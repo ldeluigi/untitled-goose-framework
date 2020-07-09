@@ -1,8 +1,8 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/scala,sbt,intellij
-# Edit at https://www.toptal.com/developers/gitignore?templates=scala,sbt,intellij
+# Created by https://www.toptal.com/developers/gitignore/api/intellij+iml,scala,sbt
+# Edit at https://www.toptal.com/developers/gitignore?templates=intellij+iml,scala,sbt
 
-### Intellij ###
+### Intellij+iml ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
@@ -75,28 +75,13 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-### Intellij Patch ###
-# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
+### Intellij+iml Patch ###
+# Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
 
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
-
-# Sonarlint plugin
-.idea/**/sonarlint/
-
-# SonarQube Plugin
-.idea/**/sonarIssues.xml
-
-# Markdown Navigator plugin
-.idea/**/markdown-navigator.xml
-.idea/**/markdown-navigator-enh.xml
-.idea/**/markdown-navigator/
-
-# Cache file creation bug
-# See https://youtrack.jetbrains.com/issue/JBR-2257
-.idea/$CACHE_FILE$
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
 
 ### SBT ###
 # Simple Build Tool
@@ -116,4 +101,4 @@ project/plugins/project/
 *.class
 *.log
 
-# End of https://www.toptal.com/developers/gitignore/api/scala,sbt,intellij
+# End of https://www.toptal.com/developers/gitignore/api/intellij+iml,scala,sbt
