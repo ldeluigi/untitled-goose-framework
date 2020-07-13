@@ -1,23 +1,26 @@
-import scalafx.Includes._
+import view.BoardStage
 import scalafx.application.JFXApp
-import scalafx.scene.Scene
-import scalafx.scene.paint.Color._
-import scalafx.scene.shape.Rectangle
+import java.awt.Dimension
+import java.awt.Toolkit
+
+import javafx.scene.input.KeyCode
+
 
 object Main extends JFXApp {
+
+  val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
   stage = new JFXApp.PrimaryStage {
-    title.value = "Hello Stage"
-    width = 600
-    height = 450
-    scene = new Scene {
-      fill = LightGreen
-      content = new Rectangle {
-        x = 25
-        y = 40
-        width = 100
-        height = 100
-        fill <== when(hover) choose Green otherwise Red
-      }
-    }
+    title.value = "Untitled Goose Framework"
+    width = screenSize.width
+    height = screenSize.height
+    resizable = false
+    fullScreen = true
+    scene = BoardStage.apply(3)
+    fullScreenExitHint = "Premi esc per uscire"
   }
+  stage.getScene.setOnKeyPressed(
+    key => if(key.getCode == KeyCode.F11) {
+      stage.setFullScreen(true)
+    }
+  )
 }
