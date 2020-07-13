@@ -2,10 +2,10 @@ package model
 
 trait GameEvent {
 
-  def persistent : Boolean
+  def persistent: Boolean
 
-  def name : String
+  def name: String
 
-  def group : List[String]
+  def group: List[String]
 
 }

@@ -3,5 +3,5 @@ package model.actions
 import model.MatchState
 
 trait Action {
-  def execute(gameState: MatchState) : MatchState
+  def execute(gameState: MatchState): MatchState
 }
