@@ -12,10 +12,10 @@ trait TileDefinition {
 
 
 object TileDefinition {
-  def apply(number: Int) = MockTileDefinition(number) //TODO change this
+  def apply(number: Int) = TileDefinitionImpl(number) //TODO change this
 }
 
-case class MockTileDefinition(num: Int) extends TileDefinition {
+case class TileDefinitionImpl(num: Int) extends TileDefinition {
 
   override def number: Option[Int] = Some(num)
 
@@ -24,4 +24,14 @@ case class MockTileDefinition(num: Int) extends TileDefinition {
   override def tileType: Option[List[String]] = None
 
   override def next: Option[TileDefinition] = None
+
+  override def equals(obj: TileDefinition): Boolean = {
+    if(number.isDefined && obj.number.isDefined){
+      return number.get == obj.number.get
+    }
+
+    if(name.isDefined && obj.name.isDefined){
+      return name.get == obj.name.get
+    }
+  }
 }

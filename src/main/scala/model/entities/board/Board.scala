@@ -9,10 +9,10 @@ trait Board {
 }
 
 object Board {
-  def apply() = MockBoard() //TODO change
+  def apply() = BoardImpl() //TODO change
 }
 
-case class MockBoard() extends Board {
+case class BoardImpl() extends Board {
   override def tiles: List[TileDefinition] = List.range(0, 50).map(i => TileDefinition(i))
 
   override def name: String = "MockBoard"

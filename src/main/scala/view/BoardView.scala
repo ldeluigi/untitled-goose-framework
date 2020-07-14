@@ -27,7 +27,6 @@ case class BoardViewImpl(board: Board) extends ScrollPane with BoardView {
   this.vbarPolicy = ScrollPane.ScrollBarPolicy.Always
 
   //Draw tiles
-
   var i = 0
   for (t <- board.tiles) {
     var currentTile = TileVisualization(t, width, height)

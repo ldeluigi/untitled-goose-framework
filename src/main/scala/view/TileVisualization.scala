@@ -4,7 +4,7 @@ import model.entities.board.TileDefinition
 import scalafx.beans.property.{ReadOnlyDoubleProperty}
 import scalafx.scene.control.Label
 import scalafx.scene.layout.StackPane
-import scalafx.scene.paint.Color.{Red, Yellow}
+import scalafx.scene.paint.Color.{Red, Black}
 import scalafx.scene.shape.{Rectangle, StrokeType}
 
 trait TileVisualization {
@@ -20,7 +20,7 @@ object TileVisualization {
 class TileVisualizationImpl(tile: TileDefinition, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty) extends StackPane with TileVisualization {
   var rectangle: Rectangle = new Rectangle {
     fill = Red
-    stroke = Yellow
+    stroke = Black
     strokeType = StrokeType.Inside
     strokeWidth <== parentWidth / 8 * 0.05
     width <== parentWidth / 8

@@ -9,7 +9,8 @@ trait Match {
 
   def players: Set[Player]
 
-  def state: MatchState
+  def currentState: MatchState
 
   def rules: RuleSet
 }
+
