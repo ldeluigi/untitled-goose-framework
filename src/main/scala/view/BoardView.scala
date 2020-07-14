@@ -1,7 +1,7 @@
 package view
 
 import model.MatchState
-import model.entities.board.Board
+import model.entities.board.{Board, TileDefinition}
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
 import scalafx.scene.paint.Color._
@@ -29,17 +29,11 @@ case class BoardViewImpl(board: Board) extends ScrollPane with BoardView {
   //Draw tiles
 
   var i = 0
-  for (i <- 0 to board.tiles.size) {
-    var currentTile = new Rectangle {
-      fill = Red
-      stroke = Yellow
-      strokeType = StrokeType.Inside
-    }
-    currentTile.strokeWidth <== this.width / 8 * 0.05
-    currentTile.width <== this.width / 8
-    currentTile.height <== this.height / 6
-    currentTile.x <== this.width / 8 * i
+  for (t <- board.tiles) {
+    var currentTile = TileVisualization(t, width, height)
+    currentTile.layoutX <== currentTile.width * i
     boardPane.children.add(currentTile)
+    i = i + 1
   }
 
   override def updateMatchState(matchState: MatchState): Unit = ???
