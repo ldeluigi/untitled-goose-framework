@@ -13,3 +13,17 @@ trait Match {
 
   def rules: RuleSet
 }
+
+object Match{
+  def apply() = MockMatch()
+}
+
+case class MockMatch() extends Match{
+  override def board: Board =
+
+  override def players: Set[Player] = ???
+
+  override def state: MatchState = ???
+
+  override def rules: RuleSet = ???
+}
