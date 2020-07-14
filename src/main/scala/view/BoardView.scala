@@ -13,38 +13,33 @@ trait BoardView {
 }
 
 object BoardView {
-  def apply(board: Board, width: Int, height: Int) = BoardViewImpl(board, width, height)
+  def apply(board: Board) = BoardViewImpl(board)
 }
 
-case class BoardViewImpl(board: Board, widthSize: Int, heightSize: Int) extends ScrollPane with BoardView {
-  this.setMinSize(widthSize, heightSize)
-  this.setMaxSize(widthSize, heightSize)
-
-
+case class BoardViewImpl(board: Board) extends ScrollPane with BoardView {
   val boardPane = new Pane()
+
   boardPane.style = "-fx-background-color: #000"
 
   this.content = boardPane
-  this.pannable = false
+  this.pannable = true
   this.hbarPolicy = ScrollPane.ScrollBarPolicy.Always
   this.vbarPolicy = ScrollPane.ScrollBarPolicy.Always
 
   //Draw tiles
 
-  val tileWidth = widthSize / 8
-  val tileHeight = widthSize / 10
   var i = 0
   for (i <- 0 to board.tiles.size) {
-    boardPane.children.add(new Rectangle {
-      x = 0 + (i * tileWidth)
-      y = 0
-      width = tileWidth
-      height = tileHeight
+    var currentTile = new Rectangle {
       fill = Red
-      strokeWidth = 5
       stroke = Yellow
       strokeType = StrokeType.Inside
-    })
+    }
+    currentTile.strokeWidth <== this.width / 8 * 0.05
+    currentTile.width <== this.width / 8
+    currentTile.height <== this.height / 6
+    currentTile.x <== this.width / 8 * i
+    boardPane.children.add(currentTile)
   }
 
   override def updateMatchState(matchState: MatchState): Unit = ???

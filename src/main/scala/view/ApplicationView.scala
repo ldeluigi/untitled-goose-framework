@@ -20,7 +20,7 @@ object ApplicationView {
 case class ApplicationViewImpl(widthSize: Int, heightSize: Int) extends Scene with ApplicationView {
 
   val boardProportion = 0.8
-
+  val appBarOffset = 40
   var currentBoard: Option[Board] = None
   var currentState: Option[MatchState] = None
 
@@ -30,14 +30,19 @@ case class ApplicationViewImpl(widthSize: Int, heightSize: Int) extends Scene wi
   override def setBoard(board: Board): Unit = {
     if (currentBoard.isEmpty) {
       currentBoard = Some(board)
-      borderPane.center = BoardView(currentBoard.get, (widthSize * boardProportion).toInt, heightSize)
+      var boardView = BoardView(currentBoard.get)
+      borderPane.center = boardView
+      boardView.prefWidth <== this.width * boardProportion
+      boardView.prefHeight <== this.height
     }
   }
 
   override def setMatchState(matchState: MatchState): Unit = {
     if (currentState.isEmpty) {
       currentState = Some(matchState)
-      borderPane.right = ActionMenu((widthSize * (1 - boardProportion)).toInt, heightSize)
+      var actionMenu = ActionMenu()
+      borderPane.right = actionMenu
+      actionMenu.prefWidth <== this.width * (1 - boardProportion)
     }
   }
 

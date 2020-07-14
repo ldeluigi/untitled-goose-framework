@@ -13,7 +13,7 @@ object Board {
 }
 
 case class MockBoard() extends Board {
-  override def tiles: List[TileDefinition] = List.range(0, 5).map(i => TileDefinition(i))
+  override def tiles: List[TileDefinition] = List.range(0, 50).map(i => TileDefinition(i))
 
   override def name: String = "MockBoard"
 

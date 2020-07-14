@@ -9,7 +9,8 @@ import model.entities.board.Board
 
 object Main extends JFXApp {
 
-  val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
+  //val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
+  val screenSize: Dimension = new Dimension(720, 400)
   val appView = ApplicationView(screenSize.width, screenSize.height)
   appView.setBoard(Board()) //TODO change
   appView.setMatchState(null) //TODO change
@@ -18,8 +19,8 @@ object Main extends JFXApp {
     title.value = "Untitled Goose Framework"
     width = screenSize.width
     height = screenSize.height
-    resizable = false
-    fullScreen = true
+    resizable = true
+    //fullScreen = true
     scene = appView
     fullScreenExitHint = "Premi esc per uscire"
   }

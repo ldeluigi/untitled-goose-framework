@@ -11,13 +11,10 @@ trait ActionMenu {
 }
 
 object ActionMenu {
-  def apply(width: Int, height: Int) = ActionMenuImpl(width, height)
+  def apply() = ActionMenuImpl()
 }
 
-case class ActionMenuImpl(widthSize: Int, heightSize: Int) extends Pane with ActionMenu {
-
-  this.setMinSize(widthSize, heightSize)
-  this.setMaxSize(widthSize, heightSize)
+case class ActionMenuImpl() extends Pane with ActionMenu {
 
   this.children.add(new Button("CIAO"))
 
