@@ -7,7 +7,7 @@ trait Position {
 }
 
 object Position {
-  def apply():Position = PositionImpl()
+  def apply(): Position = PositionImpl()
 }
 
 case class PositionImpl() extends Position {

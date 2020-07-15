@@ -5,7 +5,7 @@ import scalafx.scene.control.Button
 
 trait ActionVisualization extends Button {
 
-  onMouseClicked = _ => onClick
+  onMouseClicked = _ => onClick()
 
   def onClick(): Unit
 }
@@ -15,7 +15,7 @@ object ActionVisualization {
 }
 
 case class ActionVisualizationImpl(action: Action, controller: ApplicationController) extends ActionVisualization {
-  this.text = action.name
 
+  this.text = action.name
   override def onClick(): Unit = controller.resolveAction(action)
 }

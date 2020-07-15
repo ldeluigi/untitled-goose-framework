@@ -4,15 +4,15 @@ import engine.events.GameEventHandler
 import model.entities.board.TileDefinition
 
 trait Tile extends TileDefinition {
-  def history: List[GameEventHandler[_]] //TODO change
+  def history: List[GameEvent] //TODO change
 }
 
 object Tile {
-  def apply():Tile = TileImpl()
+  def apply(): Tile = TileImpl()
 }
 
 case class TileImpl() extends Tile {
-  override def history: List[GameEventHandler[_]] = ???
+  override def history: List[GameEvent] = ???
 
   override def number: Option[Int] = ???
 
