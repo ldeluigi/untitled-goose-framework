@@ -6,7 +6,6 @@ import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
 
 trait ApplicationController extends Scene {
-
   def resolveAction(action: Action)
 }
 
@@ -31,6 +30,7 @@ case class ApplicationControllerImpl(widthSize: Int, heightSize: Int, gameMatch:
   val actionMenu: ActionMenu = ActionMenu(boardView, this)
   borderPane.right = actionMenu
   actionMenu.prefWidth <== this.width * (1 - boardProportion)
+  actionMenu.displayActions(gameMatch.availableActions)
 
   override def resolveAction(action: Action): Unit = {
     boardView.updateMatchState(gameMatch.resolveAction(action))

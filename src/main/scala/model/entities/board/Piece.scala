@@ -1,8 +1,5 @@
 package model.entities.board
 
-import scala.reflect.api.Position
-import scala.reflect.internal.util.Position
-
 trait Piece {
   def position: Position
 
@@ -10,9 +7,12 @@ trait Piece {
 }
 
 object Piece{
-  def apply() = MockPiece() //TODO change this
+  def apply(): Piece = PieceImpl() //TODO change this
 }
 
-case class MockPiece() extends Piece{
-  override def position: Position = Position
+case class PieceImpl() extends Piece{
+
+  override def position: Position = Position()
+
+  override def setPosition(pos: Position): Unit = ???
 }
