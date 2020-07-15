@@ -39,17 +39,3 @@ case class MatchImpl(board: Board, playerPieces: Map[Player, Piece], rules: Rule
 
   override def availableActions: Set[Action] = rules.actions(currentState)
 }
-
-object Match{
-  def apply() = MockMatch()
-}
-
-case class MockMatch() extends Match{
-  override def board: Board =
-
-  override def players: Set[Player] = ???
-
-  override def state: MatchState = ???
-
-  override def rules: RuleSet = ???
-}

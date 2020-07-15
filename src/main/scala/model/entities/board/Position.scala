@@ -6,10 +6,10 @@ trait Position {
   def tile: Tile
 }
 
-object Position{
-  def apply() = MockPosition()
+object Position {
+  def apply():Position = PositionImpl()
 }
 
-case class MockPosition() extends Position{
-  override def tile: Tile = Tile
+case class PositionImpl() extends Position {
+  override def tile: Tile = ???
 }

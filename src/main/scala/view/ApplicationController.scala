@@ -10,7 +10,7 @@ trait ApplicationController extends Scene {
 }
 
 object ApplicationController {
-  def apply(width: Int, height: Int,  gameMatch: Match): ApplicationController =
+  def apply(width: Int, height: Int, gameMatch: Match): ApplicationController =
     ApplicationControllerImpl(width, height, gameMatch)
 }
 

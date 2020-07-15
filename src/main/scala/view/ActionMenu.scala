@@ -16,8 +16,8 @@ object ActionMenu {
 case class ActionMenuImpl(boardView: BoardView, controller: ApplicationController) extends ActionMenu {
 
   override def displayActions(actions: Set[Action]): Unit = {
-    for(a <- actions){
-      this.children.add(ActionVisualization(a,controller))
+    for (a <- actions) {
+      this.children.add(ActionVisualization(a, controller))
     }
   }
 }

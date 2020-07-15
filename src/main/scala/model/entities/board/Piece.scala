@@ -6,11 +6,11 @@ trait Piece {
   def setPosition(pos: Position)
 }
 
-object Piece{
+object Piece {
   def apply(): Piece = PieceImpl() //TODO change this
 }
 
-case class PieceImpl() extends Piece{
+case class PieceImpl() extends Piece {
 
   override def position: Position = Position()
 

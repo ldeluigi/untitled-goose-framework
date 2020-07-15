@@ -13,8 +13,8 @@ object Main extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
   val players = ???
   val ruleSet = ???
-  val currentMatch = Match(Board(),players, ruleSet)
-  val appView = ApplicationController(screenSize.width, screenSize.height,currentMatch)
+  val currentMatch = Match(Board(), players, ruleSet)
+  val appView = ApplicationController(screenSize.width, screenSize.height, currentMatch)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
