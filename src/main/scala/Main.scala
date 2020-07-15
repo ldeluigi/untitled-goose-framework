@@ -10,8 +10,7 @@ import model.entities.board.Board
 object Main extends JFXApp {
 
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val appView = ApplicationView(screenSize.width, screenSize.height)
-  appView.setBoard(Board()) //TODO change
+  val appView = ApplicationView(screenSize.width, screenSize.height, Board())
   appView.setMatchState(null) //TODO change
 
   stage = new JFXApp.PrimaryStage {

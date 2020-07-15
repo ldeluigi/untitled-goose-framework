@@ -1,5 +1,7 @@
 package model.entities.board
 
+import model.Tile
+
 trait TileDefinition {
   def number: Option[Int]
 
@@ -25,13 +27,32 @@ case class TileDefinitionImpl(num: Int) extends TileDefinition {
 
   override def next: Option[TileDefinition] = None
 
-  override def equals(obj: TileDefinition): Boolean = {
-    if(number.isDefined && obj.number.isDefined){
-      return number.get == obj.number.get
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case t: TileDefinition => {
+        if (number.isDefined && t.number.isDefined) {
+          return number.get == t.number.get
+        }
+
+        if (name.isDefined && t.name.isDefined) {
+          return name.get == t.name.get
+        }
+
+        false
+      }
+      case t: Tile => {
+        if (number.isDefined && t.number.isDefined) {
+          return number.get == t.number.get
+        }
+
+        if (name.isDefined && t.name.isDefined) {
+          return name.get == t.name.get
+        }
+
+        false
+      }
+      case _ => false
     }
 
-    if(name.isDefined && obj.name.isDefined){
-      return name.get == obj.name.get
-    }
   }
 }

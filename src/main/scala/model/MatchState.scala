@@ -11,3 +11,18 @@ trait MatchState {
 
   def history: List[GameEvent]
 }
+
+object MatchState {
+  def apply(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece]) = new MatchStateImpl(startTurn, startPlayer, pieces)
+}
+
+case class MatchStateImpl(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece]) extends MatchState {
+
+  val currentTurn: Int = startTurn
+
+  val currentPlayer: Player = startPlayer
+
+  val playerPieces: Map[Player, Piece] = pieces
+
+  override def history: List[GameEvent] = ???
+}

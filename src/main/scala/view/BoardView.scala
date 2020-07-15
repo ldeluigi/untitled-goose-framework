@@ -19,7 +19,7 @@ object BoardView {
 case class BoardViewImpl(board: Board) extends ScrollPane with BoardView {
   val boardPane = new Pane()
 
-  boardPane.style = "-fx-background-color: #000"
+  var tiles: List[TileVisualization] = Nil
 
   this.content = boardPane
   this.pannable = true
@@ -28,12 +28,24 @@ case class BoardViewImpl(board: Board) extends ScrollPane with BoardView {
 
   //Draw tiles
   var i = 0
+  var rows = 6
+  var cols = 8
+
   for (t <- board.tiles) {
-    var currentTile = TileVisualization(t, width, height)
-    currentTile.layoutX <== currentTile.width * i
+    val currentTile = TileVisualization(t, width, height, rows, cols)
+    currentTile.layoutX <== this.width / cols * i
     boardPane.children.add(currentTile)
     i = i + 1
+    tiles = currentTile :: tiles
   }
 
-  override def updateMatchState(matchState: MatchState): Unit = ???
+
+  override def updateMatchState(matchState: MatchState): Unit = {
+    for (p <- matchState.playerPieces) {
+      val positionTile = tiles.find(v => v.tile == p._2.position.tile)
+      if (positionTile.isDefined) {
+        positionTile.get.setPiece(PieceVisualization())
+      }
+    }
+  }
 }
