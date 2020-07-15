@@ -5,7 +5,7 @@ import engine.events.GameEventHandler
 trait Player {
   def name: String
 
-  def hystory: List[GameEvent] //TODO change
+  def history: List[GameEvent] //TODO change
 }
 
 object Player {
@@ -16,5 +16,5 @@ case class PlayerImpl(playerName: String) extends Player {
 
   override def name: String = playerName
 
-  override def hystory: List[GameEvent] = ???
+  override def history: List[GameEvent] = ???
 }

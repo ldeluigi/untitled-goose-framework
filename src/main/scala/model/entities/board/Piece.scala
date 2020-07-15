@@ -3,16 +3,25 @@ package model.entities.board
 trait Piece {
   def position: Position
 
-  def setPosition(pos: Position)
+  def setPosition(pos: Position): Piece
 }
 
 object Piece {
-  def apply(): Piece = PieceImpl() //TODO change this
+  def apply(position: Position): Piece = {
+    PieceImpl().setPosition(position)
+  }
+
+  def apply(): Piece = PieceImpl()
 }
 
 case class PieceImpl() extends Piece {
 
-  override def position: Position = Position()
+  var currentPosition: Option[Position] = None
 
-  override def setPosition(pos: Position): Unit = ???
+  override def position: Position = currentPosition.get
+
+  override def setPosition(pos: Position): Piece = {
+    currentPosition = Some(pos)
+    this
+  }
 }

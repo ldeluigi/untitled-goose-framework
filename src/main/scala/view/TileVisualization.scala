@@ -16,7 +16,7 @@ trait TileVisualization extends StackPane {
 
   def setPiece(piece: PieceVisualization): Unit
 
-  def removePiece(piece: PieceVisualization): Unit
+  def removePieces(): Unit
 
   def rectangle: Rectangle
 }
@@ -43,13 +43,18 @@ class TileVisualizationImpl(val tile: TileDefinition, parentWidth: ReadOnlyDoubl
 
   this.children.addAll(rectangle, label)
 
+  var pieceList: List[PieceVisualization] = Nil
+
   override def setPiece(piece: PieceVisualization): Unit = {
     //TODO set alignment based on how many are on this tile
     piece.alignment = Pos.BottomLeft
     this.children.add(piece)
+    pieceList = piece :: pieceList
   }
 
-  override def removePiece(piece: PieceVisualization): Unit = {
-    this.children.remove(piece)
+  override def removePieces(): Unit = {
+    for (p <- pieceList) {
+      this.children.remove(p)
+    }
   }
 }

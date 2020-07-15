@@ -17,5 +17,6 @@ object ActionVisualization {
 case class ActionVisualizationImpl(action: Action, controller: ApplicationController) extends ActionVisualization {
 
   this.text = action.name
+
   override def onClick(): Unit = controller.resolveAction(action)
 }

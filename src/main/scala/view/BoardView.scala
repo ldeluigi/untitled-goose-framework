@@ -37,10 +37,10 @@ case class BoardViewImpl(board: Board) extends BoardView {
     tiles = currentTile :: tiles
   }
 
-  tiles.head.setPiece(PieceVisualization())
-
-
   override def updateMatchState(matchState: MatchState): Unit = {
+    for (t <- tiles) {
+      t.removePieces()
+    }
     for (p <- matchState.playerPieces) {
       val positionTile = tiles.find(v => v.tile == p._2.position.tile)
       if (positionTile.isDefined) {

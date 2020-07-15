@@ -5,16 +5,22 @@ import java.awt.Toolkit
 
 import engine.`match`.Match
 import javafx.scene.input.KeyCode
-import model.entities.board.Board
+import model.Player
+import model.actions.{Action, StepForwardAction}
+import model.entities.board.{Board, Piece}
+import model.rules.RuleSet
 
 
 object Main extends JFXApp {
 
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val players = ???
-  val ruleSet = ???
-  val currentMatch = Match(Board(), players, ruleSet)
-  val appView = ApplicationController(screenSize.width, screenSize.height, currentMatch)
+  val board: Board = Board()
+  val players: Map[Player, Piece] = Map(Player("P1") -> Piece())
+  val actions: Set[Action] = Set(new StepForwardAction())
+  val ruleSet: RuleSet = RuleSet(actions)
+
+  val currentMatch: Match = Match(board, players, ruleSet)
+  val appView: ApplicationController = ApplicationController(screenSize.width, screenSize.height, currentMatch)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"

@@ -7,9 +7,9 @@ trait Position {
 }
 
 object Position {
-  def apply(): Position = PositionImpl()
+  def apply(tile: Tile): Position = PositionImpl(tile)
 }
 
-case class PositionImpl() extends Position {
-  override def tile: Tile = ???
+case class PositionImpl(tile: Tile) extends Position {
+
 }

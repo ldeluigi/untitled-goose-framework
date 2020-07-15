@@ -26,6 +26,7 @@ case class ApplicationControllerImpl(widthSize: Int, heightSize: Int, gameMatch:
   borderPane.center = boardView
   boardView.prefWidth <== this.width * boardProportion
   boardView.prefHeight <== this.height
+  boardView.updateMatchState(gameMatch.currentState)
 
   val actionMenu: ActionMenu = ActionMenu(boardView, this)
   borderPane.right = actionMenu

@@ -40,6 +40,7 @@ case class TileDefinitionImpl(num: Int) extends TileDefinition {
 
         false
       }
+      //TODO maybe delete
       case t: Tile => {
         if (number.isDefined && t.number.isDefined) {
           return number.get == t.number.get

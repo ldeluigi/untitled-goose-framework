@@ -1,7 +1,7 @@
 package engine.`match`
 
 import model.actions.Action
-import model.{MatchState, Player}
+import model.{MatchState, Player, Tile}
 import model.entities.board.{Board, Piece}
 import model.rules.RuleSet
 
@@ -24,11 +24,12 @@ object Match {
 
 case class MatchImpl(board: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Match {
 
+  val tileList: List[Tile] = board.tiles.map(t => Tile(t))
   var firstTurn = 0
   for (piece <- playerPieces.values) {
-    piece.setPosition(rules.startPosition())
+    piece.setPosition(rules.startPosition(tileList))
   }
-  var currentState: MatchState = MatchState(firstTurn, rules.first(playerPieces.keySet), playerPieces)
+  var currentState: MatchState = MatchState(firstTurn, rules.first(playerPieces.keySet), playerPieces, tileList)
 
   override def players: Set[Player] = playerPieces.keySet
 

@@ -1,6 +1,5 @@
 package model
 
-import engine.events.GameEventHandler
 import model.entities.board.TileDefinition
 
 trait Tile extends TileDefinition {
@@ -8,17 +7,18 @@ trait Tile extends TileDefinition {
 }
 
 object Tile {
-  def apply(): Tile = TileImpl()
+  def apply(tileDefinition: TileDefinition): Tile = TileImpl(tileDefinition)
 }
 
-case class TileImpl() extends Tile {
+case class TileImpl(tile: TileDefinition) extends Tile {
+
   override def history: List[GameEvent] = ???
 
-  override def number: Option[Int] = ???
+  override def number: Option[Int] = tile.number
 
-  override def name: Option[String] = ???
+  override def name: Option[String] = tile.name
 
-  override def tileType: Option[List[String]] = ???
+  override def tileType: Option[List[String]] = tile.tileType
 
-  override def next: Option[TileDefinition] = ???
+  override def next: Option[TileDefinition] = tile.next
 }
