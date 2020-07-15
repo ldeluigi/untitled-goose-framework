@@ -5,17 +5,17 @@ import model.actions.Action
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
 
-trait ApplicationController {
+trait ApplicationController extends Scene {
 
   def resolveAction(action: Action)
 }
 
 object ApplicationController {
-  def apply(width: Int, height: Int,  gameMatch: Match): ApplicationControllerImpl =
+  def apply(width: Int, height: Int,  gameMatch: Match): ApplicationController =
     ApplicationControllerImpl(width, height, gameMatch)
 }
 
-case class ApplicationControllerImpl(widthSize: Int, heightSize: Int, gameMatch: Match) extends Scene with ApplicationController {
+case class ApplicationControllerImpl(widthSize: Int, heightSize: Int, gameMatch: Match) extends ApplicationController {
 
   val boardProportion = 0.8
   val appBarOffset = 40

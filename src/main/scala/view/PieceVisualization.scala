@@ -10,7 +10,7 @@ trait PieceVisualization extends StackPane {
 }
 
 object PieceVisualization {
-  def apply() = PieceVisualizationImpl()
+  def apply(): PieceVisualization = PieceVisualizationImpl()
 }
 
 case class PieceVisualizationImpl() extends PieceVisualization {

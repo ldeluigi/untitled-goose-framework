@@ -9,7 +9,7 @@ trait Board {
 }
 
 object Board {
-  def apply() = BoardImpl() //TODO change
+  def apply(): Board = BoardImpl() //TODO change
 }
 
 case class BoardImpl() extends Board {

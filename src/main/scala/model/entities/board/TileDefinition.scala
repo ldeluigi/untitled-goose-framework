@@ -14,7 +14,7 @@ trait TileDefinition {
 
 
 object TileDefinition {
-  def apply(number: Int) = TileDefinitionImpl(number) //TODO change this
+  def apply(number: Int): TileDefinition = TileDefinitionImpl(number) //TODO change this
 }
 
 case class TileDefinitionImpl(num: Int) extends TileDefinition {

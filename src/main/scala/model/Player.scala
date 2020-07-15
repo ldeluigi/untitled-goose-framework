@@ -5,9 +5,9 @@ trait Player {
 }
 
 object Player {
-  def apply() = PlayerImpl()
+  def apply(): Player = PlayerImpl()
 }
 
-case class PlayerImpl() {
+case class PlayerImpl() extends Player {
 
 }
