@@ -1,22 +1,20 @@
 package view
 
-import model.{MatchState, Player}
 import model.actions.Action
-import scalafx.scene.control.Button
 import scalafx.scene.layout.Pane
 
-trait ActionMenu {
+trait ActionMenu extends Pane {
 
-  def displayActions(actions: List[Action])
+  def displayActions(actions: Set[Action])
 
 }
 
 object ActionMenu {
-  def apply(boardView: BoardView) = ActionMenuImpl(boardView)
+  def apply(boardView: BoardView, controller: ApplicationController): ActionMenu = ActionMenuImpl(boardView, controller)
 }
 
-case class ActionMenuImpl(val boardView: BoardView) extends Pane with ActionMenu {
+case class ActionMenuImpl(boardView: BoardView, controller: ApplicationController) extends ActionMenu {
 
-  override def displayActions(actions: List[Action]): Unit = ???
+  override def displayActions(actions: Set[Action]): Unit = ???
 }
 

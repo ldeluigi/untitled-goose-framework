@@ -1,22 +1,20 @@
 package view
 
 import model.MatchState
-import model.entities.board.{Board, TileDefinition}
+import model.entities.board.Board
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
-import scalafx.scene.paint.Color._
-import scalafx.scene.shape.{Rectangle, StrokeType}
 
 
-trait BoardView {
+trait BoardView extends ScrollPane {
   def updateMatchState(matchState: MatchState)
 }
 
 object BoardView {
-  def apply(board: Board) = BoardViewImpl(board)
+  def apply(board: Board): BoardView = BoardViewImpl(board)
 }
 
-case class BoardViewImpl(board: Board) extends ScrollPane with BoardView {
+case class BoardViewImpl(board: Board) extends BoardView {
   val boardPane = new Pane()
 
   var tiles: List[TileVisualization] = Nil
@@ -38,6 +36,8 @@ case class BoardViewImpl(board: Board) extends ScrollPane with BoardView {
     i = i + 1
     tiles = currentTile :: tiles
   }
+
+  tiles.head.setPiece(PieceVisualization())
 
 
   override def updateMatchState(matchState: MatchState): Unit = {

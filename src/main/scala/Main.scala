@@ -1,8 +1,9 @@
-import view.{ApplicationView}
+import view.ApplicationController
 import scalafx.application.JFXApp
 import java.awt.Dimension
 import java.awt.Toolkit
 
+import engine.`match`.Match
 import javafx.scene.input.KeyCode
 import model.entities.board.Board
 
@@ -10,8 +11,10 @@ import model.entities.board.Board
 object Main extends JFXApp {
 
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val appView = ApplicationView(screenSize.width, screenSize.height, Board())
-  appView.setMatchState(null) //TODO change
+  val players = ???
+  val ruleSet = ???
+  val currentMatch = Match(Board(),players, ruleSet)
+  val appView = ApplicationController(screenSize.width, screenSize.height,currentMatch)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"

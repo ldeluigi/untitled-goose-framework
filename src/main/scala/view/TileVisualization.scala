@@ -22,10 +22,13 @@ trait TileVisualization extends StackPane {
 }
 
 object TileVisualization {
-  def apply(tile: TileDefinition, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int) = new TileVisualizationImpl(tile, parentWidth, parentHeight, rows, cols)
+  def apply(tile: TileDefinition, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int) =
+    new TileVisualizationImpl(tile, parentWidth, parentHeight, rows, cols)
 }
 
-class TileVisualizationImpl(val tile: TileDefinition, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int) extends TileVisualization {
+class TileVisualizationImpl(val tile: TileDefinition, parentWidth: ReadOnlyDoubleProperty,
+                            parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int)
+  extends TileVisualization {
   var rectangle: Rectangle = new Rectangle {
     fill = Red
     stroke = Black
