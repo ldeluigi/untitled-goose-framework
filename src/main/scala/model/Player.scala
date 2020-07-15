@@ -15,3 +15,11 @@ case class MockPLayer(name: String) extends Player{
 
   override def hystory: List[Any] = ???
 }
+
+object Player {
+  def apply(): Player = PlayerImpl()
+}
+
+case class PlayerImpl() extends Player {
+
+}

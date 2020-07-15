@@ -1,23 +1,20 @@
 package view
 
 import model.actions.Action
-import scalafx.scene.control.Button
 import scalafx.scene.layout.Pane
 
-trait ActionMenu {
+trait ActionMenu extends Pane {
 
-  def displayActions(actions: List[Action])
+  def displayActions(actions: Set[Action])
 
 }
 
 object ActionMenu {
-  def apply() = ActionMenuImpl()
+  def apply(boardView: BoardView, controller: ApplicationController): ActionMenu = ActionMenuImpl(boardView, controller)
 }
 
-case class ActionMenuImpl() extends Pane with ActionMenu {
+case class ActionMenuImpl(boardView: BoardView, controller: ApplicationController) extends ActionMenu {
 
-  this.children.add(new Button("CIAO"))
-
-  override def displayActions(actions: List[Action]): Unit = ???
+  override def displayActions(actions: Set[Action]): Unit = ???
 }
 

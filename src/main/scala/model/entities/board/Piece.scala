@@ -5,6 +5,8 @@ import scala.reflect.internal.util.Position
 
 trait Piece {
   def position: Position
+
+  def setPosition(pos: Position)
 }
 
 object Piece{

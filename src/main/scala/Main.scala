@@ -1,26 +1,29 @@
-import view.{ApplicationView, BoardStage, BoardView}
+import view.ApplicationController
 import scalafx.application.JFXApp
 import java.awt.Dimension
 import java.awt.Toolkit
 
+import engine.`match`.Match
 import javafx.scene.input.KeyCode
 import model.entities.board.Board
 
 
 object Main extends JFXApp {
 
-  //val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val screenSize: Dimension = new Dimension(720, 400)
-  val appView = ApplicationView(screenSize.width, screenSize.height)
-  appView.setBoard(Board()) //TODO change
-  appView.setMatchState(null) //TODO change
+  val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
+  val players = ???
+  val ruleSet = ???
+  val currentMatch = Match(Board(),players, ruleSet)
+  val appView = ApplicationController(screenSize.width, screenSize.height,currentMatch)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
-    width = screenSize.width
-    height = screenSize.height
+    width = 0.5 * screenSize.width
+    height = 0.5 * screenSize.height
     resizable = true
     //fullScreen = true
+    minWidth = 0.5 * screenSize.width
+    minHeight = 0.5 * screenSize.height
     scene = appView
     fullScreenExitHint = "Premi esc per uscire"
   }
