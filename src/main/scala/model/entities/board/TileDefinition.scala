@@ -38,19 +38,6 @@ object TileDefinition {
 
           false
         }
-        //TODO maybe delete
-        case t: Tile => {
-          if (number.isDefined && t.number.isDefined) {
-            return number.get == t.number.get
-          }
-
-          if (name.isDefined && t.name.isDefined) {
-            return name.get == t.name.get
-          }
-
-          false
-        }
-        case _ => false
       }
     }
   }

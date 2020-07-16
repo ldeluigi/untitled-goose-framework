@@ -9,7 +9,7 @@ trait Board {
 
   def disposition: Disposition
 
-  def next(tile: TileDefinition) : Option[TileDefinition]
+  def next(tile: TileDefinition): Option[TileDefinition]
 
 }
 
@@ -23,7 +23,7 @@ object Board {
     override def disposition: Disposition = ???
 
     override def next(tile: TileDefinition): Option[TileDefinition] =
-      tile.number flatMap (i => tiles lift(i+1)) orElse tile.next
+      tile.number flatMap (i => tiles lift (i + 1)) orElse tile.next
   }
 
   def apply(): Board = new BoardImpl() //TODO change

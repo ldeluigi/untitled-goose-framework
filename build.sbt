@@ -9,6 +9,9 @@ libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
 
+scalacOptions ++= Seq(
+  "-language:postfixOps"
+)
 
 
 // Determine OS version of JavaFX binaries
