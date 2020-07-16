@@ -9,12 +9,13 @@ trait Player {
 }
 
 object Player {
-  def apply(name: String): Player = PlayerImpl(name)
-}
 
-case class PlayerImpl(playerName: String) extends Player {
+  private class PlayerImpl(playerName: String) extends Player {
 
-  override def name: String = playerName
+    override def name: String = playerName
 
-  override def history: List[GameEvent] = ???
+    override def history: List[GameEvent] = ???
+  }
+
+  def apply(name: String): Player = new PlayerImpl(name)
 }

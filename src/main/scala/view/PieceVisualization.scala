@@ -10,14 +10,16 @@ trait PieceVisualization extends StackPane {
 }
 
 object PieceVisualization {
-  def apply(): PieceVisualization = PieceVisualizationImpl()
-}
 
-case class PieceVisualizationImpl() extends PieceVisualization {
+  private class PieceVisualizationImpl() extends PieceVisualization {
 
-  val pieceShape = new Circle {
-    fill = Blue
-    radius = 20
+    val pieceShape = new Circle {
+      fill = Blue
+      radius = 20
+    }
+    this.children.addAll(pieceShape)
   }
-  this.children.addAll(pieceShape)
+
+  def apply(): PieceVisualization = new PieceVisualizationImpl()
 }
+

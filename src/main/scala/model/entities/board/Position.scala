@@ -7,9 +7,10 @@ trait Position {
 }
 
 object Position {
-  def apply(tile: Tile): Position = PositionImpl(tile)
-}
 
-case class PositionImpl(tile: Tile) extends Position {
+  private class PositionImpl(val tile: Tile) extends Position {
 
+  }
+
+  def apply(tile: Tile): Position = new PositionImpl(tile)
 }

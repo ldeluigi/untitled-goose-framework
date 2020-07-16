@@ -14,10 +14,14 @@ import model.rules.RuleSet
 object Main extends JFXApp {
 
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
+
+  //From DSL generation
   val board: Board = Board()
-  val players: Map[Player, Piece] = Map(Player("P1") -> Piece())
   val actions: Set[Action] = Set(new StepForwardAction())
   val ruleSet: RuleSet = RuleSet(actions)
+
+  //From a menu GUI that select and creates player and pieces
+  val players: Map[Player, Piece] = Map(Player("P1") -> Piece())
 
   val currentMatch: Match = Match(board, players, ruleSet)
   val appView: ApplicationController = ApplicationController(screenSize.width, screenSize.height, currentMatch)

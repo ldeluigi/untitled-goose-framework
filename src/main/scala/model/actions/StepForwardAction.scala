@@ -16,16 +16,6 @@ class StepForwardAction() extends Action {
     gameState
   }
 
-  private def findNext(currentTile: Tile, tiles: List[Tile]): Option[Tile] = {
-    val it = tiles.iterator
-    while (it.hasNext && it.next != currentTile) {}
-    if (it.hasNext) {
-      Some(it.next())
-    } else {
-      None
-    }
-  }
-
   @scala.annotation.tailrec
   private def findNextRec(currentTile: Tile, tiles: List[Tile]): Option[Tile] = tiles match {
     case Nil => None

@@ -15,17 +15,19 @@ trait MatchState {
 }
 
 object MatchState {
+
+  private class MatchStateImpl(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], val boardTiles: List[Tile]) extends MatchState {
+
+    val currentTurn: Int = startTurn
+
+    val currentPlayer: Player = startPlayer
+
+    val playerPieces: Map[Player, Piece] = pieces
+
+    override def history: List[GameEvent] = ???
+  }
+
   def apply(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], boardTiles: List[Tile]): MatchState =
-    MatchStateImpl(startTurn, startPlayer, pieces, boardTiles)
+    new MatchStateImpl(startTurn, startPlayer, pieces, boardTiles)
 }
 
-case class MatchStateImpl(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], boardTiles: List[Tile]) extends MatchState {
-
-  val currentTurn: Int = startTurn
-
-  val currentPlayer: Player = startPlayer
-
-  val playerPieces: Map[Player, Piece] = pieces
-
-  override def history: List[GameEvent] = ???
-}

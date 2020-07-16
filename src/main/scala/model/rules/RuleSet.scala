@@ -17,24 +17,26 @@ trait RuleSet {
 }
 
 object RuleSet {
-  def apply(allActions: Set[Action]): RuleSet = EmptyRuleSet(allActions)
+
+  private class EmptyRuleSet(allActions: Set[Action]) extends RuleSet {
+
+    override def first(players: Set[Player]): Player = {
+      players.head
+    }
+
+    override def startPosition(tiles: List[Tile]): Position = {
+      Position(tiles.take(1).head)
+    }
+
+    override def actions(state: MatchState): Set[Action] = {
+      allActions
+    }
+
+    override def resolveAction(state: MatchState, action: Action): MatchState = {
+      action.execute(state)
+    }
+  }
+
+  def apply(allActions: Set[Action]): RuleSet = new EmptyRuleSet(allActions)
 }
 
-case class EmptyRuleSet(allActions: Set[Action]) extends RuleSet {
-
-  override def first(players: Set[Player]): Player = {
-    players.head
-  }
-
-  override def startPosition(tiles: List[Tile]): Position = {
-    Position(tiles.take(1).head)
-  }
-
-  override def actions(state: MatchState): Set[Action] = {
-    allActions
-  }
-
-  override def resolveAction(state: MatchState, action: Action): MatchState = {
-    action.execute(state)
-  }
-}

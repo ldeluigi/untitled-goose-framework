@@ -7,18 +7,19 @@ trait Tile extends TileDefinition {
 }
 
 object Tile {
-  def apply(tileDefinition: TileDefinition): Tile = TileImpl(tileDefinition)
-}
 
-case class TileImpl(tile: TileDefinition) extends Tile {
+  private class TileImpl(tile: TileDefinition) extends Tile {
 
-  override def history: List[GameEvent] = ???
+    override def history: List[GameEvent] = ???
 
-  override def number: Option[Int] = tile.number
+    override def number: Option[Int] = tile.number
 
-  override def name: Option[String] = tile.name
+    override def name: Option[String] = tile.name
 
-  override def tileType: Option[List[String]] = tile.tileType
+    override def tileType: Option[List[String]] = tile.tileType
 
-  override def next: Option[TileDefinition] = tile.next
+    override def next: Option[TileDefinition] = tile.next
+  }
+
+  def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)
 }

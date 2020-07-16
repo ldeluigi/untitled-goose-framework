@@ -11,12 +11,13 @@ trait ActionVisualization extends Button {
 }
 
 object ActionVisualization {
-  def apply(action: Action, controller: ApplicationController): ActionVisualization = ActionVisualizationImpl(action, controller)
-}
 
-case class ActionVisualizationImpl(action: Action, controller: ApplicationController) extends ActionVisualization {
+  private class ActionVisualizationImpl(action: Action, controller: ApplicationController) extends ActionVisualization {
 
-  this.text = action.name
+    this.text = action.name
 
-  override def onClick(): Unit = controller.resolveAction(action)
+    override def onClick(): Unit = controller.resolveAction(action)
+  }
+
+  def apply(action: Action, controller: ApplicationController): ActionVisualization = new ActionVisualizationImpl(action, controller)
 }
