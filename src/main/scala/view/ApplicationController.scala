@@ -39,7 +39,7 @@ object ApplicationController {
   }
 
   def apply(width: Int, height: Int, gameMatch: Match): ApplicationController = new
-    ApplicationControllerImpl(width, height, gameMatch)
+      ApplicationControllerImpl(width, height, gameMatch)
 }
 
 

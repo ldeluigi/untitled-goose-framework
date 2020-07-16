@@ -1,5 +1,6 @@
 package view
 
+import engine.`match`.MatchBoard
 import model.MatchState
 import model.entities.board.Board
 import scalafx.scene.control.ScrollPane
@@ -11,7 +12,8 @@ trait BoardView extends ScrollPane {
 }
 
 object BoardView {
-  private class BoardViewImpl(board: Board) extends BoardView {
+
+  private class BoardViewImpl(matchBoard: MatchBoard) extends BoardView {
     val boardPane = new Pane()
 
     var tiles: List[TileVisualization] = Nil
@@ -26,7 +28,7 @@ object BoardView {
     var rows = 6
     var cols = 8
 
-    for (t <- board.tiles) {
+    for (t <- matchBoard.tiles) {
       val currentTile = TileVisualization(t, width, height, rows, cols)
       currentTile.layoutX <== this.width / cols * i
       boardPane.children.add(currentTile)
@@ -47,6 +49,6 @@ object BoardView {
     }
   }
 
-  def apply(board: Board): BoardView = new BoardViewImpl(board)
+  def apply(board: MatchBoard): BoardView = new BoardViewImpl(board)
 }
 

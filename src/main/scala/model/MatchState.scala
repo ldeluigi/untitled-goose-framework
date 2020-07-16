@@ -1,5 +1,6 @@
 package model
 
+import engine.`match`.MatchBoard
 import model.entities.board.Piece
 
 trait MatchState {
@@ -9,14 +10,14 @@ trait MatchState {
 
   def playerPieces: Map[Player, Piece]
 
-  def boardTiles: List[Tile]
+  def matchBoard: MatchBoard
 
   def history: List[GameEvent]
 }
 
 object MatchState {
 
-  private class MatchStateImpl(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], val boardTiles: List[Tile]) extends MatchState {
+  private class MatchStateImpl(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], val matchBoard: MatchBoard) extends MatchState {
 
     val currentTurn: Int = startTurn
 
@@ -27,7 +28,7 @@ object MatchState {
     override def history: List[GameEvent] = ???
   }
 
-  def apply(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], boardTiles: List[Tile]): MatchState =
-    new MatchStateImpl(startTurn, startPlayer, pieces, boardTiles)
+  def apply(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =
+    new MatchStateImpl(startTurn, startPlayer, pieces, board)
 }
 

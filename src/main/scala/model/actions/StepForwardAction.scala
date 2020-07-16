@@ -9,7 +9,7 @@ class StepForwardAction() extends Action {
 
   override def execute(gameState: MatchState): MatchState = {
     var piece = gameState.playerPieces(gameState.currentPlayer)
-    var nextTile = findNextRec(piece.position.tile, gameState.boardTiles)
+    var nextTile = findNextRec(piece.position.tile, gameState.matchBoard.tiles)
     if (nextTile.isDefined) {
       piece.setPosition(Position(nextTile.get))
     }

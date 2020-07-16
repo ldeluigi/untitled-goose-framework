@@ -9,7 +9,7 @@ trait Match {
 
   def availableActions: Set[Action]
 
-  def board: Board
+  def board: MatchBoard
 
   def players: Set[Player]
 
@@ -20,14 +20,14 @@ trait Match {
 
 object Match {
 
-  private class MatchImpl(val board: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Match {
+  private class MatchImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Match {
 
-    val tileList: List[Tile] = board.tiles.map(t => Tile(t))
+    val board = MatchBoard(gameBoard)
     var firstTurn = 0
     for (piece <- playerPieces.values) {
-      piece.setPosition(rules.startPosition(tileList))
+      piece.setPosition(rules.startPosition(board.tiles))
     }
-    var currentState: MatchState = MatchState(firstTurn, rules.first(playerPieces.keySet), playerPieces, tileList)
+    var currentState: MatchState = MatchState(firstTurn, rules.first(playerPieces.keySet), playerPieces, board)
 
     override def players: Set[Player] = playerPieces.keySet
 
@@ -37,6 +37,7 @@ object Match {
     }
 
     override def availableActions: Set[Action] = rules.actions(currentState)
+
   }
 
   def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Match = new MatchImpl(board, players, rules)

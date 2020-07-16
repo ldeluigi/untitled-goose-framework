@@ -1,5 +1,6 @@
 package view
 
+import model.Tile
 import model.entities.board.TileDefinition
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos
@@ -10,7 +11,7 @@ import scalafx.scene.shape.{Rectangle, StrokeType}
 
 trait TileVisualization extends StackPane {
 
-  def tile: TileDefinition
+  def tile: Tile
 
   def text: String
 
@@ -23,9 +24,9 @@ trait TileVisualization extends StackPane {
 
 object TileVisualization {
 
-  private class TileVisualizationImpl(val tile: TileDefinition, parentWidth: ReadOnlyDoubleProperty,
-                              parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int)
-    extends TileVisualization {
+  private class TileVisualizationImpl(val tile: Tile, parentWidth: ReadOnlyDoubleProperty,
+                                      parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int) extends TileVisualization {
+
     var rectangle: Rectangle = new Rectangle {
       fill = Red
       stroke = Black
@@ -54,9 +55,10 @@ object TileVisualization {
         this.children.remove(p)
       }
     }
+
   }
 
-  def apply(tile: TileDefinition, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int) =
+  def apply(tile: Tile, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int): TileVisualization =
     new TileVisualizationImpl(tile, parentWidth, parentHeight, rows, cols)
 }
 
