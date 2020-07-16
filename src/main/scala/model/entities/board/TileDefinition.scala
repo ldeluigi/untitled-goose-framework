@@ -15,6 +15,20 @@ trait TileDefinition {
 
 object TileDefinition {
 
+  implicit def ordering[A <: TileDefinition]: Ordering[A] = (x: A, y: A) => {
+    if (x.number.isDefined) {
+      if (y.number.isDefined) {
+        x.number.get compare y.number.get
+      } else {
+        ordering.compare(x, y.next.get)
+      }
+    } else {
+      //If there is no number sure there is next
+      //TODO make sure of this
+      ordering.compare(x.next.get, y)
+    }
+  }
+
   private class TileDefinitionImpl(num: Int) extends TileDefinition {
 
     override def number: Option[Int] = Some(num)

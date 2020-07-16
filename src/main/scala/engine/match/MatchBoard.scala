@@ -18,7 +18,7 @@ object MatchBoard {
 
     val tileMap: Map[TileDefinition, Tile] = board.tiles map (t => t -> Tile(t)) toMap
 
-    override def tiles: List[Tile] = tileMap.values toList
+    override def tiles: List[Tile] = tileMap.values.toList.sorted
 
     override def next(tile: Tile): Option[Tile] = board next tile map (t => tileMap(t))
   }
