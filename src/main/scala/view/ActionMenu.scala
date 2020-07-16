@@ -10,15 +10,15 @@ trait ActionMenu extends Pane {
 }
 
 object ActionMenu {
-  def apply(boardView: BoardView, controller: ApplicationController): ActionMenu = ActionMenuImpl(boardView, controller)
-}
 
-case class ActionMenuImpl(boardView: BoardView, controller: ApplicationController) extends ActionMenu {
+  private class ActionMenuImpl(boardView: BoardView, controller: ApplicationController) extends ActionMenu {
 
-  override def displayActions(actions: Set[Action]): Unit = {
-    for (a <- actions) {
-      this.children.add(ActionVisualization(a, controller))
+    override def displayActions(actions: Set[Action]): Unit = {
+      for (a <- actions) {
+        this.children.add(ActionVisualization(a, controller))
+      }
     }
   }
-}
 
+  def apply(boardView: BoardView, controller: ApplicationController): ActionMenu = new ActionMenuImpl(boardView, controller)
+}
