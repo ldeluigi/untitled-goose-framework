@@ -15,18 +15,18 @@ trait Board {
 
 object Board {
 
-  private class BoardImpl() extends Board {
-    private val myTiles: List[TileDefinition] = List.range(0, 10).map(i => TileDefinition(i))
+  private class BoardImpl(tileNum: Int) extends Board {
+    private val myTiles: List[TileDefinition] = List.range(0, tileNum).map(i => TileDefinition(i))
 
     override def name: String = "MockBoard"
 
     override def disposition: Disposition = ???
 
     override def next(tile: TileDefinition): Option[TileDefinition] =
-      tile.number flatMap (i => myTiles lift (i + 1)) orElse tile.next
+      tile.number flatMap (i => myTiles lift (i + 1))
 
     override def tiles: Set[TileDefinition] = myTiles.toSet
   }
 
-  def apply(): Board = new BoardImpl() //TODO change
+  def apply(tileNum: Int): Board = new BoardImpl(tileNum) //TODO change
 }

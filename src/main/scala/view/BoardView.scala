@@ -2,7 +2,6 @@ package view
 
 import engine.`match`.MatchBoard
 import model.MatchState
-import model.entities.board.Board
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
 
@@ -43,11 +42,21 @@ object BoardView {
       for (p <- matchState.playerPieces) {
         val positionTile = tiles.find(v => v.tile == p._2.position.tile)
         if (positionTile.isDefined) {
+          if (p._1 == matchState.currentPlayer) {
+            setFocus(positionTile.get)
+          }
           positionTile.get.setPiece(PieceVisualization())
         }
       }
     }
+
+    //TODO da migliorare introduce un mini bug grafico
+    private def setFocus(positionTile: TileVisualization): Unit = {
+      this.setHvalue(positionTile.getLayoutX / boardPane.getWidth)
+      this.setVvalue(positionTile.getLayoutY / boardPane.getHeight)
+    }
   }
+
 
   def apply(board: MatchBoard): BoardView = new BoardViewImpl(board)
 }

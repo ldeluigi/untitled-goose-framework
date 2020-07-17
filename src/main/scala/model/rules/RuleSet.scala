@@ -25,7 +25,7 @@ object RuleSet {
     }
 
     override def startPosition(tiles: Set[Tile]): Position = {
-      Position(tiles.take(1).head)
+      Position(tiles.toList.sorted.take(1).head)
     }
 
     override def actions(state: MatchState): Set[Action] = {

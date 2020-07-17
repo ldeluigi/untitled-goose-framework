@@ -8,26 +8,18 @@ trait TileDefinition {
   def name: Option[String]
 
   def tileType: Option[List[String]]
-
-  def next: Option[TileDefinition]
 }
 
 
 object TileDefinition {
 
-  implicit def ordering[A <: TileDefinition]: Ordering[A] = (x: A, y: A) => {
-    if (x.number.isDefined) {
-      if (y.number.isDefined) {
-        x.number.get compare y.number.get
-      } else {
-        ordering.compare(x, y.next.get)
-      }
-    } else {
-      //If there is no number sure there is next
-      //TODO make sure of this
-      ordering.compare(x.next.get, y)
+  implicit def ordering[A <: TileDefinition]: Ordering[A] = (x: A, y: A) =>
+    (x.number, y.number) match {
+      case (None, None) => 0
+      case (None, Some(_)) => 1
+      case (Some(_), None) => -1
+      case (Some(xNum), Some(yNum)) => xNum compare yNum
     }
-  }
 
   private class TileDefinitionImpl(num: Int) extends TileDefinition {
 
@@ -36,8 +28,6 @@ object TileDefinition {
     override def name: Option[String] = None
 
     override def tileType: Option[List[String]] = None
-
-    override def next: Option[TileDefinition] = None
 
     override def equals(obj: Any): Boolean = {
       obj match {

@@ -17,8 +17,6 @@ object Tile {
     override def name: Option[String] = tile.name
 
     override def tileType: Option[List[String]] = tile.tileType
-
-    override def next: Option[TileDefinition] = tile.next
   }
 
   def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)

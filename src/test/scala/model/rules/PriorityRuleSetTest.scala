@@ -26,6 +26,6 @@ class PriorityRuleSetTest extends AnyFlatSpec with Matchers {
 
   thisClass should "select a first player" in {
     val player = dumbRuleSet first Set(startPlayer)
-    player.name should be (startPlayer.name)
+    player.name should be(startPlayer.name)
   }
 }

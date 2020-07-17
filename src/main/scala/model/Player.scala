@@ -15,6 +15,10 @@ object Player {
     override def name: String = playerName
 
     override def history: List[GameEvent] = ???
+
+    override def equals(obj: Any): Boolean = obj match {
+      case obj: Player => this.name == obj.name
+    }
   }
 
   def apply(name: String): Player = new PlayerImpl(name)
