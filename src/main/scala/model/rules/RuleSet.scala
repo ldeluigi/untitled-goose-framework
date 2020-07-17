@@ -8,7 +8,7 @@ trait RuleSet {
 
   def first(players: Set[Player]): Player
 
-  def startPosition(tiles: List[Tile]): Position
+  def startPosition(tiles: Set[Tile]): Position
 
   def actions(state: MatchState): Set[Action]
 
@@ -21,10 +21,10 @@ object RuleSet {
   private class EmptyRuleSet(allActions: Set[Action]) extends RuleSet {
 
     override def first(players: Set[Player]): Player = {
-      players.head
+      PlayerRule.selectRandom(players)
     }
 
-    override def startPosition(tiles: List[Tile]): Position = {
+    override def startPosition(tiles: Set[Tile]): Position = {
       Position(tiles.take(1).head)
     }
 

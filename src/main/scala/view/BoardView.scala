@@ -28,7 +28,7 @@ object BoardView {
     var rows = 6
     var cols = 8
 
-    for (t <- matchBoard.tiles) {
+    for (t <- matchBoard.tiles.toList.sorted) {
       val currentTile = TileVisualization(t, width, height, rows, cols)
       currentTile.layoutX <== this.width / cols * i
       boardPane.children.add(currentTile)

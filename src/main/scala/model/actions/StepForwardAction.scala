@@ -17,3 +17,7 @@ class StepForwardAction() extends Action {
   }
 
 }
+
+object StepForwardAction {
+  def apply(): StepForwardAction = new StepForwardAction()
+}

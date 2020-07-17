@@ -3,7 +3,7 @@ package model.entities.board
 import model.Tile
 
 trait Board {
-  def tiles: List[TileDefinition]
+  def tiles: Set[TileDefinition]
 
   def name: String
 
@@ -16,14 +16,16 @@ trait Board {
 object Board {
 
   private class BoardImpl() extends Board {
-    val tiles: List[TileDefinition] = List.range(0, 10).map(i => TileDefinition(i))
+    private val myTiles: List[TileDefinition] = List.range(0, 10).map(i => TileDefinition(i))
 
     override def name: String = "MockBoard"
 
     override def disposition: Disposition = ???
 
     override def next(tile: TileDefinition): Option[TileDefinition] =
-      tile.number flatMap (i => tiles lift (i + 1)) orElse tile.next
+      tile.number flatMap (i => myTiles lift (i + 1)) orElse tile.next
+
+    override def tiles: Set[TileDefinition] = myTiles.toSet
   }
 
   def apply(): Board = new BoardImpl() //TODO change

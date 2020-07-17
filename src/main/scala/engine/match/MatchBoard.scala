@@ -5,7 +5,7 @@ import model.entities.board.{Board, Disposition, TileDefinition}
 
 trait MatchBoard {
 
-  def tiles: List[Tile]
+  def tiles: Set[Tile]
 
   def board: Board
 
@@ -18,7 +18,7 @@ object MatchBoard {
 
     val tileMap: Map[TileDefinition, Tile] = board.tiles map (t => t -> Tile(t)) toMap
 
-    override def tiles: List[Tile] = tileMap.values.toList.sorted
+    override def tiles: Set[Tile] = tileMap.values.toSet
 
     override def next(tile: Tile): Option[Tile] = board next tile map (t => tileMap(t))
   }
