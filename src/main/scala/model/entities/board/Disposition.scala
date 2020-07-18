@@ -20,9 +20,12 @@ object Disposition {
 
     override def columns: Int = side
 
-    override def tilePlacement(tileIndex: Int): (Int, Int) =
-      (if ((tileIndex / columns) % 2 == 0) tileIndex % columns else columns - tileIndex % columns - 1,
-        rows - tileIndex / columns - 1)
+    override def tilePlacement(tileIndex: Int): (Int, Int) = {
+      val rowIndex = tileIndex / columns
+      val columnIndex = tileIndex % columns
+      (if (rowIndex % 2 == 0) columnIndex else columns - columnIndex - 1,
+        rows - rowIndex - 1)
+    }
   }
 
   private class SpiralDisposition(val totalTiles: Int) extends Disposition {
@@ -35,7 +38,7 @@ object Disposition {
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
       val n: Int = totalTiles - tileIndex
-      val k: Int = Math.ceil((Math.sqrt(n)) / 2).toInt
+      val k: Int = Math.ceil(Math.sqrt(n) / 2).toInt
       val t: Int = 2 * k + 1
       val m: Int = t * t
       val m1: Int = m - t + 1
