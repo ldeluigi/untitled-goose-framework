@@ -31,7 +31,7 @@ object TileVisualization {
       fill = Red
       stroke = Black
       strokeType = StrokeType.Inside
-      strokeWidth <== parentWidth / cols * 0.05
+      strokeWidth <== parentWidth / cols * 0.05 //TODO tweak value
       width <== parentWidth / cols
       height <== parentHeight / rows
     }

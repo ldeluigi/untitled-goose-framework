@@ -22,14 +22,16 @@ object BoardView {
     this.hbarPolicy = ScrollPane.ScrollBarPolicy.Always
     this.vbarPolicy = ScrollPane.ScrollBarPolicy.Always
 
-    //Draw tiles
+    //Draw tile
+
     var i = 0
-    var rows = 6
-    var cols = 8
+    var rows = matchBoard.board.disposition.rows
+    var cols = matchBoard.board.disposition.columns
 
     for (t <- matchBoard.tiles.toList.sorted) {
       val currentTile = TileVisualization(t, width, height, rows, cols)
-      currentTile.layoutX <== this.width / cols * i
+      currentTile.layoutX <== this.width / cols * matchBoard.board.disposition.tilePlacement(i)._1
+      currentTile.layoutY <== this.height / rows * matchBoard.board.disposition.tilePlacement(i)._2
       boardPane.children.add(currentTile)
       i = i + 1
       tiles = currentTile :: tiles

@@ -7,7 +7,7 @@ import engine.`match`.Match
 import javafx.scene.input.KeyCode
 import model.Player
 import model.actions.{Action, StepForwardAction}
-import model.entities.board.{Board, Piece}
+import model.entities.board.{Board, Disposition, Piece}
 import model.rules.RuleSet
 
 
@@ -16,7 +16,8 @@ object Main extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
 
   //From DSL generation
-  val board: Board = Board(20)
+  val totalTiles = 8
+  val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
   val actions: Set[Action] = Set(new StepForwardAction())
   val ruleSet: RuleSet = RuleSet(actions)
 
