@@ -14,7 +14,7 @@ trait Disposition {
 object Disposition {
 
   private class SnakeDisposition(val totalTiles: Int) extends Disposition {
-    val side: Int = Math.sqrt(totalTiles).round.toInt
+    val side: Int = Math.sqrt(totalTiles).ceil.toInt
 
     override def rows: Int = side
 
@@ -26,7 +26,7 @@ object Disposition {
   }
 
   private class SpiralDisposition(val totalTiles: Int) extends Disposition {
-    val side: Int = Math.sqrt(totalTiles).round.toInt
+    val side: Int = Math.sqrt(totalTiles).ceil.toInt
 
     override def rows: Int = side
 
@@ -50,33 +50,33 @@ object Disposition {
     var rows: Int = 0
     var columns: Int = 0
 
-    if (totalTiles % 4 == 0) {
-      rows = ((totalTiles + 4) / 4) + (totalTiles + 4) % 4
-      columns = rows
-    } else if (totalTiles % 2 == 0) {
-      rows = 2
-      columns = totalTiles / 2
-    } else {
-      rows = 2
-      columns = (totalTiles + 1) / 2
-    }
+    //    if (totalTiles % 4 == 0) {
+    //      rows = ((totalTiles + 4) / 4) + (totalTiles + 4) % 4
+    //      columns = rows
+    //    } else if (totalTiles % 2 == 0) {
+    //      rows = 2
+    //      columns = totalTiles / 2
+    //    } else {
+    //      rows = 2
+    //      columns = (totalTiles + 1) / 2
+    //    }
+    //
+    val side: Int = Math.sqrt(totalTiles).ceil.toInt
+    rows = side
+    columns = side
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
-      if (rows == 2) {
-        new SnakeDisposition(totalTiles).tilePlacement(tileIndex)
+      val c = columns - 1
+      val r = rows - 1
+      val i = tileIndex
+      if (i < c) {
+        (i % c, 0)
+      } else if (i < c + r) {
+        (c, i % r)
+      } else if (i < 2 * c + r) {
+        (c - (i % c), r)
       } else {
-        val c = columns - 1
-        val r = rows - 1
-        val i = tileIndex
-        if (i < c) {
-          (i % c, 0)
-        } else if (i < c + r) {
-          (c, i % r)
-        } else if (i < 2 * c + r) {
-          (c - (i % c), r)
-        } else {
-          (0, r - (i % r))
-        }
+        (0, r - (i % r))
       }
     }
   }
