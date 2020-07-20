@@ -13,7 +13,7 @@ trait Disposition {
 
 object Disposition {
 
-  private class SnakeDisposition(val totalTiles: Int) extends Disposition {
+  private class SnakeDisposition(val totalTiles: Int, val ratio : Int = 1) extends Disposition {
     val side: Int = Math.sqrt(totalTiles).ceil.toInt
 
     override def rows: Int = side
@@ -28,23 +28,29 @@ object Disposition {
     }
   }
 
-  private class SpiralDisposition(val totalTiles: Int) extends Disposition {
+  private class SpiralDisposition(val totalTiles: Int, val ratio: Int = 1) extends Disposition {
     val side: Int = Math.sqrt(totalTiles).ceil.toInt
 
     override def rows: Int = side
 
     override def columns: Int = side
 
+    private val borderLength = Math.max((columns + rows) * 2 - 4, 1)
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
-      val n: Int = totalTiles - tileIndex
-      val k: Int = Math.ceil(Math.sqrt(n) / 2).toInt
-      val t: Int = 2 * k + 1
-      val m: Int = t * t
-      val m1: Int = m - t + 1
-      val m2: Int = m1 - t + 1
-      if (n >= m - t + 1) (k - (m - n), -k) else if (n >= m1 - t + 1) (-k, -k + (m1 - n)) else if (n >= m2 - t + 1) (-k + (m2 - n), k) else
-        (k + 1 - (m2 - n - t), k + 1)
+      def _tilePlacement(tileIndex: Int, rows: Int, columns: Int): (Int, Int) = {
+        if (tileIndex < borderLength)
+          if (tileIndex < columns) (tileIndex, rows - 1) else
+            if (tileIndex < columns + rows - 1) (columns - 1, rows + columns - tileIndex - 2) else
+              if (tileIndex < columns * 2 + rows - 2) (rows + columns * 2 - tileIndex - 3, 0) else
+            (0, tileIndex - rows - columns * 2 + 3)
+        else
+          _tilePlacement(tileIndex - borderLength, rows - 2, columns - 2) match {
+            case (x, y) => (x + 1, y + 1)
+          }
+      }
+
+      _tilePlacement(tileIndex, rows, columns)
     }
   }
 

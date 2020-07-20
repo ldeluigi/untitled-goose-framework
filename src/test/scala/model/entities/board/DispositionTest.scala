@@ -33,10 +33,9 @@ class DispositionTest extends AnyFlatSpec with Matchers {
     sd.columns should be(10)
   }
 
-  // TODO fix test
-  //  "Spiral disposition" should "place correctly" in {
-  //    val sd = Disposition.spiral(16)
-  //    val list: List[(Int, Int)] = Range(0, 16).map(sd.tilePlacement).toList
-  //    list should be(List[(Int, Int)]((3, 0), (3, 1), (3, 2), (3, 3), (2, 3), (1, 3), (0, 3), (0, 2), (0, 1), (0, 0), (1, 0), (2, 0), (2, 1), (2, 2), (1, 2), (1, 1)))
-  //  }
+  "Spiral disposition" should "place correctly" in {
+    val sd = Disposition.spiral(16)
+    val list: List[(Int, Int)] = Range(0, 16).map(sd.tilePlacement).toList
+    list should be(List[(Int, Int)]((0, 3), (1, 3), (2, 3), (3, 3), (3, 2), (3, 1), (3, 0), (2, 0), (1, 0), (0, 0), (0, 1), (0, 2), (1, 2), (2, 2), (2, 1), (1, 1)))
+  }
 }
