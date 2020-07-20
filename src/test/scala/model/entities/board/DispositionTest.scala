@@ -17,11 +17,11 @@ class DispositionTest extends AnyFlatSpec with Matchers {
     sd.columns should be(10)
   }
 
-    "Snake disposition" should "place correctly" in {
-      val sd = Disposition.snake(16)
-      val list: List[(Int, Int)] = Range(0, 16).map(sd.tilePlacement).toList
-      list should be(List((0,3), (1,3), (2,3), (3,3), (3,2), (2,2), (1,2), (0,2), (0,1), (1,1), (2,1), (3,1), (3,0), (2,0), (1,0), (0,0)))
-    }
+  "Snake disposition" should "place correctly" in {
+    val sd = Disposition.snake(16)
+    val list: List[(Int, Int)] = Range(0, 16).map(sd.tilePlacement).toList
+    list should be(List((0, 3), (1, 3), (2, 3), (3, 3), (3, 2), (2, 2), (1, 2), (0, 2), (0, 1), (1, 1), (2, 1), (3, 1), (3, 0), (2, 0), (1, 0), (0, 0)))
+  }
 
   "Spiral disposition" should "have squared rows" in {
     val sd = Disposition.spiral(100)
