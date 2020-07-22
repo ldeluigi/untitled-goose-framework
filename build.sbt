@@ -4,10 +4,16 @@ version := "0.1"
 
 scalaVersion := "2.13.3"
 
+resolvers += "Local Ivy Repository" at "file:///" + Path.userHome.absolutePath + "/.ivy2/local"
+
 // Add dependency on ScalaFX library
 libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
+
+// Test deps
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
+
+libraryDependencies += "io.vertx" % "vertx-core" % "4.0.0-milestone5"
 
 scalacOptions ++= Seq(
   "-language:postfixOps"
