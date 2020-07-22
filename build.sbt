@@ -2,7 +2,7 @@ name := "untitled-goose-framework"
 
 version := "0.1"
 
-scalaVersion := "2.13.3"
+scalaVersion := "2.12.10"
 
 resolvers += "Local Ivy Repository" at "file:///" + Path.userHome.absolutePath + "/.ivy2/local"
 
@@ -13,7 +13,7 @@ libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
 
-libraryDependencies += "io.vertx" % "vertx-core" % "4.0.0-milestone5"
+libraryDependencies += "io.vertx" %% "vertx-lang-scala" % "3.9.1"
 
 scalacOptions ++= Seq(
   "-language:postfixOps"
