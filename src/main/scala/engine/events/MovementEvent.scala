@@ -1,13 +1,19 @@
-package engine.events
+import model.{GameEvent}
 
-import com.sun.media.jfxmedia.events.PlayerEvent
+/*class MovementEvent(groupList: List[String]) extends GameEvent {
 
-abstract class MovementEvent() extends PlayerEvent {
-  def movement: Int //TO DO
+  def movement: Int
+
+  override def name: String = "MovementEvent"
+
+  override def group: List[String] = groupList
 }
 
-object MovementEvent{
-  //To Do Apply
+
+object MovementEvent {
+
+  def movement: Int = ???
+
+  def apply(): MovementEvent = new MovementEvent()
 }
-
-
+*/
