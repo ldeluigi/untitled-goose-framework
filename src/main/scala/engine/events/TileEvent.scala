@@ -11,7 +11,7 @@ class TileEvent(groupList: List[String], tile: Tile) extends GameEvent {
   def source: Tile = tile
 }
 
-object TileEvent{
+object TileEvent {
   def apply(groupList: List[String], tile: Tile): TileEvent = new TileEvent(groupList, tile)
 }
 

@@ -1,7 +1,8 @@
 package engine.`match`
 
+import engine.events.EventSink
 import model.actions.Action
-import model.{MatchState, Player, Tile}
+import model.{MatchState, Player}
 import model.entities.board.{Board, Piece}
 import model.rules.RuleSet
 
@@ -15,7 +16,7 @@ trait Match {
 
   def currentState: MatchState
 
-  def resolveAction(action: Action): MatchState
+  def resolveAction(sink: EventSink, action: Action): Unit
 }
 
 object Match {
@@ -31,9 +32,8 @@ object Match {
 
     override def players: Set[Player] = playerPieces.keySet
 
-    override def resolveAction(action: Action): MatchState = {
-      currentState = rules.resolveAction(currentState, action)
-      currentState
+    override def resolveAction(sink: EventSink, action: Action): Unit = {
+      rules.resolveAction(sink, action: Action)
     }
 
     override def availableActions: Set[Action] = rules.actions(currentState)

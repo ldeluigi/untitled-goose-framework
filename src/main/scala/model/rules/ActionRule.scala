@@ -1,18 +1,18 @@
 package model.rules
 
+import engine.events.EventSink
 import model.MatchState
-import model.actions.Action
 
 trait ActionRule {
 
-  def allowedActions(gameState: MatchState): Set[ActionAvailability]
+  def allowedActions(sink: EventSink): Set[ActionAvailability]
 
 }
 
 object ActionRule {
 
   private class ActionRuleImpl() extends ActionRule {
-    override def allowedActions(gameState: MatchState): Set[ActionAvailability] = Set()
+    override def allowedActions(sink: EventSink): Set[ActionAvailability] = Set()
   }
 
   def apply(): ActionRule = new ActionRuleImpl()

@@ -1,6 +1,7 @@
 package view
 
 import engine.`match`.Match
+import engine.events.EventSink
 import model.actions.Action
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
@@ -31,8 +32,8 @@ object ApplicationController {
     actionMenu.prefWidth <== this.width * (1 - boardProportion)
     actionMenu.displayActions(gameMatch.availableActions)
 
-    override def resolveAction(action: Action): Unit = {
-      boardView.updateMatchState(gameMatch.resolveAction(action))
+    def resolveAction(sink: EventSink): Unit = {
+      boardView.updateMatchState(gameMatch.resolveAction(sink))
       actionMenu.displayActions(gameMatch.availableActions)
     }
 

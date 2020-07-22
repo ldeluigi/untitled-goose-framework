@@ -13,7 +13,7 @@ trait RuleSet {
 
   def actions(state: MatchState): Set[Action]
 
-  def resolveAction(sink: EventSink, action: Action): MatchState
+  def resolveAction(sink: EventSink, action: Action): Unit
 
 }
 
@@ -33,8 +33,8 @@ object RuleSet {
       allActions
     }
 
-    override def resolveAction(state: MatchState, action: Action): MatchState = {
-      action.execute(sink: EventSink)
+    override def resolveAction(sink: EventSink, action: Action): Unit = {
+      action.execute(sink)
     }
   }
 
