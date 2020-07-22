@@ -1,6 +1,8 @@
 package engine.events
 
-trait EventSink {
+import model.GameEvent
 
-  def accept(event: Any): Unit
+trait EventSink[E <: GameEvent] {
+
+  def accept(event: E): Unit
 }
