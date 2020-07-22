@@ -3,6 +3,7 @@ package model.entities.board
 import model.Tile
 
 trait Board {
+
   def tiles: Set[TileDefinition]
 
   def name: String
