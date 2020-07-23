@@ -25,6 +25,7 @@ object Board {
       tile.number flatMap (i => myTiles lift (i + 1))
 
     override def tiles: Set[TileDefinition] = myTiles.toSet
+
   }
 
   def apply(tileNum: Int, disposition: Disposition): Board = new BoardImpl(tileNum, disposition) //TODO change

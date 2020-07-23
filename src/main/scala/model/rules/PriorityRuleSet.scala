@@ -1,31 +1,37 @@
 package model.rules
 
-import engine.events.EventSink
 import model.actions.Action
 import model.entities.board.Position
+import model.rules.operations.Operation
 import model.{MatchState, Player, Tile}
 
 class PriorityRuleSet(firstTile: Set[Tile] => Position,
                       firstPlayer: Set[Player] => Player = PlayerRule.selectRandom,
                       actionRules: Set[ActionRule] = Set(),
+                      behaviourRules: Seq[BehaviourRule] = Seq()
                      ) extends RuleSet {
 
   override def startPosition(tiles: Set[Tile]): Position = firstTile(tiles)
 
-  override def actions(sink: EventSink): Set[Action] =
+  override def actions(state: MatchState): Set[Action] =
     actionRules
-      .flatMap(r => r.allowedActions(sink))
-      .groupMapReduce(a => a.action)(identity)(
-        (a1, a2) =>
-          if (a2.priority > a1.priority)
-            a2 else a1
-      ).view.mapValues(_.allowed)
-      .filter(_._2)
-      .keySet.toSet
-
-  override def resolveAction(sink: EventSink, action: Action): Unit = action.execute(sink)
+      .flatMap(_.allowedActions(state))
+      .groupBy(_.action)
+      .map(group => group._2
+        .reduce(
+          (a1, a2) =>
+            if (a2.priority > a1.priority)
+              a2 else a1
+        )
+      )
+      .filter(_.allowed)
+      .map(_.action)
+      .toSet
 
   override def first(players: Set[Player]): Player = firstPlayer(players)
+
+  override def stateBasedOperations(state: MatchState): Seq[Operation] =
+    for { rule <- behaviourRules; operation <- rule.applyRule(state) } yield operation
 }
 
 object PriorityRuleSet {

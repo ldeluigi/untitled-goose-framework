@@ -1,10 +1,10 @@
 package engine.`match`
 
-import engine.events.EventSink
 import model.actions.Action
-import model.{MatchState, Player}
 import model.entities.board.{Board, Piece}
 import model.rules.RuleSet
+import model.rules.operations.Operation
+import model.{MatchState, Player}
 
 trait Match {
 
@@ -16,28 +16,26 @@ trait Match {
 
   def currentState: MatchState
 
-  def resolveAction(sink: EventSink, action: Action): Unit
+  def stateBasedOperations: Seq[Operation]
+
 }
 
 object Match {
 
   private class MatchImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Match {
 
-    val board = MatchBoard(gameBoard)
-    var firstTurn = 0
+    val board: MatchBoard = MatchBoard(gameBoard)
+    val firstTurn = 0
     for (piece <- playerPieces.values) {
-      piece.setPosition(rules.startPosition(board.tiles))
+      piece.setPosition(Some(rules.startPosition(board.tiles)))
     }
-    var currentState: MatchState = MatchState(firstTurn, rules.first(playerPieces.keySet), playerPieces, board)
+    val currentState: MatchState = MatchState(firstTurn, rules.first(playerPieces.keySet), playerPieces, board)
 
     override def players: Set[Player] = playerPieces.keySet
 
-    override def resolveAction(sink: EventSink, action: Action): Unit = {
-      rules.resolveAction(sink, action: Action)
-    }
-
     override def availableActions: Set[Action] = rules.actions(currentState)
 
+    override def stateBasedOperations: Seq[Operation] = rules.stateBasedOperations(currentState)
   }
 
   def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Match = new MatchImpl(board, players, rules)

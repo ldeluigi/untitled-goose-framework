@@ -4,16 +4,17 @@ import engine.events.EventSink
 import model.{MatchState, Player, Tile}
 import model.actions.Action
 import model.entities.board.{Board, Position}
+import model.rules.operations.Operation
 
 trait RuleSet {
+
+  def stateBasedOperations(state: MatchState): Seq[Operation]
 
   def first(players: Set[Player]): Player
 
   def startPosition(tiles: Set[Tile]): Position
 
   def actions(state: MatchState): Set[Action]
-
-  def resolveAction(sink: EventSink, action: Action): Unit
 
 }
 
@@ -33,9 +34,7 @@ object RuleSet {
       allActions
     }
 
-    override def resolveAction(sink: EventSink, action: Action): Unit = {
-      action.execute(sink)
-    }
+    override def stateBasedOperations(state: MatchState): Seq[Operation] = Seq() // TODO think about
   }
 
   def apply(allActions: Set[Action]): RuleSet = new EmptyRuleSet(allActions)

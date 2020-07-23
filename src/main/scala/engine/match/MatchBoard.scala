@@ -1,7 +1,7 @@
 package engine.`match`
 
 import model.Tile
-import model.entities.board.{Board, Disposition, TileDefinition}
+import model.entities.board.{Board, TileDefinition}
 
 trait MatchBoard {
 

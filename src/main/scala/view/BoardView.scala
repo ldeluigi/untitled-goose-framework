@@ -42,7 +42,7 @@ object BoardView {
         t.removePieces()
       }
       for (p <- matchState.playerPieces) {
-        val positionTile = tiles.find(v => v.tile == p._2.position.tile)
+        val positionTile = tiles.find(v => p._2.position.isDefined && v.tile == p._2.position.get.tile)
         if (positionTile.isDefined) {
           if (p._1 == matchState.currentPlayer) {
             setFocus(positionTile.get)

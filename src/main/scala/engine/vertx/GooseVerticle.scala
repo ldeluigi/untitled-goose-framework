@@ -10,7 +10,7 @@ class GooseVerticle extends ScalaVerticle {
     println("Goose Engine - Vert.x Verticle: start")
     vertx.eventBus().consumer[GameEvent](eventAddress)
       .handler(e => e.body() match {
-        case _ => e.reply("ok")
+        case _ =>
       })
   }
 

@@ -1,19 +1,17 @@
-import model.{GameEvent}
+package engine.events
+import model.GameEvent
 
-/*class MovementEvent(groupList: List[String]) extends GameEvent {
+class MovementEvent(steps: Int) extends GameEvent {
 
-  def movement: Int
+  def movement: Int = steps
 
   override def name: String = "MovementEvent"
 
-  override def group: List[String] = groupList
+  override def group: List[String] = List()
 }
 
 
 object MovementEvent {
 
-  def movement: Int = ???
-
-  def apply(): MovementEvent = new MovementEvent()
+  def apply(steps: Int): MovementEvent = new MovementEvent(steps)
 }
-*/
