@@ -17,7 +17,6 @@ trait Match {
   def currentState: MatchState
 
   def stateBasedOperations: Seq[Operation]
-
 }
 
 object Match {
@@ -36,6 +35,7 @@ object Match {
     override def availableActions: Set[Action] = rules.actions(currentState)
 
     override def stateBasedOperations: Seq[Operation] = rules.stateBasedOperations(currentState)
+
   }
 
   def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Match = new MatchImpl(board, players, rules)

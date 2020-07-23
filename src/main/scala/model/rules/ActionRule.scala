@@ -1,6 +1,5 @@
 package model.rules
 
-import engine.events.EventSink
 import model.MatchState
 
 trait ActionRule {

@@ -30,6 +30,7 @@ object TileDefinition {
     override def tileType: Option[List[String]] = None
 
     override def equals(obj: Any): Boolean = {
+      // TODO rewrite with functional style please
       obj match {
         case t: TileDefinition => {
           if (number.isDefined && t.number.isDefined) {

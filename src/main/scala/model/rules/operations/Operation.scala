@@ -1,6 +1,6 @@
 package model.rules.operations
 
-import engine.events.EventSink
+import engine.events.core.EventSink
 import model.{GameEvent, MatchState}
 
 trait Operation {

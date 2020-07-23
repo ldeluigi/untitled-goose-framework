@@ -14,7 +14,7 @@ trait MatchState {
 
   def history: List[GameEvent]
 
-  def updatePlayerPieces(map: Map[Player, Piece] =>  Map[Player, Piece]): MatchState
+  def updatePlayerPiece(player: Player, update: Piece =>  Piece): MatchState
 }
 
 object MatchState {
@@ -28,8 +28,8 @@ object MatchState {
 
     val playerPieces: Map[Player, Piece] = pieces
 
-    override def updatePlayerPieces(map: Map[Player, Piece] => Map[Player, Piece]): MatchState =
-      new MatchStateImpl(startTurn, startPlayer, map(playerPieces), matchBoard)
+    override def updatePlayerPiece(player: Player, update: Piece =>  Piece): MatchState =
+      new MatchStateImpl(startTurn, startPlayer, playerPieces + (player -> update(playerPieces(player))), matchBoard)
   }
 
   def apply(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =

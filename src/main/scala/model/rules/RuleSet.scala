@@ -1,6 +1,6 @@
 package model.rules
 
-import engine.events.EventSink
+import engine.events.core.EventSink
 import model.{MatchState, Player, Tile}
 import model.actions.Action
 import model.entities.board.{Board, Position}

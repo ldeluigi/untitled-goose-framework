@@ -1,4 +1,4 @@
-package engine.events
+package engine.events.core
 
 import model.GameEvent
 
