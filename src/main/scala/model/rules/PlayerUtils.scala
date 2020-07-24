@@ -4,7 +4,7 @@ import model.Player
 
 import scala.util.Random
 
-object PlayerRule {
+object PlayerUtils {
 
   private def random[T](s: Set[T]): T = {
     val n = Random.nextInt(s.size)

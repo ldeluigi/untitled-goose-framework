@@ -3,11 +3,11 @@ package model.rules.ruleset
 import model.actions.Action
 import model.entities.board.Position
 import model.rules.operations.Operation
-import model.rules.{ActionRule, BehaviourRule, PlayerRule}
+import model.rules.{ActionRule, BehaviourRule, PlayerUtils}
 import model.{MatchState, Player, Tile}
 
 class PriorityRuleSet(firstTile: Set[Tile] => Position,
-                      firstPlayer: Set[Player] => Player = PlayerRule.selectRandom,
+                      firstPlayer: Set[Player] => Player = PlayerUtils.selectRandom,
                       actionRules: Set[ActionRule] = Set(),
                       behaviourRules: Seq[BehaviourRule] = Seq()
                      ) extends RuleSet {

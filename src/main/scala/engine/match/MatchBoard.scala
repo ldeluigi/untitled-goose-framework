@@ -10,6 +10,8 @@ trait MatchBoard {
   def board: Board
 
   def next(tile: Tile): Option[Tile]
+
+  def first: Tile
 }
 
 object MatchBoard {
@@ -20,7 +22,9 @@ object MatchBoard {
 
     override def tiles: Set[Tile] = tileMap.values.toSet
 
-    override def next(tile: Tile): Option[Tile] = board next tile map (t => tileMap(t))
+    override def next(tile: Tile): Option[Tile] = board next tile map (tileMap(_))
+
+    override def first: Tile = tileMap(board first)
   }
 
   def apply(board: Board): MatchBoard = new MatchBoardImpl(board)

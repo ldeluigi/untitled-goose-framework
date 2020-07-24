@@ -17,8 +17,7 @@ object Main extends JFXApp {
   //From DSL generation
   val totalTiles = 8
   val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
-  val actions: Set[Action] = Set(StepForwardAction())
-  val ruleSet: RuleSet = RuleSet(actions)
+  val ruleSet: RuleSet = RuleSet()
 
   //From a menu GUI that select and creates player and pieces
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece())

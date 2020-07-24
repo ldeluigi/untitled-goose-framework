@@ -10,6 +10,8 @@ trait Board {
 
   def next(tile: TileDefinition): Option[TileDefinition]
 
+  def first: TileDefinition
+
 }
 
 object Board {
@@ -24,6 +26,7 @@ object Board {
 
     override def tiles: Set[TileDefinition] = myTiles.toSet
 
+    override def first: TileDefinition = myTiles.head
   }
 
   def apply(tileNum: Int, disposition: Disposition): Board = new BoardImpl(tileNum, disposition) //TODO change

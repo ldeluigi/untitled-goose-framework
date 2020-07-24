@@ -7,6 +7,8 @@ class MovementEvent(steps: Int, player: Player) extends PlayerEvent(player) {
 
   def movement: Int = steps
 
+  var done: Boolean = false
+
   override def name: String = "MovementEvent"
 }
 
