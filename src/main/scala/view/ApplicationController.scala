@@ -12,6 +12,7 @@ import scalafx.scene.layout.BorderPane
 //TODO return scene instead of being a Scene
 trait ApplicationController extends Scene {
   def resolveAction(action: Action)
+  def close(): Unit
 }
 
 trait GooseController {
@@ -52,6 +53,8 @@ object ApplicationController {
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
     })
+
+    override def close(): Unit = engine.stop()
   }
 
   def apply(width: Int, height: Int, gameMatch: Match): ApplicationController = new

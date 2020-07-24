@@ -1,10 +1,9 @@
 package engine.vertx
 
-import engine.events.root.PlayerEvent
 import io.vertx.lang.scala.ScalaVerticle
 import model.GameEvent
 
-class GooseVerticle(val handler: GameEvent => Unit) extends ScalaVerticle {
+private[vertx] class GooseVerticle(val handler: GameEvent => Unit) extends ScalaVerticle {
   def eventAddress: String = "GameEvent"
 
   override def start(): Unit = {

@@ -11,6 +11,7 @@ import model.GameEvent
 trait GooseEngine {
   def currentMatch: Match
   def eventSink: EventSink[GameEvent]
+  def stop(): Unit
 }
 
 object GooseEngine {
@@ -38,6 +39,8 @@ object GooseEngine {
     override def currentMatch: Match = status
 
     override def eventSink: EventSink[GameEvent] = this
+
+    override def stop(): Unit = vertx.close()
   }
 
   def apply(status: Match): GooseEngine = new GooseEngineImpl(status)

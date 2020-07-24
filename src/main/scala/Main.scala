@@ -43,4 +43,5 @@ object Main extends JFXApp {
       stage.setFullScreen(true)
     }
   )
+  stage.setOnCloseRequest(e => appView.close())
 }
