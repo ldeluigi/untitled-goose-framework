@@ -32,7 +32,7 @@ class PriorityRuleSet(firstTile: Set[Tile] => Position,
   override def first(players: Set[Player]): Player = firstPlayer(players)
 
   override def stateBasedOperations(state: MatchState): Seq[Operation] =
-    for { rule <- behaviourRules; operation <- rule.applyRule(state) } yield operation
+    for {rule <- behaviourRules; operation <- rule.applyRule(state)} yield operation
 }
 
 object PriorityRuleSet {

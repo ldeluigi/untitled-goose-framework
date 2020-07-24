@@ -26,7 +26,7 @@ class DispositionTest extends AnyFlatSpec with Matchers {
   "Snake disposition" should "place correctly a square with odd sides" in {
     val sd = Disposition.snake(9)
     val list: List[(Int, Int)] = Range(0, 9).map(sd.tilePlacement).toList
-    list should be(List((0,2), (1,2), (2,2), (2,1), (1,1), (0,1), (0,0), (1,0), (2,0)))
+    list should be(List((0, 2), (1, 2), (2, 2), (2, 1), (1, 1), (0, 1), (0, 0), (1, 0), (2, 0)))
   }
 
   "Snake disposition" should "place correctly an incomplete square" in {
@@ -38,7 +38,7 @@ class DispositionTest extends AnyFlatSpec with Matchers {
   "Snake disposition" should "place correctly an incomplete rectangle" in {
     val sd = Disposition.snake(15, 2)
     val list: List[(Int, Int)] = Range(0, 15).map(sd.tilePlacement).toList
-    list should be(List((0,2), (1,2), (2,2), (3,2), (4,2), (5,2), (5,1), (4,1), (3,1), (2,1), (1,1), (0,1), (0,0), (1,0), (2,0)))
+    list should be(List((0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (5, 1), (4, 1), (3, 1), (2, 1), (1, 1), (0, 1), (0, 0), (1, 0), (2, 0)))
   }
 
   "Spiral disposition" should "have squared rows" in {
@@ -60,7 +60,7 @@ class DispositionTest extends AnyFlatSpec with Matchers {
   "Spiral disposition" should "place correctly a square with odd sides" in {
     val sd = Disposition.spiral(9)
     val list: List[(Int, Int)] = Range(0, 9).map(sd.tilePlacement).toList
-    list should be(List[(Int, Int)]((0,2), (1,2), (2,2), (2,1), (2,0), (1,0), (0,0), (0,1), (1,1)))
+    list should be(List[(Int, Int)]((0, 2), (1, 2), (2, 2), (2, 1), (2, 0), (1, 0), (0, 0), (0, 1), (1, 1)))
   }
 
   "Spiral disposition" should "place correctly an incomplete square" in {
@@ -72,6 +72,6 @@ class DispositionTest extends AnyFlatSpec with Matchers {
   "Spiral disposition" should "place correctly an incomplete rectangle" in {
     val sd = Disposition.spiral(15, 2)
     val list: List[(Int, Int)] = Range(0, 15).map(sd.tilePlacement).toList
-    list should be(List((0,2), (1,2), (2,2), (3,2), (4,2), (5,2), (5,1), (5,0), (4,0), (3,0), (2,0), (1,0), (0,0), (0,1), (1,1)))
+    list should be(List((0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (5, 1), (5, 0), (4, 0), (3, 0), (2, 0), (1, 0), (0, 0), (0, 1), (1, 1)))
   }
 }

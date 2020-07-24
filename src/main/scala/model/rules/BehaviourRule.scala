@@ -9,8 +9,9 @@ trait BehaviourRule {
   def applyRule(state: MatchState): Seq[Operation]
 }
 
-object BehaviourRule{
-  private class BehaviourRuleImpl(operations: Seq[Operation]) extends BehaviourRule{
+object BehaviourRule {
+
+  private class BehaviourRuleImpl(operations: Seq[Operation]) extends BehaviourRule {
     override def name: Option[String] = None
 
     override def applyRule(state: MatchState): Seq[Operation] = operations

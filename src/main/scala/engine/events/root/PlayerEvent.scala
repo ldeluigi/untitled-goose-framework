@@ -9,7 +9,7 @@ abstract class PlayerEvent(player: Player) extends GameEvent {
   def source: Player = player
 }
 
-object PlayerEvent{
+object PlayerEvent {
 
   def unapply(arg: PlayerEvent): Option[Player] = Some(arg.source)
 

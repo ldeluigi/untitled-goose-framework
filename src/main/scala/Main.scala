@@ -15,8 +15,8 @@ object Main extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
 
   //From DSL generation
-  val totalTiles = 10
-  val board: Board = Board(totalTiles, Disposition.loop(totalTiles))
+  val totalTiles = 8
+  val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
   val actions: Set[Action] = Set(StepForwardAction())
   val ruleSet: RuleSet = RuleSet(actions)
 

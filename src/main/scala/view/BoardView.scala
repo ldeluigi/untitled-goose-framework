@@ -23,7 +23,6 @@ object BoardView {
     this.vbarPolicy = ScrollPane.ScrollBarPolicy.Always
 
     //Draw tile
-
     var i = 0
     var rows = matchBoard.board.disposition.rows
     var cols = matchBoard.board.disposition.columns

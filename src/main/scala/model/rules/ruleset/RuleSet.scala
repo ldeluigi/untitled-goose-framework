@@ -1,9 +1,10 @@
 package model.rules.ruleset
 
-import model.actions.Action
+import engine.events.MovementEvent
+import model.actions.{Action, StepForwardAction}
 import model.entities.board.Position
 import model.rules.PlayerRule
-import model.rules.operations.Operation
+import model.rules.operations.{Operation, StepForwardOperation}
 import model.{MatchState, Player, Tile}
 
 trait RuleSet {
@@ -35,7 +36,15 @@ object RuleSet {
     }
 
     override def stateBasedOperations(state: MatchState): Seq[Operation] = {
-      Seq()
+      val movementList = state.history.filter(x => x match {
+        case x: MovementEvent => x.source == state.currentPlayer
+        case _ => false
+      })
+      if (movementList.nonEmpty) {
+        Seq(new StepForwardOperation(state.currentPlayer))
+      } else {
+        Seq()
+      }
     }
   }
 

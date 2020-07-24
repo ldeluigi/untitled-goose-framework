@@ -7,17 +7,20 @@ import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
 import model.rules.operations.Operation
+import view.{ApplicationController, GooseController}
 
 trait GooseEngine {
   def currentMatch: Match
+
   def eventSink: EventSink[GameEvent]
+
   def stop(): Unit
 }
 
 object GooseEngine {
 
 
-  private class GooseEngineImpl(private val status: Match) extends GooseEngine with EventSink[GameEvent] {
+  private class GooseEngineImpl(private val status: Match, private val controller: GooseController) extends GooseEngine with EventSink[GameEvent] {
 
     private var stack: List[Operation] = List()
 
@@ -32,13 +35,14 @@ object GooseEngine {
     override def accept(event: GameEvent): Unit =
       vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(GameEventMessageCodec.name))
 
-    private def onEvent(event: GameEvent) : Unit = {
+    private def onEvent(event: GameEvent): Unit = {
       status.submitEvent(event)
       stack ++= status.stateBasedOperations
       while (stack nonEmpty) {
         val op = stack.head
         stack = stack.tail
         op.execute(status.currentState, stackSolver)
+        controller.update(status.currentState)
       }
     }
 
@@ -51,7 +55,8 @@ object GooseEngine {
     private object stackSolver extends EventSink[GameEvent] {
       override def accept(event: GameEvent): Unit = onEvent(event)
     }
+
   }
 
-  def apply(status: Match): GooseEngine = new GooseEngineImpl(status)
+  def apply(status: Match, controller: GooseController): GooseEngine = new GooseEngineImpl(status, controller)
 }

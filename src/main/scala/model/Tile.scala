@@ -5,6 +5,7 @@ import model.entities.board.TileDefinition
 
 trait Tile extends TileDefinition {
   def history: List[TileEvent]
+
   def history_=(history: List[TileEvent]): Unit
 }
 

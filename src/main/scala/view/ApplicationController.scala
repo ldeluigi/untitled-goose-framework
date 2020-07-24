@@ -11,6 +11,7 @@ import scalafx.scene.layout.BorderPane
 //TODO return scene instead of being a Scene
 trait ApplicationController extends Scene {
   def resolveAction(action: Action)
+
   def close(): Unit
 }
 
@@ -30,7 +31,7 @@ object ApplicationController {
     val borderPane = new BorderPane()
     this.content = borderPane
 
-    val engine: GooseEngine = GooseEngine(gameMatch)
+    val engine: GooseEngine = GooseEngine(gameMatch, this)
 
     val boardView: BoardView = BoardView(gameMatch.board)
     borderPane.center = boardView
@@ -47,7 +48,7 @@ object ApplicationController {
       action.execute(engine.eventSink, engine.currentMatch)
     }
 
-    override def update(state: MatchState): Unit = Platform.runLater(() =>  {
+    override def update(state: MatchState): Unit = Platform.runLater(() => {
       // TODO consider grouping inside a  method
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
