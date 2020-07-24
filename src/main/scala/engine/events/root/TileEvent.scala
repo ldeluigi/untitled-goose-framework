@@ -1,6 +1,6 @@
 package engine.events.root
 
-import model.{GameEvent, Tile}
+import model.Tile
 
 abstract class TileEvent(groupList: List[String], tile: Tile) extends GameEvent {
 

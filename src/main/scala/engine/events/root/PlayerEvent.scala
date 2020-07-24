@@ -1,6 +1,6 @@
 package engine.events.root
 
-import model.{GameEvent, Player}
+import model.Player
 
 abstract class PlayerEvent(player: Player) extends GameEvent {
 

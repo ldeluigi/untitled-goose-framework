@@ -1,10 +1,10 @@
-package model.rules
+package model.rules.ruleset
 
-import engine.events.core.EventSink
-import model.{MatchState, Player, Tile}
 import model.actions.Action
-import model.entities.board.{Board, Position}
+import model.entities.board.Position
+import model.rules.PlayerRule
 import model.rules.operations.Operation
+import model.{MatchState, Player, Tile}
 
 trait RuleSet {
 

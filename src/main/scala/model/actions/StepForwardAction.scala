@@ -3,7 +3,8 @@ package model.actions
 import engine.`match`.Match
 import engine.events.MovementEvent
 import engine.events.core.EventSink
-import model.{GameEvent, Player}
+import engine.events.root.GameEvent
+import model.Player
 
 class StepForwardAction() extends Action {
 

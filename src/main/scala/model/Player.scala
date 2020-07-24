@@ -1,5 +1,7 @@
 package model
 
+import engine.events.root.GameEvent
+
 trait Player {
   def name: String
 

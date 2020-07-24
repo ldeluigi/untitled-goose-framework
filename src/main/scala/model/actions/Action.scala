@@ -2,7 +2,7 @@ package model.actions
 
 import engine.`match`.Match
 import engine.events.core.EventSink
-import model.GameEvent
+import engine.events.root.GameEvent
 
 trait Action {
 

@@ -2,8 +2,8 @@ package engine.`match`
 
 import model.actions.Action
 import model.entities.board.{Board, Piece}
-import model.rules.RuleSet
 import model.rules.operations.Operation
+import model.rules.ruleset.RuleSet
 import model.{MatchState, Player}
 
 trait Match {

@@ -3,6 +3,7 @@ package model.rules
 import model.actions.StepForwardAction
 import model.{MatchState, Player, Tile}
 import model.entities.board.{Position, TileDefinition}
+import model.rules.ruleset.{PriorityRuleSet, RuleSet}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

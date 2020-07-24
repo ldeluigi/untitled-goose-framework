@@ -1,6 +1,7 @@
 package model
 
 import engine.`match`.MatchBoard
+import engine.events.root.GameEvent
 import model.entities.board.Piece
 
 trait MatchState {

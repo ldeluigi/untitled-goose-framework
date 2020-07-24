@@ -1,4 +1,4 @@
-package model
+package engine.events.root
 
 trait GameEvent extends Serializable {
 

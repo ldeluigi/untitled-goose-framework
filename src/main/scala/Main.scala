@@ -8,7 +8,7 @@ import javafx.scene.input.KeyCode
 import model.Player
 import model.actions.{Action, StepForwardAction}
 import model.entities.board.{Board, Disposition, Piece}
-import model.rules.RuleSet
+import model.rules.ruleset.RuleSet
 
 
 object Main extends JFXApp {
@@ -43,5 +43,5 @@ object Main extends JFXApp {
       stage.setFullScreen(true)
     }
   )
-  stage.setOnCloseRequest(e => appView.close())
+  stage.setOnCloseRequest(_ => appView.close())
 }

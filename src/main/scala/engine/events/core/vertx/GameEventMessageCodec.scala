@@ -1,10 +1,10 @@
-package engine.vertx
+package engine.events.core.vertx
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 
+import engine.events.root.GameEvent
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.eventbus.MessageCodec
-import model.GameEvent
 
 private[vertx] class GameEventMessageCodec extends MessageCodec[GameEvent, GameEvent] {
   override def encodeToWire(buffer: Buffer, s: GameEvent): Unit = {

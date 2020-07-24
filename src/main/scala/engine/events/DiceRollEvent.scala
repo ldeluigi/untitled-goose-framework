@@ -1,6 +1,7 @@
 package engine.events
 
-import model.{GameEvent, Player}
+import engine.events.root.GameEvent
+import model.Player
 
 class DiceRollEvent(groupList: List[String], player: Player) extends GameEvent {
 

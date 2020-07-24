@@ -1,8 +1,9 @@
 package model.rules.operations
 
 import engine.events.core.EventSink
+import engine.events.root.GameEvent
 import model.entities.board.Position
-import model.{GameEvent, MatchState, Player}
+import model.{MatchState, Player}
 
 class StepForwardOperation(player: Player) extends Operation {
   override def execute(state: MatchState, eventSink: EventSink[GameEvent]): MatchState = ???

@@ -2,8 +2,8 @@ package view
 
 import engine.`match`.Match
 import engine.events.core.EventSink
-import engine.vertx.GooseEngine
-import model.{GameEvent, MatchState}
+import engine.events.core.vertx.GooseEngine
+import model.MatchState
 import model.actions.Action
 import scalafx.application.Platform
 import scalafx.scene.Scene

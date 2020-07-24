@@ -1,8 +1,9 @@
-package model.rules
+package model.rules.ruleset
 
 import model.actions.Action
 import model.entities.board.Position
 import model.rules.operations.Operation
+import model.rules.{ActionRule, BehaviourRule, PlayerRule}
 import model.{MatchState, Player, Tile}
 
 class PriorityRuleSet(firstTile: Set[Tile] => Position,
