@@ -1,7 +1,7 @@
 package view
 
 
-import scalafx.scene.layout.{Pane, StackPane}
+import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color._
 import scalafx.scene.shape.{Circle, Shape}
 

@@ -15,22 +15,40 @@ trait MatchState {
 
   def history: List[GameEvent]
 
-  def updatePlayerPiece(player: Player, update: Piece =>  Piece): MatchState
+  def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
+
+  def currentPlayer_=(player: Player): Unit
+
+  def currentTurn_=(turn: Int): Unit
+
+  def history_=(history: List[GameEvent]): Unit
 }
 
 object MatchState {
 
   private class MatchStateImpl(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece],
-                               val matchBoard: MatchBoard, val history: List[GameEvent] = List()) extends MatchState {
+                               val matchBoard: MatchBoard) extends MatchState {
 
-    val currentTurn: Int = startTurn
+    var history: List[GameEvent] = List()
+    var currentTurn: Int = startTurn
 
-    val currentPlayer: Player = startPlayer
+    private var currentTurnPlayer: Player = startPlayer
 
-    val playerPieces: Map[Player, Piece] = pieces
+    private var playerPiecesMap: Map[Player, Piece] = pieces
 
-    override def updatePlayerPiece(player: Player, update: Piece =>  Piece): MatchState =
-      new MatchStateImpl(startTurn, startPlayer, playerPieces + (player -> update(playerPieces(player))), matchBoard)
+    override def updatePlayerPiece(player: Player, update: Piece => Piece): Unit =
+      if (playerPiecesMap contains player) {
+        playerPiecesMap += (player -> update(playerPiecesMap(player)))
+      }
+
+    override def currentPlayer: Player = currentTurnPlayer
+
+    override def currentPlayer_=(player: Player): Unit =
+      if (playerPiecesMap contains player) {
+        currentTurnPlayer = player
+      }
+
+    override def playerPieces: Map[Player, Piece] = playerPiecesMap
   }
 
   def apply(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =

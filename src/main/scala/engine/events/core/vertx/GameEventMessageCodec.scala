@@ -11,7 +11,7 @@ private[vertx] class GameEventMessageCodec extends MessageCodec[GameEvent, GameE
     val stream: ByteArrayOutputStream = new ByteArrayOutputStream()
     val oos = new ObjectOutputStream(stream)
     oos.writeObject(s)
-    oos.close
+    oos.close()
     buffer.appendBytes(stream.toByteArray)
   }
 
@@ -19,7 +19,7 @@ private[vertx] class GameEventMessageCodec extends MessageCodec[GameEvent, GameE
     val bytes = buffer.getBytes
     val ois = new ObjectInputStream(new ByteArrayInputStream(bytes))
     val value = ois.readObject
-    ois.close
+    ois.close()
     value.asInstanceOf[GameEvent]
   }
 

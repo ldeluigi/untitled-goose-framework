@@ -1,11 +1,13 @@
 package model
 
-import engine.events.root.GameEvent
+import engine.events.root.PlayerEvent
 
 trait Player {
   def name: String
 
-  def history: List[GameEvent] //TODO change
+  def history: List[PlayerEvent]
+
+  def history_=(history: List[PlayerEvent]): Unit
 }
 
 object Player {
@@ -14,7 +16,7 @@ object Player {
 
     override def name: String = playerName
 
-    override def history: List[GameEvent] = ???
+    var history: List[PlayerEvent] = List()
 
     override def equals(obj: Any): Boolean = obj match {
       case obj: Player => this.name == obj.name

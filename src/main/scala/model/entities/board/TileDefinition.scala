@@ -1,7 +1,5 @@
 package model.entities.board
 
-import model.Tile
-
 trait TileDefinition {
   def number: Option[Int]
 

@@ -1,7 +1,6 @@
 package view
 
 import engine.`match`.Match
-import engine.events.core.EventSink
 import engine.events.core.vertx.GooseEngine
 import model.MatchState
 import model.actions.Action

@@ -34,7 +34,9 @@ object RuleSet {
       allActions
     }
 
-    override def stateBasedOperations(state: MatchState): Seq[Operation] = Seq() // TODO think about
+    override def stateBasedOperations(state: MatchState): Seq[Operation] = {
+      Seq()
+    }
   }
 
   def apply(allActions: Set[Action]): RuleSet = new EmptyRuleSet(allActions)

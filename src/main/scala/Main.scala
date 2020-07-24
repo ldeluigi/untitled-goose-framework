@@ -1,7 +1,4 @@
-import view.ApplicationController
-import scalafx.application.JFXApp
-import java.awt.Dimension
-import java.awt.Toolkit
+import java.awt.{Dimension, Toolkit}
 
 import engine.`match`.Match
 import javafx.scene.input.KeyCode
@@ -9,6 +6,8 @@ import model.Player
 import model.actions.{Action, StepForwardAction}
 import model.entities.board.{Board, Disposition, Piece}
 import model.rules.ruleset.RuleSet
+import scalafx.application.JFXApp
+import view.ApplicationController
 
 
 object Main extends JFXApp {

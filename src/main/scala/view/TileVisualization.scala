@@ -1,7 +1,6 @@
 package view
 
 import model.Tile
-import model.entities.board.TileDefinition
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos
 import scalafx.scene.control.Label

@@ -2,9 +2,9 @@ package engine.events.root
 
 import model.Tile
 
-abstract class TileEvent(groupList: List[String], tile: Tile) extends GameEvent {
+abstract class TileEvent(tile: Tile) extends GameEvent {
 
-  override def group: List[String] = groupList
+  override def group: List[String] = List()
 
   def source: Tile = tile
 }
