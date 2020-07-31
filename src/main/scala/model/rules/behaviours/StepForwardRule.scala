@@ -14,9 +14,9 @@ case class StepForwardRule() extends BehaviourRule {
       event <- player.history
       if event.isInstanceOf[MovementEvent]
       movementEvent = event.asInstanceOf[MovementEvent]
-      if !movementEvent.done
+      if !movementEvent.isConsumed
     } yield {
-      movementEvent.done = true
+      movementEvent.consume()
       StepForwardOperation(player)
     }).toSeq
 }

@@ -32,10 +32,14 @@ object GooseEngine {
     vertx.eventBus.registerCodec(new GameEventMessageCodec)
     vertx.deployVerticle(gv)
 
-    override def accept(event: GameEvent): Unit =
+    override def accept(event: GameEvent): Unit = {
       vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(GameEventMessageCodec.name))
+    }
+
 
     private def onEvent(event: GameEvent): Unit = {
+      //controller.logEvent(event) TODO FRA Decomment when implemented
+      println(event.name)
       status.submitEvent(event)
       stack ++= status.stateBasedOperations
       while (stack nonEmpty) {

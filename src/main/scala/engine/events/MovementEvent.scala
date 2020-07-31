@@ -3,17 +3,13 @@ package engine.events
 import engine.events.root.PlayerEvent
 import model.Player
 
-class MovementEvent(steps: Int, player: Player) extends PlayerEvent(player) {
+case class MovementEvent(steps: Int, player: Player, currentTurn: Long) extends PlayerEvent(player, currentTurn) {
 
   def movement: Int = steps
 
-  var done: Boolean = false
+  override def name: String = "Movement Event " + steps
 
-  override def name: String = "MovementEvent"
+  override def isConsumable: Boolean = true
+
 }
 
-
-object MovementEvent {
-
-  def apply(steps: Int, player: Player): MovementEvent = new MovementEvent(steps, player)
-}

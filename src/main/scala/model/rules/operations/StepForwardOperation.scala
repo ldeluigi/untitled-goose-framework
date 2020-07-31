@@ -12,8 +12,8 @@ class StepForwardOperation(player: Player) extends Operation {
       piece.updatePosition(pos =>
         if (pos isDefined)
           state.matchBoard // If position is none it remains none
-          .next(pos.get.tile)
-          .map(Position(_))
+            .next(pos.get.tile)
+            .map(Position(_))
         else Some(Position(state.matchBoard.first))
       )
     )

@@ -42,8 +42,9 @@ object Match {
     override def submitEvent(event: GameEvent): Unit = {
       currentState.history = event :: currentState.history
       event match {
-        case event: PlayerEvent => event.source.history = event :: event.source.history
+        case event: PlayerEvent => event.sourcePlayer.history = event :: event.sourcePlayer.history
         case event: TileEvent => event.source.history = event :: event.source.history
+        case event: GameEvent => event :: this.currentState.history
       }
     }
   }

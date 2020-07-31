@@ -2,6 +2,7 @@ package view
 
 import engine.`match`.Match
 import engine.events.core.vertx.GooseEngine
+import engine.events.root.GameEvent
 import model.MatchState
 import model.actions.Action
 import scalafx.application.Platform
@@ -17,6 +18,8 @@ trait ApplicationController extends Scene {
 
 trait GooseController {
   def update(state: MatchState)
+
+  def logEvent(event: GameEvent)
 }
 
 object ApplicationController {
@@ -45,7 +48,7 @@ object ApplicationController {
     actionMenu.displayActions(gameMatch.availableActions)
 
     def resolveAction(action: Action): Unit = {
-      action.execute(engine.eventSink, engine.currentMatch)
+      action.execute(engine.eventSink, engine.currentMatch.currentState)
     }
 
     override def update(state: MatchState): Unit = Platform.runLater(() => {
@@ -55,6 +58,8 @@ object ApplicationController {
     })
 
     override def close(): Unit = engine.stop()
+
+    override def logEvent(event: GameEvent): Unit = ??? //TODO FRANCESCA
   }
 
   def apply(width: Int, height: Int, gameMatch: Match): ApplicationController = new

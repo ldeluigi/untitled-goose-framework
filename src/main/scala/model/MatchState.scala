@@ -5,7 +5,7 @@ import engine.events.root.GameEvent
 import model.entities.board.Piece
 
 trait MatchState {
-  def currentTurn: Int
+  def currentTurn: Long
 
   def currentPlayer: Player
 
@@ -19,18 +19,18 @@ trait MatchState {
 
   def currentPlayer_=(player: Player): Unit
 
-  def currentTurn_=(turn: Int): Unit
+  def currentTurn_=(turn: Long): Unit
 
   def history_=(history: List[GameEvent]): Unit
 }
 
 object MatchState {
 
-  private class MatchStateImpl(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece],
+  private class MatchStateImpl(startTurn: Long, startPlayer: Player, pieces: Map[Player, Piece],
                                val matchBoard: MatchBoard) extends MatchState {
 
     var history: List[GameEvent] = List()
-    var currentTurn: Int = startTurn
+    var currentTurn: Long = startTurn
 
     private var currentTurnPlayer: Player = startPlayer
 
@@ -51,7 +51,7 @@ object MatchState {
     override def playerPieces: Map[Player, Piece] = playerPiecesMap
   }
 
-  def apply(startTurn: Int, startPlayer: Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =
+  def apply(startTurn: Long, startPlayer: Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =
     new MatchStateImpl(startTurn, startPlayer, pieces, board)
 }
 

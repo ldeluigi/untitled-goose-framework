@@ -1,13 +1,13 @@
 package engine.events
 
-import engine.events.root.GameEvent
-import model.Player
+import engine.events.root.AbstractGameEvent
 
-class DiceRollEvent(groupList: List[String], player: Player) extends GameEvent {
+case class DiceRollEvent[DiceSide](side: DiceSide, currentTurn: Long) extends AbstractGameEvent(currentTurn) {
 
   override def name: String = "DiceRoll"
 
-  override def group: List[String] = groupList
+  override def isConsumable: Boolean = false
 
-  // TODO sides and dice result generation modeling
+  def result: DiceSide = side
+
 }

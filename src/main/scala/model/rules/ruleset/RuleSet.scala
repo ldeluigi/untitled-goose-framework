@@ -1,9 +1,10 @@
 package model.rules.ruleset
 
-import model.actions.{Action, StepForwardAction}
+import model.actions.{Action, RollDice, StepForwardAction}
+import model.entities.Dice
 import model.entities.board.Position
 import model.rules.PlayerUtils
-import model.rules.behaviours.StepForwardRule
+import model.rules.behaviours.{MovementWithDiceRule, MultipleStepForwardRule, StepForwardRule, TurnEndConsumer, TurnEndEventRule}
 import model.rules.operations.Operation
 import model.{MatchState, Player, Tile}
 
@@ -32,11 +33,14 @@ object RuleSet {
     }
 
     override def actions(state: MatchState): Set[Action] = {
-      Set(StepForwardAction())
+      Set(RollDice(Dice[Int]((1 to 6).toSet, "SixDice")))
     }
 
     override def stateBasedOperations(state: MatchState): Seq[Operation] = {
-      StepForwardRule().applyRule(state)
+      MovementWithDiceRule().applyRule(state) ++
+        MultipleStepForwardRule().applyRule(state) ++
+        TurnEndEventRule().applyRule(state) ++
+        TurnEndConsumer().applyRule(state)
     }
   }
 

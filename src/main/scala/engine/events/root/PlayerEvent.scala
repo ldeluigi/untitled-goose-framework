@@ -2,17 +2,13 @@ package engine.events.root
 
 import model.Player
 
-abstract class PlayerEvent(player: Player) extends GameEvent {
+abstract class PlayerEvent(player: Player, currentTurn: Long) extends AbstractGameEvent(currentTurn) {
 
-  override def group: List[String] = List()
-
-  def source: Player = player
+  def sourcePlayer: Player = player
 }
 
 object PlayerEvent {
-
-  def unapply(arg: PlayerEvent): Option[Player] = Some(arg.source)
-
+  def unapply(arg: PlayerEvent): Option[Player] = Some(arg.sourcePlayer)
 }
 
 
