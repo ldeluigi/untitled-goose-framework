@@ -33,14 +33,20 @@ object RuleSet {
     }
 
     override def actions(state: MatchState): Set[Action] = {
-      Set(RollDice(Dice[Int]((1 to 6).toSet, "SixDice")))
+      Set(RollDice(Dice[Int]((1 to 6).toSet, "six face")))
     }
 
     override def stateBasedOperations(state: MatchState): Seq[Operation] = {
-      MovementWithDiceRule().applyRule(state) ++
-        MultipleStepForwardRule().applyRule(state) ++
-        TurnEndEventRule().applyRule(state) ++
-        TurnEndConsumer().applyRule(state)
+      var opSeq: Seq[Operation] =
+        MovementWithDiceRule().applyRule(state) ++
+          MultipleStepForwardRule().applyRule(state) ++
+          TurnEndEventRule().applyRule(state)
+
+      if (state.newTurnStarted) {
+        opSeq = opSeq ++ TurnEndConsumer().applyRule(state)
+        state.newTurnStarted = false;
+      }
+      opSeq
     }
   }
 

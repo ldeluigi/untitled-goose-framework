@@ -11,19 +11,21 @@ case class TurnEndConsumer() extends BehaviourRule {
   override def name: Option[String] = Some("TurnEndConsumer")
 
   override def applyRule(state: MatchState): Seq[Operation] = {
-    state.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
-      .find(_.isInstanceOf[TurnShouldEndEvent]) match {
-      case Some(event) => Seq(consumeTurn(event, state))
-      case _ => Seq()
-    }
+    Seq(consumeTurn(state))
   }
 
-  private def consumeTurn(event: GameEvent, state: MatchState): Operation = {
-    event.consume()
+  private def consumeTurn(state: MatchState): Operation = {
     (s: MatchState, _: EventSink[GameEvent]) => {
-      s.currentTurn = s.currentTurn + 1
+      var eventList = state.history
+        .filter(_.turn == state.currentTurn)
+        .filter(!_.isConsumed)
+        .filter(_.isInstanceOf[TurnShouldEndEvent])
+      if (eventList.nonEmpty) {
+        eventList.foreach(_.consume())
+        s.currentTurn = s.currentTurn + 1
+        s.newTurnStarted = true
+      }
+
       //TODO UPDATE CURRENT PLAYER WITH NEXT ONE!
     }
   }

@@ -22,7 +22,7 @@ object GooseEngine {
 
   private class GooseEngineImpl(private val status: Match, private val controller: GooseController) extends GooseEngine with EventSink[GameEvent] {
 
-    private var stack: List[Operation] = List()
+    private var stack: Seq[Operation] = Seq()
 
     private val vertx: Vertx = Vertx.vertx()
     implicit val vertxExecutionContext: VertxExecutionContext = VertxExecutionContext(
@@ -39,12 +39,13 @@ object GooseEngine {
 
     private def onEvent(event: GameEvent): Unit = {
       //controller.logEvent(event) TODO FRA Decomment when implemented
-      println(event.name)
+      println(event.name + " " + event.turn)
       status.submitEvent(event)
-      stack ++= status.stateBasedOperations
+      stack = status.stateBasedOperations ++ stack
       while (stack nonEmpty) {
         val op = stack.head
         stack = stack.tail
+        println(op)
         op.execute(status.currentState, stackSolver)
         controller.update(status.currentState)
       }

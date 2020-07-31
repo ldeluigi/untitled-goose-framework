@@ -12,8 +12,6 @@ case class MovementWithDiceRule() extends BehaviourRule {
   override def name: Option[String] = None
 
   override def applyRule(matchState: MatchState): Seq[Operation] = {
-    var operations = Seq()
-
     matchState.history
       .filter(_.turn == matchState.currentTurn)
       .filter(!_.isConsumed)
@@ -23,7 +21,6 @@ case class MovementWithDiceRule() extends BehaviourRule {
         e.asInstanceOf[DiceRollEvent[Int]]
       })
       .map(e => moveOperation(e.result, matchState))
-      .toSeq
   }
 
   private def moveOperation(steps: Int, state: MatchState): Operation = {

@@ -5,6 +5,11 @@ import engine.events.root.GameEvent
 import model.entities.board.Piece
 
 trait MatchState {
+
+  def newTurnStarted: Boolean
+
+  def newTurnStarted_=(value: Boolean): Unit
+
   def currentTurn: Long
 
   def currentPlayer: Player
@@ -49,6 +54,8 @@ object MatchState {
       }
 
     override def playerPieces: Map[Player, Piece] = playerPiecesMap
+
+    var newTurnStarted: Boolean = true
   }
 
   def apply(startTurn: Long, startPlayer: Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =

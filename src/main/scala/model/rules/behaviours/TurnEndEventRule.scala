@@ -14,7 +14,6 @@ case class TurnEndEventRule() extends BehaviourRule {
   override def applyRule(state: MatchState): Seq[Operation] = {
     state.history
       .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
       .find(_.isInstanceOf[TurnShouldEndEvent]) match {
       case None => Seq(triggerEvent(state))
       case _ => Seq()

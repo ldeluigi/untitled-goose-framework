@@ -17,7 +17,7 @@ trait Board {
 object Board {
 
   private class BoardImpl(tileNum: Int, val disposition: Disposition) extends Board {
-    private val myTiles: List[TileDefinition] = List.range(0, tileNum).map(i => TileDefinition(i))
+    private val myTiles: List[TileDefinition] = (1 to tileNum).toList.map(i => TileDefinition(i))
 
     override def name: String = "MockBoard" // TODO what?
 
