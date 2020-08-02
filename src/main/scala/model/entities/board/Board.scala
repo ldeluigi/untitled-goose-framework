@@ -22,7 +22,7 @@ object Board {
     override def name: String = "MockBoard" // TODO what?
 
     override def next(tile: TileDefinition): Option[TileDefinition] =
-      tile.number flatMap (i => myTiles lift (i + 1))
+      tile.number flatMap (i => myTiles lift i)
 
     override def tiles: Set[TileDefinition] = myTiles.toSet
 
