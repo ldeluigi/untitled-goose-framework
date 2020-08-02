@@ -13,3 +13,4 @@ object PlayerUtils {
 
   def selectRandom(players: Set[Player]): Player = random(players)
 }
+

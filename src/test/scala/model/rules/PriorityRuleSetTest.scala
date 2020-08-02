@@ -2,7 +2,7 @@ package model.rules
 
 import model.actions.StepForwardAction
 import model.entities.board.{Position, TileDefinition}
-import model.rules.ruleset.{PriorityRuleSet, RuleSet}
+import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.{MatchState, Player, Tile}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -19,10 +19,10 @@ class PriorityRuleSetTest extends AnyFlatSpec with Matchers {
     Set(ActionAvailability(StepForwardAction()))
 
   val dumbRuleSet: RuleSet = PriorityRuleSet(
-    t => Position(t.toList.min),
-    _.head,
-    ActionRule(),
-    myRule
+    t => Position(t.min),
+    playerOrdering = PlayerOrdering.orderedRandom,
+    actionRules = Set(ActionRule(), myRule),
+    behaviourRule = Seq()
   )
 
   thisClass should "select a first player" in {

@@ -2,10 +2,14 @@ import java.awt.{Dimension, Toolkit}
 
 import engine.`match`.Match
 import javafx.scene.input.KeyCode
-import model.Player
-import model.actions.{Action, StepForwardAction}
-import model.entities.board.{Board, Disposition, Piece}
-import model.rules.ruleset.RuleSet
+import model.{Color, Player}
+import model.actions.RollDice
+import model.entities.Dice
+import model.entities.board.{Board, Disposition, Piece, Position}
+import model.rules.actionrules.AlwaysPermittedActionRule
+import model.rules.behaviours.{MovementWithDiceRule, MultipleStepForwardRule}
+import model.rules.{ActionRule, BehaviourRule}
+import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import scalafx.application.JFXApp
 import view.ApplicationController
 
@@ -15,12 +19,24 @@ object Main extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
 
   //From DSL generation
-  val totalTiles = 25
-  val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
-  val ruleSet: RuleSet = RuleSet()
+  val totalTiles = 24
+  val board: Board = Board(totalTiles, Disposition.spiral(totalTiles))
+  val movementDice: Dice[Int] = Dice[Int]((1 to 6).toSet, "six face")
+  val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(RollDice(movementDice)))
+  val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepForwardRule(), MovementWithDiceRule())
+
+
+  val priorityRuleSet: RuleSet = PriorityRuleSet(
+    tiles => Position(tiles.toList.sorted.take(1).head),
+    PlayerOrdering.orderedRandom,
+    actionRules,
+    behaviourRule
+  )
+
+  val ruleSet: RuleSet = priorityRuleSet
 
   //From a menu GUI that select and creates player and pieces
-  val players: Map[Player, Piece] = Map(Player("P1") -> Piece())
+  val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
 
   val currentMatch: Match = Match(board, players, ruleSet)
   val appView: ApplicationController = ApplicationController(screenSize.width, screenSize.height, currentMatch)

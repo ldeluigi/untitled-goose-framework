@@ -31,7 +31,13 @@ object Match {
     for (piece <- playerPieces.values) {
       piece.setPosition(Some(rules.startPosition(board.tiles)))
     }
-    val currentState: MatchState = MatchState(firstTurn, rules.first(playerPieces.keySet), playerPieces, board)
+    val currentState: MatchState = MatchState(
+      firstTurn,
+      rules.first(playerPieces.keySet),
+      () => rules.nextPlayer(currentState.currentPlayer, players),
+      playerPieces,
+      board
+    )
 
     override def players: Set[Player] = playerPieces.keySet
 

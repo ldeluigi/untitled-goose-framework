@@ -14,6 +14,8 @@ trait RuleSet {
 
   def first(players: Set[Player]): Player
 
+  def nextPlayer(currentPlayer: Player, players: Set[Player]): Player
+
   def startPosition(tiles: Set[Tile]): Position
 
   def actions(state: MatchState): Set[Action]
@@ -22,7 +24,7 @@ trait RuleSet {
 
 object RuleSet {
 
-  private class StepForwardRuleSet() extends RuleSet {
+  private class DiceForwardRuleSet() extends RuleSet {
 
     override def first(players: Set[Player]): Player = {
       PlayerUtils.selectRandom(players)
@@ -48,8 +50,12 @@ object RuleSet {
       }
       opSeq
     }
+
+    override def nextPlayer(currentPlayer: Player, players: Set[Player]): Player = {
+      PlayerUtils.selectRandom(players)
+    }
   }
 
-  def apply(): RuleSet = new StepForwardRuleSet()
+  def apply(): RuleSet = new DiceForwardRuleSet()
 }
 

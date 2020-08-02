@@ -14,6 +14,8 @@ trait MatchState {
 
   def currentPlayer: Player
 
+  def nextPlayer: Player
+
   def playerPieces: Map[Player, Piece]
 
   def matchBoard: MatchBoard
@@ -31,7 +33,7 @@ trait MatchState {
 
 object MatchState {
 
-  private class MatchStateImpl(startTurn: Long, startPlayer: Player, pieces: Map[Player, Piece],
+  private class MatchStateImpl(startTurn: Long, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
                                val matchBoard: MatchBoard) extends MatchState {
 
     var history: List[GameEvent] = List()
@@ -56,9 +58,11 @@ object MatchState {
     override def playerPieces: Map[Player, Piece] = playerPiecesMap
 
     var newTurnStarted: Boolean = true
+
+    override def nextPlayer: Player = nextPlayerStrategy()
   }
 
-  def apply(startTurn: Long, startPlayer: Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =
-    new MatchStateImpl(startTurn, startPlayer, pieces, board)
+  def apply(startTurn: Long, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =
+    new MatchStateImpl(startTurn, startPlayer, nextPlayerStrategy, pieces, board)
 }
 

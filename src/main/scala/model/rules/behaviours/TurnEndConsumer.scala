@@ -1,6 +1,7 @@
 package model.rules.behaviours
 
-import engine.events.TurnShouldEndEvent
+import engine.`match`.Match
+import engine.events.{DoNotPassTurnEvent, TurnShouldEndEvent}
 import engine.events.core.EventSink
 import engine.events.root.GameEvent
 import model.MatchState
@@ -16,15 +17,22 @@ case class TurnEndConsumer() extends BehaviourRule {
 
   private def consumeTurn(state: MatchState): Operation = {
     (s: MatchState, _: EventSink[GameEvent]) => {
-      var eventList = state.history
+      val eventList = state.history
         .filter(_.turn == state.currentTurn)
         .filter(!_.isConsumed)
-        .filter(_.isInstanceOf[TurnShouldEndEvent])
-      if (eventList.nonEmpty) {
-        eventList.foreach(_.consume())
+
+      if (eventList.exists(_.isInstanceOf[TurnShouldEndEvent])) {
+        eventList.filter(_.isInstanceOf[TurnShouldEndEvent]).foreach(_.consume())
         s.currentTurn = s.currentTurn + 1
         s.newTurnStarted = true
       }
+
+      if (eventList.exists(_.isInstanceOf[DoNotPassTurnEvent])) {
+        eventList.filter(_.isInstanceOf[DoNotPassTurnEvent]).foreach(_.consume())
+      } else {
+        s.currentPlayer = s.nextPlayer
+      }
+
 
       //TODO UPDATE CURRENT PLAYER WITH NEXT ONE!
     }

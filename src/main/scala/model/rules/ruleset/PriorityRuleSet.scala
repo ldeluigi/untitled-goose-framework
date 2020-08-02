@@ -2,12 +2,13 @@ package model.rules.ruleset
 
 import model.actions.Action
 import model.entities.board.Position
+import model.rules.behaviours.{TurnEndConsumer, TurnEndEventRule}
 import model.rules.operations.Operation
 import model.rules.{ActionRule, BehaviourRule, PlayerUtils}
 import model.{MatchState, Player, Tile}
 
 class PriorityRuleSet(firstTile: Set[Tile] => Position,
-                      firstPlayer: Set[Player] => Player = PlayerUtils.selectRandom,
+                      playerOrdering: PlayerOrdering,
                       actionRules: Set[ActionRule] = Set(),
                       behaviourRules: Seq[BehaviourRule] = Seq()
                      ) extends RuleSet {
@@ -29,17 +30,32 @@ class PriorityRuleSet(firstTile: Set[Tile] => Position,
       .map(_.action)
       .toSet
 
-  override def first(players: Set[Player]): Player = firstPlayer(players)
+  override def first(players: Set[Player]): Player =
+    playerOrdering.first(players)
 
-  override def stateBasedOperations(state: MatchState): Seq[Operation] =
-    for {rule <- behaviourRules; operation <- rule.applyRule(state)} yield operation
+  override def stateBasedOperations(state: MatchState): Seq[Operation] = {
+    var opSeq: Seq[Operation] = behaviourRules.flatMap(_.applyRule(state))
+    opSeq = TurnEndEventRule().applyRule(state) ++ opSeq
+
+    if (state.newTurnStarted) {
+      opSeq = opSeq ++ TurnEndConsumer().applyRule(state)
+      state.newTurnStarted = false;
+    }
+    println(opSeq)
+    opSeq
+  }
+
+  override def nextPlayer(currentPlayer: Player, players: Set[Player]): Player =
+    playerOrdering.next(currentPlayer, players)
 }
 
 object PriorityRuleSet {
   def apply(startTile: Set[Tile] => Position,
-            firstPlayer: Set[Player] => Player,
-            actionRules: ActionRule*): PriorityRuleSet =
-    new PriorityRuleSet(startTile, firstPlayer, actionRules.toSet)
+            playerOrdering: PlayerOrdering,
+            actionRules: Set[ActionRule],
+            behaviourRule: Seq[BehaviourRule]
+           ): PriorityRuleSet =
+    new PriorityRuleSet(startTile, playerOrdering, actionRules, behaviourRule)
 
 
 }
