@@ -27,14 +27,14 @@ object TileVisualization {
                                       parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int) extends TileVisualization {
 
     var rectangle: Rectangle = new Rectangle {
-      fill = Red
+      fill = White
       stroke = Black
       strokeType = StrokeType.Inside
       strokeWidth <== parentWidth / cols * 0.05 //TODO tweak value
       width <== parentWidth / cols
       height <== parentHeight / rows
     }
-    val text: String = tile.number.get.toString;
+    val text: String = tile.number.get.toString
 
     var label = new Label(text)
 

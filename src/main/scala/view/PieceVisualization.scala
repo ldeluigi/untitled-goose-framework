@@ -1,6 +1,7 @@
 package view
 
 
+import model.entities.board.Piece
 import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color._
 import scalafx.scene.shape.{Circle, Shape}
@@ -11,15 +12,15 @@ trait PieceVisualization extends StackPane {
 
 object PieceVisualization {
 
-  private class PieceVisualizationImpl() extends PieceVisualization {
+  private class PieceVisualizationImpl(piece: Piece) extends PieceVisualization {
 
-    val pieceShape = new Circle {
-      fill = Blue
+    val pieceShape: Shape = new Circle {
+      fill = ColorUtils.getColor(piece.color)
       radius = 20
     }
     this.children.addAll(pieceShape)
   }
 
-  def apply(): PieceVisualization = new PieceVisualizationImpl()
+  def apply(piece: Piece): PieceVisualization = new PieceVisualizationImpl(piece)
 }
 

@@ -24,8 +24,8 @@ object BoardView {
 
     //Draw tile
     var i = 0
-    var rows = matchBoard.board.disposition.rows
-    var cols = matchBoard.board.disposition.columns
+    var rows: Int = matchBoard.board.disposition.rows
+    var cols: Int = matchBoard.board.disposition.columns
 
     for (t <- matchBoard.tiles.toList.sorted) {
       val currentTile = TileVisualization(t, width, height, rows, cols)
@@ -46,7 +46,7 @@ object BoardView {
           if (p._1 == matchState.currentPlayer) {
             setFocus(positionTile.get)
           }
-          positionTile.get.setPiece(PieceVisualization())
+          positionTile.get.setPiece(PieceVisualization(p._2))
         }
       }
     }
