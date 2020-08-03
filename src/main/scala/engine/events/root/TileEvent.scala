@@ -8,7 +8,7 @@ abstract class TileEvent(tile: Tile, currentTurn: Long) extends AbstractGameEven
 
 }
 
-abstract class ConsumableTileEvent(tile: Tile, currentTurn: Long, consumeTimes: Int) extends ConsumableGameEvent(currentTurn, consumeTimes){
+abstract class ConsumableTileEvent(tile: Tile, currentTurn: Long, consumeTimes: Int) extends ConsumableGameEvent(currentTurn, consumeTimes) {
 
   def source: Tile = tile
 

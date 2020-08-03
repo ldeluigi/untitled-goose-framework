@@ -7,7 +7,7 @@ abstract class PlayerEvent(player: Player, currentTurn: Long) extends AbstractGa
   def sourcePlayer: Player = player
 }
 
-abstract class ConsumablePlayerEvent(player: Player, currentTurn: Long, consumeTimes: Int) extends ConsumableGameEvent(currentTurn, consumeTimes){
+abstract class ConsumablePlayerEvent(player: Player, currentTurn: Long, consumeTimes: Int) extends ConsumableGameEvent(currentTurn, consumeTimes) {
 
   def sourcePlayer: Player = player
 
