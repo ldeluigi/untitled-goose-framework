@@ -30,4 +30,15 @@ abstract class AbstractGameEvent(currentTurn: Long) extends GameEvent {
 }
 
 
+abstract class ConsumableGameEvent(currentTurn: Long, var consumeTimes: Int) extends AbstractGameEvent(currentTurn) {
+
+  override def isConsumed: Boolean = consumeTimes == 0
+
+  override def consume(): Unit = {
+    if(isConsumable)
+      consumeTimes = consumeTimes - 1
+  }
+}
+
+
 

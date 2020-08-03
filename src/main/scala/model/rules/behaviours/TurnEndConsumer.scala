@@ -32,9 +32,6 @@ case class TurnEndConsumer() extends BehaviourRule {
       } else {
         s.currentPlayer = s.nextPlayer
       }
-
-
-      //TODO UPDATE CURRENT PLAYER WITH NEXT ONE!
     }
   }
 }
