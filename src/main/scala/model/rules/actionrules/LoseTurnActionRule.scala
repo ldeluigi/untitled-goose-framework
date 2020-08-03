@@ -8,9 +8,8 @@ import model.rules.{ActionAvailability, ActionRule}
 case class LoseTurnActionRule(allOtherActions: Set[Action]) extends ActionRule {
 
   override def allowedActions(state: MatchState): Set[ActionAvailability] = {
-    allOtherActions.map(ActionAvailability(_, RulePriorities.loseTurnPriority, allowed = false)) +=
-    ActionAvailability(SkipOneTurnAction(),RulePriorities.loseTurnPriority)
-
+    allOtherActions.map(ActionAvailability(_, RulePriorities.loseTurnPriority, allowed = false)) +
+      ActionAvailability(SkipOneTurnAction(), RulePriorities.loseTurnPriority)
   }
 
 }
