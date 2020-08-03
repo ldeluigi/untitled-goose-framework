@@ -5,18 +5,16 @@ import engine.events.root.GameEvent
 import model.entities.board.Position
 import model.{MatchState, Player}
 
-case class StepForwardOperation(player: Player) extends Operation {
-  override def execute(state: MatchState, eventSink: EventSink[GameEvent]): Unit = {
-    // TODO fire events
-    state.updatePlayerPiece(player, piece =>
-      piece.updatePosition(pos =>
-        if (pos isDefined)
-          state.matchBoard // If position is none it remains none
-            .next(pos.get.tile)
-            .map(Position(_))
-        else Some(Position(state.matchBoard.first))
-      )
-    )
+
+case class StepForwardOperation(player: Player, remainingSteps: Int) extends AbstractStepOperation(player, remainingSteps) {
+
+  override def step(state: MatchState, pos: Option[Position]): Option[Position] = {
+    if (pos isDefined)
+      state.matchBoard // If position is none it remains none
+        .next(pos.get.tile)
+        .map(Position(_))
+    else Some(Position(state.matchBoard.first))
   }
+
 }
 

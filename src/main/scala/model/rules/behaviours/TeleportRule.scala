@@ -5,8 +5,8 @@ import model.MatchState
 import model.rules.BehaviourRule
 import model.rules.operations.{Operation, TeleportOperation}
 
-class TeleportRule extends BehaviourRule{
-  override def name: Option[String] = Some ("Teleport")
+class TeleportRule extends BehaviourRule {
+  override def name: Option[String] = Some("Teleport")
 
   override def applyRule(state: MatchState): Seq[Operation] = {
     state.currentPlayer.history

@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
-import engine.events.{DiceRollEvent, StepMovementEvent}
-import model.MatchState
+import engine.events.StepMovementEvent
+import model.{MatchState, Player}
 import model.rules.BehaviourRule
 import model.rules.operations.{Operation, StepBackwardOperation, StepForwardOperation}
 
@@ -18,9 +18,16 @@ case class MultipleStepRule() extends BehaviourRule {
         e.consume()
         e.asInstanceOf[StepMovementEvent]
       })
-      .flatMap(e => e.movement match {
-        case step if step >= 0 => Seq.fill(step)(StepForwardOperation(e.sourcePlayer))
-        case step if step < 0 => Seq.fill(-step)(StepBackwardOperation(e.sourcePlayer))
-      })
+      .flatMap(e => generateStep(e.movement, e.sourcePlayer, e.movement >= 0))
+  }
+
+  def generateStep(step: Int, player: Player, forward: Boolean): Seq[Operation] = {
+    (1 to step).toList.map(i => {
+      if (forward) {
+        StepForwardOperation(player, step - i)
+      } else {
+        StepBackwardOperation(player, step - i)
+      }
+    })
   }
 }

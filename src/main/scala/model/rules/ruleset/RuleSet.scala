@@ -4,7 +4,7 @@ import model.actions.{Action, RollDice, StepForwardAction}
 import model.entities.Dice
 import model.entities.board.Position
 import model.rules.PlayerUtils
-import model.rules.behaviours.{MovementWithDiceRule, MultipleStepRule, StepForwardRule, TurnEndConsumer, TurnEndEventRule}
+import model.rules.behaviours.{MovementWithDiceRule, MultipleStepRule, TurnEndConsumer, TurnEndEventRule}
 import model.rules.operations.Operation
 import model.{MatchState, Player, Tile}
 
