@@ -7,8 +7,6 @@ case class DiceRollEvent[DiceSide](player: Player, side: DiceSide, currentTurn: 
 
   override def name: String = "DiceRoll value:" + side.toString
 
-  override def isConsumable: Boolean = true
-
   def result: DiceSide = side
 
 }

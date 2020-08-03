@@ -9,7 +9,5 @@ case class StepMovementEvent(steps: Int, player: Player, currentTurn: Long) exte
 
   override def name: String = "Movement Event " + steps
 
-  override def isConsumable: Boolean = true
-
 }
 

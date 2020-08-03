@@ -9,5 +9,4 @@ case class TeleportEvent(teleportTo: Tile, player: Player, currentTurn: Long) ex
 
   override def name: String = "Teleport Event"
 
-  override def isConsumable: Boolean = true
 }

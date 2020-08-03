@@ -1,14 +1,8 @@
 package engine.events.root
 
-import model.{Tile}
+import model.Tile
 
-abstract class TileEvent(tile: Tile, currentTurn: Long) extends AbstractGameEvent(currentTurn) {
-
-  def source: Tile = tile
-
-}
-
-abstract class ConsumableTileEvent(tile: Tile, currentTurn: Long, consumeTimes: Int) extends ConsumableGameEvent(currentTurn, consumeTimes) {
+abstract class TileEvent(tile: Tile, currentTurn: Long, consumeTimes: Int = 1) extends AbstractGameEvent(currentTurn, consumeTimes) {
 
   def source: Tile = tile
 
