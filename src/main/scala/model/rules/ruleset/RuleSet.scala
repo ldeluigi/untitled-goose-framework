@@ -4,7 +4,7 @@ import model.actions.{Action, RollDice, StepForwardAction}
 import model.entities.Dice
 import model.entities.board.Position
 import model.rules.PlayerUtils
-import model.rules.behaviours.{MovementWithDiceRule, MultipleStepForwardRule, StepForwardRule, TurnEndConsumer, TurnEndEventRule}
+import model.rules.behaviours.{MovementWithDiceRule, MultipleStepRule, StepForwardRule, TurnEndConsumer, TurnEndEventRule}
 import model.rules.operations.Operation
 import model.{MatchState, Player, Tile}
 
@@ -41,12 +41,12 @@ object RuleSet {
     override def stateBasedOperations(state: MatchState): Seq[Operation] = {
       var opSeq: Seq[Operation] =
         MovementWithDiceRule().applyRule(state) ++
-          MultipleStepForwardRule().applyRule(state) ++
+          MultipleStepRule().applyRule(state) ++
           TurnEndEventRule().applyRule(state)
 
       if (state.newTurnStarted) {
         opSeq = opSeq ++ TurnEndConsumer().applyRule(state)
-        state.newTurnStarted = false;
+        state.newTurnStarted = false
       }
       opSeq
     }

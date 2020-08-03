@@ -7,7 +7,7 @@ import model.actions.RollDice
 import model.entities.Dice
 import model.entities.board.{Board, Disposition, Piece, Position}
 import model.rules.actionrules.AlwaysPermittedActionRule
-import model.rules.behaviours.{MovementWithDiceRule, MultipleStepForwardRule}
+import model.rules.behaviours.{MovementWithDiceRule, MultipleStepRule}
 import model.rules.{ActionRule, BehaviourRule}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import scalafx.application.JFXApp
@@ -23,7 +23,7 @@ object Main extends JFXApp {
   val board: Board = Board(totalTiles, Disposition.spiral(totalTiles))
   val movementDice: Dice[Int] = Dice[Int]((1 to 6).toSet, "six face")
   val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(RollDice(movementDice)))
-  val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepForwardRule(), MovementWithDiceRule())
+  val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepRule(), MovementWithDiceRule())
 
 
   val priorityRuleSet: RuleSet = PriorityRuleSet(
