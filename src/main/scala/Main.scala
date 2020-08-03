@@ -35,7 +35,10 @@ object Main extends JFXApp {
 
   val ruleSet: RuleSet = priorityRuleSet
 
-  //From a menu GUI that select and creates player and pieces
+  //Launch Intro Menu with board and rulest as parameters
+  //new IntroScene(board,ruleset)
+
+  //From a menu GUI that select and creates player and pieces on the press of a "Start game" button
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
 
   val currentMatch: Match = Match(board, players, ruleSet)

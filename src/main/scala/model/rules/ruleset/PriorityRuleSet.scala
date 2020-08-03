@@ -41,7 +41,6 @@ class PriorityRuleSet(firstTile: Set[Tile] => Position,
       opSeq = opSeq ++ TurnEndConsumer().applyRule(state)
       state.newTurnStarted = false;
     }
-    println(opSeq)
     opSeq
   }
 
