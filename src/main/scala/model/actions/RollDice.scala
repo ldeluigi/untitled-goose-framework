@@ -1,6 +1,5 @@
 package model.actions
 
-import engine.`match`.Match
 import engine.events.DiceRollEvent
 import engine.events.core.EventSink
 import engine.events.root.GameEvent
