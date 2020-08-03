@@ -10,7 +10,7 @@ case class MultipleStepForwardRule() extends BehaviourRule {
   override def name: Option[String] = Some("Multiple StepRule")
 
   override def applyRule(state: MatchState): Seq[Operation] = {
-    state.history
+    state.currentPlayer.history
       .filter(_.turn == state.currentTurn)
       .filter(!_.isConsumed)
       .filter(_.isInstanceOf[StepMovementEvent])
