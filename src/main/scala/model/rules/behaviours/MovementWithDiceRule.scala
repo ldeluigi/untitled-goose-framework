@@ -2,7 +2,7 @@ package model.rules.behaviours
 
 import engine.events.core.EventSink
 import engine.events.root.GameEvent
-import engine.events.{DiceRollEvent, MovementEvent}
+import engine.events.{DiceRollEvent, StepMovementEvent}
 import model.MatchState
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
@@ -25,7 +25,7 @@ case class MovementWithDiceRule() extends BehaviourRule {
 
   private def moveOperation(event: DiceRollEvent[Int], state: MatchState): Operation = {
     (_, e: EventSink[GameEvent]) => {
-      e.accept(MovementEvent(event.result, event.player, state.currentTurn))
+      e.accept(StepMovementEvent(event.result, event.player, state.currentTurn))
     }
   }
 

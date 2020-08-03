@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.MovementEvent
+import engine.events.StepMovementEvent
 import model.MatchState
 import model.rules.BehaviourRule
 import model.rules.operations.{Operation, StepForwardOperation}
@@ -12,8 +12,8 @@ case class StepForwardRule() extends BehaviourRule {
     (for {
       player <- state.playerPieces.keys
       event <- player.history
-      if event.isInstanceOf[MovementEvent]
-      movementEvent = event.asInstanceOf[MovementEvent]
+      if event.isInstanceOf[StepMovementEvent]
+      movementEvent = event.asInstanceOf[StepMovementEvent]
       if !movementEvent.isConsumed
     } yield {
       movementEvent.consume()

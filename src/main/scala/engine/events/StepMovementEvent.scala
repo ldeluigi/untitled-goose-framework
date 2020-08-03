@@ -3,7 +3,7 @@ package engine.events
 import engine.events.root.PlayerEvent
 import model.Player
 
-case class MovementEvent(steps: Int, player: Player, currentTurn: Long) extends PlayerEvent(player, currentTurn) {
+case class StepMovementEvent(steps: Int, player: Player, currentTurn: Long) extends PlayerEvent(player, currentTurn) {
 
   def movement: Int = steps
 
