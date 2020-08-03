@@ -12,7 +12,7 @@ import model.rules.{ActionRule, BehaviourRule}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import scalafx.application.JFXApp
 import view.ApplicationController
-
+import view.intro.IntroMenu
 
 object Main extends JFXApp {
 
@@ -35,8 +35,7 @@ object Main extends JFXApp {
 
   val ruleSet: RuleSet = priorityRuleSet
 
-  //Launch Intro Menu with board and rulest as parameters
-  //new IntroScene(board,ruleset)
+  new IntroMenu(board, ruleSet)
 
   //From a menu GUI that select and creates player and pieces on the press of a "Start game" button
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
