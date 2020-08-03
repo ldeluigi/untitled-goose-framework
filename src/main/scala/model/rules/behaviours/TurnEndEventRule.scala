@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.{MovementEvent, TurnShouldEndEvent}
+import engine.events.{StepMovementEvent, TurnShouldEndEvent}
 import engine.events.core.EventSink
 import engine.events.root.GameEvent
 import model.MatchState
