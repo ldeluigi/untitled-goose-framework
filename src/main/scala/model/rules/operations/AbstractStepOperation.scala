@@ -14,15 +14,15 @@ abstract class AbstractStepOperation(player: Player, remainingSteps: Int) extend
     val newPosition = step(state, oldPosition)
 
     if (oldPosition.isDefined) {
-      eventSink.accept(TileExitedEvent(oldPosition.get.tile, state.currentTurn))
+      eventSink.accept(TileExitedEvent(state.currentPlayer, oldPosition.get.tile, state.currentTurn))
     }
 
     if (newPosition.isDefined) {
-      eventSink.accept(TileEnteredEvent(oldPosition.get.tile, state.currentTurn))
+      eventSink.accept(TileEnteredEvent(state.currentPlayer, oldPosition.get.tile, state.currentTurn))
     }
 
     if (remainingSteps == 0) {
-      eventSink.accept(StopOnTileEvent(oldPosition.get.tile, state.currentTurn))
+      eventSink.accept(StopOnTileEvent(state.currentPlayer, oldPosition.get.tile, state.currentTurn))
     }
 
     state.updatePlayerPiece(player, piece =>

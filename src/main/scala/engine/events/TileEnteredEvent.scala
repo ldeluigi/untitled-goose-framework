@@ -1,9 +1,9 @@
 package engine.events
 
 import engine.events.root.TileEvent
-import model.Tile
+import model.{Player, Tile}
 
-case class TileEnteredEvent(tile: Tile, currentTurn: Long) extends TileEvent(tile, currentTurn) {
+case class TileEnteredEvent(player: Player, tile: Tile, currentTurn: Long) extends TileEvent(tile, currentTurn) {
   override def name: String = "Tile Entered"
 
   override def isConsumable: Boolean = true

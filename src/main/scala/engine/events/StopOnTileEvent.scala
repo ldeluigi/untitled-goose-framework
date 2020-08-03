@@ -1,10 +1,10 @@
 package engine.events
 
 import engine.events.root.TileEvent
-import model.Tile
+import model.{Player, Tile}
 
 
-case class StopOnTileEvent(tile: Tile, currentTurn: Long) extends TileEvent(tile, currentTurn) {
+case class StopOnTileEvent(player: Player, tile: Tile, currentTurn: Long) extends TileEvent(tile, currentTurn) {
   override def name: String = "Stop On Tile"
 
   override def isConsumable: Boolean = true
