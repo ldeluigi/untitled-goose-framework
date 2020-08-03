@@ -11,6 +11,8 @@ trait MatchBoard {
 
   def next(tile: Tile): Option[Tile]
 
+  def prev(tile: Tile): Option[Tile]
+
   def first: Tile
 }
 
@@ -25,6 +27,8 @@ object MatchBoard {
     override def next(tile: Tile): Option[Tile] = board next tile map (tileMap(_))
 
     override def first: Tile = tileMap(board first)
+
+    override def prev(tile: Tile): Option[Tile] = board prev tile map (tileMap(_))
   }
 
   def apply(board: Board): MatchBoard = new MatchBoardImpl(board)
