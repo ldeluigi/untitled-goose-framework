@@ -31,10 +31,30 @@ trait MatchState {
   def history_=(history: List[GameEvent]): Unit
 }
 
+trait ReadOnlyMatchState {
+
+  def newTurnStarted: Boolean
+
+  def currentTurn: Long
+
+  def currentPlayer: Player
+
+  def nextPlayer: Player
+
+  def playerPieces: Map[Player, Piece]
+
+  def matchBoard: MatchBoard
+
+  def history: List[GameEvent]
+
+  def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
+}
+
+
 object MatchState {
 
   private class MatchStateImpl(startTurn: Long, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
-                               val matchBoard: MatchBoard) extends MatchState {
+                               val matchBoard: MatchBoard) extends MatchState with ReadOnlyMatchState {
 
     var history: List[GameEvent] = List()
     var currentTurn: Long = startTurn
