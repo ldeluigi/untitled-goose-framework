@@ -1,13 +1,16 @@
 package engine.events.core.vertx
 
 import engine.`match`.Match
-import engine.events.core.EventSink
+import engine.events.core.{DialogDisplayer, EventSink}
 import engine.events.root.GameEvent
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
-import model.rules.operations.Operation
-import view.{ApplicationController, GooseController}
+import model.entities.DialogContent
+import model.rules.operations.{DialogOperation, Operation, SpecialOperation}
+import view.GooseController
+
+import scala.concurrent.Future
 
 trait GooseEngine {
   def currentMatch: Match
@@ -32,22 +35,47 @@ object GooseEngine {
     vertx.eventBus.registerCodec(new GameEventMessageCodec)
     vertx.deployVerticle(gv)
 
+    val dialogDisplayer: DialogDisplayer = (dialogContent: DialogContent) => controller.showDialog(dialogContent)
+
     override def accept(event: GameEvent): Unit = {
       vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(GameEventMessageCodec.name))
     }
 
+    var stopped = false
 
     private def onEvent(event: GameEvent): Unit = {
       //controller.logEvent(event) TODO FRA Decomment when implemented
       println(event.name + " " + event.turn)
       gameMatch.submitEvent(event)
       stack = gameMatch.stateBasedOperations ++ stack
-      while (stack nonEmpty) {
+      executeOperation()
+    }
+
+    def executeOperation(): Unit = {
+      if (!stopped && stack.nonEmpty) {
         val op = stack.head
         stack = stack.tail
-        op.execute(gameMatch.currentState, stackSolver)
+        op.execute(gameMatch.currentState, onEvent)
+        /*op match {
+          case operation: SpecialOperation => operation match {
+            case o: DialogOperation => dialogDisplayer.display(o.content).onComplete(e => {
+              this.stopped = false
+              e.foreach(accept)
+            })
+          }
+        }*/
         controller.update(gameMatch.currentState)
+        continue()
       }
+    }
+
+    def continue(): Unit = {
+      stopped = false
+      executeOperation()
+    }
+
+    def stopLoop(): Unit = {
+      stopped = true
     }
 
     override def currentMatch: Match = gameMatch
@@ -55,11 +83,6 @@ object GooseEngine {
     override def eventSink: EventSink[GameEvent] = this
 
     override def stop(): Unit = vertx.close()
-
-    private object stackSolver extends EventSink[GameEvent] {
-      override def accept(event: GameEvent): Unit = onEvent(event)
-    }
-
   }
 
   def apply(status: Match, controller: GooseController): GooseEngine = new GooseEngineImpl(status, controller)

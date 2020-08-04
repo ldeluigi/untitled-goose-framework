@@ -5,9 +5,12 @@ import engine.events.core.vertx.GooseEngine
 import engine.events.root.GameEvent
 import model.MatchState
 import model.actions.Action
+import model.entities.DialogContent
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
+
+import scala.concurrent.Future
 
 //TODO return scene instead of being a Scene
 trait ApplicationController extends Scene {
@@ -18,6 +21,8 @@ trait ApplicationController extends Scene {
 
 trait GooseController {
   def update(state: MatchState)
+
+  def showDialog[T](content: DialogContent): Future[T]
 
   def logEvent(event: GameEvent)
 }
@@ -60,6 +65,7 @@ object ApplicationController {
     override def close(): Unit = engine.stop()
 
     override def logEvent(event: GameEvent): Unit = ??? //TODO FRANCESCA
+    override def showDialog[T](content: DialogContent): Future[T] = ???
   }
 
   def apply(width: Int, height: Int, gameMatch: Match): ApplicationController = new
