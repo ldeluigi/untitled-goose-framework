@@ -1,7 +1,5 @@
 package model.rules.behaviours
 
-import engine.events.core.EventSink
-import engine.events.root.{GameEvent, PlayerEvent}
 import engine.events.{LoseTurnEvent, TurnSkippedEvent}
 import model.MatchState
 import model.rules.BehaviourRule
@@ -15,7 +13,7 @@ case class SkipTurnBehaviour() extends BehaviourRule {
   }
 
   def consumeTurn(): Operation = {
-    (state: MatchState, _: EventSink[GameEvent]) => {
+    Operation.execute((state: MatchState) => {
       val currentPlayerHistory = state.currentPlayer.history
         .filter(_.turn == state.currentTurn)
         .filter(!_.isConsumed)
@@ -42,6 +40,6 @@ case class SkipTurnBehaviour() extends BehaviourRule {
           }
         }
       }
-    }
+    })
   }
 }

@@ -1,8 +1,6 @@
 package model.rules.behaviours
 
 import engine.events.{GainTurnEvent, TurnShouldEndEvent}
-import engine.events.core.EventSink
-import engine.events.root.GameEvent
 import model.MatchState
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
@@ -15,7 +13,7 @@ case class TurnEndConsumer() extends BehaviourRule {
   }
 
   private def consumeTurn(state: MatchState): Operation = {
-    (s: MatchState, _: EventSink[GameEvent]) => {
+    Operation.execute((s: MatchState) => {
       val eventList = state.history
         .filter(_.turn == state.currentTurn)
         .filter(!_.isConsumed)
@@ -34,6 +32,6 @@ case class TurnEndConsumer() extends BehaviourRule {
         s.currentPlayer = s.nextPlayer
       }
 
-    }
+    })
   }
 }

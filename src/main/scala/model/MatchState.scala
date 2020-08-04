@@ -4,32 +4,6 @@ import engine.`match`.MatchBoard
 import engine.events.root.GameEvent
 import model.entities.board.Piece
 
-trait MatchState {
-
-  def newTurnStarted: Boolean
-
-  def newTurnStarted_=(value: Boolean): Unit
-
-  def currentTurn: Long
-
-  def currentPlayer: Player
-
-  def nextPlayer: Player
-
-  def playerPieces: Map[Player, Piece]
-
-  def matchBoard: MatchBoard
-
-  def history: List[GameEvent]
-
-  def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
-
-  def currentPlayer_=(player: Player): Unit
-
-  def currentTurn_=(turn: Long): Unit
-
-  def history_=(history: List[GameEvent]): Unit
-}
 
 trait ReadOnlyMatchState {
 
@@ -50,11 +24,21 @@ trait ReadOnlyMatchState {
   def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
 }
 
+trait MatchState extends ReadOnlyMatchState {
+
+  def newTurnStarted_=(value: Boolean): Unit
+
+  def currentPlayer_=(player: Player): Unit
+
+  def currentTurn_=(turn: Long): Unit
+
+  def history_=(history: List[GameEvent]): Unit
+}
 
 object MatchState {
 
   private class MatchStateImpl(startTurn: Long, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
-                               val matchBoard: MatchBoard) extends MatchState with ReadOnlyMatchState {
+                               val matchBoard: MatchBoard) extends MatchState {
 
     var history: List[GameEvent] = List()
     var currentTurn: Long = startTurn

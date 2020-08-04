@@ -1,13 +1,11 @@
 package model.rules.behaviours
 
-import engine.events.core.EventSink
-import engine.events.root.GameEvent
 import engine.events.{DiceRollEvent, StepMovementEvent}
 import model.MatchState
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
-case class MovementWithDiceRule() extends BehaviourRule {
+case class MovementWithDiceBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = None
 
@@ -20,13 +18,7 @@ case class MovementWithDiceRule() extends BehaviourRule {
         e.consume()
         e.asInstanceOf[DiceRollEvent[Int]]
       })
-      .map(e => moveOperation(e, matchState))
-  }
-
-  private def moveOperation(event: DiceRollEvent[Int], state: MatchState): Operation = {
-    (_, e: EventSink[GameEvent]) => {
-      e.accept(StepMovementEvent(event.result, event.player, state.currentTurn))
-    }
+      .map(e => Operation.trigger(s => Some(StepMovementEvent(e.result, e.player, s.currentTurn))))
   }
 
 }

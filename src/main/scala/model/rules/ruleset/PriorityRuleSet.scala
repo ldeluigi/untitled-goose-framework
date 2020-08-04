@@ -2,7 +2,7 @@ package model.rules.ruleset
 
 import model.actions.Action
 import model.entities.board.Position
-import model.rules.behaviours.{TurnEndConsumer, TurnEndEventRule}
+import model.rules.behaviours.{TurnEndConsumer, TurnEndEventBehaviour}
 import model.rules.operations.Operation
 import model.rules.{ActionRule, BehaviourRule, PlayerUtils}
 import model.{MatchState, Player, Tile}
@@ -35,7 +35,7 @@ class PriorityRuleSet(firstTile: Set[Tile] => Position,
 
   override def stateBasedOperations(state: MatchState): Seq[Operation] = {
     var opSeq: Seq[Operation] = behaviourRules.flatMap(_.applyRule(state))
-    opSeq = TurnEndEventRule().applyRule(state) ++ opSeq
+    opSeq = TurnEndEventBehaviour().applyRule(state) ++ opSeq
 
     if (state.newTurnStarted) {
       opSeq = opSeq ++ TurnEndConsumer().applyRule(state)
