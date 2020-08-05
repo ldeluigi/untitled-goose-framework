@@ -8,8 +8,6 @@ import model.actions.Action
 import model.entities.DialogContent
 import scalafx.application.Platform
 import scalafx.scene.Scene
-import scalafx.scene.control.{Alert, ButtonType}
-import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.layout.BorderPane
 
 import scala.concurrent.{Future, Promise}

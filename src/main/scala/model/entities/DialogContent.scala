@@ -10,7 +10,7 @@ trait DialogContent {
 
   def text: String
 
-  def options: Map[String, GameEvent]
+  def options: Map[String, Option[GameEvent]]
 }
 
 object DialogContent {
@@ -19,7 +19,7 @@ object DialogContent {
 
     override def text: String = "Make 10 Steps?"
 
-    override def options: Map[String, GameEvent] = Map("Yes" -> StepMovementEvent(10, state.currentPlayer, state.currentTurn))
+    override def options: Map[String, Option[GameEvent]] = Map("Yes" -> Some(StepMovementEvent(10, state.currentPlayer, state.currentTurn)), "No" -> None)
   }
 }
 

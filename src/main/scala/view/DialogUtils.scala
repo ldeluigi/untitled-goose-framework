@@ -14,9 +14,13 @@ object DialogUtils {
       headerText = content.text
       buttonTypes = content.options.map(opt => new ButtonType(opt._1))
     }
+
     val result = alert.showAndWait()
     result match {
-      case Some(value) => promise.success(content.options(value.text))
+      case Some(value) => content.options(value.text) match {
+        case Some(event) => promise.success(event)
+        case None => promise.failure(new NoSuchElementException) //TODO Check if correct
+      }
       case None => promise.failure(new IllegalStateException("-x-Dialog cannot be closed without answering"))
     }
   }
