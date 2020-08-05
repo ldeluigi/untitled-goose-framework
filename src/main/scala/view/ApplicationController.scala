@@ -8,9 +8,11 @@ import model.actions.Action
 import model.entities.DialogContent
 import scalafx.application.Platform
 import scalafx.scene.Scene
+import scalafx.scene.control.{Alert, ButtonType}
+import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.layout.BorderPane
 
-import scala.concurrent.Future
+import scala.concurrent.{Future, Promise}
 
 //TODO return scene instead of being a Scene
 trait ApplicationController extends Scene {
@@ -22,7 +24,7 @@ trait ApplicationController extends Scene {
 trait GooseController {
   def update(state: MatchState)
 
-  def showDialog[T](content: DialogContent): Future[T]
+  def showDialog(content: DialogContent): Future[GameEvent]
 
   def logEvent(event: GameEvent)
 }
@@ -65,7 +67,14 @@ object ApplicationController {
     override def close(): Unit = engine.stop()
 
     override def logEvent(event: GameEvent): Unit = ??? //TODO FRANCESCA
-    override def showDialog[T](content: DialogContent): Future[T] = ???
+
+    override def showDialog(content: DialogContent): Future[GameEvent] = {
+      val promise: Promise[GameEvent] = Promise()
+      Platform.runLater(() => {
+        DialogUtils.launchDialog(content, promise)
+      })
+      promise.future
+    }
   }
 
   def apply(width: Int, height: Int, gameMatch: Match): ApplicationController = new

@@ -1,10 +1,13 @@
 import java.awt.{Dimension, Toolkit}
 
 import engine.`match`.Match
+import engine.events.DialogLaunchEvent
+import engine.events.core.EventSink
+import engine.events.root.GameEvent
 import javafx.scene.input.KeyCode
-import model.{Color, Player}
-import model.actions.RollDice
-import model.entities.Dice
+import model.{Color, MatchState, Player}
+import model.actions.{Action, RollDice}
+import model.entities.{DialogContent, Dice}
 import model.entities.board.{Board, Disposition, Piece, Position}
 import model.rules.actionrules.AlwaysPermittedActionRule
 import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour}
@@ -22,7 +25,14 @@ object Main extends JFXApp {
   val totalTiles = 24
   val board: Board = Board(totalTiles, Disposition.spiral(totalTiles))
   val movementDice: Dice[Int] = Dice[Int]((1 to 6).toSet, "six face")
-  val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(RollDice(movementDice)))
+  val testDialog: Action = new Action {
+    override def name: String = "Launch Dialog!"
+
+    override def execute(sink: EventSink[GameEvent], state: MatchState): Unit = {
+      sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent.testDialog(s)))
+    }
+  }
+  val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(RollDice(movementDice), testDialog))
   val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour())
 
 

@@ -10,8 +10,6 @@ import model.entities.DialogContent
 import model.rules.operations.{DialogOperation, Operation, SpecialOperation}
 import view.GooseController
 
-import scala.concurrent.Future
-
 trait GooseEngine {
   def currentMatch: Match
 
@@ -56,14 +54,16 @@ object GooseEngine {
         val op = stack.head
         stack = stack.tail
         op.execute(gameMatch.currentState, onEvent)
-        /*op match {
-          case operation: SpecialOperation => operation match {
-            case o: DialogOperation => dialogDisplayer.display(o.content).onComplete(e => {
-              this.stopped = false
-              e.foreach(accept)
-            })
-          }
-        }*/
+        op match {
+          case operation: SpecialOperation =>
+            operation match {
+              case o: DialogOperation => dialogDisplayer.display(o.content).onComplete(e => {
+                this.stopped = false
+                e.foreach(accept)
+              })
+            }
+          case _ => Unit
+        }
         controller.update(gameMatch.currentState)
         continue()
       }

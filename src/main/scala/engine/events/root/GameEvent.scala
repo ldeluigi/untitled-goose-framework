@@ -16,7 +16,7 @@ trait GameEvent extends Serializable {
 
 }
 
-abstract class AbstractGameEvent(currentTurn: Long, var consumeTimes: Int) extends GameEvent {
+abstract class AbstractGameEvent(currentTurn: Long, var consumeTimes: Int = 1) extends GameEvent {
 
   def consumeAll(): Unit = consumeTimes = 0
 

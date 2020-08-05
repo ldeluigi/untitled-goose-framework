@@ -9,6 +9,11 @@ sealed trait SpecialOperation extends Operation {
 
 }
 
-class DialogOperation(val content: DialogContent) extends SpecialOperation {
-  override def execute(state: MatchState, eventSink: EventSink[GameEvent]): Unit = {}
+class DialogOperation(val createDialog: MatchState => DialogContent) extends SpecialOperation {
+  var content: DialogContent = _
+
+  override def execute(state: MatchState, eventSink: EventSink[GameEvent]): Unit = {
+    content = createDialog(state)
+  }
+
 }
