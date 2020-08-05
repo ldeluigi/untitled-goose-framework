@@ -57,25 +57,19 @@ object GooseEngine {
         op match {
           case operation: SpecialOperation =>
             operation match {
-              case o: DialogOperation => dialogDisplayer.display(o.content).onComplete(e => {
-                this.stopped = false
-                e.foreach(accept)
-              })
+              case o: DialogOperation => {
+                stopped = true
+                dialogDisplayer.display(o.content).onComplete(e => {
+                  this.stopped = false
+                  e.foreach(onEvent)
+                })
+              }
             }
           case _ => Unit
         }
         controller.update(gameMatch.currentState)
-        continue()
+        executeOperation()
       }
-    }
-
-    def continue(): Unit = {
-      stopped = false
-      executeOperation()
-    }
-
-    def stopLoop(): Unit = {
-      stopped = true
     }
 
     override def currentMatch: Match = gameMatch
