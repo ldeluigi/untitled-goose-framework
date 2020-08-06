@@ -9,28 +9,30 @@ class PieceTest extends AnyFlatSpec {
   val tileTwo: Tile = Tile(TileDefinition(2))
   val piece: Piece = Piece(Position(tileOne))
 
-  "A piece" can "not have a position" ignore {
+  "A piece" should "not have a position when created empty" in {
     val emptyPiece = Piece()
     assert(emptyPiece.position.isEmpty)
   }
 
-  it can "have a position" ignore {
+  it should "have a position when specified" in {
     assert(piece.position.nonEmpty)
   }
 
-  it should "have a color" ignore {
+  it should "have a color" in {
     assert(piece.color != null)
   }
 
-  it should "set position of the piece" ignore {
+  it should "set the position of the piece when given one" in {
     val position = Position(tileTwo)
-    assert(piece.setPosition(Some(position)).position.equals(position))
+    assert(piece.setPosition(Some(position)).position.get.equals(position))
   }
 
-  it should "update its position" ignore {
+  it should "update its position with the given function" in {
     val position = Position(tileTwo)
     def update: Option[Position] => Option[Position] = _ => Some(position)
-    assert(piece.updatePosition(update).equals(position))
+
+    val updatedPiece = piece.updatePosition(update)
+    assert(updatedPiece.position.get.equals(position))
   }
 
 }
