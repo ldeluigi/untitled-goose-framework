@@ -30,6 +30,10 @@ object Piece {
     new PieceImpl(None, color)
   }
 
+  def apply(position: Position): Piece = {
+    new PieceImpl(Some(position), Color.random)
+  }
+
   def apply(): Piece = new PieceImpl(None, Color.random)
 }
 

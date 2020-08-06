@@ -6,5 +6,6 @@
         <entry key="xml" value="XML" />
       </map>
     </option>
+    <option name="typeMismatchHints" value="false" />
   </component>
 </project>
