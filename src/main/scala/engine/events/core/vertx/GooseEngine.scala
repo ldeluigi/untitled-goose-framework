@@ -10,6 +10,8 @@ import model.entities.DialogContent
 import model.rules.operations.{DialogOperation, Operation, SpecialOperation}
 import view.GooseController
 
+import scala.util.{Failure, Success}
+
 trait GooseEngine {
   def currentMatch: Match
 
@@ -59,9 +61,12 @@ object GooseEngine {
             operation match {
               case o: DialogOperation => {
                 stopped = true
-                dialogDisplayer.display(o.content).onComplete(e => {
-                  this.stopped = false
-                  e.foreach(onEvent)
+                dialogDisplayer.display(o.content).onComplete(res => {
+                  stopped = false
+                  res match {
+                    case Failure(_) => executeOperation()
+                    case Success(event) => onEvent(event)
+                  }
                 })
               }
             }
