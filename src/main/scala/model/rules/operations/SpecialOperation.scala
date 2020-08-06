@@ -21,7 +21,8 @@ class DialogOperation(val createDialog: MatchState => DialogContent) extends Spe
 
 class TerminateTurnOperation() extends SpecialOperation {
   override def execute(state: MatchState, eventSink: EventSink[GameEvent]): Unit = ???
-    /*TODO
+
+  /*TODO
     Consume all events and player events in this turn
     fa avanzare il turno al player successivo
      */
