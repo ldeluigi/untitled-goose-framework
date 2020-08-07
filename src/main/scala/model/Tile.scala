@@ -22,6 +22,23 @@ object Tile {
     override def name: Option[String] = tile.name
 
     override def tileType: Option[List[String]] = tile.tileType
+
+    override def equals(obj: Any): Boolean = {
+      // TODO rewrite with functional style please
+      obj match {
+        case t: Tile => {
+          if (number.isDefined && t.number.isDefined && t.history.equals(history)) {
+            return number.get == t.number.get
+          }
+
+          if (name.isDefined && t.name.isDefined && t.history.equals(history)) {
+            return name.get == t.name.get
+          }
+
+          false
+        }
+      }
+    }
   }
 
   def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)
