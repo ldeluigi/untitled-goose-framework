@@ -19,11 +19,7 @@ object TileDefinition {
       case (Some(xNum), Some(yNum)) => xNum compare yNum
     }
 
-  private class TileDefinitionImpl(num: Int) extends TileDefinition {
-
-    override def number: Option[Int] = Some(num)
-
-    override def name: Option[String] = None
+  private class TileDefinitionImpl(val number: Option[Int], val name: Option[String]) extends TileDefinition {
 
     override def tileType: Option[List[String]] = None
 
@@ -45,5 +41,10 @@ object TileDefinition {
     }
   }
 
-  def apply(number: Int): TileDefinition = new TileDefinitionImpl(number) //TODO change this
+  def apply(number: Int): TileDefinition = new TileDefinitionImpl(Some(number), None) //TODO change this
+
+  def apply(number: Int, name: String): TileDefinition = new TileDefinitionImpl(Some(number), Some(name))
+
+  def apply(name: String): TileDefinition = new TileDefinitionImpl(None, Some(name))
+
 }
