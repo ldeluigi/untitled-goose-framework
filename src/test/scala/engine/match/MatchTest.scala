@@ -60,6 +60,7 @@ class MatchTest extends AnyFlatSpec with OneInstancePerTest {
     assert(state.nextPlayer.equals(p2))
   }
 
+  //TODO complete this or remove
   it should "know where the playerPieces are" in {
     pending
   }
