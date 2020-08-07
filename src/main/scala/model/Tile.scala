@@ -7,6 +7,8 @@ trait Tile extends TileDefinition {
   def history: List[TileEvent]
 
   def history_=(history: List[TileEvent]): Unit
+
+  // TODO controllare se inserire un metodo per modificare la history aggiungendo eventi
 }
 
 object Tile {

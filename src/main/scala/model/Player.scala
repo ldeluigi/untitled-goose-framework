@@ -8,6 +8,8 @@ trait Player {
   def history: List[PlayerEvent]
 
   def history_=(history: List[PlayerEvent]): Unit
+
+  // TODO controllare se inserire un metodo per modificare la history aggiungendo eventi
 }
 
 object Player {
