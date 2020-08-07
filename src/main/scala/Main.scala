@@ -45,13 +45,7 @@ object Main extends JFXApp {
 
   val ruleSet: RuleSet = priorityRuleSet
 
-  new IntroMenu(board, ruleSet)
-
-  //From a menu GUI that select and creates player and pieces on the press of a "Start game" button
-  val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
-
-  val currentMatch: Match = Match(board, players, ruleSet)
-  val appView: ApplicationController = ApplicationController(screenSize.width, screenSize.height, currentMatch)
+  val introMenu = new IntroMenu(board, ruleSet, screenSize.width, screenSize.height)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
@@ -61,13 +55,14 @@ object Main extends JFXApp {
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = appView
+    scene = introMenu
     fullScreenExitHint = "Premi esc per uscire"
   }
+
   stage.getScene.setOnKeyPressed(
     key => if (key.getCode == KeyCode.F11) {
       stage.setFullScreen(true)
     }
   )
-  stage.setOnCloseRequest(_ => appView.close())
+  //TODO fix this stage.setOnCloseRequest(_ => appView.close())
 }
