@@ -29,6 +29,10 @@ object MatchBoard {
     override def first: Tile = tileMap(board first)
 
     override def prev(tile: Tile): Option[Tile] = board prev tile map (tileMap(_))
+
+    override def equals(obj: Any): Boolean = obj match {
+      case obj: MatchBoard => obj.board.equals(board)
+    }
   }
 
   def apply(board: Board): MatchBoard = new MatchBoardImpl(board)
