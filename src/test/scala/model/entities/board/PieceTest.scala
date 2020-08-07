@@ -29,6 +29,7 @@ class PieceTest extends AnyFlatSpec {
 
   it should "update its position with the given function" in {
     val position = Position(tileTwo)
+
     def update: Option[Position] => Option[Position] = _ => Some(position)
 
     val updatedPiece = piece.updatePosition(update)

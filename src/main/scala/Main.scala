@@ -22,8 +22,8 @@ object Main extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
 
   //From DSL generation
-  val totalTiles = 24
-  val board: Board = Board(totalTiles, Disposition.spiral(totalTiles))
+  val totalTiles = 50
+  val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
   val movementDice: Dice[Int] = Dice[Int]((1 to 6).toSet, "six face")
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"
