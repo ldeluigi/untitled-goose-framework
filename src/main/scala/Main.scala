@@ -9,7 +9,7 @@ import model.{Color, MatchState, Player}
 import model.actions.{Action, RollDice}
 import model.entities.{DialogContent, Dice}
 import model.entities.board.{Board, Disposition, Piece, Position}
-import model.rules.actionrules.AlwaysPermittedActionRule
+import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.rules.{ActionRule, BehaviourRule}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
@@ -32,7 +32,7 @@ object Main extends JFXApp {
       sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent.testDialog(s)))
     }
   }
-  val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(RollDice(movementDice), testDialog))
+  val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollDice(movementDice), testDialog))
   val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour())
 
 

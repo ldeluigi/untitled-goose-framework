@@ -24,7 +24,7 @@ object PlayerOrdering {
 
   def orderedRandom: PlayerOrdering = new PlayerOrdering {
 
-    var playerList: List[Player] = List()
+    var playerList: Seq[Player] = List()
 
     override def first(players: Set[Player]): Player = {
       playerList = Random.shuffle(players).toList
@@ -32,12 +32,33 @@ object PlayerOrdering {
     }
 
     override def next(current: Player, players: Set[Player]): Player = {
-      val removed = playerList diff players.toList
-      val added = players.toList diff playerList
-      playerList = playerList.filter(!removed.contains(_))
-      playerList = playerList ++ added
+      playerList = updateLocalSeq(playerList, players)
       playerList.lift((playerList.indexOf(current) + 1) % playerList.size).get
     }
+  }
+
+
+  def givenOrder(players: Seq[Player]): PlayerOrdering = new PlayerOrdering {
+    var playerList: Seq[Player] = players
+
+    override def first(players: Set[Player]): Player = {
+      playerList = updateLocalSeq(playerList, players)
+      playerList.head
+    }
+
+    override def next(current: Player, players: Set[Player]): Player = {
+      playerList = updateLocalSeq(playerList, players)
+      playerList.lift((playerList.indexOf(current) + 1) % playerList.size).get
+    }
+  }
+
+  private def updateLocalSeq(localSeq: Seq[Player], players: Set[Player]): Seq[Player] = {
+    var playerList = localSeq
+    val removed = playerList diff players.toList
+    val added = players.toList diff playerList
+    playerList = playerList.filter(!removed.contains(_))
+    playerList = playerList ++ added
+    playerList
   }
 
 }

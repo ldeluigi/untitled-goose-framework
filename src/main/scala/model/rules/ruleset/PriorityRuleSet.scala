@@ -7,13 +7,13 @@ import model.rules.operations.Operation
 import model.rules.{ActionRule, BehaviourRule, PlayerUtils}
 import model.{MatchState, Player, Tile}
 
-class PriorityRuleSet(firstTile: Set[Tile] => Position,
+class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                       playerOrdering: PlayerOrdering,
                       actionRules: Set[ActionRule] = Set(),
                       behaviourRules: Seq[BehaviourRule] = Seq()
                      ) extends RuleSet {
 
-  override def startPosition(tiles: Set[Tile]): Position = firstTile(tiles)
+  override def startPosition(tiles: Set[Tile]): Position = firstPosition(tiles)
 
   override def actions(state: MatchState): Set[Action] =
     actionRules
@@ -49,12 +49,11 @@ class PriorityRuleSet(firstTile: Set[Tile] => Position,
 }
 
 object PriorityRuleSet {
-  def apply(startTile: Set[Tile] => Position,
-            playerOrdering: PlayerOrdering,
-            actionRules: Set[ActionRule],
-            behaviourRule: Seq[BehaviourRule]
+  def apply(startTile: Set[Tile] => Position = tiles => Position(tiles.toList.sorted.take(1).head),
+            playerOrdering: PlayerOrdering = PlayerOrdering.orderedRandom,
+            actionRules: Set[ActionRule] = Set(),
+            behaviourRule: Seq[BehaviourRule] = Seq()
            ): PriorityRuleSet =
     new PriorityRuleSet(startTile, playerOrdering, actionRules, behaviourRule)
-
 
 }

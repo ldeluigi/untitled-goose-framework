@@ -63,7 +63,7 @@ object MatchState {
 
     var newTurnStarted: Boolean = true
 
-    override def nextPlayer: Player = nextPlayerStrategy()
+    override def nextPlayer: Player = nextPlayerStrategy() //TODO Check if this is ok or we need a better way to do this
   }
 
   def apply(startTurn: Long, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =
