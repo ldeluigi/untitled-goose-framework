@@ -39,6 +39,7 @@ object ApplicationController {
 
     val boardProportion = 0.8
     val appBarOffset = 40
+    val logHeight = 200
 
     val borderPane = new BorderPane()
     this.content = borderPane
@@ -48,7 +49,7 @@ object ApplicationController {
     val boardView: BoardDisplay = BoardDisplay(gameMatch.board)
     borderPane.center = boardView
     boardView.prefWidth <== this.width * boardProportion
-    boardView.prefHeight <== this.height - 200
+    boardView.prefHeight <== this.height - logHeight
     boardView.updateMatchState(gameMatch.currentState)
 
     val actionMenu: ActionMenu = ActionMenu(boardView, this)
@@ -57,14 +58,13 @@ object ApplicationController {
     actionMenu.displayActions(gameMatch.availableActions)
 
 
-    val logger: EventLogger = EventLogger()
+    val logger: EventLogger = EventLogger(logHeight)
     borderPane.bottom = logger
     logger.prefWidth <== this.width
     /*
     val showLogger: Button = new Button("logger")
     showLogger.onMouseClicked = _ => logger.setVisible(!logger.isVisible)
     borderPane.left = showLogger
-
      */
 
     def resolveAction(action: Action): Unit = {

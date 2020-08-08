@@ -46,7 +46,7 @@ object BoardDisplay {
           if (p._1 == matchState.currentPlayer) {
             setFocus(positionTile.get)
           }
-          positionTile.get.setPiece(PieceVisualization(p._2))
+          positionTile.get.setPiece(PieceVisualization(p._2, this.width))
         }
       }
     }

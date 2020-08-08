@@ -9,5 +9,5 @@ object Color extends Enumeration {
   }
 
   type Color = Value
-  val Red, Blue, Yellow, White, Black, Orange, Green, Purple = Value
+  val Red, Blue, Yellow, Orange, Green, Purple = Value
 }

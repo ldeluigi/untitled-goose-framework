@@ -10,8 +10,6 @@ object ColorUtils {
       case model.Color.Red => Color.Red
       case model.Color.Blue => Color.Blue
       case model.Color.Yellow => Color.Yellow
-      case model.Color.White => Color.White
-      case model.Color.Black => Color.Black
       case model.Color.Orange => Color.Orange
       case model.Color.Green => Color.Green
       case model.Color.Purple => Color.Purple

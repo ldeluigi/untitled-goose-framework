@@ -13,14 +13,15 @@ trait EventLogger extends Pane {
 
 object EventLogger {
 
-  private class EventLoggerImpl() extends EventLogger {
+  private class EventLoggerImpl(height: Int) extends EventLogger {
     val logText: TextArea = new TextArea {
       wrapText = true
       editable = false
     }
 
     this.children.add(logText)
-    logText.prefWidth <== this.prefWidth
+    logText.prefWidth <== this.width
+    logText.prefHeight = height
 
     def logEvent(event: GameEvent): Unit = {
       val now = Calendar.getInstance().getTime
@@ -32,6 +33,6 @@ object EventLogger {
   }
 
 
-  def apply(): EventLogger = new EventLoggerImpl()
+  def apply(height: Int): EventLogger = new EventLoggerImpl(height)
 
 }
