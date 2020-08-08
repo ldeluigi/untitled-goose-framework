@@ -25,18 +25,18 @@ object Tile {
 
     override def equals(obj: Any): Boolean = {
       // TODO rewrite with functional style please
+      // TODO history comparison???
       obj match {
-        case t: Tile => {
-          if (number.isDefined && t.number.isDefined && t.history.equals(history)) {
+        case t: Tile =>
+          if (number.isDefined && t.number.isDefined) {
             return number.get == t.number.get
           }
 
-          if (name.isDefined && t.name.isDefined && t.history.equals(history)) {
+          if (name.isDefined && t.name.isDefined) {
             return name.get == t.name.get
           }
 
           false
-        }
       }
     }
   }
