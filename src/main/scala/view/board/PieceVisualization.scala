@@ -1,10 +1,9 @@
-package view
-
+package view.board
 
 import model.entities.board.Piece
 import scalafx.scene.layout.StackPane
-import scalafx.scene.paint.Color._
 import scalafx.scene.shape.{Circle, Shape}
+import view.ColorUtils
 
 trait PieceVisualization extends StackPane {
   def pieceShape: Shape

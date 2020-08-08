@@ -18,6 +18,8 @@ trait GameEvent extends Serializable {
 
 abstract class AbstractGameEvent(currentTurn: Long, var consumeTimes: Int = 1) extends GameEvent {
 
+  def name: String = this.getClass.getSimpleName
+
   def consumeAll(): Unit = consumeTimes = 0
 
   override def isConsumable: Boolean = consumeTimes > 0
@@ -32,6 +34,12 @@ abstract class AbstractGameEvent(currentTurn: Long, var consumeTimes: Int = 1) e
   override def group: List[String] = List()
 
   override def turn: Long = currentTurn
+
+  override def toString: String = {
+    " Turn: " + currentTurn + " " + name
+  }
+
+
 }
 
 

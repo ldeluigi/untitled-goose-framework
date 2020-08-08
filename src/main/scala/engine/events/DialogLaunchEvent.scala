@@ -5,5 +5,5 @@ import model.MatchState
 import model.entities.DialogContent
 
 case class DialogLaunchEvent(currentTurn: Long, createDialog: MatchState => DialogContent) extends AbstractGameEvent(currentTurn) {
-  override def name: String = "Dialog Launch"
+
 }

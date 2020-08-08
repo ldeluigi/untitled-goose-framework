@@ -39,6 +39,11 @@ object Tile {
           false
       }
     }
+
+    override def toString: String =
+      "Tile: " +
+        (if (number.isDefined) " number " + number.get else "") +
+        (if (name.isDefined) name.get else "")
   }
 
   def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)

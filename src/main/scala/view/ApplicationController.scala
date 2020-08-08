@@ -1,14 +1,18 @@
 package view
 
 import engine.`match`.Match
-import engine.events.core.vertx.GooseEngine
+import engine.core.vertx.GooseEngine
 import engine.events.root.GameEvent
 import model.MatchState
 import model.actions.Action
 import model.entities.DialogContent
 import scalafx.application.Platform
 import scalafx.scene.Scene
+import scalafx.scene.control.Button
 import scalafx.scene.layout.BorderPane
+import view.actionmenu.ActionMenu
+import view.board.BoardDisplay
+import view.logger.EventLogger
 
 import scala.concurrent.{Future, Promise}
 
@@ -41,16 +45,27 @@ object ApplicationController {
 
     val engine: GooseEngine = GooseEngine(gameMatch, this)
 
-    val boardView: BoardView = BoardView(gameMatch.board)
+    val boardView: BoardDisplay = BoardDisplay(gameMatch.board)
     borderPane.center = boardView
     boardView.prefWidth <== this.width * boardProportion
-    boardView.prefHeight <== this.height
+    boardView.prefHeight <== this.height - 200
     boardView.updateMatchState(gameMatch.currentState)
 
     val actionMenu: ActionMenu = ActionMenu(boardView, this)
     borderPane.right = actionMenu
     actionMenu.prefWidth <== this.width * (1 - boardProportion)
     actionMenu.displayActions(gameMatch.availableActions)
+
+
+    val logger: EventLogger = EventLogger()
+    borderPane.bottom = logger
+    logger.prefWidth <== this.width
+    /*
+    val showLogger: Button = new Button("logger")
+    showLogger.onMouseClicked = _ => logger.setVisible(!logger.isVisible)
+    borderPane.left = showLogger
+
+     */
 
     def resolveAction(action: Action): Unit = {
       action.execute(engine.eventSink, engine.currentMatch.currentState)
@@ -64,7 +79,10 @@ object ApplicationController {
 
     override def close(): Unit = engine.stop()
 
-    override def logEvent(event: GameEvent): Unit = ??? //TODO FRANCESCA
+    override def logEvent(event: GameEvent): Unit = Platform.runLater(() => {
+      logger.logEvent(event)
+    })
+
 
     override def showDialog(content: DialogContent): Future[GameEvent] = {
       val promise: Promise[GameEvent] = Promise()

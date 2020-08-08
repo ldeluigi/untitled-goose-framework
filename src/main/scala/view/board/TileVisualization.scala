@@ -1,4 +1,4 @@
-package view
+package view.board
 
 import model.Tile
 import scalafx.beans.property.ReadOnlyDoubleProperty

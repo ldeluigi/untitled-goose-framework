@@ -1,7 +1,8 @@
-package view
+package view.actionmenu
 
 import model.actions.Action
 import scalafx.scene.control.Button
+import view.ApplicationController
 
 trait ActionVisualization extends Button {
 

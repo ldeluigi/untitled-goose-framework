@@ -23,6 +23,8 @@ object Player {
     override def equals(obj: Any): Boolean = obj match {
       case obj: Player => this.name == obj.name
     }
+
+    override def toString: String = "Player: " + name
   }
 
   def apply(name: String): Player = new PlayerImpl(name)

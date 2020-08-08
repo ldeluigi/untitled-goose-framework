@@ -1,7 +1,7 @@
 package model.actions
 
 import engine.events.DiceRollEvent
-import engine.events.core.EventSink
+import engine.core.EventSink
 import engine.events.root.GameEvent
 import model.MatchState
 import model.entities.Dice

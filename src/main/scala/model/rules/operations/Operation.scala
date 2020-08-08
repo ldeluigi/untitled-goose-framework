@@ -1,6 +1,6 @@
 package model.rules.operations
 
-import engine.events.core.{DialogDisplayer, EventSink}
+import engine.core.{DialogDisplayer, EventSink}
 import engine.events.root.GameEvent
 import model.entities.DialogContent
 import model.{MatchState, ReadOnlyMatchState}

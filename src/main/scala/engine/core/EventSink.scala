@@ -1,4 +1,4 @@
-package engine.events.core
+package engine.core
 
 import engine.events.root.GameEvent
 

@@ -2,7 +2,7 @@ import java.awt.{Dimension, Toolkit}
 
 import engine.`match`.Match
 import engine.events.DialogLaunchEvent
-import engine.events.core.EventSink
+import engine.core.EventSink
 import engine.events.root.GameEvent
 import javafx.scene.input.KeyCode
 import model.{Color, MatchState, Player}

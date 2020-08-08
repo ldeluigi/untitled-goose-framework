@@ -2,7 +2,7 @@ import java.awt.{Dimension, Toolkit}
 
 import engine.`match`.Match
 import engine.events.DialogLaunchEvent
-import engine.events.core.EventSink
+import engine.core.EventSink
 import engine.events.root.GameEvent
 import javafx.scene.input.KeyCode
 import model.{Color, MatchState, Player}
@@ -15,7 +15,7 @@ import model.rules.{ActionRule, BehaviourRule}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import scalafx.application.JFXApp
 import view.ApplicationController
-import view.intro.IntroMenu
+import view.playerselection.PlayerSelection
 
 object Main extends JFXApp {
 
@@ -45,7 +45,7 @@ object Main extends JFXApp {
 
   val ruleSet: RuleSet = priorityRuleSet
 
-  val introMenu = new IntroMenu(board, ruleSet, screenSize.width, screenSize.height)
+  val introMenu = new PlayerSelection(board, ruleSet, screenSize.width, screenSize.height)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"

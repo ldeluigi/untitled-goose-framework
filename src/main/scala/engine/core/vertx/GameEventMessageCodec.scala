@@ -1,4 +1,4 @@
-package engine.events.core.vertx
+package engine.core.vertx
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 

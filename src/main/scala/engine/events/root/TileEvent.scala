@@ -6,6 +6,7 @@ abstract class TileEvent(tile: Tile, currentTurn: Long, consumeTimes: Int = 1) e
 
   def source: Tile = tile
 
+  override def toString: String = super.toString + " Source: " + source.toString
 }
 
 object TileEvent {

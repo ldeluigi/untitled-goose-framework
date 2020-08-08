@@ -7,7 +7,6 @@ case class StepMovementEvent(steps: Int, player: Player, currentTurn: Long) exte
 
   def movement: Int = steps
 
-  override def name: String = "Movement Event " + steps
-
+  override def toString: String = super.toString + " steps: " + steps
 }
 

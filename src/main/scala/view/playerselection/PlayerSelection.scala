@@ -1,4 +1,4 @@
-package view.intro
+package view.playerselection
 
 import engine.`match`.Match
 import model.{Color, Player}
@@ -9,7 +9,7 @@ import scalafx.scene.control.{Button, ComboBox, Label, TextField}
 import scalafx.scene.layout.BorderPane
 import view.ApplicationController
 
-class IntroMenu(board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int) extends Scene {
+class PlayerSelection(board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int) extends Scene {
 
   val borderPane = new BorderPane()
   this.content = borderPane

@@ -1,7 +1,7 @@
 package model.actions
 
 import engine.events.StepMovementEvent
-import engine.events.core.EventSink
+import engine.core.EventSink
 import engine.events.root.GameEvent
 import model.MatchState
 

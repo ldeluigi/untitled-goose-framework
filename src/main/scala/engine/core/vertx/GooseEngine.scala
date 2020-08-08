@@ -1,7 +1,7 @@
-package engine.events.core.vertx
+package engine.core.vertx
 
 import engine.`match`.Match
-import engine.events.core.{DialogDisplayer, EventSink}
+import engine.core.{DialogDisplayer, EventSink}
 import engine.events.root.GameEvent
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
@@ -44,7 +44,7 @@ object GooseEngine {
     var stopped = false
 
     private def onEvent(event: GameEvent): Unit = {
-      //controller.logEvent(event) TODO FRA Decomment when implemented
+      controller.logEvent(event)
       println(event.name + " " + event.turn)
       gameMatch.submitEvent(event)
       stack = gameMatch.stateBasedOperations ++ stack

@@ -1,4 +1,4 @@
-package engine.events.core.vertx
+package engine.core.vertx
 
 import engine.events.root.GameEvent
 import io.vertx.lang.scala.ScalaVerticle

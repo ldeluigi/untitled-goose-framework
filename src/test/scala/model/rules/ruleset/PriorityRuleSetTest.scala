@@ -1,7 +1,7 @@
 package model.rules.ruleset
 
 import engine.`match`.Match
-import engine.events.core.EventSink
+import engine.core.EventSink
 import engine.events.root.GameEvent
 import model.actions.Action
 import model.{MatchState, Player, Tile}
