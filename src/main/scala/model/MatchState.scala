@@ -21,6 +21,5 @@ trait MatchState {
 
   def history: List[GameEvent]
 
-  def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
 }
 
