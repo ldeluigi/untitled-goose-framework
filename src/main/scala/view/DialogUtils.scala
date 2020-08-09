@@ -2,8 +2,8 @@ package view
 
 import engine.events.root.GameEvent
 import model.entities.DialogContent
-import scalafx.scene.control.{Alert, ButtonType}
 import scalafx.scene.control.Alert.AlertType
+import scalafx.scene.control.{Alert, ButtonType}
 
 import scala.concurrent.Promise
 

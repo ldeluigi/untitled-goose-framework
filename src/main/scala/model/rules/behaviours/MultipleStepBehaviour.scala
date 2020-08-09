@@ -4,13 +4,13 @@ import engine.events.{StepMovementEvent, StopOnTileEvent, TileEnteredEvent, Tile
 import model.entities.board.Position
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
-import model.{MutableMatchState, Player}
+import model.{MatchState, Player}
 
 case class MultipleStepBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = Some("Multiple StepRule")
 
-  override def applyRule(state: MutableMatchState): Seq[Operation] = {
+  override def applyRule(state: MatchState): Seq[Operation] = {
     state.currentPlayer.history
       .filter(_.turn == state.currentTurn)
       .filter(!_.isConsumed)
@@ -22,13 +22,13 @@ case class MultipleStepBehaviour() extends BehaviourRule {
       .flatMap(e => generateStep(state, e.movement, e.source, e.movement >= 0))
   }
 
-  def generateStep(state: MutableMatchState, step: Int, player: Player, forward: Boolean): Seq[Operation] = {
+  def generateStep(state: MatchState, step: Int, player: Player, forward: Boolean): Seq[Operation] = {
     (1 to step).toList.flatMap(i => {
       stepOperation(state, player, forward, step - i)
     })
   }
 
-  def stepOperation(state: MutableMatchState, player: Player, forward: Boolean, remainingSteps: Int): Seq[Operation] = {
+  def stepOperation(state: MatchState, player: Player, forward: Boolean, remainingSteps: Int): Seq[Operation] = {
 
     val tileExited = Operation.trigger(s => {
       val tile = s.playerPieces(player).position.map(_.tile)

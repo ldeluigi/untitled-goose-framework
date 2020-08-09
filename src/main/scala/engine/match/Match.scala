@@ -19,6 +19,8 @@ trait Match {
 
   def stateBasedOperations: Seq[Operation]
 
+  def cleanup: Operation
+
   def submitEvent(event: GameEvent): Unit
 }
 
@@ -53,6 +55,8 @@ object Match {
         case event: GameEvent => event :: this.currentState.history
       }
     }
+
+    override def cleanup: Operation = Operation.execute(rules.cleanupOperations)
   }
 
   def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Match = new MatchImpl(board, players, rules)

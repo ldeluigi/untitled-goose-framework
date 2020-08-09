@@ -45,7 +45,9 @@ object GooseEngine {
 
     private def onEvent(event: GameEvent): Unit = {
       controller.logEvent(event)
-      println(event.name + " " + event.turn)
+      if (stack.isEmpty) {
+        stack = stack :+ gameMatch.cleanup
+      }
       gameMatch.submitEvent(event)
       stack = gameMatch.stateBasedOperations ++ stack
       executeOperation()

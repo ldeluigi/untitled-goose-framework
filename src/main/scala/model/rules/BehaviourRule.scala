@@ -1,10 +1,10 @@
 package model.rules
 
-import model.MutableMatchState
+import model.MatchState
 import model.rules.operations.Operation
 
 trait BehaviourRule {
   def name: Option[String]
 
-  def applyRule(state: MutableMatchState): Seq[Operation]
+  def applyRule(state: MatchState): Seq[Operation]
 }
