@@ -4,26 +4,6 @@ import engine.`match`.MatchBoard
 import engine.events.root.GameEvent
 import model.entities.board.Piece
 
-
-trait MatchState {
-
-  def newTurnStarted: Boolean
-
-  def currentTurn: Int
-
-  def currentPlayer: Player
-
-  def nextPlayer: Player
-
-  def playerPieces: Map[Player, Piece]
-
-  def matchBoard: MatchBoard
-
-  def history: List[GameEvent]
-
-  def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
-}
-
 trait MutableMatchState extends MatchState {
 
   def newTurnStarted_=(value: Boolean): Unit
@@ -69,4 +49,3 @@ object MutableMatchState {
   def apply(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: MatchBoard): MutableMatchState =
     new MatchStateImpl(startTurn, startPlayer, nextPlayerStrategy, pieces, board)
 }
-

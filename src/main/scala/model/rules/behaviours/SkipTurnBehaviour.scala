@@ -1,14 +1,14 @@
 package model.rules.behaviours
 
 import engine.events.{LoseTurnEvent, SkipTurnEvent}
-import model.MutableMatchState
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
+import model.{MatchState, MutableMatchState}
 
 case class SkipTurnBehaviour() extends BehaviourRule {
   override def name: Option[String] = None
 
-  override def applyRule(state: MutableMatchState): Seq[Operation] = {
+  override def applyRule(state: MatchState): Seq[Operation] = {
     Seq(consumeTurn())
   }
 

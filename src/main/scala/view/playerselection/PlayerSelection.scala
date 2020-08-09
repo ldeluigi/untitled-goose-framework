@@ -1,9 +1,9 @@
 package view.playerselection
 
 import engine.`match`.Match
-import model.{Color, Player}
 import model.entities.board.{Board, Piece}
 import model.rules.ruleset.RuleSet
+import model.{Color, Player}
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, ComboBox, Label, TextField}
 import scalafx.scene.layout.BorderPane
