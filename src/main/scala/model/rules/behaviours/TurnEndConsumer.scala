@@ -1,19 +1,19 @@
 package model.rules.behaviours
 
 import engine.events.{GainTurnEvent, TurnShouldEndEvent}
-import model.MatchState
+import model.MutableMatchState
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
 case class TurnEndConsumer() extends BehaviourRule {
   override def name: Option[String] = Some("TurnEndConsumer")
 
-  override def applyRule(state: MatchState): Seq[Operation] = {
+  override def applyRule(state: MutableMatchState): Seq[Operation] = {
     Seq(consumeTurn(state))
   }
 
-  private def consumeTurn(state: MatchState): Operation = {
-    Operation.execute((s: MatchState) => {
+  private def consumeTurn(state: MutableMatchState): Operation = {
+    Operation.execute((s: MutableMatchState) => {
       val eventList = state.history
         .filter(_.turn == state.currentTurn)
         .filter(!_.isConsumed)

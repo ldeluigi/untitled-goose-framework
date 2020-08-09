@@ -6,7 +6,7 @@ trait GameEvent extends Serializable {
 
   def group: List[String]
 
-  def turn: Long
+  def turn: Int
 
   def isConsumed: Boolean
 

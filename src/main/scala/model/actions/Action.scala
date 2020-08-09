@@ -1,15 +1,14 @@
 package model.actions
 
-import engine.`match`.Match
 import engine.core.EventSink
 import engine.events.root.GameEvent
-import model.MatchState
+import model.MutableMatchState
 
 trait Action {
 
   def name: String
 
-  def execute(sink: EventSink[GameEvent], state: MatchState): Unit
+  def execute(sink: EventSink[GameEvent], state: MutableMatchState): Unit
 
   override def equals(obj: Any): Boolean = obj match {
     case a: Action if a.name == this.name => true

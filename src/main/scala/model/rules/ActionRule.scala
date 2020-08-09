@@ -1,17 +1,17 @@
 package model.rules
 
-import model.MatchState
+import model.MutableMatchState
 
 trait ActionRule {
 
-  def allowedActions(state: MatchState): Set[ActionAvailability]
+  def allowedActions(state: MutableMatchState): Set[ActionAvailability]
 
 }
 
 object ActionRule {
 
   private class ActionRuleImpl() extends ActionRule {
-    override def allowedActions(state: MatchState): Set[ActionAvailability] = Set()
+    override def allowedActions(state: MutableMatchState): Set[ActionAvailability] = Set()
   }
 
   def apply(): ActionRule = new ActionRuleImpl()

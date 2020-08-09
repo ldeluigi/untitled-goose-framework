@@ -5,7 +5,7 @@ import model.actions.Action
 import model.entities.board.{Board, Piece}
 import model.rules.operations.Operation
 import model.rules.ruleset.RuleSet
-import model.{MatchState, Player}
+import model.{MutableMatchState, Player}
 
 trait Match {
 
@@ -15,7 +15,7 @@ trait Match {
 
   def players: Set[Player]
 
-  def currentState: MatchState
+  def currentState: MutableMatchState
 
   def stateBasedOperations: Seq[Operation]
 
@@ -31,7 +31,7 @@ object Match {
     for (piece <- playerPieces.values) {
       piece.setPosition(Some(rules.startPosition(board.tiles)))
     }
-    val currentState: MatchState = MatchState(
+    val currentState: MutableMatchState = MutableMatchState(
       firstTurn,
       rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, players),

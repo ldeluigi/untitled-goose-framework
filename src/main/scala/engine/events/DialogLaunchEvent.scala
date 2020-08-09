@@ -1,9 +1,9 @@
 package engine.events
 
-import engine.events.root.AbstractGameEvent
-import model.MatchState
+import engine.events.root.ConsumableGameEvent
+import model.MutableMatchState
 import model.entities.DialogContent
 
-case class DialogLaunchEvent(currentTurn: Long, createDialog: MatchState => DialogContent) extends AbstractGameEvent(currentTurn) {
+case class DialogLaunchEvent(currentTurn: Int, createDialog: MutableMatchState => DialogContent) extends ConsumableGameEvent(currentTurn) {
 
 }

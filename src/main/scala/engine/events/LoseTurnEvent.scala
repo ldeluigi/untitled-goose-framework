@@ -1,7 +1,8 @@
 package engine.events
 
-import engine.events.root.PlayerEvent
+import engine.events.root.{ConsumableGameEvent, PlayerEvent}
 import model.Player
 
-case class LoseTurnEvent(player: Player, currentTurn: Long, turnLost: Int) extends PlayerEvent(player, currentTurn, turnLost) {
+case class LoseTurnEvent(source: Player, currentTurn: Int, turnLost: Int)
+  extends ConsumableGameEvent(currentTurn) with PlayerEvent {
 }

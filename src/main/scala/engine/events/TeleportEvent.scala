@@ -1,11 +1,10 @@
 package engine.events
 
-import engine.events.root.PlayerEvent
+import engine.events.root.{ConsumableGameEvent, PlayerEvent}
 import model.{Player, Tile}
 
-case class TeleportEvent(teleportTo: Tile, player: Player, currentTurn: Long) extends PlayerEvent(player, currentTurn) {
-
-  def tile: Tile = teleportTo
+case class TeleportEvent(teleportTo: Tile, source: Player, currentTurn: Int)
+  extends ConsumableGameEvent(currentTurn) with PlayerEvent {
 
   override def toString: String = super.toString + " teleport to: " + teleportTo.toString
 

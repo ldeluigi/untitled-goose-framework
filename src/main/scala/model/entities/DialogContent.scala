@@ -2,7 +2,7 @@ package model.entities
 
 import engine.events.StepMovementEvent
 import engine.events.root.GameEvent
-import model.MatchState
+import model.MutableMatchState
 
 trait DialogContent {
 
@@ -14,7 +14,7 @@ trait DialogContent {
 }
 
 object DialogContent {
-  def testDialog(state: MatchState): DialogContent = new DialogContent {
+  def testDialog(state: MutableMatchState): DialogContent = new DialogContent {
     override def title = "Movement bonus!"
 
     override def text: String = "Make 10 Steps?"

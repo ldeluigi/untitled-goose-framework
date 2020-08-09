@@ -1,20 +1,18 @@
 import java.awt.{Dimension, Toolkit}
 
-import engine.`match`.Match
-import engine.events.DialogLaunchEvent
 import engine.core.EventSink
+import engine.events.DialogLaunchEvent
 import engine.events.root.GameEvent
 import javafx.scene.input.KeyCode
-import model.{Color, MatchState, Player}
+import model.MutableMatchState
 import model.actions.{Action, RollDice}
+import model.entities.board.{Board, Disposition, Position}
 import model.entities.{DialogContent, Dice}
-import model.entities.board.{Board, Disposition, Piece, Position}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour}
-import model.rules.{ActionRule, BehaviourRule}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
+import model.rules.{ActionRule, BehaviourRule}
 import scalafx.application.JFXApp
-import view.ApplicationController
 import view.playerselection.PlayerSelection
 
 object Main extends JFXApp {
@@ -28,7 +26,7 @@ object Main extends JFXApp {
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"
 
-    override def execute(sink: EventSink[GameEvent], state: MatchState): Unit = {
+    override def execute(sink: EventSink[GameEvent], state: MutableMatchState): Unit = {
       sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent.testDialog(s)))
     }
   }

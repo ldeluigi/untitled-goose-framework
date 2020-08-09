@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
 import engine.events.DialogLaunchEvent
-import model.MatchState
+import model.MutableMatchState
 import model.rules.BehaviourRule
 import model.rules.operations.{DialogOperation, Operation}
 
@@ -9,7 +9,7 @@ case class DialogLaunchBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = None
 
-  override def applyRule(state: MatchState): Seq[Operation] = {
+  override def applyRule(state: MutableMatchState): Seq[Operation] = {
     state.history
       .filter(_.turn == state.currentTurn)
       .filter(!_.isConsumed)

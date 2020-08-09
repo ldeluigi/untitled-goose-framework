@@ -1,12 +1,11 @@
 package model.rules.ruleset
 
-import engine.`match`.Match
 import engine.core.EventSink
 import engine.events.root.GameEvent
 import model.actions.Action
-import model.{MatchState, Player, Tile}
 import model.entities.board.{Position, TileDefinition}
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
+import model.{MutableMatchState, Player, Tile}
 import org.scalatest.flatspec.AnyFlatSpec
 
 class PriorityRuleSetTest extends AnyFlatSpec {
@@ -22,7 +21,7 @@ class PriorityRuleSetTest extends AnyFlatSpec {
   val myAction: Action = new Action {
     override def name: String = "testAction"
 
-    override def execute(sink: EventSink[GameEvent], state: MatchState): Unit = {}
+    override def execute(sink: EventSink[GameEvent], state: MutableMatchState): Unit = {}
   }
 
 
@@ -45,14 +44,14 @@ class PriorityRuleSetTest extends AnyFlatSpec {
     val negation = AlwaysNegatedActionRule(1, myAction)
     val permission = AlwaysPermittedActionRule(2, myAction)
     val ruleSet = PriorityRuleSet(actionRules = Set(negation, permission))
-    assert(ruleSet.actions(null).contains(myAction)) //TODO CHECK WHAT TO DO WITH STATE
+    assert(ruleSet.actions(null).contains(myAction))
   }
 
   it should "negate the action if the priority of the permission is lower than the negation" in {
     val negation = AlwaysNegatedActionRule(2, myAction)
     val permission = AlwaysPermittedActionRule(1, myAction)
     val ruleSet = PriorityRuleSet(actionRules = Set(negation, permission))
-    assert(!ruleSet.actions(null).contains(myAction)) //TODO CHECK WHAT TO DO WITH STATE
+    assert(!ruleSet.actions(null).contains(myAction))
   }
 
   it should "return the operations to be executed in a state" in {

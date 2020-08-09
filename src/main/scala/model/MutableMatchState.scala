@@ -5,11 +5,11 @@ import engine.events.root.GameEvent
 import model.entities.board.Piece
 
 
-trait ReadOnlyMatchState {
+trait MatchState {
 
   def newTurnStarted: Boolean
 
-  def currentTurn: Long
+  def currentTurn: Int
 
   def currentPlayer: Player
 
@@ -24,24 +24,24 @@ trait ReadOnlyMatchState {
   def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
 }
 
-trait MatchState extends ReadOnlyMatchState {
+trait MutableMatchState extends MatchState {
 
   def newTurnStarted_=(value: Boolean): Unit
 
   def currentPlayer_=(player: Player): Unit
 
-  def currentTurn_=(turn: Long): Unit
+  def currentTurn_=(turn: Int): Unit
 
   def history_=(history: List[GameEvent]): Unit
 }
 
-object MatchState {
+object MutableMatchState {
 
-  private class MatchStateImpl(startTurn: Long, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
-                               val matchBoard: MatchBoard) extends MatchState {
+  private class MatchStateImpl(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
+                               val matchBoard: MatchBoard) extends MutableMatchState {
 
     var history: List[GameEvent] = List()
-    var currentTurn: Long = startTurn
+    var currentTurn: Int = startTurn
 
     private var currentTurnPlayer: Player = startPlayer
 
@@ -66,7 +66,7 @@ object MatchState {
     override def nextPlayer: Player = nextPlayerStrategy() //TODO Check if this is ok or we need a better way to do this
   }
 
-  def apply(startTurn: Long, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: MatchBoard): MatchState =
+  def apply(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: MatchBoard): MutableMatchState =
     new MatchStateImpl(startTurn, startPlayer, nextPlayerStrategy, pieces, board)
 }
 

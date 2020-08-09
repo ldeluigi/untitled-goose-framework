@@ -2,9 +2,9 @@ package engine.events.root
 
 import model.Tile
 
-abstract class TileEvent(tile: Tile, currentTurn: Long, consumeTimes: Int = 1) extends AbstractGameEvent(currentTurn, consumeTimes) {
+trait TileEvent extends GameEvent {
 
-  def source: Tile = tile
+  def source: Tile
 
   override def toString: String = super.toString + " Source: " + source.toString
 }

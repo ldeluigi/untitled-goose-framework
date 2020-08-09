@@ -3,12 +3,11 @@ package view
 import engine.`match`.Match
 import engine.core.vertx.GooseEngine
 import engine.events.root.GameEvent
-import model.MatchState
+import model.MutableMatchState
 import model.actions.Action
 import model.entities.DialogContent
 import scalafx.application.Platform
 import scalafx.scene.Scene
-import scalafx.scene.control.Button
 import scalafx.scene.layout.BorderPane
 import view.actionmenu.ActionMenu
 import view.board.BoardDisplay
@@ -24,7 +23,7 @@ trait ApplicationController extends Scene {
 }
 
 trait GooseController {
-  def update(state: MatchState)
+  def update(state: MutableMatchState)
 
   def showDialog(content: DialogContent): Future[GameEvent]
 
@@ -70,7 +69,7 @@ object ApplicationController {
       action.execute(engine.eventSink, engine.currentMatch.currentState)
     }
 
-    override def update(state: MatchState): Unit = Platform.runLater(() => {
+    override def update(state: MutableMatchState): Unit = Platform.runLater(() => {
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
     })

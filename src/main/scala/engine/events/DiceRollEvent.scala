@@ -1,12 +1,12 @@
 package engine.events
 
-import engine.events.root.{AbstractGameEvent, PlayerEvent}
+import engine.events.root.{ConsumableGameEvent, PlayerEvent}
 import model.Player
 
-case class DiceRollEvent[DiceSide](player: Player, side: DiceSide, currentTurn: Long) extends PlayerEvent(player, currentTurn) {
+case class DiceRollEvent[DiceSide](source: Player, side: DiceSide, currentTurn: Int)
+  extends ConsumableGameEvent(currentTurn) with PlayerEvent {
 
   def result: DiceSide = side
 
   override def toString: String = super.toString + " result: " + result.toString
-
 }

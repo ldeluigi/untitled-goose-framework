@@ -1,24 +1,21 @@
 package model.rules.operations
 
-import engine.core.{DialogDisplay, EventSink}
+import engine.core.EventSink
 import engine.events.root.GameEvent
-import model.entities.DialogContent
-import model.{MatchState, ReadOnlyMatchState}
-
-import scala.concurrent.ExecutionContext
+import model.{MatchState, MutableMatchState}
 
 
 trait Operation {
-  def execute(state: MatchState, eventSink: EventSink[GameEvent]): Unit
+  def execute(state: MutableMatchState, eventSink: EventSink[GameEvent]): Unit
 }
 
 object Operation {
 
-  def trigger(f: ReadOnlyMatchState => Option[GameEvent]): Operation = (state: MatchState, eventSink: EventSink[GameEvent]) => {
+  def trigger(f: MatchState => Option[GameEvent]): Operation = (state: MutableMatchState, eventSink: EventSink[GameEvent]) => {
     f(state).foreach(eventSink.accept)
   }
 
-  def execute(f: MatchState => Unit): Operation = (state: MatchState, _: EventSink[GameEvent]) => {
+  def execute(f: MutableMatchState => Unit): Operation = (state: MutableMatchState, _: EventSink[GameEvent]) => {
     f(state)
   }
 }

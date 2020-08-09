@@ -4,12 +4,12 @@ import engine.events.{StopOnTileEvent, TeleportEvent, TileEnteredEvent, TileExit
 import model.entities.board.Position
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
-import model.{MatchState, Player, Tile}
+import model.{MutableMatchState, Player, Tile}
 
 class TeleportBehaviour extends BehaviourRule {
   override def name: Option[String] = Some("Teleport")
 
-  override def applyRule(state: MatchState): Seq[Operation] = {
+  override def applyRule(state: MutableMatchState): Seq[Operation] = {
     state.currentPlayer.history
       .filter(_.turn == state.currentTurn)
       .filter(!_.isConsumed)
@@ -18,10 +18,10 @@ class TeleportBehaviour extends BehaviourRule {
         e.consume()
         e.asInstanceOf[TeleportEvent]
       })
-      .flatMap(e => teleportOperation(state, state.currentPlayer, e.tile))
+      .flatMap(e => teleportOperation(state, state.currentPlayer, e.teleportTo))
   }
 
-  def teleportOperation(state: MatchState, player: Player, tile: Tile): Seq[Operation] = {
+  def teleportOperation(state: MutableMatchState, player: Player, tile: Tile): Seq[Operation] = {
     val tileExited = Operation.trigger(s => {
       val tile = s.playerPieces(player).position.map(_.tile)
       if (tile.isDefined) {

@@ -1,9 +1,9 @@
 package engine.events
 
-import engine.events.root.TileEvent
+import engine.events.root.{PersistentGameEvent, TileEvent}
 import model.Tile
 
-case class TileActivatedEvent(tile: Tile, currentTurn: Long) extends TileEvent(tile, currentTurn) {
-  override def isConsumable: Boolean = false
+case class TileActivatedEvent(source: Tile, currentTurn: Int)
+  extends PersistentGameEvent(currentTurn) with TileEvent {
 }
 

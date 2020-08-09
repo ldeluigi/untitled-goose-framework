@@ -2,9 +2,9 @@ package engine.events.root
 
 import model.Player
 
-abstract class PlayerEvent(player: Player, currentTurn: Long, consumeTimes: Int = 1) extends AbstractGameEvent(currentTurn, consumeTimes) {
+trait PlayerEvent extends GameEvent {
 
-  def source: Player = player
+  def source: Player
 
   override def toString: String = super.toString + " Source: " + source.toString
 }

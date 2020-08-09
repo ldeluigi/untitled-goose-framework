@@ -1,16 +1,16 @@
 package model.rules.ruleset
 
-import model.actions.{Action, RollDice, StepForwardAction}
+import model.actions.{Action, RollDice}
 import model.entities.Dice
 import model.entities.board.Position
 import model.rules.PlayerUtils
 import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour, TurnEndConsumer, TurnEndEventBehaviour}
 import model.rules.operations.Operation
-import model.{MatchState, Player, Tile}
+import model.{MutableMatchState, Player, Tile}
 
 trait RuleSet {
 
-  def stateBasedOperations(state: MatchState): Seq[Operation]
+  def stateBasedOperations(state: MutableMatchState): Seq[Operation]
 
   def first(players: Set[Player]): Player
 
@@ -18,7 +18,7 @@ trait RuleSet {
 
   def startPosition(tiles: Set[Tile]): Position
 
-  def actions(state: MatchState): Set[Action]
+  def actions(state: MutableMatchState): Set[Action]
 
 }
 
@@ -34,11 +34,11 @@ object RuleSet {
       Position(tiles.toList.sorted.take(1).head)
     }
 
-    override def actions(state: MatchState): Set[Action] = {
+    override def actions(state: MutableMatchState): Set[Action] = {
       Set(RollDice(Dice[Int]((1 to 6).toSet, "six face")))
     }
 
-    override def stateBasedOperations(state: MatchState): Seq[Operation] = {
+    override def stateBasedOperations(state: MutableMatchState): Seq[Operation] = {
       var opSeq: Seq[Operation] =
         MovementWithDiceBehaviour().applyRule(state) ++
           MultipleStepBehaviour().applyRule(state) ++

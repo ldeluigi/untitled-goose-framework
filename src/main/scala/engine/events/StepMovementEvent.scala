@@ -1,9 +1,10 @@
 package engine.events
 
-import engine.events.root.PlayerEvent
+import engine.events.root.{ConsumableGameEvent, PlayerEvent}
 import model.Player
 
-case class StepMovementEvent(steps: Int, player: Player, currentTurn: Long) extends PlayerEvent(player, currentTurn) {
+case class StepMovementEvent(steps: Int, source: Player, currentTurn: Int) extends
+  ConsumableGameEvent(currentTurn) with PlayerEvent {
 
   def movement: Int = steps
 
