@@ -37,6 +37,7 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
     var opSeq: Seq[Operation] = behaviourRules.flatMap(_.applyRule(state))
     opSeq = TurnEndEventBehaviour().applyRule(state) ++ opSeq
     opSeq = opSeq ++ DialogLaunchBehaviour().applyRule(state)
+
     if (state.newTurnStarted) {
       opSeq = opSeq ++ TurnEndConsumer().applyRule(state)
       state.newTurnStarted = false

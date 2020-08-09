@@ -20,8 +20,6 @@ trait MatchState {
   def matchBoard: MatchBoard
 
   def history: List[GameEvent]
-
-  def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
 }
 
 trait MutableMatchState extends MatchState {
@@ -33,6 +31,8 @@ trait MutableMatchState extends MatchState {
   def currentTurn_=(turn: Int): Unit
 
   def history_=(history: List[GameEvent]): Unit
+
+  def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
 }
 
 object MutableMatchState {
