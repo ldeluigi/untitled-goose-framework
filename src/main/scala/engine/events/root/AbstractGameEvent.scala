@@ -6,7 +6,7 @@ abstract class AbstractGameEvent(currentTurn: Long, var consumeTimes: Int = 1) e
 
   def consumeAll(): Unit = consumeTimes = 0
 
-  override def isConsumable: Boolean = consumeTimes > 0
+  def isConsumable: Boolean = consumeTimes > 0
 
   override def isConsumed: Boolean = consumeTimes == 0
 

@@ -4,14 +4,14 @@ import model.Player
 
 abstract class PlayerEvent(player: Player, currentTurn: Long, consumeTimes: Int = 1) extends AbstractGameEvent(currentTurn, consumeTimes) {
 
-  def sourcePlayer: Player = player
+  def source: Player = player
 
-  override def toString: String = super.toString + " Source: " + sourcePlayer.toString
+  override def toString: String = super.toString + " Source: " + source.toString
 }
 
 object PlayerEvent {
 
-  def unapply(arg: PlayerEvent): Option[Player] = Some(arg.sourcePlayer)
+  def unapply(arg: PlayerEvent): Option[Player] = Some(arg.source)
 
 }
 

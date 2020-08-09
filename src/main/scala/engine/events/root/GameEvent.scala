@@ -10,8 +10,6 @@ trait GameEvent extends Serializable {
 
   def isConsumed: Boolean
 
-  def isConsumable: Boolean
-
   def consume(): Unit
 }
 

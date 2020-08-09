@@ -19,7 +19,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
         e.consume()
         e.asInstanceOf[StepMovementEvent]
       })
-      .flatMap(e => generateStep(state, e.movement, e.sourcePlayer, e.movement >= 0))
+      .flatMap(e => generateStep(state, e.movement, e.source, e.movement >= 0))
   }
 
   def generateStep(state: MatchState, step: Int, player: Player, forward: Boolean): Seq[Operation] = {
