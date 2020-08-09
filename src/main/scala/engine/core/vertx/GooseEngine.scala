@@ -1,7 +1,7 @@
 package engine.core.vertx
 
 import engine.`match`.Match
-import engine.core.{DialogDisplayer, EventSink}
+import engine.core.{DialogDisplay, EventSink}
 import engine.events.root.GameEvent
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
@@ -35,13 +35,13 @@ object GooseEngine {
     vertx.eventBus.registerCodec(new GameEventMessageCodec)
     vertx.deployVerticle(gv)
 
-    val dialogDisplayer: DialogDisplayer = (dialogContent: DialogContent) => controller.showDialog(dialogContent)
+    private val dialogDisplay: DialogDisplay = (dialogContent: DialogContent) => controller.showDialog(dialogContent)
 
     override def accept(event: GameEvent): Unit = {
       vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(GameEventMessageCodec.name))
     }
 
-    var stopped = false
+    private var stopped = false
 
     private def onEvent(event: GameEvent): Unit = {
       controller.logEvent(event)
@@ -61,7 +61,7 @@ object GooseEngine {
             operation match {
               case o: DialogOperation =>
                 stopped = true
-                dialogDisplayer.display(o.content).onComplete(res => {
+                dialogDisplay.display(o.content).onComplete(res => {
                   stopped = false
                   res match {
                     case Failure(_) => executeOperation()
