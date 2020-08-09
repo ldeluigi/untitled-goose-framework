@@ -41,10 +41,9 @@ object TileDefinition {
     }
   }
 
-  def apply(number: Int): TileDefinition = new TileDefinitionImpl(Some(number), None) //TODO change this
-
-  def apply(number: Int, name: String): TileDefinition = new TileDefinitionImpl(Some(number), Some(name))
+  def apply(number: Int): TileDefinition = new TileDefinitionImpl(Some(number), None)
 
   def apply(name: String): TileDefinition = new TileDefinitionImpl(None, Some(name))
 
+  def apply(number: Int, name: String): TileDefinition = new TileDefinitionImpl(Some(number), Some(name))
 }

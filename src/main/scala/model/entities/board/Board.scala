@@ -24,7 +24,7 @@ object Board {
 
     private val myTiles: List[TileDefinition] = (1 to tileNum).toList.map(i => TileDefinition(i))
 
-    override def name: String = "GeneratedBoard" // TODO what?
+    override def name: String = "GeneratedBoard"
 
     override def next(tile: TileDefinition): Option[TileDefinition] =
       tile.number flatMap (i => myTiles lift i)
@@ -49,7 +49,7 @@ object Board {
     override def first: TileDefinition = tiles.toSeq.min
   }
 
-  def apply(tileNum: Int, disposition: Disposition): Board = new GeneratedBoard(tileNum, disposition) //TODO change
+  def apply(tileNum: Int, disposition: Disposition): Board = new GeneratedBoard(tileNum, disposition)
 
   def apply(name: String, tiles: Set[TileDefinition], disposition: Disposition): Board = new BoardImpl(name, tiles, disposition)
 

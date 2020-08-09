@@ -10,7 +10,7 @@ trait DialogContent {
 
   def text: String
 
-  def options: Map[String, Option[GameEvent]]
+  def options: Map[String, Option[GameEvent]] //TODO remove Optional
 }
 
 object DialogContent {

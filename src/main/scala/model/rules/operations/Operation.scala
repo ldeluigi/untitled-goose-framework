@@ -14,8 +14,6 @@ trait Operation {
 
 object Operation {
 
-  implicit val context: ExecutionContext = ExecutionContext.global //TODO verify
-
   def trigger(f: ReadOnlyMatchState => Option[GameEvent]): Operation = (state: MatchState, eventSink: EventSink[GameEvent]) => {
     f(state).foreach(eventSink.accept)
   }

@@ -33,7 +33,6 @@ trait GooseController {
 
 object ApplicationController {
 
-  // TODO check wtf are this ignored parameters
   private class ApplicationControllerImpl(widthSize: Int, heightSize: Int, gameMatch: Match)
     extends ApplicationController with GooseController {
 
@@ -72,7 +71,6 @@ object ApplicationController {
     }
 
     override def update(state: MatchState): Unit = Platform.runLater(() => {
-      // TODO consider grouping inside a  method
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
     })
