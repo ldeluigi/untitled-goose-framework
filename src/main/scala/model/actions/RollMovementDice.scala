@@ -4,7 +4,7 @@ import engine.core.EventSink
 import engine.events.MovementDiceRollEvent
 import engine.events.root.GameEvent
 import model.MutableMatchState
-import model.entities.MovementDice
+import model.entities.Dice.MovementDice
 
 
 class RollMovementDice(dice: MovementDice) extends Action {

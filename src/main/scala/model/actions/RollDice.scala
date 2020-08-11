@@ -5,6 +5,7 @@ import engine.events.DiceRollEvent
 import engine.events.root.GameEvent
 import model.MutableMatchState
 import model.entities.Dice
+import model.entities.Dice.Dice
 
 class RollDice[DiceSide](dice: Dice[DiceSide]) extends Action {
 
