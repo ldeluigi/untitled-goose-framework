@@ -36,8 +36,7 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
     playerOrdering.first(players)
 
   override def stateBasedOperations(state: MatchState): Seq[Operation] =
-    TurnEndEventBehaviour().applyRule(state) ++ // TODO remove enforcing turn end
-      behaviourRules.flatMap(_.applyRule(state)) ++
+    behaviourRules.flatMap(_.applyRule(state)) ++
       DialogLaunchBehaviour().applyRule(state)
 
   override def nextPlayer(currentPlayer: Player, players: Set[Player]): Player =
@@ -54,7 +53,7 @@ object PriorityRuleSet {
   def apply(startTile: Set[Tile] => Position = tiles => Position(tiles.toList.sorted.take(1).head),
             playerOrdering: PlayerOrdering = PlayerOrdering.orderedRandom,
             actionRules: Set[ActionRule] = Set(),
-            behaviourRule: Seq[BehaviourRule] = Seq(),
+            behaviourRule: Seq[BehaviourRule] = Seq(TurnEndEventBehaviour()),
             cleanupRules: Seq[CleanupRule] = Seq()
            ): PriorityRuleSet =
     new PriorityRuleSet(startTile, playerOrdering, actionRules, behaviourRule, cleanupRules)

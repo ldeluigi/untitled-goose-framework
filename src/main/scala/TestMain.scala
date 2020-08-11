@@ -9,10 +9,10 @@ import model.actions.{Action, RollDice}
 import model.entities.board.{Board, Disposition, Piece, Position}
 import model.entities.{DialogContent, Dice}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
-import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour}
+import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour, TurnEndEventBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.rules.{ActionRule, BehaviourRule}
-import model.{MutableMatchState, Player}
+import model.{Color, MutableMatchState, Player}
 import scalafx.application.JFXApp
 import view.ApplicationController
 
@@ -33,7 +33,7 @@ object TestMain extends JFXApp {
     }
   }
   val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollDice(movementDice), testDialog))
-  val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour())
+  val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour(), TurnEndEventBehaviour())
 
 
   val priorityRuleSet: RuleSet = PriorityRuleSet(
@@ -47,8 +47,8 @@ object TestMain extends JFXApp {
 
 
   //From a menu GUI that select and creates player and pieces on the press of a "Start game" button
-  //Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
-  val players: Map[Player, Piece] = List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
+  val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
+  //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
   val currentMatch: Match = Match(board, players, ruleSet)
   val appView: ApplicationController = ApplicationController(screenSize.width, screenSize.height, currentMatch)

@@ -1,6 +1,6 @@
 package model.rules.cleanup
 
-import engine.events.{GainTurnEvent, TurnShouldEndEvent}
+import engine.events.{GainTurnEvent, TurnEndedEvent, TurnShouldEndEvent}
 import model.MutableMatchState
 import model.rules.CleanupRule
 
@@ -16,16 +16,17 @@ object TurnEndConsumer extends CleanupRule {
 
     if (eventList.exists(_.isInstanceOf[TurnShouldEndEvent])) {
       eventList.filter(_.isInstanceOf[TurnShouldEndEvent]).foreach(_.consume())
+      state.currentPlayer.history = state.currentPlayer.history :+ TurnEndedEvent(state.currentTurn, state.currentPlayer)
       state.currentTurn = state.currentTurn + 1
       state.newTurnStarted = true
-    }
 
-    val playerEvent = state.currentPlayer.history.filter(!_.isConsumed)
+      val playerEvent = state.currentPlayer.history.filter(!_.isConsumed)
 
-    if (playerEvent.exists(_.isInstanceOf[GainTurnEvent])) {
-      eventList.filter(_.isInstanceOf[GainTurnEvent]).head.consume()
-    } else {
-      state.currentPlayer = state.nextPlayer
+      if (playerEvent.exists(_.isInstanceOf[GainTurnEvent])) {
+        eventList.filter(_.isInstanceOf[GainTurnEvent]).head.consume()
+      } else {
+        state.currentPlayer = state.nextPlayer
+      }
     }
   }
 }
