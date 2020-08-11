@@ -15,6 +15,7 @@ import model.rules.{ActionRule, BehaviourRule}
 import model.{Color, MutableMatchState, Player}
 import scalafx.application.JFXApp
 import view.ApplicationController
+import view.playerselection.PlayerSelection
 
 object TestMain extends JFXApp {
 
@@ -52,6 +53,8 @@ object TestMain extends JFXApp {
 
   val currentMatch: Match = Match(board, players, ruleSet)
   val appView: ApplicationController = ApplicationController(screenSize.width, screenSize.height, currentMatch)
+
+  val playerSelection = new PlayerSelection(stage, board, ruleSet, screenSize.width, screenSize.height)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"

@@ -40,10 +40,7 @@ object Main extends JFXApp {
     actionRules,
     behaviourRule
   )
-
   val ruleSet: RuleSet = priorityRuleSet
-
-  val introMenu = new PlayerSelection(board, ruleSet, screenSize.width, screenSize.height)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
@@ -53,7 +50,7 @@ object Main extends JFXApp {
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = introMenu
+    scene = new PlayerSelection(this, board, ruleSet, screenSize.width, screenSize.height)
     fullScreenExitHint = "Premi esc per uscire"
   }
 
