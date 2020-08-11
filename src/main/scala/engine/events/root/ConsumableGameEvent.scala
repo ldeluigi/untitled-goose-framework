@@ -1,6 +1,6 @@
 package engine.events.root
 
-class ConsumableGameEvent(currentTurn: Int) extends PersistentGameEvent(currentTurn) {
+class ConsumableGameEvent(val turn: Int, val groups: Set[String] = Set()) extends GameEvent {
   private[this] var consumed: Boolean = false
 
   override def isConsumed: Boolean = consumed
@@ -8,4 +8,7 @@ class ConsumableGameEvent(currentTurn: Int) extends PersistentGameEvent(currentT
   override def consume(): Unit = {
     consumed = true
   }
+
+  override def name: String = this.getClass.getSimpleName
+
 }
