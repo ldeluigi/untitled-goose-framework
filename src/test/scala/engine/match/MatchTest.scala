@@ -1,20 +1,20 @@
 package engine.`match`
 
 import engine.events.{DiceRollEvent, TileEnteredEvent, TurnShouldEndEvent}
-import engine.events.root.GameEvent
-import model.{Color, Player}
-import model.entities.board.{Board, Disposition, Piece}
+import mock.MatchMock
+import model.entities.board.{Board, Disposition, Piece, Position}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
-import org.scalatest.OneInstancePerTest
+import mock.MatchMock._
+import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}
 import org.scalatest.flatspec.AnyFlatSpec
 
-class MatchTest extends AnyFlatSpec with OneInstancePerTest {
+class MatchTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEach{
 
-  val board: Board = Board(10, Disposition.snake(10))
-  val p1: Player = Player("P1")
-  val p2: Player = Player("P2")
-  val players: Map[Player, Piece] = Map(p1 -> Piece(Color.Red), p2 -> Piece(Color.Blue))
-  val gameMatch: Match = Match(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))))
+  var gameMatch: Match = MatchMock.default
+
+  override def beforeEach(): Unit = {
+    gameMatch = Match(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))))
+  }
 
   "A Match" should "have a MatchBoard" in {
     assert(gameMatch.board.equals(MatchBoard(board)))
@@ -60,13 +60,13 @@ class MatchTest extends AnyFlatSpec with OneInstancePerTest {
     assert(state.nextPlayer.equals(p2))
   }
 
-  //TODO complete this or remove
   it should "know where the playerPieces are" in {
-    pending
+    assert(gameMatch.currentState.playerPieces(p1).position.isEmpty)
   }
 
   it should "update player pieces as told" in {
-    pending
+    gameMatch.currentState.updatePlayerPiece(p1, _ => Piece(Position(gameMatch.board.first)))
+    assert(gameMatch.currentState.playerPieces(p1).position.get == Position(gameMatch.board.first))
   }
 
 }
