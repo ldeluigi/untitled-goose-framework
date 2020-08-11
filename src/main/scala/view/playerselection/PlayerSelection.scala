@@ -5,7 +5,7 @@ import model.entities.board.{Board, Piece}
 import model.rules.ruleset.RuleSet
 import model.{Color, Player}
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, ComboBox, Label, TextField}
+import scalafx.scene.control.{Button, ColorPicker, ComboBox, Label, TextField}
 import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.stage.Stage
 import view.ApplicationController
@@ -17,7 +17,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   val playerName = new Label("Insert player name: ")
   val playerNameFromInput = new TextField()
-  val colorsChoice = new ComboBox() // TODO add colors
+  val colorsChoice = new ColorPicker()
   val addPlayer = new Button("Add player to the game")
   val startGame = new Button("Start game!")
 
