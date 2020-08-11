@@ -1,28 +1,29 @@
 package model.entities
 
-
-trait Dice[DiceSide] {
-  def name: String
-
-  def roll: DiceSide
-}
-
-trait MovementDice extends Dice[Int]
-
 object Dice {
+  trait Dice[DiceSide] {
+    def name: String
 
-  private class RandomDice[DiceSide](sides: Set[DiceSide], val name: String) extends Dice[DiceSide] {
-    override def roll: DiceSide = {
-      val n = util.Random.nextInt(sides.size)
-      sides.iterator.drop(n).next
-    }
+    def roll: DiceSide
   }
 
-  private class RandomMovementDice(sideSet: Set[Int], diceName: String)
-    extends RandomDice[Int](sideSet, diceName) with MovementDice
+  trait MovementDice extends Dice[Int]
 
-  def random[DiceSide](sides: Set[DiceSide], name: String): Dice[DiceSide] = new RandomDice(sides, name)
+  object Factory {
 
-  def randomMovement(sides: Set[Int], name: String): MovementDice = new RandomMovementDice(sides, name)
+    private class RandomDice[DiceSide](sides: Set[DiceSide], val name: String) extends Dice[DiceSide] {
+      override def roll: DiceSide = {
+        val n = util.Random.nextInt(sides.size)
+        sides.iterator.drop(n).next
+      }
+    }
 
+    private class RandomMovementDice(sideSet: Set[Int], diceName: String)
+      extends RandomDice[Int](sideSet, diceName) with MovementDice
+
+    def random[DiceSide](sides: Set[DiceSide], name: String): Dice[DiceSide] = new RandomDice(sides, name)
+
+    def randomMovement(sides: Set[Int], name: String): MovementDice = new RandomMovementDice(sides, name)
+
+  }
 }
