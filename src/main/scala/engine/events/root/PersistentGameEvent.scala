@@ -2,8 +2,6 @@ package engine.events.root
 
 class PersistentGameEvent(currentTurn: Int) extends GameEvent {
 
-  def name: String = this.getClass.getSimpleName
-
   override def isConsumed: Boolean = false
 
   override def consume(): Unit = {}
@@ -15,5 +13,7 @@ class PersistentGameEvent(currentTurn: Int) extends GameEvent {
   override def toString: String = {
     " Turn: " + currentTurn + " " + name
   }
+
+  override def name: String = this.getClass.getSimpleName
 
 }
