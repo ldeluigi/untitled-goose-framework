@@ -30,10 +30,7 @@ object Disposition {
     }
   }
 
-  // TODO fix for input = 25
   private class SpiralDisposition(totalTiles: Int, ratio: Int) extends BaseDisposition(totalTiles, ratio) {
-
-    private val borderLength = Math.max((columns + rows) * 2 - 4, 1)
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
       def _tilePlacement(tileIndex: Int, rows: Int, columns: Int): (Int, Int) = {
