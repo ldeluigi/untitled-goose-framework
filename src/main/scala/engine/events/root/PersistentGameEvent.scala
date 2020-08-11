@@ -1,12 +1,10 @@
 package engine.events.root
 
-class PersistentGameEvent(currentTurn: Int) extends GameEvent {
+class PersistentGameEvent(currentTurn: Int, val groups: Set[String] = Set()) extends GameEvent {
 
   override def isConsumed: Boolean = false
 
   override def consume(): Unit = {}
-
-  override def group: List[String] = List()
 
   override def turn: Int = currentTurn
 

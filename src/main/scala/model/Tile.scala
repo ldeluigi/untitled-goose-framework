@@ -21,7 +21,7 @@ object Tile {
 
     override def name: Option[String] = tile.name
 
-    override def tileType: Option[List[String]] = tile.tileType
+    override def groups: Set[String] = tile.groups
 
     override def equals(obj: Any): Boolean = {
       // TODO history comparison???
