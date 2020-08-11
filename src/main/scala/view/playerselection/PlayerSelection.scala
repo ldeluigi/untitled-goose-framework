@@ -25,36 +25,36 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   val start = new Button("Start game!")
   val cancel = new Button("Cancel")
 
-  val centerPlayerConsole = new HBox() {
+  val centerPlayerConsole: HBox = new HBox() {
     alignment = Pos.Center
     spacing = 10
     children = List(playerName, playerNameFromInput, colorsChoice, addPlayer)
   }
 
-  val bottomGameControls = new HBox() {
+  val bottomGameControls: HBox = new HBox() {
     alignment = Pos.BottomRight
     spacing = 30
     padding = Insets(30)
     children = List(start, cancel)
   }
 
-  borderPane.top = new Label ("Game name")
+  borderPane.top = new Label("Game name")
   borderPane.center = centerPlayerConsole
   borderPane.bottom = bottomGameControls
 
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
 
-  addPlayer.onAction = (_) => {
+  addPlayer.onAction = _ => {
     playerNameFromInput.clear()
     // add entry to players map
   }
 
-  start.onAction = (_) => {
+  start.onAction = _ => {
     val currentMatch: Match = Match(board, players, ruleSet)
-    val appView: ApplicationController = ApplicationController(widthSize, heightSize, currentMatch)
+    val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
   }
 
-  cancel.onAction = (_) => {
+  cancel.onAction = _ => {
     playerNameFromInput.clear()
   }
 

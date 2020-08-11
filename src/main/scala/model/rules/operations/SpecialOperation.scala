@@ -17,6 +17,7 @@ object SpecialOperation {
     }
 
   }
+
 }
 
 //class TerminateTurnOperation() extends SpecialOperation {

@@ -1,6 +1,7 @@
 package model.entities
 
 object Dice {
+
   trait Dice[DiceSide] {
     def name: String
 
@@ -26,4 +27,5 @@ object Dice {
     def randomMovement(sides: Set[Int], name: String): MovementDice = new RandomMovementDice(sides, name)
 
   }
+
 }

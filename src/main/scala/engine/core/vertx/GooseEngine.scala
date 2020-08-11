@@ -2,7 +2,7 @@ package engine.core.vertx
 
 import engine.`match`.Match
 import engine.core.{DialogDisplay, EventSink}
-import engine.events.root.{GameEvent, NoOpEvent}
+import engine.events.root.{ExitEvent, GameEvent, NoOpEvent}
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
@@ -76,15 +76,20 @@ object GooseEngine {
     override def stop(): Unit = vertx.close()
 
     private def onEvent(event: GameEvent): Unit = {
-      if (event != NoOpEvent) {
-        controller.logEvent(event)
-        if (stack.isEmpty) {
-          stack = stack :+ gameMatch.cleanup
-        }
-        gameMatch.submitEvent(event)
-        stack = gameMatch.stateBasedOperations ++ stack
+      event match {
+        case ExitEvent => controller.close()
+
+        case NoOpEvent => executeOperation()
+
+        case _ => controller.logEvent(event)
+          if (stack.isEmpty) {
+            stack = stack :+ gameMatch.cleanup
+          }
+          gameMatch.submitEvent(event)
+          stack = gameMatch.stateBasedOperations ++ stack
+          executeOperation()
       }
-      executeOperation()
+
     }
   }
 

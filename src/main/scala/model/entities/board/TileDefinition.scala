@@ -31,9 +31,13 @@ object TileDefinition {
     }
   }
 
-  def apply(number: Int, groups: Set[String] = Set()): TileDefinition = new TileDefinitionImpl(Some(number), None, groups)
+  def apply(number: Int): TileDefinition = new TileDefinitionImpl(Some(number), None, Set())
 
-  def apply(name: String, groups: Set[String] = Set()): TileDefinition = new TileDefinitionImpl(None, Some(name), groups)
+  def apply(name: String): TileDefinition = new TileDefinitionImpl(None, Some(name), Set())
+
+  def apply(number: Int, groups: Set[String]): TileDefinition = new TileDefinitionImpl(Some(number), None, groups)
+
+  def apply(name: String, groups: Set[String]): TileDefinition = new TileDefinitionImpl(None, Some(name), groups)
 
   def apply(number: Int, name: String, groups: Set[String] = Set()): TileDefinition = new TileDefinitionImpl(Some(number), Some(name), groups)
 }

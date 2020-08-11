@@ -2,8 +2,8 @@ import java.awt.{Dimension, Toolkit}
 
 import engine.`match`.Match
 import engine.core.EventSink
-import engine.events.{DialogLaunchEvent, StepMovementEvent}
 import engine.events.root.{GameEvent, NoOpEvent}
+import engine.events.{DialogLaunchEvent, StepMovementEvent}
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
@@ -58,7 +58,6 @@ object TestMain extends JFXApp {
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
   val currentMatch: Match = Match(board, players, ruleSet)
-  val appView: ApplicationController = ApplicationController(screenSize.width, screenSize.height, currentMatch)
 
   val playerSelection = new PlayerSelection(stage, board, ruleSet, screenSize.width, screenSize.height)
 
@@ -67,7 +66,7 @@ object TestMain extends JFXApp {
     //fullScreen = true
     minWidth = 0.75 * screenSize.width
     minHeight = 0.75 * screenSize.height
-    scene = appView
+    scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch)
     fullScreenExitHint = "Premi esc per uscire"
   }
 
@@ -77,5 +76,4 @@ object TestMain extends JFXApp {
     }
   )
 
-  stage.setOnCloseRequest(_ => appView.close())
 }

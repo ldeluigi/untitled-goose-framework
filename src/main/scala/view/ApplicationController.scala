@@ -9,6 +9,7 @@ import model.entities.DialogContent
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
+import scalafx.stage.Stage
 import view.actionmenu.ActionMenu
 import view.board.BoardDisplay
 import view.logger.EventLogger
@@ -18,8 +19,6 @@ import scala.concurrent.{Future, Promise}
 //TODO return scene instead of being a Scene
 trait ApplicationController extends Scene {
   def resolveAction(action: Action)
-
-  def close(): Unit
 }
 
 trait GooseController {
@@ -28,11 +27,13 @@ trait GooseController {
   def showDialog(content: DialogContent): Future[GameEvent]
 
   def logEvent(event: GameEvent)
+
+  def close(): Unit
 }
 
 object ApplicationController {
 
-  private class ApplicationControllerImpl(widthSize: Int, heightSize: Int, gameMatch: Match)
+  private class ApplicationControllerImpl(stage: Stage, widthSize: Int, heightSize: Int, gameMatch: Match)
     extends ApplicationController with GooseController {
 
     val boardProportion = 0.8
@@ -65,6 +66,8 @@ object ApplicationController {
     borderPane.left = showLogger
      */
 
+    stage.setOnCloseRequest(_ => stopEngine())
+
     def resolveAction(action: Action): Unit = {
       action.execute(engine.eventSink, engine.currentMatch.currentState)
     }
@@ -74,7 +77,9 @@ object ApplicationController {
       actionMenu.displayActions(engine.currentMatch.availableActions)
     })
 
-    override def close(): Unit = engine.stop()
+    override def close(): Unit = stage.close()
+
+    private def stopEngine(): Unit = engine.stop()
 
     override def logEvent(event: GameEvent): Unit = Platform.runLater(() => {
       logger.logEvent(event)
@@ -90,8 +95,8 @@ object ApplicationController {
     }
   }
 
-  def apply(width: Int, height: Int, gameMatch: Match): ApplicationController = new
-      ApplicationControllerImpl(width, height, gameMatch)
+  def apply(stage: Stage, width: Int, height: Int, gameMatch: Match): ApplicationController = new
+      ApplicationControllerImpl(stage, width, height, gameMatch)
 }
 
 
