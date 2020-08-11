@@ -6,9 +6,10 @@ import model.actions.Action
 import model.entities.board.{Position, TileDefinition}
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
 import model.{MutableMatchState, Player, Tile}
+import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 
-class PriorityRuleSetTest extends AnyFlatSpec {
+class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
 
   val t1: Tile = Tile(TileDefinition(1))
   val t2: Tile = Tile(TileDefinition(2))
@@ -18,6 +19,12 @@ class PriorityRuleSetTest extends AnyFlatSpec {
   val p2: Player = Player("P2")
   val ordering: PlayerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))
 
+  var ruleSet: PriorityRuleSet = PriorityRuleSet(firstPosition, ordering)
+
+  override protected def beforeEach(): Unit = {
+    ruleSet = PriorityRuleSet(firstPosition, ordering)
+  }
+
   val myAction: Action = new Action {
     override def name: String = "testAction"
 
@@ -26,17 +33,14 @@ class PriorityRuleSetTest extends AnyFlatSpec {
 
 
   "A priority based rule set" should "define the starting position from a given set of tiles" in {
-    val ruleSet = PriorityRuleSet(firstPosition, ordering)
     assert(ruleSet.startPosition(tileSet).equals(Position(t1)))
   }
 
   it should "define the first player to play from a given set" in {
-    val ruleSet = PriorityRuleSet(firstPosition, ordering)
     assert(ruleSet.first(Set(p1, p2)).equals(p1))
   }
 
   it should "define the next player given the current one" in {
-    val ruleSet = PriorityRuleSet(firstPosition, ordering)
     assert(ruleSet.nextPlayer(p1, Set(p1, p2)).equals(p2))
   }
 
@@ -54,7 +58,13 @@ class PriorityRuleSetTest extends AnyFlatSpec {
     assert(!ruleSet.actions(null).contains(myAction))
   }
 
+
+  // TODO complete test
   it should "return the operations to be executed in a state" in {
+    pending
+  }
+
+  it should "return the operations to be executed in cleanup" in {
     pending
   }
 }

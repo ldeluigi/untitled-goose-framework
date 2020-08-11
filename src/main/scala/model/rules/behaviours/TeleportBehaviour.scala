@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
 import engine.events.{StopOnTileEvent, TeleportEvent, TileEnteredEvent, TileExitedEvent}
-import model.entities.board.Position
+import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 import model.{MatchState, Player, Tile}
@@ -33,7 +33,7 @@ class TeleportBehaviour extends BehaviourRule {
 
     val teleport = Operation.execute(state => {
       state.updatePlayerPiece(player, piece => {
-        piece.updatePosition(_ => Some(Position(tile)))
+        Piece(Position(tile), piece.color)
       })
     })
 

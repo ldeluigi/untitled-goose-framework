@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
 import engine.events.{StepMovementEvent, StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
-import model.entities.board.Position
+import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 import model.{MatchState, Player}
@@ -41,7 +41,8 @@ case class MultipleStepBehaviour() extends BehaviourRule {
 
     val step = Operation.execute(state => {
       state.updatePlayerPiece(player, piece => {
-        piece.updatePosition {
+        // TODO refactor this piece of code
+        Piece((piece.position match {
           case Some(pos) => if (forward) {
             state.matchBoard
               .next(pos.tile)
@@ -52,7 +53,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
               .map(Position(_))
           }
           case None => Some(Position(state.matchBoard.first))
-        }
+        }).get, piece.color)
       })
     })
 

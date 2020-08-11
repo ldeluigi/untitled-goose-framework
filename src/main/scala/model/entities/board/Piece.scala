@@ -7,33 +7,26 @@ trait Piece {
   def position: Option[Position]
 
   def color: Color
-
-  def setPosition(pos: Option[Position]): Piece
-
-  def updatePosition(update: Option[Position] => Option[Position]): Piece
 }
 
 object Piece {
 
-  private class PieceImpl(val position: Option[Position], val color: Color) extends Piece {
-    override def setPosition(pos: Option[Position]): Piece = new PieceImpl(pos, color)
+  private case class PieceImpl(position: Option[Position], color: Color) extends Piece
 
-    override def updatePosition(update: Option[Position] => Option[Position]): Piece = setPosition(update(position))
 
-  }
-
+  // TODO make decent constructors that take another Piece not this stuff
   def apply(position: Position, color: Color): Piece = {
-    new PieceImpl(Some(position), color)
+    PieceImpl(Some(position), color)
   }
 
   def apply(color: Color): Piece = {
-    new PieceImpl(None, color)
+    PieceImpl(None, color)
   }
 
   def apply(position: Position): Piece = {
-    new PieceImpl(Some(position), Color.random)
+    PieceImpl(Some(position), Color.random)
   }
 
-  def apply(): Piece = new PieceImpl(None, Color.random)
+  def apply(): Piece = PieceImpl(None, Color.random)
 }
 

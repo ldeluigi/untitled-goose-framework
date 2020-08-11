@@ -40,9 +40,6 @@ object Match {
       playerPieces,
       board
     )
-    for (piece <- playerPieces.values) {
-      piece.setPosition(Some(rules.startPosition(board.tiles)))
-    }
 
     override def players: Set[Player] = playerPieces.keySet
 
