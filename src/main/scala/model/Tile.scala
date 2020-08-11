@@ -21,22 +21,14 @@ object Tile {
 
     override def name: Option[String] = tile.name
 
-    override def tileType: Option[List[String]] = tile.tileType
+    override def groups: Set[String] = tile.groups
 
     override def equals(obj: Any): Boolean = {
-      // TODO rewrite with functional style please
       // TODO history comparison???
       obj match {
         case t: Tile =>
-          if (number.isDefined && t.number.isDefined) {
-            return number.get == t.number.get
-          }
-
-          if (name.isDefined && t.name.isDefined) {
-            return name.get == t.name.get
-          }
-
-          false
+          (number.isDefined && t.number.isDefined && number.get == t.number.get) ||
+            (name.isDefined && t.name.isDefined && name.get == t.name.get)
       }
     }
 

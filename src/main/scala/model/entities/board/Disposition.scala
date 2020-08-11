@@ -14,7 +14,7 @@ trait Disposition {
 object Disposition {
 
   private abstract class BaseDisposition(val totalTiles: Int, val ratio: Int) extends Disposition {
-    val height: Double = Math.sqrt(totalTiles / ratio)
+    private val height: Double = Math.sqrt(totalTiles / ratio)
 
     override def rows: Int = height.ceil.toInt
 
@@ -30,6 +30,7 @@ object Disposition {
     }
   }
 
+  // TODO fix for input = 25
   private class SpiralDisposition(totalTiles: Int, ratio: Int) extends BaseDisposition(totalTiles, ratio) {
 
     private val borderLength = Math.max((columns + rows) * 2 - 4, 1)
@@ -54,25 +55,13 @@ object Disposition {
     }
   }
 
+  // TODO fix
   private class LoopDisposition(val totalTiles: Int) extends Disposition {
 
-    var rows: Int = 0
-    var columns: Int = 0
+    private val side: Int = Math.sqrt(totalTiles).ceil.toInt
 
-    //    if (totalTiles % 4 == 0) {
-    //      rows = ((totalTiles + 4) / 4) + (totalTiles + 4) % 4
-    //      columns = rows
-    //    } else if (totalTiles % 2 == 0) {
-    //      rows = 2
-    //      columns = totalTiles / 2
-    //    } else {
-    //      rows = 2
-    //      columns = (totalTiles + 1) / 2
-    //    }
-    //
-    val side: Int = Math.sqrt(totalTiles).ceil.toInt
-    rows = side
-    columns = side
+    override val rows: Int = side
+    override val columns: Int = side
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
       val c = columns - 1

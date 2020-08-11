@@ -5,5 +5,4 @@ import model.{Player, Tile}
 
 
 case class StopOnTileEvent(player: Player, source: Tile, currentTurn: Int)
-  extends ConsumableGameEvent(currentTurn) with TileEvent {
-}
+  extends ConsumableGameEvent(currentTurn) with TileEvent

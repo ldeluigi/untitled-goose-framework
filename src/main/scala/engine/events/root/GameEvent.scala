@@ -1,10 +1,10 @@
 package engine.events.root
 
-trait GameEvent extends Serializable {
+import model.Groupable
+
+trait GameEvent extends Serializable with Groupable {
 
   def name: String
-
-  def group: List[String]
 
   def turn: Int
 

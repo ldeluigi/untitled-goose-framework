@@ -1,8 +1,6 @@
 package model.entities
 
-import engine.events.StepMovementEvent
 import engine.events.root.GameEvent
-import model.MutableMatchState
 
 trait DialogContent {
 
@@ -10,17 +8,18 @@ trait DialogContent {
 
   def text: String
 
-  def options: Map[String, Option[GameEvent]] //TODO remove Optional
+  def options: Map[String, GameEvent]
 }
 
 object DialogContent {
-  def testDialog(state: MutableMatchState): DialogContent = new DialogContent {
-    override def title = "Movement bonus!"
+  def apply(dialogTitle: String, dialogText: String, answers: (String, GameEvent)*): DialogContent =
+    new DialogContent {
+      override def title: String = dialogTitle
 
-    override def text: String = "Make 10 Steps?"
+      override def text: String = dialogText
 
-    override def options: Map[String, Option[GameEvent]] = Map("Yes" -> Some(StepMovementEvent(10, state.currentPlayer, state.currentTurn)), "No" -> None)
-  }
+      override def options: Map[String, GameEvent] = answers.toMap
+    }
 }
 
 

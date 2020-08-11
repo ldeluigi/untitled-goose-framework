@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.{DiceRollEvent, StepMovementEvent}
+import engine.events.{MovementDiceRollEvent, StepMovementEvent}
 import model.MatchState
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
@@ -13,10 +13,10 @@ case class MovementWithDiceBehaviour() extends BehaviourRule {
     matchState.currentPlayer.history
       .filter(_.turn == matchState.currentTurn)
       .filter(!_.isConsumed)
-      .filter(_.isInstanceOf[DiceRollEvent[Any]]) //TODO SOLVE THIS WARNING
+      .filter(_.isInstanceOf[MovementDiceRollEvent])
       .map(e => {
         e.consume()
-        e.asInstanceOf[DiceRollEvent[Int]]
+        e.asInstanceOf[MovementDiceRollEvent]
       })
       .map(e => Operation.trigger(s => Some(StepMovementEvent(e.result, e.source, s.currentTurn))))
   }

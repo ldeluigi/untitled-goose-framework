@@ -18,9 +18,11 @@ trait MatchBoard {
 
 object MatchBoard {
 
+  def apply(board: Board): MatchBoard = new MatchBoardImpl(board)
+
   private class MatchBoardImpl(val board: Board) extends MatchBoard {
 
-    val tileMap: Map[TileDefinition, Tile] = board.tiles map (t => t -> Tile(t)) toMap
+    private val tileMap: Map[TileDefinition, Tile] = board.tiles map (t => t -> Tile(t)) toMap
 
     override def tiles: Set[Tile] = tileMap.values.toSet
 
@@ -35,5 +37,4 @@ object MatchBoard {
     }
   }
 
-  def apply(board: Board): MatchBoard = new MatchBoardImpl(board)
 }

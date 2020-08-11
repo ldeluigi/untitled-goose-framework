@@ -24,7 +24,7 @@ object PlayerOrdering {
 
   def orderedRandom: PlayerOrdering = new PlayerOrdering {
 
-    var playerList: Seq[Player] = List()
+    private var playerList: Seq[Player] = List()
 
     override def first(players: Set[Player]): Player = {
       playerList = Random.shuffle(players).toList
@@ -39,7 +39,7 @@ object PlayerOrdering {
 
 
   def givenOrder(players: Seq[Player]): PlayerOrdering = new PlayerOrdering {
-    var playerList: Seq[Player] = players
+    private var playerList: Seq[Player] = players
 
     override def first(players: Set[Player]): Player = {
       playerList = updateLocalSeq(playerList, players)

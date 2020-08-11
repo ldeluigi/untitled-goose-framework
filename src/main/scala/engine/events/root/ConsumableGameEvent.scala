@@ -1,7 +1,7 @@
 package engine.events.root
 
 abstract class ConsumableGameEvent(currentTurn: Int) extends PersistentGameEvent(currentTurn) {
-  private var consumed: Boolean = false
+  private[this] var consumed: Boolean = false
 
   override def isConsumed: Boolean = consumed
 
