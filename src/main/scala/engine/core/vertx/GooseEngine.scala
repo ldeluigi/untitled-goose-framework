@@ -7,7 +7,8 @@ import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
 import model.entities.DialogContent
-import model.rules.operations.{DialogOperation, Operation, SpecialOperation}
+import model.rules.operations.Operation
+import model.rules.operations.SpecialOperation.{DialogOperation, SpecialOperation}
 import view.GooseController
 
 import scala.util.{Failure, Success}

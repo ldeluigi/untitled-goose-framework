@@ -3,7 +3,8 @@ package model.rules.behaviours
 import engine.events.DialogLaunchEvent
 import model.MatchState
 import model.rules.BehaviourRule
-import model.rules.operations.{DialogOperation, Operation}
+import model.rules.operations.Operation
+import model.rules.operations.SpecialOperation.DialogOperation
 
 case class DialogLaunchBehaviour() extends BehaviourRule {
 
@@ -18,6 +19,6 @@ case class DialogLaunchBehaviour() extends BehaviourRule {
         e.consume()
         e.asInstanceOf[DialogLaunchEvent]
       })
-      .map(e => new DialogOperation(e.createDialog))
+      .map(e => DialogOperation(e.createDialog))
   }
 }
