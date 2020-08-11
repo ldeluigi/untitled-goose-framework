@@ -3,10 +3,12 @@ package engine.events
 import engine.events.root.{ConsumableGameEvent, PlayerEvent}
 import model.Player
 
-case class DiceRollEvent[DiceSide](source: Player, side: DiceSide, currentTurn: Int)
+class DiceRollEvent[DiceSide](val source: Player, val result: DiceSide, currentTurn: Int)
   extends ConsumableGameEvent(currentTurn) with PlayerEvent {
 
-  def result: DiceSide = side
-
   override def toString: String = super.toString + " result: " + result.toString
+}
+
+object DiceRollEvent {
+  def apply[DiceSide](source: Player, result: DiceSide, currentTurn: Int): DiceRollEvent[DiceSide] = new DiceRollEvent(source, result, currentTurn)
 }

@@ -5,9 +5,9 @@ import engine.events.DialogLaunchEvent
 import engine.events.root.GameEvent
 import javafx.scene.input.KeyCode
 import model.MutableMatchState
-import model.actions.{Action, RollDice}
+import model.actions.{Action, RollMovementDice}
 import model.entities.board.{Board, Disposition, Position}
-import model.entities.{DialogContent, Dice}
+import model.entities.{DialogContent, Dice, MovementDice}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour, TurnEndEventBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
@@ -22,7 +22,7 @@ object Main extends JFXApp {
   //From DSL generation
   val totalTiles = 50
   val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
-  val movementDice: Dice[Int] = Dice[Int]((1 to 6).toSet, "six face")
+  val movementDice: MovementDice = Dice.randomMovement((1 to 6).toSet, "six face")
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"
 
@@ -30,7 +30,7 @@ object Main extends JFXApp {
       sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent.testDialog(s)))
     }
   }
-  val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollDice(movementDice), testDialog))
+  val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollMovementDice(movementDice), testDialog))
   val behaviourRule: Seq[BehaviourRule] = Seq(TurnEndEventBehaviour(), MultipleStepBehaviour(), MovementWithDiceBehaviour())
 
 

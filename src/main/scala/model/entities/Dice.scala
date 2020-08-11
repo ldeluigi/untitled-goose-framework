@@ -5,8 +5,9 @@ trait Dice[DiceSide] {
   def name: String
 
   def roll: DiceSide
-
 }
+
+trait MovementDice extends Dice[Int]
 
 object Dice {
 
@@ -17,6 +18,11 @@ object Dice {
     }
   }
 
-  def apply[DiceSide](sides: Set[DiceSide], name: String): Dice[DiceSide] = new RandomDice(sides, name)
+  private class RandomMovementDice(sideSet: Set[Int], diceName: String)
+    extends RandomDice[Int](sideSet, diceName) with MovementDice
+
+  def random[DiceSide](sides: Set[DiceSide], name: String): Dice[DiceSide] = new RandomDice(sides, name)
+
+  def randomMovement(sides: Set[Int], name: String): MovementDice = new RandomMovementDice(sides, name)
 
 }

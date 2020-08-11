@@ -7,7 +7,7 @@ import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
 import model.entities.DialogContent
-import model.rules.operations.{DialogOperation, Operation, SpecialOperation, TerminateTurnOperation}
+import model.rules.operations.{DialogOperation, Operation, SpecialOperation}
 import view.GooseController
 
 import scala.util.{Failure, Success}
@@ -70,8 +70,8 @@ object GooseEngine {
                     case Success(event) => onEvent(event)
                   }
                 })
-              case _: TerminateTurnOperation =>
-                stack = Seq()
+              //              case _: TerminateTurnOperation =>
+              //                stack = Seq()
             }
           case _ => Unit
         }
