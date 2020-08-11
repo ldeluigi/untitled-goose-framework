@@ -1,13 +1,10 @@
 package model.actions
 
-import engine.core.EventSink
 import engine.events.DiceRollEvent
 import engine.events.root.GameEvent
-import model.MutableMatchState
-import model.entities.Dice
+import mock.MatchMock._
 import model.entities.Dice.Dice
 import org.scalatest.flatspec.AnyFlatSpec
-import mock.MatchMock._
 
 class RollDiceTest extends AnyFlatSpec {
 

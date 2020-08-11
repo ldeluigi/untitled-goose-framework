@@ -2,13 +2,13 @@ package engine.`match`
 
 import engine.events.{DiceRollEvent, TileEnteredEvent, TurnShouldEndEvent}
 import mock.MatchMock
-import model.entities.board.{Board, Disposition, Piece, Position}
-import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import mock.MatchMock._
-import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}
+import model.entities.board.{Piece, Position}
+import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}
 
-class MatchTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEach{
+class MatchTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEach {
 
   var gameMatch: Match = MatchMock.default
 
