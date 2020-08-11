@@ -49,7 +49,7 @@ class GooseEngineTest extends AnyFlatSpec {
     Thread.currentThread().getThreadGroup.enumerate(a)
     val ge = GooseEngine(m, cGenerator(_ => {}))
     var now: Int = Thread.currentThread().getThreadGroup.activeCount()
-    assert(now - prev > 2)
+    assert(now - prev >= 2)
     ge.stop()
     Eventually.eventually(Waiters.timeout(5 seconds)) {
       now = Thread.currentThread().getThreadGroup.activeCount()
