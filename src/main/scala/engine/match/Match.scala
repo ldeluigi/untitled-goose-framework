@@ -31,7 +31,7 @@ object Match {
   private class MatchImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Match {
 
     private val firstTurn = 0
-    
+
     override val board: MatchBoard = MatchBoard(gameBoard)
     override val currentState: MutableMatchState = MutableMatchState(
       firstTurn,
