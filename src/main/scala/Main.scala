@@ -1,13 +1,14 @@
 import java.awt.{Dimension, Toolkit}
 
 import engine.core.EventSink
-import engine.events.DialogLaunchEvent
-import engine.events.root.GameEvent
+import engine.events.root.{GameEvent, NoOpEvent}
+import engine.events.{DialogLaunchEvent, StepMovementEvent}
 import javafx.scene.input.KeyCode
 import model.MutableMatchState
 import model.actions.{Action, RollMovementDice}
+import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Position}
-import model.entities.{DialogContent, Dice, MovementDice}
+import model.entities.{DialogContent, Dice}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour, TurnEndEventBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
@@ -22,12 +23,17 @@ object Main extends JFXApp {
   //From DSL generation
   val totalTiles = 50
   val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
-  val movementDice: MovementDice = Dice.randomMovement((1 to 6).toSet, "six face")
+  val movementDice: MovementDice = Dice.Factory.randomMovement((1 to 6).toSet, "six face")
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"
 
     override def execute(sink: EventSink[GameEvent], state: MutableMatchState): Unit = {
-      sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent.testDialog(s)))
+      sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent(
+        "Movement Bonus",
+        "Make 10 step?",
+        "Yes" -> StepMovementEvent(10, s.currentPlayer, s.currentTurn),
+        "No" -> NoOpEvent
+      )))
     }
   }
   val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollMovementDice(movementDice), testDialog))

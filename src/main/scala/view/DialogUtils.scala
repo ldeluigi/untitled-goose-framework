@@ -19,10 +19,7 @@ object DialogUtils {
 
     val result = alert.showAndWait()
     result match {
-      case Some(value) => content.options(value.text) match {
-        case Some(event) => promise.success(event)
-        case None => promise.failure(new NoSuchElementException) //TODO replace with NoneEvent
-      }
+      case Some(value) => promise.success(content.options(value.text))
       case None => promise.failure(new IllegalStateException("-x-Dialog cannot be closed without answering"))
     }
   }

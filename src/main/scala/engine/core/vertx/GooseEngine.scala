@@ -2,7 +2,7 @@ package engine.core.vertx
 
 import engine.`match`.Match
 import engine.core.{DialogDisplay, EventSink}
-import engine.events.root.GameEvent
+import engine.events.root.{GameEvent, NoOpEvent}
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
@@ -23,34 +23,22 @@ trait GooseEngine {
 object GooseEngine {
 
 
+  def apply(status: Match, controller: GooseController): GooseEngine = new GooseEngineImpl(status, controller)
+
   private class GooseEngineImpl(private val gameMatch: Match, private val controller: GooseController) extends GooseEngine with EventSink[GameEvent] {
-
-    private var stack: Seq[Operation] = Seq()
-
     private val vertx: Vertx = Vertx.vertx()
+    private val gv = new GooseVerticle(onEvent)
     implicit val vertxExecutionContext: VertxExecutionContext = VertxExecutionContext(
       vertx.getOrCreateContext()
     )
-    private val gv = new GooseVerticle(onEvent)
+    private val dialogDisplay: DialogDisplay = (dialogContent: DialogContent) => controller.showDialog(dialogContent)
     vertx.eventBus.registerCodec(new GameEventMessageCodec)
     vertx.deployVerticle(gv)
-
-    private val dialogDisplay: DialogDisplay = (dialogContent: DialogContent) => controller.showDialog(dialogContent)
+    private var stack: Seq[Operation] = Seq()
+    private var stopped = false
 
     override def accept(event: GameEvent): Unit = {
       vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(GameEventMessageCodec.name))
-    }
-
-    private var stopped = false
-
-    private def onEvent(event: GameEvent): Unit = {
-      controller.logEvent(event)
-      if (stack.isEmpty) {
-        stack = stack :+ gameMatch.cleanup
-      }
-      gameMatch.submitEvent(event)
-      stack = gameMatch.stateBasedOperations ++ stack
-      executeOperation()
     }
 
     def executeOperation(): Unit = {
@@ -85,7 +73,18 @@ object GooseEngine {
     override def eventSink: EventSink[GameEvent] = this
 
     override def stop(): Unit = vertx.close()
+
+    private def onEvent(event: GameEvent): Unit = {
+      if (event != NoOpEvent) {
+        controller.logEvent(event)
+        if (stack.isEmpty) {
+          stack = stack :+ gameMatch.cleanup
+        }
+        gameMatch.submitEvent(event)
+        stack = gameMatch.stateBasedOperations ++ stack
+      }
+      executeOperation()
+    }
   }
 
-  def apply(status: Match, controller: GooseController): GooseEngine = new GooseEngineImpl(status, controller)
 }

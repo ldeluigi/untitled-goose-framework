@@ -26,20 +26,23 @@ trait Match {
 
 object Match {
 
+  def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Match = new MatchImpl(board, players, rules)
+
   private class MatchImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Match {
 
-    val board: MatchBoard = MatchBoard(gameBoard)
-    val firstTurn = 0
-    for (piece <- playerPieces.values) {
-      piece.setPosition(Some(rules.startPosition(board.tiles)))
-    }
-    val currentState: MutableMatchState = MutableMatchState(
+    private val firstTurn = 0
+    
+    override val board: MatchBoard = MatchBoard(gameBoard)
+    override val currentState: MutableMatchState = MutableMatchState(
       firstTurn,
       rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, players),
       playerPieces,
       board
     )
+    for (piece <- playerPieces.values) {
+      piece.setPosition(Some(rules.startPosition(board.tiles)))
+    }
 
     override def players: Set[Player] = playerPieces.keySet
 
@@ -59,5 +62,4 @@ object Match {
     override def cleanup: Operation = Operation.execute(rules.cleanupOperations)
   }
 
-  def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Match = new MatchImpl(board, players, rules)
 }

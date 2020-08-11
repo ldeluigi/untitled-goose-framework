@@ -11,7 +11,7 @@ trait TileDefinition {
 
 object TileDefinition {
 
-  implicit def ordering[A <: TileDefinition]: Ordering[A] = (x: A, y: A) =>
+  implicit def compare[A <: TileDefinition]: Ordering[A] = (x: A, y: A) =>
     (x.number, y.number) match {
       case (None, None) => 0
       case (None, Some(_)) => 1
@@ -24,19 +24,11 @@ object TileDefinition {
     override def tileType: Option[List[String]] = None
 
     override def equals(obj: Any): Boolean = {
-      // TODO rewrite with functional style please
       obj match {
-        case t: TileDefinition => {
-          if (number.isDefined && t.number.isDefined) {
-            return number.get == t.number.get
-          }
-
-          if (name.isDefined && t.name.isDefined) {
-            return name.get == t.name.get
-          }
-
-          false
-        }
+        case t: TileDefinition =>
+          (number.isDefined && t.number.isDefined && number.get == t.number.get) ||
+          (name.isDefined && t.name.isDefined && name.get == t.name.get)
+        case _ => false
       }
     }
   }
