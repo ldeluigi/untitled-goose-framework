@@ -4,6 +4,7 @@ import engine.`match`.Match
 import model.entities.board.{Board, Piece}
 import model.rules.ruleset.RuleSet
 import model.{Color, Player}
+import scalafx.event.ActionEvent
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, ComboBox, Label, TextField}
 import scalafx.scene.layout.BorderPane
@@ -23,10 +24,13 @@ class PlayerSelection(board: Board, ruleSet: RuleSet, widthSize: Int, heightSize
   //Generate an entry of this map whenever pressing addPlayer Button
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
 
-
   //create this when pressing StartGame
-  val currentMatch: Match = Match(board, players, ruleSet)
-  val appView: ApplicationController = ApplicationController(widthSize, heightSize, currentMatch)
+  startGame.onAction = (_) => {
+    val currentMatch: Match = Match(board, players, ruleSet)
+    val appView: ApplicationController = ApplicationController(widthSize, heightSize, currentMatch)
+  }
+
   //then set appView as new scene on the current stage
+
 
 }
