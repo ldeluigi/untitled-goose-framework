@@ -1,9 +1,9 @@
 package mock
 
 import engine.`match`.Match
-import model.{Color, Player}
 import model.entities.board.{Board, Disposition, Piece}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
+import model.{Color, Player}
 
 object MatchMock {
   val board: Board = Board(10, Disposition.snake(10))
