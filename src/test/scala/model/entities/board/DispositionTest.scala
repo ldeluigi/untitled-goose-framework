@@ -63,6 +63,13 @@ class DispositionTest extends AnyFlatSpec with Matchers {
     list should be(List[(Int, Int)]((0, 2), (1, 2), (2, 2), (2, 1), (2, 0), (1, 0), (0, 0), (0, 1), (1, 1)))
   }
 
+  "Spiral disposition" should "place correctly a square with odd sides, again" in {
+    val sd = Disposition.spiral(25)
+    val list: List[(Int, Int)] = Range(0, 25).map(sd.tilePlacement).toList
+    list should be(List[(Int, Int)]((0, 4), (1, 4), (2, 4), (3, 4), (4, 4), (4, 3), (4, 2), (4, 1), (4, 0), (3, 0),
+      (2, 0), (1, 0), (0, 0), (0, 1), (0, 2), (0, 3), (1, 3), (2, 3), (3, 3), (3, 2), (3, 1), (2, 1), (1, 1), (1, 2), (2, 2)))
+  }
+
   "Spiral disposition" should "place correctly an incomplete square" in {
     val sd = Disposition.spiral(15)
     val list: List[(Int, Int)] = Range(0, 15).map(sd.tilePlacement).toList

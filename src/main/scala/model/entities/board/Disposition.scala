@@ -37,6 +37,7 @@ object Disposition {
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
       def _tilePlacement(tileIndex: Int, rows: Int, columns: Int): (Int, Int) = {
+        val borderLength = Math.max((columns + rows) * 2 - 4, 1)
         if (tileIndex < borderLength)
           if (tileIndex < columns)
             (tileIndex, rows - 1)
