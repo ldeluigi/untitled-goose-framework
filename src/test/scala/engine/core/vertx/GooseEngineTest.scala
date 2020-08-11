@@ -7,7 +7,7 @@ import model.entities.board.{Board, Disposition, Piece}
 import model.rules.ruleset.PriorityRuleSet
 import model.{MutableMatchState, Player}
 import org.scalatest.concurrent.{Eventually, Waiters}
-import org.scalatest.flatspec.{AnyFlatSpec, AsyncFlatSpec}
+import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
 import view.GooseController
 
@@ -30,7 +30,7 @@ class GooseEngineTest extends AnyFlatSpec {
     override def close(): Unit = {}
   }
 
-  val e : GameEvent = new GameEvent {
+  val e: GameEvent = new GameEvent {
     override def name: String = "???"
 
     override def turn: Int = -1
@@ -60,19 +60,19 @@ class GooseEngineTest extends AnyFlatSpec {
   }
 
   // TODO fix this test because wtf
-//  it should "be a correct eventSink" in {
-//    val promise = Promise[Assertion]
-//    var ge: GooseEngine = null
-//    ge = GooseEngine(m, cGenerator(ev => {
-//      ge.stop()
-//      if (e == ev)
-//        promise.success(succeed)
-//      else promise.failure(null)
-//    }))
-//    //ge.eventSink.accept(NoOpEvent)
-//    ge.eventSink.accept(e)
-//    promise.future
-//  }
+  //  it should "be a correct eventSink" in {
+  //    val promise = Promise[Assertion]
+  //    var ge: GooseEngine = null
+  //    ge = GooseEngine(m, cGenerator(ev => {
+  //      ge.stop()
+  //      if (e == ev)
+  //        promise.success(succeed)
+  //      else promise.failure(null)
+  //    }))
+  //    //ge.eventSink.accept(NoOpEvent)
+  //    ge.eventSink.accept(e)
+  //    promise.future
+  //  }
 
   it should "currentMatch" in {
     val ge = GooseEngine(m, cGenerator(_ => {}))
