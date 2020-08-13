@@ -9,6 +9,4 @@ class ConsumableGameEvent(val turn: Int, val groups: Set[String] = Set()) extend
     consumed = true
   }
 
-  override def name: String = this.getClass.getSimpleName
-
 }

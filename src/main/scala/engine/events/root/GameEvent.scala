@@ -4,7 +4,7 @@ import model.Groupable
 
 trait GameEvent extends Serializable with Groupable {
 
-  def name: String
+  def name: String = this.getClass.getSimpleName
 
   def turn: Int
 
