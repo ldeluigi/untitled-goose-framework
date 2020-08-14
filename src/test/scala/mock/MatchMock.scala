@@ -10,5 +10,6 @@ object MatchMock {
   val p1: Player = Player("P1")
   val p2: Player = Player("P2")
   val players: Map[Player, Piece] = Map(p1 -> Piece(Color.Red), p2 -> Piece(Color.Blue))
+
   def default: Match = Match(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))))
 }
