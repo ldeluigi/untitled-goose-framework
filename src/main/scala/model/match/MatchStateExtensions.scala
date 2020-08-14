@@ -20,7 +20,6 @@ object MatchStateExtensions {
     type History = List[H]
     def filterCurrentTurn()(implicit state: MatchState): History = history.filter(_.turn == state.currentTurn)
     def filterNotConsumed(): History = history.filterNot(_.isConsumed)
-    def only[E <: H](): List[E] = history.filter(_.isInstanceOf[E]).map(_.asInstanceOf[E])
     def consumeAll(): History = history.map(e => {
       e.consume()
       e

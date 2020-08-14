@@ -17,7 +17,8 @@ case class MultipleStepBehaviour() extends BehaviourRule {
     state.currentPlayer.history
       .filterCurrentTurn()
       .filterNotConsumed()
-      .only[StepMovementEvent]()
+      .filter(_.isInstanceOf[StepMovementEvent])
+      .map(_.asInstanceOf[StepMovementEvent])
       .consumeAll()
       .flatMap(e => generateStep(state, e.movement, e.source, e.movement >= 0))
   }

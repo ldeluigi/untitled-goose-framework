@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.{LoseTurnEvent, SkipTurnEvent}
+import engine.events.{LoseTurnEvent, SkipTurnEvent, StepMovementEvent}
 import model.`match`.MatchStateExtensions.PimpedHistory
 import model.`match`.{MatchState, MutableMatchState}
 import model.rules.BehaviourRule
@@ -16,7 +16,8 @@ case class SkipTurnBehaviour() extends BehaviourRule {
     var skippedTurn = 0
     if (currentPlayerHistory.exists(_.isInstanceOf[SkipTurnEvent])) {
       currentPlayerHistory
-        .only[SkipTurnEvent]()
+        .filter(_.isInstanceOf[SkipTurnEvent])
+        .map(_.asInstanceOf[SkipTurnEvent])
         .consumeAll()
         .foreach(_ =>
           skippedTurn += 1

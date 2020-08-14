@@ -1,6 +1,6 @@
 package model.rules.cleanup
 
-import engine.events.{GainTurnEvent, TurnEndedEvent, TurnShouldEndEvent}
+import engine.events.{GainTurnEvent, StepMovementEvent, TurnEndedEvent, TurnShouldEndEvent}
 import model.`match`.MatchStateExtensions.PimpedHistory
 import model.`match`.MutableMatchState
 import model.rules.CleanupRule
@@ -16,7 +16,7 @@ object TurnEndConsumer extends CleanupRule {
       .filterNotConsumed()
 
     if (eventList.exists(_.isInstanceOf[TurnShouldEndEvent])) {
-      eventList.only[TurnShouldEndEvent]().consumeAll()
+      eventList.filter(_.isInstanceOf[TurnShouldEndEvent]).consumeAll()
       state.currentPlayer.history = state.currentPlayer.history :+ TurnEndedEvent(state.currentTurn, state.currentPlayer)
       state.currentTurn = state.currentTurn + 1
       state.newTurnStarted = true
