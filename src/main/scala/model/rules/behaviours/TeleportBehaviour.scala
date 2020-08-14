@@ -2,6 +2,7 @@ package model.rules.behaviours
 
 import engine.events.{StopOnTileEvent, TeleportEvent, TileEnteredEvent, TileExitedEvent}
 import model.`match`.MatchState
+import model.`match`.MatchStateExtensions.PimpedHistory
 import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
@@ -10,15 +11,12 @@ import model.{Player, Tile}
 class TeleportBehaviour extends BehaviourRule {
   override def name: Option[String] = Some("Teleport")
 
-  override def applyRule(state: MatchState): Seq[Operation] = {
+  override def applyRule(implicit state: MatchState): Seq[Operation] = {
     state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
-      .filter(_.isInstanceOf[TeleportEvent])
-      .map(e => {
-        e.consume()
-        e.asInstanceOf[TeleportEvent]
-      })
+      .filterCurrentTurn()
+      .filterNotConsumed()
+      .only[TeleportEvent]()
+      .consumeAll()
       .flatMap(e => teleportOperation(state, state.currentPlayer, e.teleportTo))
   }
 

@@ -4,6 +4,7 @@ import engine.events
 import engine.events._
 import model.Player
 import model.`match`.MatchState
+import model.`match`.MatchStateExtensions.PimpedHistory
 import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
@@ -12,15 +13,12 @@ case class MultipleStepBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = Some("Multiple StepRule")
 
-  override def applyRule(state: MatchState): Seq[Operation] = {
+  override def applyRule(implicit state: MatchState): Seq[Operation] = {
     state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
-      .filter(_.isInstanceOf[StepMovementEvent])
-      .map(e => {
-        e.consume()
-        e.asInstanceOf[StepMovementEvent]
-      })
+      .filterCurrentTurn()
+      .filterNotConsumed()
+      .only[StepMovementEvent]()
+      .consumeAll()
       .flatMap(e => generateStep(state, e.movement, e.source, e.movement >= 0))
   }
 

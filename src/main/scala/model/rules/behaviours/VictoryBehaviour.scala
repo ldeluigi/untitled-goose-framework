@@ -3,6 +3,7 @@ package model.rules.behaviours
 import engine.events.VictoryEvent
 import engine.events.root.ExitEvent
 import model.`match`.MatchState
+import model.`match`.MatchStateExtensions.PimpedHistory
 import model.entities.DialogContent
 import model.rules.BehaviourRule
 import model.rules.operations.{Operation, SpecialOperation}
@@ -13,8 +14,7 @@ case class VictoryBehaviour() extends BehaviourRule {
   override def applyRule(state: MatchState): Seq[Operation] = {
     if (state.playerPieces.keySet.exists(p => p.history.exists(e => e.isInstanceOf[VictoryEvent] && !e.isConsumed))) {
       state.playerPieces.keySet.foreach(p =>
-        p.history.filter(e => e.isInstanceOf[VictoryEvent] && !e.isConsumed)
-          .foreach(_.consume())
+        p.history.filterNotConsumed().only[VictoryEvent]().consumeAll()
       )
       Seq(SpecialOperation.DialogOperation(s =>
         DialogContent(

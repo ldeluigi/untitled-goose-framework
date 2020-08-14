@@ -1,6 +1,7 @@
 package model.rules.behaviours
 
 import engine.events.{LoseTurnEvent, SkipTurnEvent}
+import model.`match`.MatchStateExtensions.PimpedHistory
 import model.`match`.{MatchState, MutableMatchState}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
@@ -8,18 +9,18 @@ import model.rules.operations.Operation
 case class SkipTurnBehaviour() extends BehaviourRule {
   override def name: Option[String] = None
 
-  override def applyRule(state: MatchState): Seq[Operation] = {
+  override def applyRule(implicit state: MatchState): Seq[Operation] = {
     val currentPlayerHistory = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterCurrentTurn()
+      .filterNotConsumed()
     var skippedTurn = 0
     if (currentPlayerHistory.exists(_.isInstanceOf[SkipTurnEvent])) {
       currentPlayerHistory
-        .filter(_.isInstanceOf[SkipTurnEvent])
-        .foreach(e => {
+        .only[SkipTurnEvent]()
+        .consumeAll()
+        .foreach(_ =>
           skippedTurn += 1
-          e.consume()
-        })
+        )
     }
     if (skippedTurn > 0) {
       Seq(consumeTurn(skippedTurn))
@@ -31,8 +32,8 @@ case class SkipTurnBehaviour() extends BehaviourRule {
     var skippedTurns = toSkip
     Operation.execute((state: MutableMatchState) => {
       val currentPlayerHistory = state.currentPlayer.history
-        .filter(_.turn == state.currentTurn)
-        .filter(!_.isConsumed)
+        .filterCurrentTurn()(state)
+        .filterNotConsumed()
       if (currentPlayerHistory.exists(_.isInstanceOf[LoseTurnEvent])) {
         var loseEvents = currentPlayerHistory.filter(_.isInstanceOf[LoseTurnEvent])
         while (skippedTurns > 0) {
