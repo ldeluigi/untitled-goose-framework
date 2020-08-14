@@ -1,28 +1,29 @@
 package view.playerselection
 
-import model.game.Game
 import model.entities.board.{Board, Piece}
+import model.game.Game
 import model.rules.ruleset.RuleSet
 import model.{Color, Player}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, ColorPicker, TextField}
+import scalafx.scene.control.{Button, ComboBox, TextField}
 import scalafx.scene.layout.{AnchorPane, BorderPane, HBox}
-import scalafx.scene.paint.Color.{Blue, DarkGreen, DarkOliveGreen, DarkRed, IndianRed, MediumVioletRed, Red}
+import scalafx.scene.paint.Color.{DarkGreen, IndianRed}
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import view.ApplicationController
 
 class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int) extends Scene {
 
-  val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
+  var players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
   val borderPane = new BorderPane()
   val anchorPane = new AnchorPane()
 
   root = borderPane
 
   val playerNameFromInput = new TextField()
-  val colorsChoice = new ColorPicker()
+  // TODO convert this into a predetermined List from model.Colors enum
+  val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
 
   val addPlayer: Button = new Button() {
     text = "Add player to game"
@@ -73,8 +74,8 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   borderPane.bottom = bottomGameControls
 
   addPlayer.onAction = _ => {
+    players += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
     playerNameFromInput.clear()
-    // TODO add entry to players map
   }
 
   startGame.onAction = _ => {
