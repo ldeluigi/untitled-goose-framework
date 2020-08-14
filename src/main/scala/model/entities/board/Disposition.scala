@@ -16,9 +16,9 @@ object Disposition {
   private abstract class BaseDisposition(val totalTiles: Int, val ratio: Int) extends Disposition {
     private val height: Double = Math.sqrt(totalTiles / ratio)
 
-    override def rows: Int = height.ceil.toInt
+    override val rows: Int = Math.max(height.ceil.toInt, 1)
 
-    override def columns: Int = (totalTiles / height).ceil.toInt
+    override val columns: Int = Math.max((totalTiles / height).ceil.toInt, 1)
   }
 
   private class SnakeDisposition(totalTiles: Int, ratio: Int) extends BaseDisposition(totalTiles, ratio) {
@@ -53,27 +53,23 @@ object Disposition {
     }
   }
 
-  // TODO fix
-  private class LoopDisposition(val totalTiles: Int) extends Disposition {
 
-    private val side: Int = Math.sqrt(totalTiles).ceil.toInt
+  private class LoopDisposition(val totalTiles: Int, ratio: Int) extends Disposition {
 
-    override val rows: Int = side
-    override val columns: Int = side
+    private val rowsPlusColumns: Int = (totalTiles + totalTiles % 2) / 2 + 2
+
+    override val rows: Int = Math.max(rowsPlusColumns / (ratio + 1), 1)
+
+    override val columns: Int = Math.max(rowsPlusColumns - rows, 1)
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
-      val c = columns - 1
-      val r = rows - 1
-      val i = tileIndex
-      if (i < c) {
-        (i % c, 0)
-      } else if (i < c + r) {
-        (c, i % r)
-      } else if (i < 2 * c + r) {
-        (c - (i % c), r)
-      } else {
-        (0, r - (i % r))
-      }
+      if (tileIndex < columns)
+        (tileIndex, rows - 1)
+      else if (tileIndex < columns + rows - 1)
+        (columns - 1, rows + columns - tileIndex - 2)
+      else if (tileIndex < columns * 2 + rows - 2)
+        (rows + columns * 2 - tileIndex - 3, 0)
+      else (0, tileIndex - rows - columns * 2 + 3)
     }
   }
 
@@ -81,6 +77,6 @@ object Disposition {
 
   def spiral(total: Int, ratio: Int = 1): Disposition = new SpiralDisposition(total, ratio)
 
-  def loop(total: Int): Disposition = new LoopDisposition(total)
+  def loop(total: Int, ratio: Int = 1): Disposition = new LoopDisposition(total, ratio)
 
 }
