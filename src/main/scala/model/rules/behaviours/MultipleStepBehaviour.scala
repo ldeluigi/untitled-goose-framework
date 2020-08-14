@@ -43,16 +43,29 @@ case class MultipleStepBehaviour() extends BehaviourRule {
     val triggerPassedPlayers: Seq[Operation] = checkAndTriggerPassedPlayers(state, player)
 
     val step = Operation.execute(state => {
+      val inverted = player.history.filterCurrentTurn(state).find(_.isInstanceOf[InvertMovementEvent])
       state.updatePlayerPiece(player, piece => {
         Piece(piece, piece.position match {
           case Some(pos) => if (forward) {
-            state.gameBoard
-              .next(pos.tile)
-              .map(Position(_))
+            if(inverted.isEmpty){
+              state.gameBoard
+                .next(pos.tile)
+                .map(Position(_))
+            } else {
+              state.gameBoard
+                .prev(pos.tile)
+                .map(Position(_))
+            }
           } else {
-            state.gameBoard
-              .prev(pos.tile)
-              .map(Position(_))
+            if(inverted.isDefined){
+              state.gameBoard
+                .next(pos.tile)
+                .map(Position(_))
+            } else {
+              state.gameBoard
+                .prev(pos.tile)
+                .map(Position(_))
+            }
           }
           case None => Some(Position(state.gameBoard.first))
         })

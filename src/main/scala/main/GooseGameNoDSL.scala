@@ -48,10 +48,16 @@ object GooseGameNoDSL extends JFXApp {
   // If your dice roll is more than you need then you move in to square 63 and then bounce back out again,
   // each spot on the dice is still one square in this move.
   // If you land on any of the special squares while you are doing this then you must follow the normal instructions.
-  val bounceBackOnLastTile: BehaviourRule = ???
+  val bounceBackOnLastTile: BehaviourRule = (state: GameState) => {
+    state.getTile(theEnd).get.history
+      .filterCurrentTurn(state)
+      .find(_.isInstanceOf[TileEnteredEvent])
+      .map(_.asInstanceOf[TileEnteredEvent])
+      .map(_ => Seq(Operation.trigger(s=> Some(InvertMovementEvent(s.currentPlayer, s.currentTurn)))))
+      .getOrElse(Seq())
+  }
 
   //When you land on square 63 exactly you are the winner!
-  val winningBehaviour: VictoryBehaviour = VictoryBehaviour()
 
   val stopOnTheEnd: BehaviourRule = (state: GameState) => {
     val stopped = state.currentPlayer.history
@@ -230,7 +236,15 @@ object GooseGameNoDSL extends JFXApp {
   //TODO ?????
 
 
-  val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour(), TurnEndEventBehaviour())
+  //Framework behaviours
+  val FrameworkBehaviours: Seq[BehaviourRule] = Seq() :+
+    VictoryBehaviour()  :+
+    MovementWithDiceBehaviour() :+
+    MultipleStepBehaviour() :+
+    TurnEndEventBehaviour()
+
+
+  val behaviourRule: Seq[BehaviourRule] = Seq()
   val actionRules: Set[ActionRule] = Set()
 
   val ruleSet: RuleSet = PriorityRuleSet(
