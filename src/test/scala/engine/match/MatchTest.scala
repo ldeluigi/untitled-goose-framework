@@ -3,6 +3,7 @@ package engine.`match`
 import engine.events.{DiceRollEvent, TileEnteredEvent, TurnShouldEndEvent}
 import mock.MatchMock
 import mock.MatchMock._
+import model.Color
 import model.entities.board.{Piece, Position}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import org.scalatest.flatspec.AnyFlatSpec
@@ -65,7 +66,7 @@ class MatchTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterE
   }
 
   it should "update player pieces as told" in {
-    gameMatch.currentState.updatePlayerPiece(p1, _ => Piece(Position(gameMatch.board.first)))
+    gameMatch.currentState.updatePlayerPiece(p1, _ => Piece(Color.Blue, Some(Position(gameMatch.board.first))))
     assert(gameMatch.currentState.playerPieces(p1).position.get == Position(gameMatch.board.first))
   }
 

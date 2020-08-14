@@ -33,7 +33,7 @@ class TeleportBehaviour extends BehaviourRule {
 
     val teleport = Operation.execute(state => {
       state.updatePlayerPiece(player, piece => {
-        Piece(Position(tile), piece.color)
+        Piece(piece, Some(Position(tile)))
       })
     })
 

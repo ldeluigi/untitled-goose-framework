@@ -1,16 +1,16 @@
 package model.entities.board
 
-import model.Tile
+import model.{Color, Tile}
 import org.scalatest.flatspec.AnyFlatSpec
 
 class PieceTest extends AnyFlatSpec {
 
   val tileOne: Tile = Tile(TileDefinition(1))
   val tileTwo: Tile = Tile(TileDefinition(2))
-  val piece: Piece = Piece(Position(tileOne))
+  val piece: Piece = Piece(Color.Blue, Some(Position(tileOne)))
 
   "A piece" should "not have a position when created empty" in {
-    val emptyPiece = Piece()
+    val emptyPiece = Piece(Color.Blue)
     assert(emptyPiece.position.isEmpty)
   }
 
@@ -20,17 +20,19 @@ class PieceTest extends AnyFlatSpec {
 
   it should "have a color" in {
     assert(piece.color != null)
+    assert(piece.color == Color.Blue)
   }
 
   it should "set the position of the piece when given one" in {
     val position = Position(tileTwo)
-    assert(Piece(position, piece.color).position.get.equals(position))
+    val updatedPiece = Piece(piece, Some(position))
+    assert(updatedPiece.position.get.equals(position))
   }
 
-  it should "update its position with the given function" in {
-    val position = Position(tileTwo)
-    val updatedPiece = Piece(position, piece.color)
-    assert(updatedPiece.position.get.equals(position))
+  it should "set the color of the piece when given one" in {
+    val color = Color.Red
+    val updatedPiece = Piece(piece, color)
+    assert(updatedPiece.color.equals(Color.Red))
   }
 
 }

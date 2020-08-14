@@ -41,8 +41,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
 
     val step = Operation.execute(state => {
       state.updatePlayerPiece(player, piece => {
-        // TODO refactor this piece of code
-        Piece((piece.position match {
+        Piece(piece, piece.position match {
           case Some(pos) => if (forward) {
             state.matchBoard
               .next(pos.tile)
@@ -53,7 +52,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
               .map(Position(_))
           }
           case None => Some(Position(state.matchBoard.first))
-        }).get, piece.color)
+        })
       })
     })
 
