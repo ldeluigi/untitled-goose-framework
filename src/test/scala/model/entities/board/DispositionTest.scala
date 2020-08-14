@@ -113,5 +113,6 @@ class DispositionTest extends AnyFlatSpec with Matchers {
   "Loop disposition" should "place correctly a complete rectangle with ratio" in {
     val ld = Disposition.loop(12, 2)
     val list: List[(Int, Int)] = Range(0, 12).map(ld.tilePlacement).toList
-    list should be(List((0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (5, 0), (4, 0), (3, 0), (2, 0), (1, 0), (0, 0)))}
+    list should be(List((0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (5, 0), (4, 0), (3, 0), (2, 0), (1, 0), (0, 0)))
+  }
 }
