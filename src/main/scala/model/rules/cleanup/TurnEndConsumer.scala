@@ -1,18 +1,18 @@
 package model.rules.cleanup
 
 import engine.events.{GainTurnEvent, StepMovementEvent, TurnEndedEvent, TurnShouldEndEvent}
-import model.`match`.MatchStateExtensions.PimpedHistory
-import model.`match`.MutableMatchState
+import model.game.GameStateExtensions.PimpedHistory
+import model.game.MutableGameState
 import model.rules.CleanupRule
 
 object TurnEndConsumer extends CleanupRule {
 
-  override def applyRule(state: MutableMatchState): Unit =
+  override def applyRule(state: MutableGameState): Unit =
     consumeTurn(state)
 
-  private def consumeTurn(implicit state: MutableMatchState): Unit = {
+  private def consumeTurn(state: MutableGameState): Unit = {
     val eventList = state.history
-      .filterCurrentTurn()
+      .filterCurrentTurn(state)
       .filterNotConsumed()
 
     if (eventList.exists(_.isInstanceOf[TurnShouldEndEvent])) {

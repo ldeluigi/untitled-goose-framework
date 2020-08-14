@@ -1,6 +1,6 @@
 package model.rules.ruleset
 
-import model.`match`.{MatchState, MutableMatchState}
+import model.game.{GameState, MutableGameState}
 import model.actions.Action
 import model.entities.board.Position
 import model.rules.behaviours.{DialogLaunchBehaviour, TurnEndEventBehaviour}
@@ -18,7 +18,7 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
 
   override def startPosition(tiles: Set[Tile]): Position = firstPosition(tiles)
 
-  override def actions(state: MutableMatchState): Set[Action] =
+  override def actions(state: MutableGameState): Set[Action] =
     actionRules
       .flatMap(_.allowedActions(state))
       .groupBy(_.action)
@@ -36,14 +36,14 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
   override def first(players: Set[Player]): Player =
     playerOrdering.first(players)
 
-  override def stateBasedOperations(state: MatchState): Seq[Operation] =
+  override def stateBasedOperations(state: GameState): Seq[Operation] =
     behaviourRules.flatMap(_.applyRule(state)) ++
       DialogLaunchBehaviour().applyRule(state)
 
   override def nextPlayer(currentPlayer: Player, players: Set[Player]): Player =
     playerOrdering.next(currentPlayer, players)
 
-  override def cleanupOperations(state: MutableMatchState): Unit = {
+  override def cleanupOperations(state: MutableGameState): Unit = {
     cleanupRules.foreach(_.applyRule(state))
     TurnEndConsumer.applyRule(state)
   }

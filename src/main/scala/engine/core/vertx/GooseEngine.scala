@@ -5,7 +5,7 @@ import engine.events.root.{ExitEvent, GameEvent, NoOpEvent}
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
-import model.`match`.Match
+import model.game.Game
 import model.entities.DialogContent
 import model.rules.operations.Operation
 import model.rules.operations.SpecialOperation.{DialogOperation, SpecialOperation}
@@ -14,7 +14,7 @@ import view.GooseController
 import scala.util.{Failure, Success}
 
 trait GooseEngine {
-  def currentMatch: Match
+  def currentMatch: Game
 
   def eventSink: EventSink[GameEvent]
 
@@ -24,9 +24,9 @@ trait GooseEngine {
 object GooseEngine {
 
 
-  def apply(status: Match, controller: GooseController): GooseEngine = new GooseEngineImpl(status, controller)
+  def apply(status: Game, controller: GooseController): GooseEngine = new GooseEngineImpl(status, controller)
 
-  private class GooseEngineImpl(private val gameMatch: Match, private val controller: GooseController) extends GooseEngine with EventSink[GameEvent] {
+  private class GooseEngineImpl(private val gameMatch: Game, private val controller: GooseController) extends GooseEngine with EventSink[GameEvent] {
     private val vertx: Vertx = Vertx.vertx()
     private val gv = new GooseVerticle(onEvent)
     implicit val vertxExecutionContext: VertxExecutionContext = VertxExecutionContext(
@@ -69,7 +69,7 @@ object GooseEngine {
       }
     }
 
-    override def currentMatch: Match = gameMatch
+    override def currentMatch: Game = gameMatch
 
     override def eventSink: EventSink[GameEvent] = this
 

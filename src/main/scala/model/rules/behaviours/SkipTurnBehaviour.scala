@@ -1,17 +1,17 @@
 package model.rules.behaviours
 
 import engine.events.{LoseTurnEvent, SkipTurnEvent, StepMovementEvent}
-import model.`match`.MatchStateExtensions.PimpedHistory
-import model.`match`.{MatchState, MutableMatchState}
+import model.game.GameStateExtensions.PimpedHistory
+import model.game.{GameState, MutableGameState}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
 case class SkipTurnBehaviour() extends BehaviourRule {
   override def name: Option[String] = None
 
-  override def applyRule(implicit state: MatchState): Seq[Operation] = {
+  override def applyRule(state: GameState): Seq[Operation] = {
     val currentPlayerHistory = state.currentPlayer.history
-      .filterCurrentTurn()
+      .filterCurrentTurn(state)
       .filterNotConsumed()
     var skippedTurn = 0
     if (currentPlayerHistory.exists(_.isInstanceOf[SkipTurnEvent])) {
@@ -31,9 +31,9 @@ case class SkipTurnBehaviour() extends BehaviourRule {
 
   def consumeTurn(toSkip: Int): Operation = {
     var skippedTurns = toSkip
-    Operation.execute((state: MutableMatchState) => {
+    Operation.execute((state: MutableGameState) => {
       val currentPlayerHistory = state.currentPlayer.history
-        .filterCurrentTurn()(state)
+        .filterCurrentTurn(state)
         .filterNotConsumed()
       if (currentPlayerHistory.exists(_.isInstanceOf[LoseTurnEvent])) {
         var loseEvents = currentPlayerHistory.filter(_.isInstanceOf[LoseTurnEvent])

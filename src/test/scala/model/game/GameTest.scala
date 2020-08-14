@@ -1,4 +1,4 @@
-package model.`match`
+package model.game
 
 import engine.events.{DiceRollEvent, TileEnteredEvent, TurnShouldEndEvent}
 import mock.MatchMock
@@ -9,23 +9,23 @@ import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}
 
-class MatchTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEach {
+class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEach {
 
-  var gameMatch: Match = MatchMock.default
+  var gameMatch: Game = MatchMock.default
 
   override def beforeEach(): Unit = {
-    gameMatch = Match(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))))
+    gameMatch = Game(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))))
   }
 
   "A Match" should "have a MatchBoard" in {
-    assert(gameMatch.board.equals(MatchBoard(board)))
+    assert(gameMatch.board.equals(GameBoard(board)))
   }
 
   it should "have a set of players" in {
     assert(gameMatch.players.equals(players.keySet))
   }
 
-  it should "have a current MatchState" in {
+  it should "have a current GameState" in {
     assert(gameMatch.currentState != null)
   }
 
@@ -45,10 +45,10 @@ class MatchTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterE
 
   it should "submit events to tiles" in {
     val state = gameMatch.currentState
-    val tileEvent = TileEnteredEvent(state.currentPlayer, state.matchBoard.first, state.currentTurn)
+    val tileEvent = TileEnteredEvent(state.currentPlayer, state.gameBoard.first, state.currentTurn)
     gameMatch.submitEvent(tileEvent)
 
-    assert(state.matchBoard.first.history.contains(tileEvent))
+    assert(state.gameBoard.first.history.contains(tileEvent))
   }
 
   "A matchState" should "have a current player" in {

@@ -1,6 +1,6 @@
 package view.playerselection
 
-import model.`match`.Match
+import model.game.Game
 import model.entities.board.{Board, Piece}
 import model.rules.ruleset.RuleSet
 import model.{Color, Player}
@@ -58,7 +58,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   }
 
   startGame.onAction = _ => {
-    val currentMatch: Match = Match(board, players, ruleSet)
+    val currentMatch: Game = Game(board, players, ruleSet)
     val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
   }
 

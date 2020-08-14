@@ -1,4 +1,4 @@
-package model.`match`
+package model.game
 
 import engine.events.root.{GameEvent, PlayerEvent, TileEvent}
 import model.Player
@@ -7,15 +7,15 @@ import model.entities.board.{Board, Piece}
 import model.rules.operations.Operation
 import model.rules.ruleset.RuleSet
 
-trait Match {
+trait Game {
 
   def availableActions: Set[Action]
 
-  def board: MatchBoard
+  def board: GameBoard
 
   def players: Set[Player]
 
-  def currentState: MutableMatchState
+  def currentState: MutableGameState
 
   def stateBasedOperations: Seq[Operation]
 
@@ -24,16 +24,16 @@ trait Match {
   def submitEvent(event: GameEvent): Unit
 }
 
-object Match {
+object Game {
 
-  def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Match = new MatchImpl(board, players, rules)
+  def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Game = new GameImpl(board, players, rules)
 
-  private class MatchImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Match {
+  private class GameImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Game {
 
     private val firstTurn = 0
 
-    override val board: MatchBoard = MatchBoard(gameBoard)
-    override val currentState: MutableMatchState = MutableMatchState(
+    override val board: GameBoard = GameBoard(gameBoard)
+    override val currentState: MutableGameState = MutableGameState(
       firstTurn,
       rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, players),

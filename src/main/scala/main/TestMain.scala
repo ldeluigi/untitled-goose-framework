@@ -6,7 +6,7 @@ import engine.core.EventSink
 import engine.events.root.{GameEvent, NoOpEvent}
 import engine.events.{DialogLaunchEvent, StepMovementEvent}
 import javafx.scene.input.KeyCode
-import model.`match`.{Match, MutableMatchState}
+import model.game.{Game, MutableGameState}
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Piece, Position}
@@ -32,7 +32,7 @@ object TestMain extends JFXApp {
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"
 
-    override def execute(sink: EventSink[GameEvent], state: MutableMatchState): Unit = {
+    override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
       sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent(
         "Movement Bonus",
         "Make 10 step?",
@@ -59,7 +59,7 @@ object TestMain extends JFXApp {
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
-  val currentMatch: Match = Match(board, players, ruleSet)
+  val currentMatch: Game = Game(board, players, ruleSet)
 
   val playerSelection = new PlayerSelection(stage, board, ruleSet, screenSize.width, screenSize.height)
 

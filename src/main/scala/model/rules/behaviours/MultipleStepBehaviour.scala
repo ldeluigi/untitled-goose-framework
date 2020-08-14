@@ -3,8 +3,8 @@ package model.rules.behaviours
 import engine.events
 import engine.events._
 import model.Player
-import model.`match`.MatchState
-import model.`match`.MatchStateExtensions.PimpedHistory
+import model.game.GameState
+import model.game.GameStateExtensions.PimpedHistory
 import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
@@ -13,9 +13,9 @@ case class MultipleStepBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = Some("Multiple StepRule")
 
-  override def applyRule(implicit state: MatchState): Seq[Operation] = {
+  override def applyRule(state: GameState): Seq[Operation] = {
     state.currentPlayer.history
-      .filterCurrentTurn()
+      .filterCurrentTurn(state)
       .filterNotConsumed()
       .filter(_.isInstanceOf[StepMovementEvent])
       .map(_.asInstanceOf[StepMovementEvent])
@@ -23,13 +23,13 @@ case class MultipleStepBehaviour() extends BehaviourRule {
       .flatMap(e => generateStep(state, e.movement, e.source, e.movement >= 0))
   }
 
-  private def generateStep(state: MatchState, step: Int, player: Player, forward: Boolean): Seq[Operation] = {
+  private def generateStep(state: GameState, step: Int, player: Player, forward: Boolean): Seq[Operation] = {
     (1 to step).toList.flatMap(i => {
       stepOperation(state, player, forward, step - i)
     })
   }
 
-  private def stepOperation(state: MatchState, player: Player, forward: Boolean, remainingSteps: Int): Seq[Operation] = {
+  private def stepOperation(state: GameState, player: Player, forward: Boolean, remainingSteps: Int): Seq[Operation] = {
 
     val tileExited = Operation.trigger(s => {
       val tile = s.playerPieces(player).position.map(_.tile)
@@ -46,15 +46,15 @@ case class MultipleStepBehaviour() extends BehaviourRule {
       state.updatePlayerPiece(player, piece => {
         Piece(piece, piece.position match {
           case Some(pos) => if (forward) {
-            state.matchBoard
+            state.gameBoard
               .next(pos.tile)
               .map(Position(_))
           } else {
-            state.matchBoard
+            state.gameBoard
               .prev(pos.tile)
               .map(Position(_))
           }
-          case None => Some(Position(state.matchBoard.first))
+          case None => Some(Position(state.gameBoard.first))
         })
       })
     })
@@ -87,7 +87,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
   }
 
   //TODO THIS WORKS BUT IT SHOULD BE MORE GENERAL -- See Trello for mor details
-  private def checkAndTriggerPassedPlayers(state: MatchState, player: Player): Seq[Operation] = {
+  private def checkAndTriggerPassedPlayers(state: GameState, player: Player): Seq[Operation] = {
     for (other <- state.playerPieces.keySet.toSeq if !other.equals(player))
       yield Operation.trigger(s => {
         val tile = s.playerPieces(player).position.map(_.tile)

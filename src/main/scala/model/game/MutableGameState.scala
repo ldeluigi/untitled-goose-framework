@@ -1,10 +1,10 @@
-package model.`match`
+package model.game
 
 import engine.events.root.GameEvent
 import model.Player
 import model.entities.board.Piece
 
-trait MutableMatchState extends MatchState {
+trait MutableGameState extends GameState {
 
   def newTurnStarted_=(value: Boolean): Unit
 
@@ -17,10 +17,10 @@ trait MutableMatchState extends MatchState {
   def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
 }
 
-object MutableMatchState {
+object MutableGameState {
 
-  private class MatchStateImpl(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
-                               val matchBoard: MatchBoard) extends MutableMatchState {
+  private class GameStateImpl(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
+                              val gameBoard: GameBoard) extends MutableGameState {
 
     var history: List[GameEvent] = List()
     var currentTurn: Int = startTurn
@@ -48,7 +48,7 @@ object MutableMatchState {
     override def nextPlayer: Player = nextPlayerStrategy() //TODO Check if this is ok or we need a better way to do this
   }
 
-  def apply(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: MatchBoard): MutableMatchState =
-    new MatchStateImpl(startTurn, startPlayer, nextPlayerStrategy, pieces, board)
+  def apply(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: GameBoard): MutableGameState =
+    new GameStateImpl(startTurn, startPlayer, nextPlayerStrategy, pieces, board)
 }
 

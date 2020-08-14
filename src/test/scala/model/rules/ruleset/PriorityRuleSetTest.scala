@@ -2,7 +2,7 @@ package model.rules.ruleset
 
 import engine.core.EventSink
 import engine.events.root.GameEvent
-import model.`match`.MutableMatchState
+import model.game.MutableGameState
 import model.actions.Action
 import model.entities.board.{Position, TileDefinition}
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
@@ -29,7 +29,7 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
   val myAction: Action = new Action {
     override def name: String = "testAction"
 
-    override def execute(sink: EventSink[GameEvent], state: MutableMatchState): Unit = {}
+    override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {}
   }
 
 

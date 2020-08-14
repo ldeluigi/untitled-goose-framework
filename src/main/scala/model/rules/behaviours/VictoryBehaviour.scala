@@ -2,8 +2,8 @@ package model.rules.behaviours
 
 import engine.events.{StepMovementEvent, VictoryEvent}
 import engine.events.root.ExitEvent
-import model.`match`.MatchState
-import model.`match`.MatchStateExtensions.PimpedHistory
+import model.game.GameState
+import model.game.GameStateExtensions.PimpedHistory
 import model.entities.DialogContent
 import model.rules.BehaviourRule
 import model.rules.operations.{Operation, SpecialOperation}
@@ -11,7 +11,7 @@ import model.rules.operations.{Operation, SpecialOperation}
 case class VictoryBehaviour() extends BehaviourRule {
   override def name: Option[String] = Some("Victory")
 
-  override def applyRule(state: MatchState): Seq[Operation] = {
+  override def applyRule(state: GameState): Seq[Operation] = {
     if (state.playerPieces.keySet.exists(p => p.history.exists(e => e.isInstanceOf[VictoryEvent] && !e.isConsumed))) {
       state.playerPieces.keySet.foreach(p =>
         p.history.filterNotConsumed().filter(_.isInstanceOf[StepMovementEvent]).consumeAll()
