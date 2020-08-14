@@ -22,7 +22,6 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   root = borderPane
 
   val playerNameFromInput = new TextField()
-  // TODO convert this into a predetermined List from model.Colors enum
   val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
 
   val addPlayer: Button = new Button() {
@@ -80,6 +79,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   startGame.onAction = _ => {
     val currentMatch: Game = Game(board, players, ruleSet)
+    // TODO fix new scene not launching
     val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
   }
 
