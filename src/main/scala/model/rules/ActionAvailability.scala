@@ -23,4 +23,6 @@ object ActionAvailability {
 
   def apply(action: Action, priority: Int = 0, allowed: Boolean = true): ActionAvailability =
     (allowed, priority, action)
+
+  def unapply(arg: ActionAvailability): Option[(Boolean, Int, Action)] = Some(arg.allowed, arg.priority, arg.action)
 }
