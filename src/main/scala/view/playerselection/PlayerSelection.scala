@@ -6,9 +6,10 @@ import model.rules.ruleset.RuleSet
 import model.{Color, Player}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, ColorPicker, Label, TextField}
+import scalafx.scene.control.{Button, ColorPicker, TextField}
 import scalafx.scene.layout.{AnchorPane, BorderPane, HBox}
-import scalafx.scene.paint.Color.Blue
+import scalafx.scene.paint.Color.{Blue, DarkGreen, DarkOliveGreen, DarkRed, IndianRed, MediumVioletRed, Red}
+import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import view.ApplicationController
 
@@ -20,18 +21,37 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   root = borderPane
 
-  val playerName = new Label("Insert player name: ")
   val playerNameFromInput = new TextField()
   val colorsChoice = new ColorPicker()
-  val addPlayer = new Button("Add player")
-  val startGame = new Button("Start game!")
-  val cancel = new Button("Cancel")
+
+  val addPlayer: Button = new Button() {
+    text = "Add player to game"
+    style = "-fx-font-size: 12pt"
+  }
+
+  val startGame: Button = new Button() {
+    text = "Start game!"
+    textFill = DarkGreen
+    style = "-fx-font-size: 15pt"
+  }
+  val cancel: Button = new Button() {
+    text = "Cancel"
+    style = "-fx-font-size: 11pt"
+    textFill = IndianRed
+  }
 
   val upperGameNameHeader: HBox = new HBox() {
     alignment = Pos.Center
     padding = Insets(30)
-    fill = Blue
-    children = new Label("Game Name") // TODO get the actual name of the game
+    children = new Text {
+      text = "Untitled Goose Framework"
+      style = "-fx-font-size: 28pt"
+    }
+  }
+
+  val playerName: Text = new Text {
+    text = "Insert player name:"
+    style = "-fx-font-size: 12pt"
   }
 
   val centerPlayerConsole: HBox = new HBox() {
@@ -43,9 +63,9 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   val bottomGameControls: HBox = new HBox() {
     alignment = Pos.BottomRight
-    spacing = 30
-    padding = Insets(30)
-    children = List(startGame, cancel)
+    spacing = 15
+    padding = Insets(20)
+    children = List(cancel, startGame)
   }
 
   borderPane.top = upperGameNameHeader
@@ -54,7 +74,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   addPlayer.onAction = _ => {
     playerNameFromInput.clear()
-    // add entry to players map
+    // TODO add entry to players map
   }
 
   startGame.onAction = _ => {
