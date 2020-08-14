@@ -1,9 +1,8 @@
-package model
+package model.`match`
 
-import engine.`match`.MatchBoard
 import engine.events.root.GameEvent
+import model.Player
 import model.entities.board.Piece
-
 
 trait MatchState {
 
@@ -22,4 +21,3 @@ trait MatchState {
   def history: List[GameEvent]
 
 }
-

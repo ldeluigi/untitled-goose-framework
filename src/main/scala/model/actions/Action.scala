@@ -2,7 +2,7 @@ package model.actions
 
 import engine.core.EventSink
 import engine.events.root.GameEvent
-import model.MutableMatchState
+import model.`match`.MutableMatchState
 
 trait Action {
 

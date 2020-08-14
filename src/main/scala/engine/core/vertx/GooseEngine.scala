@@ -1,11 +1,11 @@
 package engine.core.vertx
 
-import engine.`match`.Match
 import engine.core.{DialogDisplay, EventSink}
 import engine.events.root.{ExitEvent, GameEvent, NoOpEvent}
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
+import model.`match`.Match
 import model.entities.DialogContent
 import model.rules.operations.Operation
 import model.rules.operations.SpecialOperation.{DialogOperation, SpecialOperation}

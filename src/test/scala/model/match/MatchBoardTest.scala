@@ -1,4 +1,4 @@
-package engine.`match`
+package model.`match`
 
 import model.Tile
 import model.entities.board.{Board, Disposition, TileDefinition}

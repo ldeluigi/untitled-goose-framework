@@ -1,10 +1,10 @@
 package engine.events
 
-import engine.events.root.{ConsumableGameEvent, PlayerEvent}
+import engine.events.root.{ConsumableGameEvent, TileEvent}
 import model.{Player, Tile}
 
-case class PlayerPassedEvent(source: Player, passingPlayer: Player, tile: Tile, currentTurn: Int)
-  extends ConsumableGameEvent(currentTurn) with PlayerEvent {
+case class PlayerPassedEvent(playerPassed: Player, playerPassing: Player, source: Tile, currentTurn: Int)
+  extends ConsumableGameEvent(currentTurn) with TileEvent {
 
-  override def toString: String = super.toString + " PlayerPassing: " + passingPlayer.toString + " on tile: " + tile.toString
+  override def toString: String = super.toString + " player " + playerPassing.toString + " passed " + playerPassed.toString
 }

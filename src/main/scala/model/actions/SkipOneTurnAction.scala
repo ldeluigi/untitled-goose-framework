@@ -3,7 +3,7 @@ package model.actions
 import engine.core.EventSink
 import engine.events.SkipTurnEvent
 import engine.events.root.GameEvent
-import model.MutableMatchState
+import model.`match`.MutableMatchState
 
 class SkipOneTurnAction extends Action {
 

@@ -1,11 +1,11 @@
-package engine.`match`
+package model.`match`
 
 import engine.events.root.{GameEvent, PlayerEvent, TileEvent}
+import model.Player
 import model.actions.Action
 import model.entities.board.{Board, Piece}
 import model.rules.operations.Operation
 import model.rules.ruleset.RuleSet
-import model.{MutableMatchState, Player}
 
 trait Match {
 

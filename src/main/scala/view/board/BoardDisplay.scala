@@ -1,7 +1,6 @@
 package view.board
 
-import engine.`match`.MatchBoard
-import model.MutableMatchState
+import model.`match`.{MatchBoard, MutableMatchState}
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
 

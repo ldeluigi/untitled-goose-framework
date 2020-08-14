@@ -2,10 +2,11 @@ package model.rules.behaviours
 
 import engine.events
 import engine.events._
+import model.Player
+import model.`match`.MatchState
 import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
-import model.{MatchState, Player}
 
 case class MultipleStepBehaviour() extends BehaviourRule {
 
@@ -86,7 +87,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
     }
   }
 
-  //TODO ADDED THIS TO BE REVIEWED
+  //TODO THIS WORKS BUT IT SHOULD BE MORE GENERAL -- See Trello for mor details
   private def checkAndTriggerPassedPlayers(state: MatchState, player: Player): Seq[Operation] = {
     for (other <- state.playerPieces.keySet.toSeq if !other.equals(player))
       yield Operation.trigger(s => {
@@ -96,14 +97,14 @@ case class MultipleStepBehaviour() extends BehaviourRule {
           val turnsOtherStopped = tile.get.history
             .filter(_.isInstanceOf[StopOnTileEvent])
             .map(_.asInstanceOf[StopOnTileEvent])
-            .filter(_.player.equals(other))
+            .filter(_.source.equals(other))
             .map(_.turn)
           //TODO should this be added as extension method to the state?
           val lastTurnPlayed = other.history.filter(_.isInstanceOf[TurnEndedEvent])
             .map(_.turn).reduceOption(_ max _).getOrElse(-1)
 
           if (turnsOtherStopped.contains(lastTurnPlayed)) {
-            Some(events.PlayerPassedEvent(player, other, tile.get, s.currentTurn))
+            Some(events.PlayerPassedEvent(other, player, tile.get, s.currentTurn))
           } else None
         } else None
       })

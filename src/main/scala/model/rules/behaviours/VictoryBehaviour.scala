@@ -2,7 +2,7 @@ package model.rules.behaviours
 
 import engine.events.VictoryEvent
 import engine.events.root.ExitEvent
-import model.MatchState
+import model.`match`.MatchState
 import model.entities.DialogContent
 import model.rules.BehaviourRule
 import model.rules.operations.{Operation, SpecialOperation}

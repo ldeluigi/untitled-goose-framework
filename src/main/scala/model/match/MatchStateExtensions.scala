@@ -1,10 +1,10 @@
-package engine.`match`
+package model.`match`
 
-import model.{MatchState, Tile}
+import model.Tile
 
 object MatchStateExtensions {
 
-  implicit class MatchExtensions(state: MatchState) {
+  implicit class MatchStateExtensions(state: MatchState) {
 
     def getTile(number: Int): Option[Tile] = {
       state.matchBoard.tiles.find(t => t.number.isDefined && t.number.get == number)

@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
 import engine.events.{MovementDiceRollEvent, StepMovementEvent}
-import model.MatchState
+import model.`match`.MatchState
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 

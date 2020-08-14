@@ -1,6 +1,6 @@
 package mock
 
-import engine.`match`.Match
+import model.`match`.Match
 import model.entities.board.{Board, Disposition, Piece}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import model.{Color, Player}

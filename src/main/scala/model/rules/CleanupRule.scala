@@ -1,6 +1,6 @@
 package model.rules
 
-import model.MutableMatchState
+import model.`match`.MutableMatchState
 
 trait CleanupRule {
 

@@ -1,8 +1,8 @@
 package engine.events
 
-import engine.events.root.{ConsumableGameEvent, TileEvent}
+import engine.events.root.{ConsumableGameEvent, PlayerEvent}
 import model.{Player, Tile}
 
 
-case class StopOnTileEvent(player: Player, source: Tile, currentTurn: Int)
-  extends ConsumableGameEvent(currentTurn) with TileEvent
+case class StopOnTileEvent(source: Player, tile: Tile, currentTurn: Int)
+  extends ConsumableGameEvent(currentTurn) with PlayerEvent

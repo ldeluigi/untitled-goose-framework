@@ -2,10 +2,11 @@ package model.rules.ruleset
 
 import engine.core.EventSink
 import engine.events.root.GameEvent
+import model.`match`.MutableMatchState
 import model.actions.Action
 import model.entities.board.{Position, TileDefinition}
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
-import model.{MutableMatchState, Player, Tile}
+import model.{Player, Tile}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 

@@ -1,11 +1,11 @@
 package engine.core.vertx
 
-import engine.`match`.Match
 import engine.events.root.{GameEvent, NoOpEvent}
+import model.`match`.{Match, MutableMatchState}
 import model.entities.DialogContent
 import model.entities.board.{Board, Disposition, Piece}
 import model.rules.ruleset.PriorityRuleSet
-import model.{Color, MutableMatchState, Player}
+import model.{Color, Player}
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.time.SpanSugar.convertIntToGrainOfTime

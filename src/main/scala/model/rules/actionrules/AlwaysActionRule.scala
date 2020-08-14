@@ -1,6 +1,6 @@
 package model.rules.actionrules
 
-import model.MutableMatchState
+import model.`match`.MutableMatchState
 import model.actions.Action
 import model.rules.{ActionAvailability, ActionRule}
 

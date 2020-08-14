@@ -1,4 +1,4 @@
-package engine.`match`
+package model.`match`
 
 import engine.events.{DiceRollEvent, TileEnteredEvent, TurnShouldEndEvent}
 import mock.MatchMock

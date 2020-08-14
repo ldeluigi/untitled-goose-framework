@@ -1,7 +1,8 @@
-package model
+package model.`match`
 
-import engine.`match`.MatchBoard
 import engine.events.root.GameEvent
+import model.Player
+import model.`match`.MatchBoard
 import model.entities.board.Piece
 
 trait MutableMatchState extends MatchState {

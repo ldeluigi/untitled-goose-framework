@@ -1,7 +1,7 @@
 package model.rules.actionrules
 
 import engine.events.LoseTurnEvent
-import model.MutableMatchState
+import model.`match`.MutableMatchState
 import model.actions.{Action, SkipOneTurnAction}
 import model.rules.ruleset.RulePriorities
 import model.rules.{ActionAvailability, ActionRule}

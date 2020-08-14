@@ -1,9 +1,10 @@
 package model.rules.ruleset
 
+import model.`match`.{MatchState, MutableMatchState}
 import model.actions.Action
 import model.entities.board.Position
 import model.rules.operations.Operation
-import model.{MatchState, MutableMatchState, Player, Tile}
+import model.{Player, Tile}
 
 trait RuleSet {
 

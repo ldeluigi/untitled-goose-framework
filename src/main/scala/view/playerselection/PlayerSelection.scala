@@ -1,14 +1,14 @@
 package view.playerselection
 
-import engine.`match`.Match
+import model.`match`.Match
 import model.entities.board.{Board, Piece}
 import model.rules.ruleset.RuleSet
 import model.{Color, Player}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.{Button, ColorPicker, Label, TextField}
-import scalafx.scene.layout.{AnchorPane, Background, BackgroundFill, BorderPane, HBox}
-import scalafx.scene.paint.Color.{ALICEBLUE, BLUE, Blue, LightGreen, color}
+import scalafx.scene.layout.{AnchorPane, BorderPane, HBox}
+import scalafx.scene.paint.Color.Blue
 import scalafx.stage.Stage
 import view.ApplicationController
 

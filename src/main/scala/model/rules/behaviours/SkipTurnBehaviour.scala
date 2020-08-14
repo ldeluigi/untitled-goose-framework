@@ -1,9 +1,9 @@
 package model.rules.behaviours
 
 import engine.events.{LoseTurnEvent, SkipTurnEvent}
+import model.`match`.{MatchState, MutableMatchState}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
-import model.{MatchState, MutableMatchState}
 
 case class SkipTurnBehaviour() extends BehaviourRule {
   override def name: Option[String] = None
@@ -21,7 +21,9 @@ case class SkipTurnBehaviour() extends BehaviourRule {
           e.consume()
         })
     }
-    Seq()
+    if (skippedTurn > 0) {
+      Seq(consumeTurn(skippedTurn))
+    } else Seq()
   }
 
 

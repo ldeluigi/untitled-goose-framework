@@ -2,7 +2,7 @@ package model.rules.operations
 
 import engine.core.EventSink
 import engine.events.root.GameEvent
-import model.MutableMatchState
+import model.`match`.MutableMatchState
 import model.entities.DialogContent
 
 object SpecialOperation {

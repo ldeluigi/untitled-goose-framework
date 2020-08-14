@@ -1,12 +1,13 @@
 package model.rules.ruleset
 
+import model.`match`.{MatchState, MutableMatchState}
 import model.actions.Action
 import model.entities.board.Position
 import model.rules.behaviours.{DialogLaunchBehaviour, TurnEndEventBehaviour}
 import model.rules.cleanup.TurnEndConsumer
 import model.rules.operations.Operation
 import model.rules.{ActionRule, BehaviourRule, CleanupRule}
-import model.{MatchState, MutableMatchState, Player, Tile}
+import model.{Player, Tile}
 
 class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                       playerOrdering: PlayerOrdering,

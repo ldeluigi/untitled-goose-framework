@@ -1,10 +1,11 @@
 package model.rules.behaviours
 
 import engine.events.{StopOnTileEvent, TeleportEvent, TileEnteredEvent, TileExitedEvent}
+import model.`match`.MatchState
 import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
-import model.{MatchState, Player, Tile}
+import model.{Player, Tile}
 
 class TeleportBehaviour extends BehaviourRule {
   override def name: Option[String] = Some("Teleport")

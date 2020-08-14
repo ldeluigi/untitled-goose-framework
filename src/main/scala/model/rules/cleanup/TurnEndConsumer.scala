@@ -1,7 +1,7 @@
 package model.rules.cleanup
 
 import engine.events.{GainTurnEvent, TurnEndedEvent, TurnShouldEndEvent}
-import model.MutableMatchState
+import model.`match`.MutableMatchState
 import model.rules.CleanupRule
 
 object TurnEndConsumer extends CleanupRule {

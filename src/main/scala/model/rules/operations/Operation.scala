@@ -2,7 +2,7 @@ package model.rules.operations
 
 import engine.core.EventSink
 import engine.events.root.GameEvent
-import model.{MatchState, MutableMatchState}
+import model.`match`.{MatchState, MutableMatchState}
 
 
 trait Operation {

@@ -1,9 +1,8 @@
 package view
 
-import engine.`match`.Match
 import engine.core.vertx.GooseEngine
 import engine.events.root.GameEvent
-import model.MutableMatchState
+import model.`match`.{Match, MutableMatchState}
 import model.actions.Action
 import model.entities.DialogContent
 import scalafx.application.Platform

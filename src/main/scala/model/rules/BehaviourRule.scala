@@ -1,6 +1,6 @@
 package model.rules
 
-import model.MatchState
+import model.`match`.MatchState
 import model.rules.operations.Operation
 
 trait BehaviourRule {
