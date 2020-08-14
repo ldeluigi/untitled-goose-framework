@@ -2,7 +2,7 @@ package view
 
 import engine.core.vertx.GooseEngine
 import engine.events.root.GameEvent
-import model.`match`.{Match, MutableMatchState}
+import model.game.{Game, MutableGameState}
 import model.actions.Action
 import model.entities.DialogContent
 import scalafx.application.Platform
@@ -21,7 +21,7 @@ trait ApplicationController extends Scene {
 }
 
 trait GooseController {
-  def update(state: MutableMatchState)
+  def update(state: MutableGameState)
 
   def showDialog(content: DialogContent): Future[GameEvent]
 
@@ -32,7 +32,7 @@ trait GooseController {
 
 object ApplicationController {
 
-  private class ApplicationControllerImpl(stage: Stage, widthSize: Int, heightSize: Int, gameMatch: Match)
+  private class ApplicationControllerImpl(stage: Stage, widthSize: Int, heightSize: Int, gameMatch: Game)
     extends ApplicationController with GooseController {
 
     val boardProportion = 0.8
@@ -71,7 +71,7 @@ object ApplicationController {
       action.execute(engine.eventSink, engine.currentMatch.currentState)
     }
 
-    override def update(state: MutableMatchState): Unit = Platform.runLater(() => {
+    override def update(state: MutableGameState): Unit = Platform.runLater(() => {
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
     })
@@ -94,7 +94,7 @@ object ApplicationController {
     }
   }
 
-  def apply(stage: Stage, width: Int, height: Int, gameMatch: Match): ApplicationController = new
+  def apply(stage: Stage, width: Int, height: Int, gameMatch: Game): ApplicationController = new
       ApplicationControllerImpl(stage, width, height, gameMatch)
 }
 

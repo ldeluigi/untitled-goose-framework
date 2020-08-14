@@ -1,9 +1,9 @@
 package model.rules
 
-import model.`match`.MutableMatchState
+import model.game.MutableGameState
 
 trait CleanupRule {
 
-  def applyRule(state: MutableMatchState): Unit
+  def applyRule(state: MutableGameState): Unit
 
 }

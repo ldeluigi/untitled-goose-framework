@@ -1,10 +1,10 @@
-package model.`match`
+package model.game
 
 import model.Tile
 import model.entities.board.{Board, Disposition, TileDefinition}
 import org.scalatest.flatspec.AnyFlatSpec
 
-class MatchBoardTest() extends AnyFlatSpec {
+class GameBoardTest() extends AnyFlatSpec {
 
   val tile1: TileDefinition = TileDefinition(1)
   val tile2: TileDefinition = TileDefinition(2)
@@ -13,7 +13,7 @@ class MatchBoardTest() extends AnyFlatSpec {
 
   val name: String = "Board"
   val board: Board = Board(name, tiles, Disposition.loop(tiles.size))
-  val matchBoard: MatchBoard = MatchBoard(board)
+  val matchBoard: GameBoard = GameBoard(board)
 
   "A match board" should "have a board" in {
     assert(matchBoard.board == board)

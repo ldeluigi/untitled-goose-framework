@@ -1,17 +1,17 @@
 package view.board
 
-import model.`match`.{MatchBoard, MutableMatchState}
+import model.game.{GameBoard, MutableGameState}
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
 
 
 trait BoardDisplay extends ScrollPane {
-  def updateMatchState(matchState: MutableMatchState)
+  def updateMatchState(matchState: MutableGameState)
 }
 
 object BoardDisplay {
 
-  private class BoardDisplayImpl(matchBoard: MatchBoard) extends BoardDisplay {
+  private class BoardDisplayImpl(matchBoard: GameBoard) extends BoardDisplay {
     val boardPane = new Pane()
 
     var tiles: List[TileVisualization] = Nil
@@ -35,7 +35,7 @@ object BoardDisplay {
       tiles = currentTile :: tiles
     }
 
-    override def updateMatchState(matchState: MutableMatchState): Unit = {
+    override def updateMatchState(matchState: MutableGameState): Unit = {
       for (t <- tiles) {
         t.removePieces()
       }
@@ -58,6 +58,6 @@ object BoardDisplay {
   }
 
 
-  def apply(board: MatchBoard): BoardDisplay = new BoardDisplayImpl(board)
+  def apply(board: GameBoard): BoardDisplay = new BoardDisplayImpl(board)
 }
 

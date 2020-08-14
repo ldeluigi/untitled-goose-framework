@@ -1,7 +1,7 @@
 package engine.core.vertx
 
 import engine.events.root.{GameEvent, NoOpEvent}
-import model.`match`.{Match, MutableMatchState}
+import model.game.{Game, MutableGameState}
 import model.entities.DialogContent
 import model.entities.board.{Board, Disposition, Piece}
 import model.rules.ruleset.PriorityRuleSet
@@ -18,10 +18,10 @@ class GooseEngineTest extends AnyFlatSpec {
 
   behavior of "GooseEngineTest"
 
-  val m: Match = Match(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.random)), PriorityRuleSet())
+  val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.random)), PriorityRuleSet())
 
   val cGenerator: (GameEvent => Unit) => GooseController = (onEvent: GameEvent => Unit) => new GooseController {
-    override def update(state: MutableMatchState): Unit = {}
+    override def update(state: MutableGameState): Unit = {}
 
     override def showDialog(content: DialogContent): Future[GameEvent] = Future.successful(NoOpEvent)
 

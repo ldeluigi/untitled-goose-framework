@@ -1,10 +1,10 @@
-package model.`match`
+package model.game
 
 import engine.events.root.GameEvent
 import model.Player
 import model.entities.board.Piece
 
-trait MatchState {
+trait GameState {
 
   def newTurnStarted: Boolean
 
@@ -16,7 +16,7 @@ trait MatchState {
 
   def playerPieces: Map[Player, Piece]
 
-  def matchBoard: MatchBoard
+  def gameBoard: GameBoard
 
   def history: List[GameEvent]
 

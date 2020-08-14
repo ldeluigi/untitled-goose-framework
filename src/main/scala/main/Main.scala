@@ -6,7 +6,7 @@ import engine.core.EventSink
 import engine.events.root.{GameEvent, NoOpEvent}
 import engine.events.{DialogLaunchEvent, StepMovementEvent}
 import javafx.scene.input.KeyCode
-import model.`match`.MutableMatchState
+import model.game.MutableGameState
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Position}
@@ -29,7 +29,7 @@ object Main extends JFXApp {
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"
 
-    override def execute(sink: EventSink[GameEvent], state: MutableMatchState): Unit = {
+    override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
       sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent(
         "Movement Bonus",
         "Make 10 step?",

@@ -1,6 +1,6 @@
 package model.rules.ruleset
 
-import model.`match`.{MatchState, MutableMatchState}
+import model.game.{GameState, MutableGameState}
 import model.actions.Action
 import model.entities.board.Position
 import model.rules.operations.Operation
@@ -8,9 +8,9 @@ import model.{Player, Tile}
 
 trait RuleSet {
 
-  def stateBasedOperations(state: MatchState): Seq[Operation]
+  def stateBasedOperations(state: GameState): Seq[Operation]
 
-  def cleanupOperations(state: MutableMatchState): Unit
+  def cleanupOperations(state: MutableGameState): Unit
 
   def first(players: Set[Player]): Player
 
@@ -18,7 +18,7 @@ trait RuleSet {
 
   def startPosition(tiles: Set[Tile]): Position
 
-  def actions(state: MutableMatchState): Set[Action]
+  def actions(state: MutableGameState): Set[Action]
 
 }
 

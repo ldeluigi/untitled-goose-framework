@@ -1,9 +1,9 @@
-package model.`match`
+package model.game
 
 import model.Tile
 import model.entities.board.{Board, TileDefinition}
 
-trait MatchBoard {
+trait GameBoard {
 
   def tiles: Set[Tile]
 
@@ -16,11 +16,11 @@ trait MatchBoard {
   def first: Tile
 }
 
-object MatchBoard {
+object GameBoard {
 
-  def apply(board: Board): MatchBoard = new MatchBoardImpl(board)
+  def apply(board: Board): GameBoard = new GameBoardImpl(board)
 
-  private class MatchBoardImpl(val board: Board) extends MatchBoard {
+  private class GameBoardImpl(val board: Board) extends GameBoard {
 
     private val tileMap: Map[TileDefinition, Tile] = board.tiles map (t => t -> Tile(t)) toMap
 
@@ -33,7 +33,7 @@ object MatchBoard {
     override def prev(tile: Tile): Option[Tile] = board prev tile map (tileMap(_))
 
     override def equals(obj: Any): Boolean = obj match {
-      case obj: MatchBoard => obj.board.equals(board)
+      case obj: GameBoard => obj.board.equals(board)
     }
   }
 
