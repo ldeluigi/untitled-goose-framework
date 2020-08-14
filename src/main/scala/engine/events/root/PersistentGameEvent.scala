@@ -10,6 +10,4 @@ class PersistentGameEvent(val turn: Int, val groups: Set[String] = Set()) extend
     " Turn: " + turn + " " + name
   }
 
-  override def name: String = this.getClass.getSimpleName
-
 }

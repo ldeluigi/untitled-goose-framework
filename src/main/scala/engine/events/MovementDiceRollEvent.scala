@@ -2,7 +2,5 @@ package engine.events
 
 import model.Player
 
-case class MovementDiceRollEvent(player: Player, res: Int, t: Int)
-  extends DiceRollEvent[Int](player, res, t) {
-  override def name: String = this.getClass.getSimpleName
-}
+case class MovementDiceRollEvent(player: Player, t: Int, res: Int*)
+  extends DiceRollEvent[Int](player, t, res: _*)
