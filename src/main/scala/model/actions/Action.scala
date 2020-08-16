@@ -15,4 +15,6 @@ trait Action {
     case _ => false
   }
 
+  override def toString: String = this.getClass.getName + "(" + name + ")"
+
 }
