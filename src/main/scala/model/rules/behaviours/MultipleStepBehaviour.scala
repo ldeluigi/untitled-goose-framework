@@ -47,7 +47,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
       state.updatePlayerPiece(player, piece => {
         Piece(piece, piece.position match {
           case Some(pos) => if (forward) {
-            if(inverted.isEmpty){
+            if (inverted.isEmpty) {
               state.gameBoard
                 .next(pos.tile)
                 .map(Position(_))
@@ -57,7 +57,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
                 .map(Position(_))
             }
           } else {
-            if(inverted.isDefined){
+            if (inverted.isDefined) {
               state.gameBoard
                 .next(pos.tile)
                 .map(Position(_))

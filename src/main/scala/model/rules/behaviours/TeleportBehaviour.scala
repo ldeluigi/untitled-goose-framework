@@ -8,7 +8,7 @@ import model.rules.BehaviourRule
 import model.rules.operations.Operation
 import model.{Player, Tile}
 
-class TeleportBehaviour extends BehaviourRule {
+case class TeleportBehaviour() extends BehaviourRule {
   override def name: Option[String] = Some("Teleport")
 
   override def applyRule(state: GameState): Seq[Operation] =

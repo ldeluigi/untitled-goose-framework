@@ -5,12 +5,13 @@ import java.awt.{Dimension, Toolkit}
 import engine.events._
 import javafx.scene.input.KeyCode
 import model.game.{Game, GameState}
-import model.actions.RollMovementDice
+import model.actions.{Action, RollMovementDice}
 import model.entities.Dice
 import model.entities.Dice.MovementDice
 import model.entities.board._
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
-import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour, TurnEndEventBehaviour, VictoryBehaviour}
+import model.rules.actionrules.LoseTurnActionRule
+import model.rules.behaviours.{DialogLaunchBehaviour, MovementWithDiceBehaviour, MultipleStepBehaviour, SkipTurnBehaviour, TeleportBehaviour, TurnEndEventBehaviour, VictoryBehaviour}
 import model.rules.operations.Operation
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.rules.{ActionRule, BehaviourRule}
@@ -36,12 +37,28 @@ object GooseGameNoDSL extends JFXApp {
   val theDeath = "The Death"
   val theEnd = "The End"
 
-
-  val tileSet: Set[TileDefinition] = ???
-  val board: Board = Board("Original Goose Game", tileSet, Disposition.spiral(totalTiles))
+  val board: Board = Board.create()
+    .withNumberedTiles(totalTiles)
+    .withName("Original Goose Game")
+    .withDisposition(Disposition.spiral(_))
+    .withNamedTile(6, theBridge)
+    .withNamedTile(19, theInn)
+    .withNamedTile(31, theWell)
+    .withNamedTile(42, theLabyrinth)
+    .withNamedTile(52, thePrison)
+    .withNamedTile(58, theDeath)
+    .withNamedTile(63, theEnd)
+    .withGroupedTiles(gooseTileGroup, 5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59)
+    .complete()
 
   //2 dices
   val movementDice: MovementDice = Dice.Factory.randomMovement((1 to 6).toSet, "six sided dice")
+
+
+  //Each turn one player can:
+  //Roll the dice and move the piece one square for the number resulted from the sum of the dice result.
+  val rollAction: Action = RollMovementDice(movementDice, 2)
+  val rollDiceActionRule: ActionRule = AlwaysPermittedActionRule(1, rollAction)
 
   //To Win
   //To win you must reach square 63 exactly.
@@ -51,9 +68,14 @@ object GooseGameNoDSL extends JFXApp {
   val bounceBackOnLastTile: BehaviourRule = (state: GameState) => {
     state.getTile(theEnd).get.history
       .filterCurrentTurn(state)
+      .filterNotConsumed()
       .find(_.isInstanceOf[TileEnteredEvent])
       .map(_.asInstanceOf[TileEnteredEvent])
-      .map(_ => Seq(Operation.trigger(s=> Some(InvertMovementEvent(s.currentPlayer, s.currentTurn)))))
+      .map(e => {
+        e.consume()
+        e
+      })
+      .map(_ => Seq(Operation.trigger(s => Some(InvertMovementEvent(s.currentPlayer, s.currentTurn)))))
       .getOrElse(Seq())
   }
 
@@ -65,28 +87,36 @@ object GooseGameNoDSL extends JFXApp {
       .filter(!_.isConsumed)
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
-      .exists(_.tile.equals(state.getTile(theEnd).get))
-    if (stopped) {
-      Seq(Operation.trigger(s => Some(VictoryEvent(s.currentTurn, s.currentPlayer))))
+      .find(_.tile.equals(state.getTile(theEnd).get))
+      .map(e => {
+        e.consume()
+        e
+      })
+    if (stopped.isDefined) {
+      Seq(
+        Operation.trigger(s => Some(VictoryEvent(s.currentTurn, s.currentPlayer))),
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+      )
     } else Seq()
   }
 
   //To Play:
 
-  //Each turn one player can:
-  //Roll the dice and move the piece one square for the number resulted from the sum of the dice result.
-  val rollDiceActionRule: AlwaysPermittedActionRule = AlwaysPermittedActionRule(1, RollMovementDice(movementDice, 2))
-
   //If you throw a 3 on your first turn you can move straight to square 26.
   val teleportTo26OnFirstTurn: BehaviourRule = (state: GameState) => {
     if (state.getTile(26).isDefined &&
-      state.currentPlayer.history.exists(!_.isInstanceOf[TurnEndedEvent])) { //is first turn
+      !state.currentPlayer.history.exists(_.isInstanceOf[TurnEndedEvent])) { //is first turn
       val teleportTo: Tile = state.getTile(26).get
       state.currentPlayer.history
-        .filter(_.turn == state.currentTurn)
+        .filterCurrentTurn(state)
+        .filterNotConsumed()
         .find(_.isInstanceOf[MovementDiceRollEvent])
         .map(_.asInstanceOf[MovementDiceRollEvent])
         .filter(_.res.contains(3))
+        .map(e => {
+          e.consume()
+          e
+        })
         .map(_ => Seq(Operation.trigger(s => Some(TeleportEvent(teleportTo, state.currentPlayer, state.currentTurn)))))
         .getOrElse(Seq())
     }
@@ -103,15 +133,19 @@ object GooseGameNoDSL extends JFXApp {
       .filter(!_.isConsumed)
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
-      .exists(_.tile.belongsTo(gooseTileGroup))
+      .find(_.tile.belongsTo(gooseTileGroup))
+      .map(e => {
+        e.consume()
+        e
+      })
 
-    if (stoppedOnGoose) {
+    if (stoppedOnGoose.isDefined) {
       state.currentPlayer.history
         .filter(_.turn == state.currentTurn)
         .find(_.isInstanceOf[StepMovementEvent])
         .map(_.asInstanceOf[StepMovementEvent])
         .map(e => Operation.trigger(s => Some(StepMovementEvent(e.movement, s.currentPlayer, s.currentTurn))))
-        .map(Seq(_)).getOrElse(Seq())
+        .map(Seq(_, Operation.trigger(s => Some(TileActivatedEvent(stoppedOnGoose.get.tile, s.currentTurn))))).getOrElse(Seq())
     }
     else Seq()
   }
@@ -123,9 +157,16 @@ object GooseGameNoDSL extends JFXApp {
       .filter(!_.isConsumed)
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
-      .exists(_.tile.equals(state.getTile(theBridge).get))
-    if (stopped) {
-      Seq(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))))
+      .find(_.tile.equals(state.getTile(theBridge).get))
+      .map(e => {
+        e.consume()
+        e
+      })
+    if (stopped.isDefined) {
+      Seq(
+        Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))),
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+      )
     } else Seq()
   }
 
@@ -136,9 +177,16 @@ object GooseGameNoDSL extends JFXApp {
       .filter(!_.isConsumed)
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
-      .exists(_.tile.equals(state.getTile(theInn).get))
-    if (stopped) {
-      Seq(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))))
+      .find(_.tile.equals(state.getTile(theInn).get))
+      .map(e => {
+        e.consume()
+        e
+      })
+    if (stopped.isDefined) {
+      Seq(
+        Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))),
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+      )
     } else Seq()
   }
 
@@ -150,9 +198,15 @@ object GooseGameNoDSL extends JFXApp {
       .filter(!_.isConsumed)
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
-      .exists(_.tile.equals(state.getTile(theWell).get))
-    if (stopped) {
-      Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))))
+      .find(_.tile.equals(state.getTile(theWell).get))
+      .map(e => {
+        e.consume()
+        e
+      })
+
+    if (stopped.isDefined) {
+      Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
     } else Seq()
   }
 
@@ -182,9 +236,14 @@ object GooseGameNoDSL extends JFXApp {
       .filter(!_.isConsumed)
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
-      .exists(_.tile.equals(state.getTile(thePrison).get))
-    if (stopped) {
-      Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))))
+      .find(_.tile.equals(state.getTile(thePrison).get))
+      .map(e => {
+        e.consume()
+        e
+      })
+    if (stopped.isDefined) {
+      Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
     } else Seq()
   }
 
@@ -212,9 +271,17 @@ object GooseGameNoDSL extends JFXApp {
       .filter(!_.isConsumed)
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
-      .exists(_.tile.equals(state.getTile(theLabyrinth).get))
-    if (stopped) {
-      Seq(Operation.execute(s => s.updatePlayerPiece(s.currentPlayer, p => Piece(p, s.getTile(37).map(Position(_))))))
+      .find(_.tile.equals(state.getTile(theLabyrinth).get))
+      .map(e => {
+        e.consume()
+        e
+      })
+
+    if (stopped.isDefined) {
+      Seq(
+        Operation.execute(s => s.updatePlayerPiece(s.currentPlayer, p => Piece(p, s.getTile(37).map(Position(_))))),
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+      )
     } else Seq()
   }
 
@@ -225,9 +292,16 @@ object GooseGameNoDSL extends JFXApp {
       .filter(!_.isConsumed)
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
-      .exists(_.tile.equals(state.getTile(theDeath).get))
-    if (stopped) {
-      Seq(Operation.execute(s => s.updatePlayerPiece(s.currentPlayer, p => Piece(p, s.getTile(1).map(Position(_))))))
+      .find(_.tile.equals(state.getTile(theDeath).get))
+      .map(e => {
+        e.consume()
+        e
+      })
+    if (stopped.isDefined) {
+      Seq(
+        Operation.execute(s => s.updatePlayerPiece(s.currentPlayer, p => Piece(p, s.getTile(1).map(Position(_))))),
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+      )
     } else Seq()
   }
 
@@ -238,14 +312,33 @@ object GooseGameNoDSL extends JFXApp {
 
   //Framework behaviours
   val FrameworkBehaviours: Seq[BehaviourRule] = Seq() :+
-    VictoryBehaviour()  :+
+    VictoryBehaviour() :+
     MovementWithDiceBehaviour() :+
+    TeleportBehaviour() :+
     MultipleStepBehaviour() :+
+    SkipTurnBehaviour() :+
+    DialogLaunchBehaviour() :+
     TurnEndEventBehaviour()
 
 
-  val behaviourRule: Seq[BehaviourRule] = Seq()
-  val actionRules: Set[ActionRule] = Set()
+  var behaviourRule: Seq[BehaviourRule] =
+    Seq() :+
+      bounceBackOnLastTile :+
+      stopOnTheEnd :+
+      teleportTo26OnFirstTurn :+
+      stopOnGooseTile :+
+      stopOnBridge :+
+      stopOnTheInn :+
+      passedOnTheWell :+
+      stopOnTheWell :+
+      passedOnPrison :+
+      stopOnPrison :+
+      stopOnDeath :+
+      stopOnLabyrinth
+
+  behaviourRule = behaviourRule ++ FrameworkBehaviours
+
+  val actionRules: Set[ActionRule] = Set(rollDiceActionRule, LoseTurnActionRule(Set(rollAction)))
 
   val ruleSet: RuleSet = PriorityRuleSet(
     tiles => Position(tiles.toList.sorted.take(1).head),
