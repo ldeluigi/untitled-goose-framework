@@ -144,7 +144,7 @@ object GooseGameNoDSL extends JFXApp {
         .filterTurn(state.currentTurn)
         .find(_.isInstanceOf[StepMovementEvent])
         .map(_.asInstanceOf[StepMovementEvent])
-        .map(e => Operation.trigger(s => Some(StepMovementEvent(e.movement, s.currentPlayer, s.currentTurn))))
+        .map(e => Operation.trigger(s => Some(GainTurnEvent(state.currentPlayer, s.currentTurn))))
         .map(Seq(_, Operation.trigger(s => Some(TileActivatedEvent(stoppedOnGoose.get.tile, s.currentTurn))))).getOrElse(Seq())
     }
     else Seq()
