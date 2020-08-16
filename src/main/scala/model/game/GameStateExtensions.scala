@@ -19,7 +19,7 @@ object GameStateExtensions {
   implicit class PimpedHistory[H <: GameEvent](history: List[H]) {
     type History = List[H]
 
-    def filterCurrentTurn(state: GameState): History = history.filter(_.turn == state.currentTurn)
+    def filterTurn(turn: Int): History = history.filter(_.turn == turn)
 
     def filterNotConsumed(): History = history.filterNot(_.isConsumed)
 

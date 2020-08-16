@@ -12,7 +12,7 @@ case class TurnEndEventBehaviour() extends BehaviourRule {
 
   override def applyRule(state: GameState): Seq[Operation] = {
     state.history
-      .filterCurrentTurn(state)
+      .filterTurn(state.currentTurn)
       .find(_.isInstanceOf[TurnShouldEndEvent]) match {
       case None => Seq(Operation.trigger(s => Some(TurnShouldEndEvent(s.currentTurn))))
       case _ => Seq()

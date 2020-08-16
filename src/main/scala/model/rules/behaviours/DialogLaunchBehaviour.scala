@@ -13,7 +13,7 @@ case class DialogLaunchBehaviour() extends BehaviourRule {
 
   override def applyRule(state: GameState): Seq[Operation] = {
     state.history
-      .filterCurrentTurn(state)
+      .filterTurn(state.currentTurn)
       .filterNotConsumed()
       .filter(_.isInstanceOf[DialogLaunchEvent])
       .map(_.asInstanceOf[DialogLaunchEvent])

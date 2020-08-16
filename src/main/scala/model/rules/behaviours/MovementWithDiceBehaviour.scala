@@ -12,7 +12,7 @@ case class MovementWithDiceBehaviour() extends BehaviourRule {
 
   override def applyRule(matchState: GameState): Seq[Operation] = {
     matchState.currentPlayer.history
-      .filterCurrentTurn(matchState)
+      .filterTurn(matchState.currentTurn)
       .filterNotConsumed()
       .filter(_.isInstanceOf[MovementDiceRollEvent])
       .map(_.asInstanceOf[MovementDiceRollEvent])

@@ -15,7 +15,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
 
   override def applyRule(state: GameState): Seq[Operation] = {
     state.currentPlayer.history
-      .filterCurrentTurn(state)
+      .filterTurn(state.currentTurn)
       .filterNotConsumed()
       .filter(_.isInstanceOf[StepMovementEvent])
       .map(_.asInstanceOf[StepMovementEvent])
@@ -43,7 +43,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
     val triggerPassedPlayers: Seq[Operation] = checkAndTriggerPassedPlayers(state, player)
 
     val step = Operation.execute(state => {
-      val inverted = player.history.filterCurrentTurn(state).find(_.isInstanceOf[InvertMovementEvent])
+      val inverted = player.history.filterTurn(state.currentTurn).find(_.isInstanceOf[InvertMovementEvent])
       state.updatePlayerPiece(player, piece => {
         Piece(piece, piece.position match {
           case Some(pos) => if (forward) {

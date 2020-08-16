@@ -67,7 +67,7 @@ object GooseGameNoDSL extends JFXApp {
   // If you land on any of the special squares while you are doing this then you must follow the normal instructions.
   val bounceBackOnLastTile: BehaviourRule = (state: GameState) => {
     state.getTile(theEnd).get.history
-      .filterCurrentTurn(state)
+      .filterTurn(state.currentTurn)
       .filterNotConsumed()
       .find(_.isInstanceOf[TileEnteredEvent])
       .map(_.asInstanceOf[TileEnteredEvent])
@@ -108,7 +108,7 @@ object GooseGameNoDSL extends JFXApp {
       !state.currentPlayer.history.exists(_.isInstanceOf[TurnEndedEvent])) { //is first turn
       val teleportTo: Tile = state.getTile(26).get
       state.currentPlayer.history
-        .filterCurrentTurn(state)
+        .filterTurn(state.currentTurn)
         .filterNotConsumed()
         .find(_.isInstanceOf[MovementDiceRollEvent])
         .map(_.asInstanceOf[MovementDiceRollEvent])

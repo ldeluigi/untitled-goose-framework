@@ -13,7 +13,7 @@ case class TeleportBehaviour() extends BehaviourRule {
 
   override def applyRule(state: GameState): Seq[Operation] =
     state.currentPlayer.history
-      .filterCurrentTurn(state)
+      .filterTurn(state.currentTurn)
       .filterNotConsumed()
       .filter(_.isInstanceOf[TeleportEvent])
       .map(_.asInstanceOf[TeleportEvent])

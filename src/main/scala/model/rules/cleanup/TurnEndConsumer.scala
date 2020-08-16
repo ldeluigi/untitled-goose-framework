@@ -12,7 +12,7 @@ object TurnEndConsumer extends CleanupRule {
 
   private def consumeTurn(state: MutableGameState): Unit = {
     val eventList = state.history
-      .filterCurrentTurn(state)
+      .filterTurn(state.currentTurn)
       .filterNotConsumed()
 
     if (eventList.exists(_.isInstanceOf[TurnShouldEndEvent])) {
