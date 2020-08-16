@@ -11,8 +11,8 @@ trait ActionAvailability {
 
   override def equals(obj: Any): Boolean =
     obj match {
-      case (al, pr, ac) =>
-        action.equals(ac) && pr == priority && al == allowed
+      case a: ActionAvailability =>
+        action == a.action && a.priority == priority && a.allowed == allowed
       case _ => false
     }
 
