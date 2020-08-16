@@ -5,11 +5,8 @@ import mock.MatchMock
 import model.entities.DialogContent
 import model.game.Game
 import model.rules.operations.SpecialOperation.DialogOperation
-import model.rules.ruleset.PriorityRuleSet
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-
-import scala.Seq
 
 class DialogLaunchBehaviourTest extends AnyFlatSpec with Matchers {
 
@@ -20,6 +17,7 @@ class DialogLaunchBehaviourTest extends AnyFlatSpec with Matchers {
     val e = DialogLaunchEvent(m.currentState.currentTurn, _ => DialogContent("", ""))
     m.submitEvent(e)
     DialogLaunchBehaviour().applyRule(m.currentState) should equal (Seq(DialogOperation(e.createDialog)))
+    DialogLaunchBehaviour().applyRule(m.currentState) should have size 0
   }
 
 }
