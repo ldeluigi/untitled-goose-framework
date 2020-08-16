@@ -33,9 +33,9 @@ case class SkipTurnBehaviour() extends BehaviourRule {
     var skippedTurns = toSkip
     Operation.execute((state: MutableGameState) => {
       val currentPlayerHistory = state.currentPlayer.history
-        .filterTurn(state.currentTurn)
         .filterNotConsumed()
       if (currentPlayerHistory.exists(_.isInstanceOf[LoseTurnEvent])) {
+        println("OK")
         var loseEvents = currentPlayerHistory.filter(_.isInstanceOf[LoseTurnEvent])
         while (skippedTurns > 0) {
           loseEvents.head.consume()

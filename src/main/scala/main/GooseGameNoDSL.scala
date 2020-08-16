@@ -83,8 +83,8 @@ object GooseGameNoDSL extends JFXApp {
 
   val stopOnTheEnd: BehaviourRule = (state: GameState) => {
     val stopped = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterTurn(state.currentTurn)
+      .filterNotConsumed()
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
       .find(_.tile.equals(state.getTile(theEnd).get))
@@ -129,8 +129,8 @@ object GooseGameNoDSL extends JFXApp {
 
   val stopOnGooseTile: BehaviourRule = (state: GameState) => {
     val stoppedOnGoose = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterTurn(state.currentTurn)
+      .filterNotConsumed()
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
       .find(_.tile.belongsTo(gooseTileGroup))
@@ -141,7 +141,7 @@ object GooseGameNoDSL extends JFXApp {
 
     if (stoppedOnGoose.isDefined) {
       state.currentPlayer.history
-        .filter(_.turn == state.currentTurn)
+        .filterTurn(state.currentTurn)
         .find(_.isInstanceOf[StepMovementEvent])
         .map(_.asInstanceOf[StepMovementEvent])
         .map(e => Operation.trigger(s => Some(StepMovementEvent(e.movement, s.currentPlayer, s.currentTurn))))
@@ -153,8 +153,8 @@ object GooseGameNoDSL extends JFXApp {
   //If you land on the Bridge, square 6, miss a turn while you pay the toll.
   val stopOnBridge: BehaviourRule = (state: GameState) => {
     val stopped = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterTurn(state.currentTurn)
+      .filterNotConsumed()
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
       .find(_.tile.equals(state.getTile(theBridge).get))
@@ -173,8 +173,8 @@ object GooseGameNoDSL extends JFXApp {
   //If you land on the Inn, square 19, miss a turn while you stop for some tasty dinner.
   val stopOnTheInn: BehaviourRule = (state: GameState) => {
     val stopped = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterTurn(state.currentTurn)
+      .filterNotConsumed()
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
       .find(_.tile.equals(state.getTile(theInn).get))
@@ -194,8 +194,8 @@ object GooseGameNoDSL extends JFXApp {
   //If another player passes you before your three turns are up you can start moving again on your next go.
   val stopOnTheWell: BehaviourRule = (state: GameState) => {
     val stopped = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterTurn(state.currentTurn)
+      .filterNotConsumed()
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
       .find(_.tile.equals(state.getTile(theWell).get))
@@ -213,8 +213,8 @@ object GooseGameNoDSL extends JFXApp {
   val passedOnTheWell: BehaviourRule = (state: GameState) => {
     val passedEvent: Option[PlayerPassedEvent] =
       state.getTile(theWell).get.history
-        .filter(_.turn == state.currentTurn)
-        .filter(!_.isConsumed)
+        .filterTurn(state.currentTurn)
+        .filterNotConsumed()
         .find(_.isInstanceOf[PlayerPassedEvent])
         .map(_.asInstanceOf[PlayerPassedEvent])
 
@@ -232,8 +232,8 @@ object GooseGameNoDSL extends JFXApp {
 
   val stopOnPrison: BehaviourRule = (state: GameState) => {
     val stopped = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterTurn(state.currentTurn)
+      .filterNotConsumed()
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
       .find(_.tile.equals(state.getTile(thePrison).get))
@@ -250,8 +250,8 @@ object GooseGameNoDSL extends JFXApp {
   val passedOnPrison: BehaviourRule = (state: GameState) => {
     val passedEvent: Option[PlayerPassedEvent] =
       state.getTile(thePrison).get.history
-        .filter(_.turn == state.currentTurn)
-        .filter(!_.isConsumed)
+        .filterTurn(state.currentTurn)
+        .filterNotConsumed()
         .find(_.isInstanceOf[PlayerPassedEvent])
         .map(_.asInstanceOf[PlayerPassedEvent])
 
@@ -267,8 +267,8 @@ object GooseGameNoDSL extends JFXApp {
   //If you land on the Labyrinth, square 42, you will get lost in the maze and have to move back to square 37.
   val stopOnLabyrinth: BehaviourRule = (state: GameState) => {
     val stopped = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterTurn(state.currentTurn)
+      .filterNotConsumed()
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
       .find(_.tile.equals(state.getTile(theLabyrinth).get))
@@ -288,8 +288,8 @@ object GooseGameNoDSL extends JFXApp {
   //If you land on Death, square 58, you have to go back to square 1 and start all over again!
   val stopOnDeath: BehaviourRule = (state: GameState) => {
     val stopped = state.currentPlayer.history
-      .filter(_.turn == state.currentTurn)
-      .filter(!_.isConsumed)
+      .filterTurn(state.currentTurn)
+      .filterNotConsumed()
       .find(_.isInstanceOf[StopOnTileEvent])
       .map(_.asInstanceOf[StopOnTileEvent])
       .find(_.tile.equals(state.getTile(theDeath).get))
