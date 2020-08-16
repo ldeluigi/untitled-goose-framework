@@ -76,7 +76,10 @@ object ApplicationController {
       actionMenu.displayActions(engine.currentMatch.availableActions)
     })
 
-    override def close(): Unit = stage.close()
+    override def close(): Unit = Platform.runLater(() => {
+      stopEngine()
+      stage.close()
+    })
 
     private def stopEngine(): Unit = engine.stop()
 
