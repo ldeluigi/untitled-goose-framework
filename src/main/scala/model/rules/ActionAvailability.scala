@@ -8,12 +8,21 @@ trait ActionAvailability {
   def allowed: Boolean
 
   def priority: Int
+
+  override def equals(obj: Any): Boolean =
+    obj match {
+      case (al, pr, ac) =>
+        action.equals(ac) && pr == priority && al == allowed
+      case _ => false
+    }
+
+  override def toString: String = ActionAvailability.unapply(this).get.toString()
 }
 
 object ActionAvailability {
 
   implicit def fromTuple(t: (Boolean, Int, Action)): ActionAvailability =
-    new {} with ActionAvailability {
+    new ActionAvailability {
       override def action: Action = t._3
 
       override def allowed: Boolean = t._1
