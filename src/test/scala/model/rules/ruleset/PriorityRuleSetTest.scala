@@ -2,9 +2,9 @@ package model.rules.ruleset
 
 import engine.core.EventSink
 import engine.events.root.GameEvent
-import model.game.MutableGameState
 import model.actions.Action
 import model.entities.board.{Position, TileDefinition}
+import model.game.MutableGameState
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
 import model.{Player, Tile}
 import org.scalatest.BeforeAndAfterEach

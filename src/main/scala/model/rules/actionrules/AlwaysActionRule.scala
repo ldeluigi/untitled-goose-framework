@@ -1,7 +1,7 @@
 package model.rules.actionrules
 
-import model.game.MutableGameState
 import model.actions.Action
+import model.game.MutableGameState
 import model.rules.{ActionAvailability, ActionRule}
 
 object AlwaysActionRule {

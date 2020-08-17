@@ -1,10 +1,10 @@
 package model.rules.behaviours
 
-import engine.events.{DialogLaunchEvent, MovementDiceRollEvent, StepMovementEvent}
+import engine.events.{MovementDiceRollEvent, StepMovementEvent}
 import model.game.GameState
+import model.game.GameStateExtensions.PimpedHistory
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
-import model.game.GameStateExtensions.PimpedHistory
 
 case class MovementWithDiceBehaviour() extends BehaviourRule {
 

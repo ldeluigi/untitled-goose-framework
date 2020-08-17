@@ -1,8 +1,8 @@
 package model.rules.ruleset
 
-import model.game.{GameState, MutableGameState}
 import model.actions.Action
 import model.entities.board.Position
+import model.game.{GameState, MutableGameState}
 import model.rules.operations.Operation
 import model.{Player, Tile}
 

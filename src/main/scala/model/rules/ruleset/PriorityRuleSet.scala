@@ -1,8 +1,8 @@
 package model.rules.ruleset
 
-import model.game.{GameState, MutableGameState}
 import model.actions.Action
 import model.entities.board.Position
+import model.game.{GameState, MutableGameState}
 import model.rules.behaviours.{DialogLaunchBehaviour, TurnEndEventBehaviour}
 import model.rules.cleanup.TurnEndConsumer
 import model.rules.operations.Operation

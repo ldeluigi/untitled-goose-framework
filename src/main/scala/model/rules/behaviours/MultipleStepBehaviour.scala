@@ -3,9 +3,9 @@ package model.rules.behaviours
 import engine.events
 import engine.events._
 import model.Player
+import model.entities.board.{Piece, Position}
 import model.game.GameState
 import model.game.GameStateExtensions.PimpedHistory
-import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 

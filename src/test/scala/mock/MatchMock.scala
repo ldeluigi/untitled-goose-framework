@@ -1,7 +1,7 @@
 package mock
 
-import model.game.Game
 import model.entities.board.{Board, Disposition, Piece}
+import model.game.Game
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import model.{Color, Player}
 

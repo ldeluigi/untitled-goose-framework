@@ -1,6 +1,5 @@
 package model.entities.board
 
-import model.Color
 import model.Color.Color
 
 trait Piece {

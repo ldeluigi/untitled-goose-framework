@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.{LoseTurnEvent, SkipTurnEvent, StepMovementEvent}
+import engine.events.{LoseTurnEvent, SkipTurnEvent}
 import model.game.GameStateExtensions.PimpedHistory
 import model.game.{GameState, MutableGameState}
 import model.rules.BehaviourRule

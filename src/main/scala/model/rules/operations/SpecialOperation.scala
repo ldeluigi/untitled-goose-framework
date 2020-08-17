@@ -2,8 +2,8 @@ package model.rules.operations
 
 import engine.core.EventSink
 import engine.events.root.GameEvent
-import model.game.MutableGameState
 import model.entities.DialogContent
+import model.game.MutableGameState
 
 object SpecialOperation {
 

@@ -5,14 +5,14 @@ import java.awt.{Dimension, Toolkit}
 import engine.events._
 import engine.events.root.GameEvent
 import javafx.scene.input.KeyCode
-import model.game.{Game, GameState}
 import model.actions.{Action, RollMovementDice}
-import model.entities.{DialogContent, Dice}
 import model.entities.Dice.MovementDice
 import model.entities.board._
+import model.entities.{DialogContent, Dice}
+import model.game.{Game, GameState}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.actionrules.LoseTurnActionRule
-import model.rules.behaviours.{DialogLaunchBehaviour, MovementWithDiceBehaviour, MultipleStepBehaviour, SkipTurnBehaviour, TeleportBehaviour, TurnEndEventBehaviour, VictoryBehaviour}
+import model.rules.behaviours._
 import model.rules.operations.{Operation, SpecialOperation}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.rules.{ActionRule, BehaviourRule}

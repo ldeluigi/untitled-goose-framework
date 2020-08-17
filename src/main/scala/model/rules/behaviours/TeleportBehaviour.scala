@@ -1,9 +1,9 @@
 package model.rules.behaviours
 
-import engine.events.{StepMovementEvent, StopOnTileEvent, TeleportEvent, TileEnteredEvent, TileExitedEvent}
+import engine.events.{StopOnTileEvent, TeleportEvent, TileEnteredEvent, TileExitedEvent}
+import model.entities.board.{Piece, Position}
 import model.game.GameState
 import model.game.GameStateExtensions.PimpedHistory
-import model.entities.board.{Piece, Position}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 import model.{Player, Tile}

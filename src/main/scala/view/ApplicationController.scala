@@ -2,9 +2,9 @@ package view
 
 import engine.core.vertx.GooseEngine
 import engine.events.root.GameEvent
-import model.game.{Game, MutableGameState}
 import model.actions.Action
 import model.entities.DialogContent
+import model.game.{Game, MutableGameState}
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane

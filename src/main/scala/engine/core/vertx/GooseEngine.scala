@@ -5,8 +5,8 @@ import engine.events.root.{ExitEvent, GameEvent, NoOpEvent}
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
-import model.game.Game
 import model.entities.DialogContent
+import model.game.Game
 import model.rules.operations.Operation
 import model.rules.operations.SpecialOperation.{DialogOperation, SpecialOperation}
 import view.GooseController

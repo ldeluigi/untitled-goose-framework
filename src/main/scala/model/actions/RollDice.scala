@@ -3,8 +3,8 @@ package model.actions
 import engine.core.EventSink
 import engine.events.DiceRollEvent
 import engine.events.root.GameEvent
-import model.game.MutableGameState
 import model.entities.Dice.Dice
+import model.game.MutableGameState
 
 class RollDice[DiceSide](dice: Dice[DiceSide]) extends Action {
 
