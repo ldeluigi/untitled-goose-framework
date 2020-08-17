@@ -79,7 +79,6 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   startGame.onAction = _ => {
     val currentMatch: Game = Game(board, players, ruleSet)
-    // TODO fix new scene not launching
     val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
     stage.scene = appView
   }

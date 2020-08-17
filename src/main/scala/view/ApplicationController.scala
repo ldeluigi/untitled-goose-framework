@@ -15,7 +15,6 @@ import view.logger.EventLogger
 
 import scala.concurrent.{Future, Promise}
 
-//TODO return scene instead of being a Scene
 trait ApplicationController extends Scene {
   def resolveAction(action: Action)
 }

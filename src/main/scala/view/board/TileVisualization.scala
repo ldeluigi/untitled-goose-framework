@@ -48,7 +48,6 @@ object TileVisualization {
     var pieceList: List[PieceVisualization] = Nil
 
     override def setPiece(piece: PieceVisualization): Unit = {
-      //TODO set alignment based on how many are on this tile
       pieceList.size match {
         case 0 => piece.alignment = CenterLeft
         case 1 => piece.alignment = CenterRight
