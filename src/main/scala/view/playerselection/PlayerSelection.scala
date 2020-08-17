@@ -6,7 +6,8 @@ import model.game.Game
 import model.rules.ruleset.RuleSet
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, ComboBox, TextArea, TextField}
+import scalafx.scene.control.Alert.AlertType
+import scalafx.scene.control._
 import scalafx.scene.layout.{AnchorPane, BorderPane, HBox, VBox}
 import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
@@ -103,10 +104,20 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   }
 
   startGame.onAction = _ => {
-    val currentMatch: Game = Game(board, enrolledPlayers, ruleSet)
-    val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
-    stage.scene = appView
+    if (enrolledPlayers.nonEmpty) {
+      val currentMatch: Game = Game(board, enrolledPlayers, ruleSet)
+      val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
+      stage.scene = appView
+    } else {
+      new Alert(AlertType.Error) {
+        initOwner(stage)
+        title = "Error!"
+        headerText = "Missing players"
+        contentText = "Can't start a game without players"
+      }.showAndWait()
+    }
   }
+
 
   def refreshPlayersList(): Unit = {
     activePlayersList.appendText("Name: " + playerNameFromInput.getText + "\t" + "color: " + colorsChoice.getValue)
