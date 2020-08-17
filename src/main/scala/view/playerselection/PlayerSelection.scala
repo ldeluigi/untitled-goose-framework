@@ -6,7 +6,8 @@ import model.game.Game
 import model.rules.ruleset.RuleSet
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, ComboBox, TextArea, TextField}
+import scalafx.scene.control.Alert.AlertType
+import scalafx.scene.control._
 import scalafx.scene.layout.{AnchorPane, BorderPane, HBox, VBox}
 import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
@@ -17,8 +18,8 @@ import view.ApplicationController
 class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int) extends Scene {
 
   var enrolledPlayers: Map[Player, Piece] = Map()
-  val borderPane = new BorderPane()
-  val anchorPane = new AnchorPane()
+  val borderPane = new BorderPane
+  val anchorPane = new AnchorPane
 
   root = borderPane
 
@@ -44,18 +45,18 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
 
-  val addPlayer: Button = new Button() {
+  val addPlayer: Button = new Button {
     text = "Enroll player"
     style = "-fx-font-size: 12pt"
   }
 
-  val startGame: Button = new Button() {
+  val startGame: Button = new Button {
     text = "Start game!"
     textFill = DarkGreen
     style = "-fx-font-size: 15pt"
   }
 
-  val upperGameNameHeader: HBox = new HBox() {
+  val upperGameNameHeader: HBox = new HBox {
     alignment = Pos.Center
     padding = Insets(30)
     children = new Text {
@@ -69,24 +70,27 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
     style = "-fx-font-size: 12pt"
   }
 
-  val centerPlayerConsole: HBox = new HBox() {
+  val centerPlayerConsole: HBox = new HBox {
     alignment = Pos.Center
     spacing = 30
     padding = Insets(30)
     children = List(playerName, playerNameFromInput, colorsChoice, addPlayer)
   }
 
-  val activePlayersList: TextArea = new TextArea() {
-    prefHeight = 20
-    prefRowCount = 20
+  val activePlayersList: TextArea = new TextArea {
+    text = "Currently enrolled players:" + "\n"
   }
+  activePlayersList.setMaxSize(widthSize * 0.15, heightSize)
 
-  val activePlayersPanel: VBox = new VBox() {
-    children = List(activePlayersList)
+
+  val activePlayersPanel: VBox = new VBox {
+    //alignment = Pos.Center
+    spacing = 15
     padding = Insets(20)
+    children = List(activePlayersList)
   }
 
-  val bottomGameControls: HBox = new HBox() {
+  val bottomGameControls: HBox = new HBox {
     alignment = Pos.BottomCenter
     spacing = 15
     padding = Insets(20)
@@ -95,23 +99,34 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   addPlayer.onAction = _ => {
     enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
+    refreshPlayersList()
     playerNameFromInput.clear()
-    //refreshPlayersList
   }
 
   startGame.onAction = _ => {
-    val currentMatch: Game = Game(board, enrolledPlayers, ruleSet)
-    val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
-    stage.scene = appView
+    if (enrolledPlayers.nonEmpty) {
+      val currentMatch: Game = Game(board, enrolledPlayers, ruleSet)
+      val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
+      stage.scene = appView
+    } else {
+      new Alert(AlertType.Error) {
+        initOwner(stage)
+        title = "Error!"
+        headerText = "Missing players"
+        contentText = "Can't start a game without players"
+      }.showAndWait()
+    }
   }
 
-  /*def refreshPlayersList: Unit = {
-    activePlayersList.setText(enrolledPlayers.toString())
-  }*/
+
+  def refreshPlayersList(): Unit = {
+    activePlayersList.appendText("Name: " + playerNameFromInput.getText + "\t" + "color: " + colorsChoice.getValue)
+    activePlayersList.appendText("\n")
+  }
 
   borderPane.top = upperGameNameHeader
   borderPane.center = centerPlayerConsole
   borderPane.bottom = bottomGameControls
-  borderPane.right = activePlayersList
+  borderPane.right = activePlayersPanel
 
 }
