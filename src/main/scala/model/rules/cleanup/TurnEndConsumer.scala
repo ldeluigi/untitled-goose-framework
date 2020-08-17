@@ -1,6 +1,6 @@
 package model.rules.cleanup
 
-import engine.events.{GainTurnEvent, StepMovementEvent, TurnEndedEvent, TurnShouldEndEvent}
+import engine.events.{GainTurnEvent, TurnEndedEvent, TurnShouldEndEvent}
 import model.game.GameStateExtensions.PimpedHistory
 import model.game.MutableGameState
 import model.rules.CleanupRule

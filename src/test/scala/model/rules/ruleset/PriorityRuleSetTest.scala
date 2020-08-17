@@ -65,6 +65,7 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
     pending
   }
 
+  // TODO complete test
   it should "return the operations to be executed in cleanup" in {
     pending
   }
