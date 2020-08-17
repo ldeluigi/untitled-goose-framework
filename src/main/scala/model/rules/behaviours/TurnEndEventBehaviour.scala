@@ -11,12 +11,10 @@ case class TurnEndEventBehaviour() extends BehaviourRule {
   override def name: Option[String] = Some("Turn Event Rule")
 
   override def applyRule(state: GameState): Seq[Operation] = {
+    //TODO refactor this with a new event and use shouldEnd to be consumed
     state.history
       .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .filter(_.isInstanceOf[TurnShouldEndEvent])
-      .consumeAll()
-      .headOption match {
+      .find(_.isInstanceOf[TurnShouldEndEvent]) match {
       case None => Seq(Operation.trigger(s => Some(TurnShouldEndEvent(s.currentTurn))))
       case _ => Seq()
     }
