@@ -12,7 +12,7 @@ case class VictoryBehaviour() extends BehaviourRule {
   override def name: Option[String] = Some("Victory")
 
   override def applyRule(state: GameState): Seq[Operation] =
-    state.players.flatMap(_.history.filterNotConsumed().filter(_.isInstanceOf[VictoryEvent])).consumeAll()
+    state.players.flatMap(_.history.filterNotConsumed().filter(_.isInstanceOf[VictoryEvent])).toSeq.consumeAll()
       .headOption.map(_ => Seq(SpecialOperation.DialogOperation(s =>
       DialogContent(
         dialogTitle = "Victory!",
