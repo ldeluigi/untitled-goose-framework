@@ -33,7 +33,7 @@ object Game {
     override val board: GameBoard = GameBoard(gameBoard)
     override val currentState: MutableGameState = MutableGameState(
       firstTurn,
-      rules.first(currentState.players),
+      rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
       playerPieces,
       board
