@@ -12,28 +12,28 @@ class PieceTest extends AnyFlatSpec with Matchers {
 
   "A piece" should "not have a position when created empty" in {
     val emptyPiece = Piece(Color.Blue)
-    emptyPiece.position.isEmpty should be (true)
+    emptyPiece.position.isEmpty should be(true)
   }
 
   it should "have a position when specified" in {
-    piece.position.nonEmpty should be (true)
+    piece.position.nonEmpty should be(true)
   }
 
   it should "have a color" in {
     piece.color should not be null
-    piece.color should equal (Color.Blue)
+    piece.color should equal(Color.Blue)
   }
 
   it should "set the position of the piece when given one" in {
     val position = Position(tileTwo)
     val updatedPiece = Piece(piece, Some(position))
-    updatedPiece.position.get should equal (position)
+    updatedPiece.position.get should equal(position)
   }
 
   it should "set the color of the piece when given one" in {
     val color = Color.Red
     val updatedPiece = Piece(piece, color)
-    updatedPiece.color should equal (Color.Red)
+    updatedPiece.color should equal(Color.Red)
   }
 
 }

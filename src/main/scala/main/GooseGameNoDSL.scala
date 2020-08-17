@@ -237,6 +237,7 @@ object GooseGameNoDSL extends JFXApp {
         e
       })
 
+
     if (stopped.isDefined) {
       Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
         Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+

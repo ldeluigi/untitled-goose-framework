@@ -12,7 +12,7 @@ class StepForwardActionTest extends AnyFlatSpec with Matchers {
 
   it should "execute" in {
     StepForwardAction().execute((event: GameEvent) =>
-      event.isInstanceOf[StepMovementEvent] && event.asInstanceOf[StepMovementEvent].movement == 1 should equal (true)
+      event.isInstanceOf[StepMovementEvent] && event.asInstanceOf[StepMovementEvent].movement == 1 should equal(true)
       , default.currentState)
   }
 

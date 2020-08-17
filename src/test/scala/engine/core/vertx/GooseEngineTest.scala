@@ -77,7 +77,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   it should "currentMatch" in {
     val ge = GooseEngine(m, cGenerator(_ => {}))
-    ge.currentMatch should equal (m)
+    ge.currentMatch should equal(m)
   }
 
 }

@@ -11,7 +11,7 @@ class PositionTest extends AnyFlatSpec with Matchers {
   val position: Position = Position(tile)
 
   "A position" should "have a tile when specified" in {
-    position.tile should equal (tile)
+    position.tile should equal(tile)
   }
 
 }

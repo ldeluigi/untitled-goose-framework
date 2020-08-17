@@ -34,7 +34,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
     val gameEvent = TurnShouldEndEvent(gameMatch.currentState.currentTurn)
     gameMatch.submitEvent(gameEvent)
 
-    gameMatch.currentState.history should contain (gameEvent)
+    gameMatch.currentState.history should contain(gameEvent)
   }
 
   it should "submit events to players" in {
@@ -50,7 +50,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
     val tileEvent = TileEnteredEvent(state.currentPlayer, state.gameBoard.first, state.currentTurn)
     gameMatch.submitEvent(tileEvent)
 
-    state.gameBoard.first.history should contain (tileEvent)
+    state.gameBoard.first.history should contain(tileEvent)
   }
 
   "A matchState" should "have a current player" in {
@@ -65,7 +65,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   it should "know where the playerPieces are" in {
-    gameMatch.currentState.playerPieces(p1).position.isEmpty should be (true)
+    gameMatch.currentState.playerPieces(p1).position.isEmpty should be(true)
   }
 
   it should "update player pieces as told" in {

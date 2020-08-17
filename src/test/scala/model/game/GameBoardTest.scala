@@ -17,12 +17,12 @@ class GameBoardTest() extends AnyFlatSpec with Matchers {
   val matchBoard: GameBoard = GameBoard(board)
 
   "A match board" should "have a board" in {
-    matchBoard.board should equal (board)
+    matchBoard.board should equal(board)
   }
 
   it should "have tiles" in {
     matchBoard.tiles.size should equal(board.tiles.size)
-    board.tiles.size should equal (tiles.size)
+    board.tiles.size should equal(tiles.size)
   }
 
   it should "have a first tile" in {

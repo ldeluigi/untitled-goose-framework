@@ -14,19 +14,19 @@ class BoardTest extends AnyFlatSpec with Matchers {
   val board: Board = Board(name, tiles, disposition)
 
   "A Board" should "have a name" in {
-    board.name should equal (name)
+    board.name should equal(name)
   }
 
   it should "have a disposition" in {
-    board.disposition should equal (disposition)
+    board.disposition should equal(disposition)
   }
 
   it should "have tiles" in {
-    board.tiles.size should equal (tiles.size)
+    board.tiles.size should equal(tiles.size)
   }
 
   it should "have a first tile" in {
-    board.first should equal (tiles.head)
+    board.first should equal(tiles.head)
   }
 
   it can "return the next tile of a given one" in {
@@ -34,6 +34,6 @@ class BoardTest extends AnyFlatSpec with Matchers {
   }
 
   it can "return the previous tile of a given one" in {
-    board.prev(tile2).get should equal (tile1)
+    board.prev(tile2).get should equal(tile1)
   }
 }

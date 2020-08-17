@@ -17,7 +17,7 @@ class RollMovementDiceTest extends AnyFlatSpec with Matchers {
 
       override def roll: Int = 5
     }).execute((event: GameEvent) =>
-      event.isInstanceOf[MovementDiceRollEvent] && event.asInstanceOf[MovementDiceRollEvent].result == Seq(5) should be (true)
+      event.isInstanceOf[MovementDiceRollEvent] && event.asInstanceOf[MovementDiceRollEvent].result == Seq(5) should be(true)
       , default.currentState)
   }
 

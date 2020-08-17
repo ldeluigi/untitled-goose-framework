@@ -12,7 +12,7 @@ class SkipOneTurnActionTest extends AnyFlatSpec with Matchers {
 
   it should "fire proper event in execute" in {
     SkipOneTurnAction().execute((event: GameEvent) =>
-      event.isInstanceOf[SkipTurnEvent] should be (true)
+      event.isInstanceOf[SkipTurnEvent] should be(true)
       , default.currentState)
   }
 
