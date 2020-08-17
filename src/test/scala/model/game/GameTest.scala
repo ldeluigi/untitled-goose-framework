@@ -22,7 +22,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   it should "have a set of players" in {
-    assert(gameMatch.players.equals(players.keySet))
+    assert(gameMatch.currentState.players.equals(players.keySet))
   }
 
   it should "have a current GameState" in {

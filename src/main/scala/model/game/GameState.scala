@@ -20,4 +20,6 @@ trait GameState {
 
   def history: List[GameEvent]
 
+  def players: Set[Player] = playerPieces.keySet
+
 }

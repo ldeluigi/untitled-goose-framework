@@ -13,8 +13,6 @@ trait Game {
 
   def board: GameBoard
 
-  def players: Set[Player]
-
   def currentState: MutableGameState
 
   def stateBasedOperations: Seq[Operation]
@@ -35,13 +33,11 @@ object Game {
     override val board: GameBoard = GameBoard(gameBoard)
     override val currentState: MutableGameState = MutableGameState(
       firstTurn,
-      rules.first(playerPieces.keySet),
-      () => rules.nextPlayer(currentState.currentPlayer, players),
+      rules.first(currentState.players),
+      () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
       playerPieces,
       board
     )
-
-    override def players: Set[Player] = playerPieces.keySet
 
     override def availableActions: Set[Action] = rules.actions(currentState)
 

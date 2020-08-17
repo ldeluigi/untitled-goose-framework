@@ -101,7 +101,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
 
   //TODO THIS WORKS BUT IT SHOULD BE MORE GENERAL -- See Trello for mor details
   private def checkAndTriggerPassedPlayers(state: GameState, player: Player): Seq[Operation] = {
-    for (other <- state.playerPieces.keySet.toSeq if !other.equals(player))
+    for (other <- state.players.toSeq if !other.equals(player))
       yield Operation.trigger(s => {
         val tile = s.playerPieces(player).position.map(_.tile)
         if (tile.isDefined) {

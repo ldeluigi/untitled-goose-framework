@@ -12,14 +12,14 @@ case class VictoryBehaviour() extends BehaviourRule {
   override def name: Option[String] = Some("Victory")
 
   override def applyRule(state: GameState): Seq[Operation] = {
-    if (state.playerPieces.keySet.exists(p => p.history.exists(e => e.isInstanceOf[VictoryEvent] && !e.isConsumed))) {
-      state.playerPieces.keySet.foreach(p =>
+    if (state.players.exists(p => p.history.exists(e => e.isInstanceOf[VictoryEvent] && !e.isConsumed))) {
+      state.players.foreach(p =>
         p.history.filterNotConsumed().filter(_.isInstanceOf[StepMovementEvent]).consumeAll()
       )
       Seq(SpecialOperation.DialogOperation(s =>
         DialogContent(
           dialogTitle = "Victory!",
-          dialogText = "Winning players: " + s.playerPieces.keySet.filter(p => p.history.exists(e => e.isInstanceOf[VictoryEvent])).map(_.name).mkString(", "),
+          dialogText = "Winning players: " + s.players.filter(p => p.history.exists(e => e.isInstanceOf[VictoryEvent])).map(_.name).mkString(", "),
           "Quit" -> ExitEvent,
         )
       ))
