@@ -19,7 +19,6 @@ case class TeleportBehaviour() extends BehaviourRule {
       .map(_.asInstanceOf[TeleportEvent])
       .consumeAll()
       .flatMap(e => teleportOperation(state, state.currentPlayer, e.teleportTo))
-      .toSeq
 
   def teleportOperation(state: GameState, player: Player, tile: Tile): Seq[Operation] = {
     val tileExited = Operation.trigger(s => {

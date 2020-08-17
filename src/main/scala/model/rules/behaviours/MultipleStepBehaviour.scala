@@ -21,7 +21,6 @@ case class MultipleStepBehaviour() extends BehaviourRule {
       .map(_.asInstanceOf[StepMovementEvent])
       .consumeAll()
       .flatMap(e => generateStep(state, e.movement, e.source, e.movement >= 0))
-      .toSeq
   }
 
   private def generateStep(state: GameState, step: Int, player: Player, forward: Boolean): Seq[Operation] = {

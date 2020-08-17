@@ -19,6 +19,5 @@ case class DialogLaunchBehaviour() extends BehaviourRule {
       .map(_.asInstanceOf[DialogLaunchEvent])
       .consumeAll()
       .map(e => DialogOperation(e.createDialog))
-      .toSeq
   }
 }
