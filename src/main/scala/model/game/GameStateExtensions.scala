@@ -16,8 +16,8 @@ object GameStateExtensions {
     }
   }
 
-  implicit class PimpedHistory[H <: GameEvent](history: List[H]) {
-    type History = List[H]
+  implicit class PimpedHistory[H <: GameEvent](history: Iterable[H]) {
+    type History = Iterable[H]
 
     def filterTurn(turn: Int): History = history.filter(_.turn == turn)
 
