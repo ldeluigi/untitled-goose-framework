@@ -66,7 +66,7 @@ object GooseGameNoDSL extends JFXApp {
   // If your dice roll is more than you need then you move in to square 63 and then bounce back out again,
   // each spot on the dice is still one square in this move.
   // If you land on any of the special squares while you are doing this then you must follow the normal instructions.
-  val bounceBackOnLastTile: BehaviourRule = (state: GameState) => {
+  val bounceBackOnLastTile: BehaviourRule = (state: GameState) =>
     state.getTile(theEnd).get.history
       .filterTurn(state.currentTurn)
       .filterNotConsumed()
@@ -78,7 +78,6 @@ object GooseGameNoDSL extends JFXApp {
       })
       .map(_ => Seq(Operation.trigger(s => Some(InvertMovementEvent(s.currentPlayer, s.currentTurn)))))
       .getOrElse(Seq())
-  }
 
   //When you land on square 63 exactly you are the winner!
 
@@ -373,30 +372,30 @@ object GooseGameNoDSL extends JFXApp {
 
 
   //Framework behaviours
-  val FrameworkBehaviours: Seq[BehaviourRule] = Seq() :+
-    VictoryBehaviour() :+
-    MovementWithDiceBehaviour() :+
-    TeleportBehaviour() :+
-    MultipleStepBehaviour() :+
-    SkipTurnBehaviour() :+
-    DialogLaunchBehaviour() :+
-    TurnEndEventBehaviour()
+  val FrameworkBehaviours: Seq[BehaviourRule] = Seq(
+    VictoryBehaviour(),
+    MovementWithDiceBehaviour(),
+    TeleportBehaviour(),
+    MultipleStepBehaviour(),
+    SkipTurnBehaviour()
+  )
 
 
   var behaviourRule: Seq[BehaviourRule] =
-    Seq() :+
-      bounceBackOnLastTile :+
-      stopOnTheEnd :+
-      teleportTo26OnFirstTurn :+
-      stopOnGooseTile :+
-      stopOnBridge :+
-      stopOnTheInn :+
-      passedOnTheWell :+
-      stopOnTheWell :+
-      passedOnPrison :+
-      stopOnPrison :+
-      stopOnDeath :+
+    Seq(
+      bounceBackOnLastTile,
+      stopOnTheEnd,
+      teleportTo26OnFirstTurn,
+      stopOnGooseTile,
+      stopOnBridge,
+      stopOnTheInn,
+      passedOnTheWell,
+      stopOnTheWell,
+      passedOnPrison,
+      stopOnPrison,
+      stopOnDeath,
       stopOnLabyrinth
+    )
 
   behaviourRule = behaviourRule ++ FrameworkBehaviours
 

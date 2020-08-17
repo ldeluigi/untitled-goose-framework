@@ -37,7 +37,8 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
     playerOrdering.first(players)
 
   override def stateBasedOperations(state: GameState): Seq[Operation] =
-    behaviourRules.flatMap(_.applyRule(state)) ++
+    TurnEndEventBehaviour().applyRule(state) ++
+      behaviourRules.flatMap(_.applyRule(state)) ++
       DialogLaunchBehaviour().applyRule(state)
 
   override def nextPlayer(currentPlayer: Player, players: Set[Player]): Player =

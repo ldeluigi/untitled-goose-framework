@@ -50,7 +50,6 @@ object BoardDisplay {
       }
     }
 
-    //TODO da migliorare introduce un mini bug grafico
     private def setFocus(positionTile: TileVisualization): Unit = {
       this.setHvalue(positionTile.getLayoutX / boardPane.getWidth)
       this.setVvalue(positionTile.getLayoutY / boardPane.getHeight)
