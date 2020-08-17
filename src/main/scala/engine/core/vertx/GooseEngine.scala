@@ -11,6 +11,8 @@ import model.rules.operations.Operation
 import model.rules.operations.SpecialOperation.{DialogOperation, SpecialOperation}
 import view.GooseController
 
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
 trait GooseEngine {
@@ -34,7 +36,7 @@ object GooseEngine {
     )
     private val dialogDisplay: DialogDisplay = (dialogContent: DialogContent) => controller.showDialog(dialogContent)
     vertx.eventBus.registerCodec(new GameEventMessageCodec)
-    vertx.deployVerticle(gv)
+    Await.result(vertx.deployVerticleFuture(gv), Duration.Inf)
     private var stack: Seq[Operation] = Seq()
     private var stopped = false
 
@@ -81,7 +83,8 @@ object GooseEngine {
 
         case NoOpEvent => executeOperation()
 
-        case _ => controller.logEvent(event)
+        case _ =>
+          controller.logEvent(event)
           if (stack.isEmpty) {
             stack = stack :+ gameMatch.cleanup
           }
