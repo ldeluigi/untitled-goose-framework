@@ -96,7 +96,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   addPlayer.onAction = _ => {
     enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
     playerNameFromInput.clear()
-    refreshPlayersList
+    //refreshPlayersList
   }
 
   startGame.onAction = _ => {
@@ -105,9 +105,9 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
     stage.scene = appView
   }
 
-  def refreshPlayersList: Unit = {
+  /*def refreshPlayersList: Unit = {
     activePlayersList.setText(enrolledPlayers.toString())
-  }
+  }*/
 
   borderPane.top = upperGameNameHeader
   borderPane.center = centerPlayerConsole
