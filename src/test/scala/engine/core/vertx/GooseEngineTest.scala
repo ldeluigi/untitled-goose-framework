@@ -21,7 +21,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet())
 
-  def cGenerator(handler: GameEvent => Unit) : GooseController = new GooseController {
+  def cGenerator(handler: GameEvent => Unit): GooseController = new GooseController {
     override def update(state: MutableGameState): Unit = {}
 
     override def showDialog(content: DialogContent): Future[GameEvent] = Future.successful(NoOpEvent)
@@ -60,18 +60,18 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     }
   }
 
-    it should "be a correct eventSink" in {
-      val p: Promise[Boolean] = Promise[Boolean]()
-      val ge: GooseEngine = GooseEngine(m, cGenerator(ev => if (e == ev) p.success(true)))
-      //ge.eventSink.accept(NoOpEvent)
-      ge.eventSink.accept(e)
-      try {
-        Await.result(p.future, 5 seconds)
-      } finally {
-        ge.stop()
-      }
-      p.future.value.get.get should be (true)
+  it should "be a correct eventSink" in {
+    val p: Promise[Boolean] = Promise[Boolean]()
+    val ge: GooseEngine = GooseEngine(m, cGenerator(ev => if (e == ev) p.success(true)))
+    //ge.eventSink.accept(NoOpEvent)
+    ge.eventSink.accept(e)
+    try {
+      Await.result(p.future, 5 seconds)
+    } finally {
+      ge.stop()
     }
+    p.future.value.get.get should be(true)
+  }
 
   it should "currentMatch" in {
     val ge = GooseEngine(m, cGenerator(_ => {}))
