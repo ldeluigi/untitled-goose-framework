@@ -6,12 +6,11 @@ import model.game.GameStateExtensions.PimpedHistory
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
-case class TurnEndEventBehaviour() extends BehaviourRule {
+private[rules] case class TurnEndEventBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = Some("Turn Event Rule")
 
   override def applyRule(state: GameState): Seq[Operation] = {
-    //TODO refactor this with a new event and use shouldEnd to be consumed
     state.history
       .filterTurn(state.currentTurn)
       .find(_.isInstanceOf[TurnShouldEndEvent]) match {

@@ -377,8 +377,7 @@ object GooseGameNoDSL extends JFXApp {
     MovementWithDiceBehaviour(),
     TeleportBehaviour(),
     MultipleStepBehaviour(),
-    SkipTurnBehaviour(),
-    DialogLaunchBehaviour()
+    SkipTurnBehaviour()
   )
 
 
@@ -398,7 +397,7 @@ object GooseGameNoDSL extends JFXApp {
       stopOnLabyrinth
     )
 
-  behaviourRule = TurnEndEventBehaviour() +: (behaviourRule ++ FrameworkBehaviours)
+  behaviourRule = behaviourRule ++ FrameworkBehaviours
 
   val actionRules: Set[ActionRule] = Set(rollDiceActionRule, LoseTurnActionRule(Set(rollAction)))
 
