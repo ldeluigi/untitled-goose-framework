@@ -1,7 +1,7 @@
 package model.game
 
-import engine.events.{LoseTurnEvent, SkipTurnEvent}
 import engine.events.root.GameEvent
+import engine.events.{LoseTurnEvent, SkipTurnEvent}
 import model.Player
 import model.game.GameStateExtensions.PimpedHistory
 import org.scalatest.BeforeAndAfterEach
@@ -38,7 +38,7 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   "PimpedHistory.only" should "filter events by type and cast them" in {
     ph.only[LoseTurnEvent] should have size 0
     ph.only[SkipTurnEvent] should contain theSameElementsAs h
-    ph.only[SkipTurnEvent].foreach(_.source.name should equal ("a"))
+    ph.only[SkipTurnEvent].foreach(_.source.name should equal("a"))
   }
 
   it should "MatchStateExtensions" in {
