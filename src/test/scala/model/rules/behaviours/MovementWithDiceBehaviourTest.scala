@@ -11,7 +11,7 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers {
 
   behavior of "MovementWithDiceBehaviourTest"
 
-  it should "applyRule" in {
+  it should "consume input event and trigger the right output event afterwards" in {
     val m: Game = MatchMock.default
     val e = MovementDiceRollEvent(m.currentState.currentPlayer, m.currentState.currentTurn, 6)
     m.submitEvent(e)
