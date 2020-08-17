@@ -55,7 +55,7 @@ object Main extends JFXApp {
     width = 0.5 * screenSize.width
     height = 0.5 * screenSize.height
     resizable = true
-    fullScreen = true
+    //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
     scene = new PlayerSelection(this, board, ruleSet, screenSize.width, screenSize.height)
