@@ -12,7 +12,7 @@ import model.entities.board.{Board, Disposition, Piece, Position}
 import model.entities.{DialogContent, Dice}
 import model.game.{Game, MutableGameState}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
-import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour, TurnEndEventBehaviour}
+import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.rules.{ActionRule, BehaviourRule}
 import model.{Color, Player}
@@ -42,7 +42,7 @@ object TestMain extends JFXApp {
     }
   }
   val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollMovementDice(movementDice), testDialog))
-  val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour(), TurnEndEventBehaviour())
+  val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour())
 
 
   val priorityRuleSet: RuleSet = PriorityRuleSet(
