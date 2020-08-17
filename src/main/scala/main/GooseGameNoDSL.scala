@@ -334,7 +334,7 @@ object GooseGameNoDSL extends JFXApp {
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.execute(s => s.updatePlayerPiece(s.currentPlayer, p => Piece(p, s.getTile(37).map(Position(_))))),
+        Operation.execute(s => Some(TeleportEvent(s.getTile(37).get, s.currentPlayer, s.currentTurn))),
         Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
     } else Seq()
@@ -361,7 +361,7 @@ object GooseGameNoDSL extends JFXApp {
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.execute(s => s.updatePlayerPiece(s.currentPlayer, p => Piece(p, s.getTile(1).map(Position(_))))),
+        Operation.trigger(s => Some(TeleportEvent(s.getTile(1).get, s.currentPlayer, s.currentTurn))),
         Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
     } else Seq()
