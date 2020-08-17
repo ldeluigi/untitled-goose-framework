@@ -45,7 +45,7 @@ object MutableGameState {
 
     var newTurnStarted: Boolean = true
 
-    override def nextPlayer: Player = nextPlayerStrategy() //TODO Check if this is ok or we need a better way to do this
+    override def nextPlayer: Player = nextPlayerStrategy()
   }
 
   def apply(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: GameBoard): MutableGameState =

@@ -67,5 +67,4 @@ object Main extends JFXApp {
       stage.setFullScreen(true)
     }
   )
-  //TODO fix this stage.setOnCloseRequest(_ => appView.close())
 }

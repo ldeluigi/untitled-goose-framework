@@ -1,8 +1,9 @@
 package model.entities.board
 
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class BoardTest extends AnyFlatSpec {
+class BoardTest extends AnyFlatSpec with Matchers {
 
   val tile1: TileDefinition = TileDefinition(1)
   val tile2: TileDefinition = TileDefinition(2)
@@ -13,26 +14,26 @@ class BoardTest extends AnyFlatSpec {
   val board: Board = Board(name, tiles, disposition)
 
   "A Board" should "have a name" in {
-    assert(board.name == name)
+    board.name should equal(name)
   }
 
   it should "have a disposition" in {
-    assert(board.disposition == disposition)
+    board.disposition should equal(disposition)
   }
 
   it should "have tiles" in {
-    assert(board.tiles.size == tiles.size)
+    board.tiles.size should equal(tiles.size)
   }
 
   it should "have a first tile" in {
-    assert(board.first == tiles.head)
+    board.first should equal(tiles.head)
   }
 
   it can "return the next tile of a given one" in {
-    assert(board.next(tile1).get.equals(tile2))
+    board.next(tile1).get should equal(tile2)
   }
 
   it can "return the previous tile of a given one" in {
-    assert(board.prev(tile2).get.equals(tile1))
+    board.prev(tile2).get should equal(tile1)
   }
 }

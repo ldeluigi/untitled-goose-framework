@@ -2,8 +2,9 @@ package engine.events.root
 
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class PersistentGameEventTest extends AnyFlatSpec with BeforeAndAfterEach {
+class PersistentGameEventTest extends AnyFlatSpec with BeforeAndAfterEach with Matchers {
 
   var p: PersistentGameEvent = new PersistentGameEvent(0)
 
@@ -14,30 +15,30 @@ class PersistentGameEventTest extends AnyFlatSpec with BeforeAndAfterEach {
   behavior of "ConsumableGameEventTest"
 
   it should "expose groups" in {
-    assert(p.groups == Set("a", "b"))
+    p.groups should equal(Set("a", "b"))
   }
 
   it should "not consume" in {
     p.consume()
-    assert(!p.isConsumed)
+    p.isConsumed should be(false)
   }
 
   it should "default to !isConsumed" in {
-    assert(!p.isConsumed)
+    p.isConsumed should be(false)
   }
 
   it should "expose name" in {
-    assert(p.name == "PersistentGameEvent")
+    p.name should equal("PersistentGameEvent")
   }
 
   it should "expose turn" in {
-    assert(p.turn == 5)
+    p.turn should equal(5)
   }
 
   it should "check groups correctly" in {
-    assert(p.belongsTo("a"))
-    assert(p.belongsTo("b"))
-    assert(!p.belongsTo("c"))
+    p.belongsTo("a") should be(true)
+    p.belongsTo("b") should be(true)
+    p.belongsTo("c") should be(false)
   }
 
 }

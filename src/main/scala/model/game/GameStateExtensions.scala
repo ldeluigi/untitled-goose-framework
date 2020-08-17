@@ -3,6 +3,8 @@ package model.game
 import engine.events.root.GameEvent
 import model.Tile
 
+import scala.reflect.ClassTag
+
 object GameStateExtensions {
 
   implicit class MatchStateExtensions(state: GameState) {
@@ -27,6 +29,11 @@ object GameStateExtensions {
       e.consume()
       e
     })
+
+    def only[T: ClassTag]: Seq[T] = history.filter({
+      case _: T => true
+      case _ => false
+    }).map(_.asInstanceOf[T])
   }
 
 }
