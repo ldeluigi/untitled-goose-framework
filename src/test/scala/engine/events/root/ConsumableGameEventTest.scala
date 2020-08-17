@@ -2,8 +2,9 @@ package engine.events.root
 
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class ConsumableGameEventTest extends AnyFlatSpec with BeforeAndAfterEach {
+class ConsumableGameEventTest extends AnyFlatSpec with BeforeAndAfterEach with Matchers {
 
   var c: ConsumableGameEvent = new ConsumableGameEvent(0)
 
@@ -14,30 +15,30 @@ class ConsumableGameEventTest extends AnyFlatSpec with BeforeAndAfterEach {
   behavior of "ConsumableGameEventTest"
 
   it should "expose groups" in {
-    assert(c.groups == Set("a", "b"))
+    c.groups should equal (Set("a", "b"))
   }
 
   it should "consume" in {
     c.consume()
-    assert(c.isConsumed)
+    c.isConsumed should be (true)
   }
 
   it should "default to !isConsumed" in {
-    assert(!c.isConsumed)
+    c.isConsumed should be (false)
   }
 
   it should "expose name" in {
-    assert(c.name == "ConsumableGameEvent")
+    c.name should equal ("ConsumableGameEvent")
   }
 
   it should "expose turn" in {
-    assert(c.turn == 5)
+    c.turn should equal (5)
   }
 
   it should "check groups correctly" in {
-    assert(c.belongsTo("a"))
-    assert(c.belongsTo("b"))
-    assert(!c.belongsTo("c"))
+    c.belongsTo("a") should be (true)
+    c.belongsTo("b") should be (true)
+    c.belongsTo("c") should be (false)
   }
 
 }

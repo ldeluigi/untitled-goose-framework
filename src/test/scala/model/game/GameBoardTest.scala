@@ -3,8 +3,9 @@ package model.game
 import model.Tile
 import model.entities.board.{Board, Disposition, TileDefinition}
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class GameBoardTest() extends AnyFlatSpec {
+class GameBoardTest() extends AnyFlatSpec with Matchers {
 
   val tile1: TileDefinition = TileDefinition(1)
   val tile2: TileDefinition = TileDefinition(2)
@@ -16,23 +17,24 @@ class GameBoardTest() extends AnyFlatSpec {
   val matchBoard: GameBoard = GameBoard(board)
 
   "A match board" should "have a board" in {
-    assert(matchBoard.board == board)
+    matchBoard.board should equal (board)
   }
 
   it should "have tiles" in {
-    assert(matchBoard.tiles.size.equals(board.tiles.size) && board.tiles.size == tiles.size)
+    matchBoard.tiles.size should equal(board.tiles.size)
+    board.tiles.size should equal (tiles.size)
   }
 
   it should "have a first tile" in {
-    assert(matchBoard.first.equals(Tile(board.first)))
+    matchBoard.first should equal(Tile(board.first))
   }
 
   it should "return the next tile of a given one" in {
-    assert(matchBoard.next(Tile(tile1)).get.equals(Tile(board.next(tile1).get)))
+    matchBoard.next(Tile(tile1)).get should equal(Tile(board.next(tile1).get))
   }
 
   it should "return the previous tile of a given one" in {
-    assert(matchBoard.prev(Tile(tile2)).get.equals(Tile(board.prev(tile2).get)))
+    matchBoard.prev(Tile(tile2)).get should equal(Tile(board.prev(tile2).get))
   }
 
 }

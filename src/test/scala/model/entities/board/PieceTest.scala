@@ -2,8 +2,9 @@ package model.entities.board
 
 import model.{Color, Tile}
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class PieceTest extends AnyFlatSpec {
+class PieceTest extends AnyFlatSpec with Matchers {
 
   val tileOne: Tile = Tile(TileDefinition(1))
   val tileTwo: Tile = Tile(TileDefinition(2))
@@ -11,28 +12,28 @@ class PieceTest extends AnyFlatSpec {
 
   "A piece" should "not have a position when created empty" in {
     val emptyPiece = Piece(Color.Blue)
-    assert(emptyPiece.position.isEmpty)
+    emptyPiece.position.isEmpty should be (true)
   }
 
   it should "have a position when specified" in {
-    assert(piece.position.nonEmpty)
+    piece.position.nonEmpty should be (true)
   }
 
   it should "have a color" in {
-    assert(piece.color != null)
-    assert(piece.color == Color.Blue)
+    piece.color should not be null
+    piece.color should equal (Color.Blue)
   }
 
   it should "set the position of the piece when given one" in {
     val position = Position(tileTwo)
     val updatedPiece = Piece(piece, Some(position))
-    assert(updatedPiece.position.get.equals(position))
+    updatedPiece.position.get should equal (position)
   }
 
   it should "set the color of the piece when given one" in {
     val color = Color.Red
     val updatedPiece = Piece(piece, color)
-    assert(updatedPiece.color.equals(Color.Red))
+    updatedPiece.color should equal (Color.Red)
   }
 
 }

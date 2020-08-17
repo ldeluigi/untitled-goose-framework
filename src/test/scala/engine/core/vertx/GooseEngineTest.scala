@@ -8,13 +8,14 @@ import model.rules.ruleset.PriorityRuleSet
 import model.{Color, Player}
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
 import view.GooseController
 
 import scala.concurrent.Future
 import scala.math.abs
 
-class GooseEngineTest extends AnyFlatSpec {
+class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   behavior of "GooseEngineTest"
 
@@ -49,13 +50,13 @@ class GooseEngineTest extends AnyFlatSpec {
     Thread.currentThread().getThreadGroup.enumerate(a)
     val ge = GooseEngine(m, cGenerator(_ => {}))
     var now: Int = Thread.currentThread().getThreadGroup.activeCount()
-    assert(now - prev >= 2)
+    now - prev should be >= 2
     ge.stop()
     Eventually.eventually(Waiters.timeout(5 seconds)) {
       now = Thread.currentThread().getThreadGroup.activeCount()
       val b: Array[Thread] = Array.ofDim(now)
       Thread.currentThread().getThreadGroup.enumerate(b)
-      assert(abs(prev - now) <= 1)
+      abs(prev - now) should be <= 1
     }
   }
 
@@ -76,7 +77,7 @@ class GooseEngineTest extends AnyFlatSpec {
 
   it should "currentMatch" in {
     val ge = GooseEngine(m, cGenerator(_ => {}))
-    assert(ge.currentMatch == m)
+    ge.currentMatch should equal (m)
   }
 
 }

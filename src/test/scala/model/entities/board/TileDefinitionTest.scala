@@ -1,29 +1,32 @@
 package model.entities.board
 
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class TileDefinitionTest extends AnyFlatSpec {
+class TileDefinitionTest extends AnyFlatSpec with Matchers {
 
   val num: Int = 1
   val name: String = "tile"
   val tileDefinitionOnlyWithNum: TileDefinition = TileDefinition(num)
 
   "A TileDefinition" should "have a number when specified" in {
-    assert(tileDefinitionOnlyWithNum.number.get.equals(num))
+    tileDefinitionOnlyWithNum.number.get should equal (num)
   }
 
   it should "have a number and a name when specified" in {
     val tileDefinitionWithNumAndName: TileDefinition = TileDefinition(num, name)
-    assert(tileDefinitionWithNumAndName.name.get.equals(name))
+    tileDefinitionWithNumAndName.name.get should equal (name)
   }
 
   it should "have a number when specified but not have a name when created empty" in {
-    assert(tileDefinitionOnlyWithNum.number.get.equals(num) && tileDefinitionOnlyWithNum.name.isEmpty)
+    tileDefinitionOnlyWithNum.number.get should equal (num)
+    tileDefinitionOnlyWithNum.name.isEmpty should be (true)
   }
 
   it should "have a name when specified but not have a number when created empty" in {
     val tileDefinitionOnlyWithName: TileDefinition = TileDefinition(name)
-    assert(tileDefinitionOnlyWithName.name.get.equals(name) && tileDefinitionOnlyWithName.number.isEmpty)
+    tileDefinitionOnlyWithName.name.get should equal (name)
+    tileDefinitionOnlyWithName.number.isEmpty should be (true)
   }
 
 }
