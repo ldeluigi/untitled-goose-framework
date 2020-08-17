@@ -30,23 +30,12 @@ case class SkipTurnBehaviour() extends BehaviourRule {
 
 
   def consumeTurn(toSkip: Int): Operation = {
-    var skippedTurns = toSkip
-    Operation.execute((state: MutableGameState) => {
-      val currentPlayerHistory = state.currentPlayer.history
+    Operation.execute((state: MutableGameState) =>
+      state.currentPlayer.history
         .filterNotConsumed()
-      if (currentPlayerHistory.exists(_.isInstanceOf[LoseTurnEvent])) {
-        println("OK")
-        var loseEvents = currentPlayerHistory.filter(_.isInstanceOf[LoseTurnEvent])
-        while (skippedTurns > 0) {
-          loseEvents.head.consume()
-          loseEvents.tail match {
-            //TODO if you somehow skip more turns that you should have should you gain them??
-            case Nil if skippedTurns > 0 => skippedTurns = 0
-            case Nil => Unit
-            case _ => loseEvents = loseEvents.tail
-          }
-        }
-      }
-    })
+        .filter(_.isInstanceOf[LoseTurnEvent])
+        .take(toSkip)
+        .consumeAll()
+    )
   }
 }

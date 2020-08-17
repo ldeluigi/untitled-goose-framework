@@ -354,7 +354,7 @@ object GooseGameNoDSL extends JFXApp {
       })
     if (stopped.isDefined) {
       Seq(
-        SpecialOperation.DialogOperation(s => new DialogContent {
+        SpecialOperation.DialogOperation(_ => new DialogContent {
           override def title: String = "The Death"
 
           override def text: String = "You died. Go back to the beginning and try again to reach the end!"

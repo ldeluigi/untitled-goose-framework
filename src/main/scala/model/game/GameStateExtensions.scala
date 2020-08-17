@@ -1,7 +1,8 @@
 package model.game
 
+import engine.events.{StopOnTileEvent, TurnEndedEvent}
 import engine.events.root.GameEvent
-import model.Tile
+import model.{Player, Tile}
 
 import scala.reflect.ClassTag
 
@@ -16,6 +17,15 @@ object GameStateExtensions {
     def getTile(name: String): Option[Tile] = {
       state.gameBoard.tiles.find(t => t.name.isDefined && t.name.get == name)
     }
+
+    def playerStopsTurns(tile: Tile, player: Player): Seq[Int] = tile.history
+      .only[StopOnTileEvent]
+      .filter(_.source.equals(player))
+      .map(_.turn)
+
+    def playerLastTurn(player: Player): Option[Int] = player.history
+      .filter(_.isInstanceOf[TurnEndedEvent])
+      .map(_.turn).reduceOption(_ max _)
   }
 
   implicit class PimpedHistory[H <: GameEvent](history: Seq[H]) {
