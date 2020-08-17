@@ -3,16 +3,17 @@ package main
 import java.awt.{Dimension, Toolkit}
 
 import engine.events._
+import engine.events.root.GameEvent
 import javafx.scene.input.KeyCode
 import model.game.{Game, GameState}
 import model.actions.{Action, RollMovementDice}
-import model.entities.Dice
+import model.entities.{DialogContent, Dice}
 import model.entities.Dice.MovementDice
 import model.entities.board._
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.actionrules.LoseTurnActionRule
 import model.rules.behaviours.{DialogLaunchBehaviour, MovementWithDiceBehaviour, MultipleStepBehaviour, SkipTurnBehaviour, TeleportBehaviour, TurnEndEventBehaviour, VictoryBehaviour}
-import model.rules.operations.Operation
+import model.rules.operations.{Operation, SpecialOperation}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.rules.{ActionRule, BehaviourRule}
 import model.{Color, Player, Tile}
@@ -117,7 +118,16 @@ object GooseGameNoDSL extends JFXApp {
           e.consume()
           e
         })
-        .map(_ => Seq(Operation.trigger(s => Some(TeleportEvent(teleportTo, state.currentPlayer, state.currentTurn)))))
+        .map(_ => Seq(
+          SpecialOperation.DialogOperation(s => new DialogContent {
+            override def title: String = "Special first throw!"
+
+            override def text: String = "You roll a 3 on your first turn, go to tile 26"
+
+            override def options: Map[String, GameEvent] = Map()
+          }),
+          Operation.trigger(s => Some(TeleportEvent(teleportTo, state.currentPlayer, state.currentTurn))))
+        )
         .getOrElse(Seq())
     }
     else Seq()
@@ -144,8 +154,18 @@ object GooseGameNoDSL extends JFXApp {
         .filterTurn(state.currentTurn)
         .find(_.isInstanceOf[StepMovementEvent])
         .map(_.asInstanceOf[StepMovementEvent])
-        .map(e => Operation.trigger(s => Some(GainTurnEvent(state.currentPlayer, s.currentTurn))))
-        .map(Seq(_, Operation.trigger(s => Some(TileActivatedEvent(stoppedOnGoose.get.tile, s.currentTurn))))).getOrElse(Seq())
+        .map(_ => Operation.trigger(s => Some(GainTurnEvent(state.currentPlayer, s.currentTurn))))
+        .map(Seq(
+          _,
+          SpecialOperation.DialogOperation(s => new DialogContent {
+            override def title: String = "Landed on a goose"
+
+            override def text: String = "You can roll your dices again"
+
+            override def options: Map[String, GameEvent] = Map()
+          }),
+          Operation.trigger(s => Some(TileActivatedEvent(stoppedOnGoose.get.tile, s.currentTurn)))))
+        .getOrElse(Seq())
     }
     else Seq()
   }
@@ -164,6 +184,13 @@ object GooseGameNoDSL extends JFXApp {
       })
     if (stopped.isDefined) {
       Seq(
+        SpecialOperation.DialogOperation(s => new DialogContent {
+          override def title: String = "The Bridge"
+
+          override def text: String = "You landed on the Bridge. Miss a turn while you pay the toll"
+
+          override def options: Map[String, GameEvent] = Map()
+        }),
         Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))),
         Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
@@ -184,6 +211,13 @@ object GooseGameNoDSL extends JFXApp {
       })
     if (stopped.isDefined) {
       Seq(
+        SpecialOperation.DialogOperation(s => new DialogContent {
+          override def title: String = "The Inn"
+
+          override def text: String = "You landed on the Inn. Miss a turn while you stop for some tasty dinner"
+
+          override def options: Map[String, GameEvent] = Map()
+        }),
         Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))),
         Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
@@ -206,7 +240,14 @@ object GooseGameNoDSL extends JFXApp {
 
     if (stopped.isDefined) {
       Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+
+        SpecialOperation.DialogOperation(s => new DialogContent {
+          override def title: String = "The Well"
+
+          override def text: String = "You landed on the Well! Miss 3 turns and make a wish... if another player passes you before the three turns are up you can start moving again"
+
+          override def options: Map[String, GameEvent] = Map()
+        })
     } else Seq()
   }
 
@@ -243,7 +284,14 @@ object GooseGameNoDSL extends JFXApp {
       })
     if (stopped.isDefined) {
       Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+
+        SpecialOperation.DialogOperation(s => new DialogContent {
+          override def title: String = "The Prison"
+
+          override def text: String = "You landed on the Prison! Miss 3 turns while you are behind bars"
+
+          override def options: Map[String, GameEvent] = Map()
+        })
     } else Seq()
   }
 
@@ -279,6 +327,13 @@ object GooseGameNoDSL extends JFXApp {
 
     if (stopped.isDefined) {
       Seq(
+        SpecialOperation.DialogOperation(s => new DialogContent {
+          override def title: String = "The Labyrinth"
+
+          override def text: String = "You enter the labyrinth but you get lost. You exit on tile 37"
+
+          override def options: Map[String, GameEvent] = Map()
+        }),
         Operation.execute(s => s.updatePlayerPiece(s.currentPlayer, p => Piece(p, s.getTile(37).map(Position(_))))),
         Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
@@ -299,6 +354,13 @@ object GooseGameNoDSL extends JFXApp {
       })
     if (stopped.isDefined) {
       Seq(
+        SpecialOperation.DialogOperation(s => new DialogContent {
+          override def title: String = "The Death"
+
+          override def text: String = "You died. Go back to the beginning and try again to reach the end!"
+
+          override def options: Map[String, GameEvent] = Map()
+        }),
         Operation.execute(s => s.updatePlayerPiece(s.currentPlayer, p => Piece(p, s.getTile(1).map(Position(_))))),
         Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )

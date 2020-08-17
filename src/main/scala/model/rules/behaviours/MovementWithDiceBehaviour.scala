@@ -18,6 +18,7 @@ case class MovementWithDiceBehaviour() extends BehaviourRule {
       .map(_.asInstanceOf[MovementDiceRollEvent])
       .consumeAll()
       .map(e => Operation.trigger(s => Some(StepMovementEvent(e.result.sum, e.source, s.currentTurn))))
+      .toSeq
   }
 
 }

@@ -16,7 +16,7 @@ class DialogLaunchBehaviourTest extends AnyFlatSpec with Matchers {
     val m: Game = MatchMock.default
     val e = DialogLaunchEvent(m.currentState.currentTurn, _ => DialogContent("", ""))
     m.submitEvent(e)
-    DialogLaunchBehaviour().applyRule(m.currentState) should equal (Seq(DialogOperation(e.createDialog)))
+    DialogLaunchBehaviour().applyRule(m.currentState) should equal(Seq(DialogOperation(e.createDialog)))
     DialogLaunchBehaviour().applyRule(m.currentState) should have size 0
   }
 

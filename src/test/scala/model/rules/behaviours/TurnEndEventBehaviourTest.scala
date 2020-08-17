@@ -7,7 +7,7 @@ import model.rules.operations.Operation
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class TurnEndEventBehaviourTest extends AnyFlatSpec with Matchers{
+class TurnEndEventBehaviourTest extends AnyFlatSpec with Matchers {
 
   behavior of "TurnEndEventBehaviourTest"
 
@@ -19,7 +19,7 @@ class TurnEndEventBehaviourTest extends AnyFlatSpec with Matchers{
     m.submitEvent(e)
     TurnEndEventBehaviour().applyRule(m.currentState) should have size 0
     ops.head.execute(m.currentState, ev => {
-      ev should equal (TurnShouldEndEvent(m.currentState.currentTurn))
+      ev should equal(TurnShouldEndEvent(m.currentState.currentTurn))
     })
   }
 
