@@ -3,10 +3,10 @@ package view.board
 import model.TileIdentifier
 import scalafx.scene.paint.Color
 
-//conversione impliccita e mappa nella view con graphic descriptor dentro cui metto la conversione implicita che usa direttamente sclafx
+//conversione implicita e mappa nella view con graphic descriptor dentro cui metto la conversione implicita che usa direttamente sclafx
 //capire come fare le conversioni implicite da num a graphic.. da nome a graphic..
 //e dal gruppo devo creare un oggetto gruppo che prende una scritta e crea un oggetto con un solo campo,
-//mi serve perchè così ho un tipo su cui fare la convesione implicita -> classe che prende una stronga e ha un campo stringa da creare sopra come classe dove faccio le conversioni implicite
+//mi serve perchè così ho un tipo su cui fare la convesione implicita -> classe che prende una stringa e ha un campo stringa da creare sopra come classe dove faccio le conversioni implicite
 /* Map(
    "oca" -> GraphicDescriptor("oca.png"), //prende una risorsa come path..
     15 -> GraphicDescriptor("pozzo.png"),
@@ -18,24 +18,23 @@ import scalafx.scene.paint.Color
 
 trait GraphicDescriptor {
 
-  // c'è una mappa da tileidentifier a graphicdescriptor ->
   // implicit conversion che dice che una tupla numero group qualcosa diventa graphicdescriptor
   // creo tante conversioni implicite da tupla sopra a sotto...
 
-  var graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
+  def graphicMap: Map[TileIdentifier, GraphicDescriptor]
 
-  val color: Color
-
+  def color: Option[Color]
 }
 
 object GraphicDescriptor {
 
-  //creare la classe gruppo
+  private class GraphicDescriptorImpl() extends GraphicDescriptor {
 
-  private class GraphicDescriptorImpl extends GraphicDescriptor {
+    var graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
 
-    override val color: Color = ???
-
+    var color: Option[Color] = ???
   }
+
+  def apply(): GraphicDescriptor = new GraphicDescriptorImpl
 
 }
