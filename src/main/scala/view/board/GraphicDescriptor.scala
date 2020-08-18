@@ -28,13 +28,13 @@ trait GraphicDescriptor {
 
 object GraphicDescriptor {
 
-  private class GraphicDescriptorImpl() extends GraphicDescriptor {
+  private class GraphicDescriptorImpl(specifiedColor: Option[Color]) extends GraphicDescriptor {
 
     var graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
 
-    var color: Option[Color] = ???
+    var color: Option[Color] = specifiedColor
   }
 
-  def apply(): GraphicDescriptor = new GraphicDescriptorImpl
+  def apply(specifiedColor: Option[Color]): GraphicDescriptor = new GraphicDescriptorImpl(specifiedColor)
 
 }
