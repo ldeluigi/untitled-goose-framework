@@ -14,7 +14,6 @@ import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import view.ApplicationController
 
-
 class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int) extends Scene {
 
   var enrolledPlayers: Map[Player, Piece] = Map()
@@ -84,7 +83,6 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
 
   val activePlayersPanel: VBox = new VBox {
-    //alignment = Pos.Center
     spacing = 15
     padding = Insets(20)
     children = List(activePlayersList)
@@ -118,10 +116,8 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
     }
   }
 
-
   def refreshPlayersList(): Unit = {
-    activePlayersList.appendText("Name: " + playerNameFromInput.getText + "\t" + "color: " + colorsChoice.getValue)
-    activePlayersList.appendText("\n")
+    activePlayersList.appendText("Name: " + playerNameFromInput.getText + "\t" + "color: " + colorsChoice.getValue + "\n")
   }
 
   borderPane.top = upperGameNameHeader
