@@ -1,6 +1,6 @@
 package view
 
-import engine.events.root.{GameEvent, NoOpEvent}
+import engine.events.{GameEvent, NoOpEvent}
 import model.entities.DialogContent
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control.{Alert, ButtonType}

@@ -1,9 +1,9 @@
 package model.rules.behaviours
 
-import engine.events.{LoseTurnEvent, SkipTurnEvent}
+import engine.events.consumable.SkipTurnEvent
+import engine.events.persistent.player.LoseTurnEvent
 import model.game.GameStateExtensions.PimpedHistory
 import model.game.{GameState, MutableGameState}
-import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
 case class SkipTurnBehaviour() extends BehaviourRule {
@@ -30,7 +30,7 @@ case class SkipTurnBehaviour() extends BehaviourRule {
 
 
   def consumeTurn(toSkip: Int): Operation = {
-    Operation.execute((state: MutableGameState) =>
+    Operation.updateState((state: MutableGameState) =>
       state.currentPlayer.history
         .filterNotConsumed()
         .filter(_.isInstanceOf[LoseTurnEvent])

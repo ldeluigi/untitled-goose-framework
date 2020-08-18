@@ -1,12 +1,10 @@
 package model.rules.behaviours
 
-import engine.events
-import engine.events._
+import engine.events.consumable._
 import model.Player
 import model.entities.board.{Piece, Position}
 import model.game.GameState
-import model.game.GameStateExtensions.{MatchStateExtensions, PimpedHistory}
-import model.rules.BehaviourRule
+import model.game.GameStateExtensions.PimpedHistory
 import model.rules.operations.Operation
 
 case class MultipleStepBehaviour() extends BehaviourRule {
@@ -20,7 +18,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
       .filter(_.isInstanceOf[StepMovementEvent])
       .map(_.asInstanceOf[StepMovementEvent])
       .consumeAll()
-      .flatMap(e => generateStep(state, e.movement, e.source, e.movement >= 0))
+      .flatMap(e => generateStep(state, e.movement, e.player, e.movement >= 0))
   }
 
   private def generateStep(state: GameState, step: Int, player: Player, forward: Boolean): Seq[Operation] = {
@@ -42,7 +40,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
 
     val triggerPassedPlayers: Seq[Operation] = checkAndTriggerPassedPlayers(state, player)
 
-    val step = Operation.execute(state => {
+    val step = Operation.updateState(state => {
       val inverted = player.history.filterTurn(state.currentTurn).find(_.isInstanceOf[InvertMovementEvent])
       state.updatePlayerPiece(player, piece => {
         Piece(piece, piece.position match {
@@ -105,7 +103,7 @@ case class MultipleStepBehaviour() extends BehaviourRule {
         val tile = s.playerPieces(player).position.map(_.tile)
         if (tile.isDefined) {
           if (state.playerLastTurn(other).exists(l => state.playerStopsTurns(tile.get, other).contains(l))) {
-            Some(events.PlayerPassedEvent(other, player, tile.get, s.currentTurn))
+            Some(PlayerPassedEvent(other, player, tile.get, s.currentTurn))
           } else None
         } else None
       })

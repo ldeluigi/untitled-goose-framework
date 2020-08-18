@@ -8,9 +8,9 @@ trait TileIdentifier {
   def groups: Set[String] //Group come riferimento alla classe dentro al GraphicDescriptor
 }
 
-object TileIdentifier{
+object TileIdentifier {
 
-  private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Set[String]) extends TileIdentifier{
+  private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Set[String]) extends TileIdentifier {
     override def number: Option[Int] = tileNum
 
     override def name: Option[String] = tileName

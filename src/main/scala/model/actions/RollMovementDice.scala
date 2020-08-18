@@ -1,8 +1,7 @@
 package model.actions
 
 import engine.core.EventSink
-import engine.events.MovementDiceRollEvent
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import model.entities.Dice.MovementDice
 import model.game.MutableGameState
 

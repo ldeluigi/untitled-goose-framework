@@ -1,6 +1,7 @@
 package model.rules.behaviours
 
-import engine.events.{MovementDiceRollEvent, StepMovementEvent}
+import engine.events.consumable
+import engine.events.consumable.MovementDiceRollEvent
 import mock.MatchMock
 import model.game.Game
 import model.rules.operations.Operation
@@ -19,7 +20,7 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers {
     ops should have size 1
     MovementWithDiceBehaviour().applyRule(m.currentState) should have size 0
     ops.head.execute(m.currentState, ev => {
-      ev should equal(StepMovementEvent(6, e.source, m.currentState.currentTurn))
+      ev should equal(consumable.StepMovementEvent(6, e.player, m.currentState.currentTurn))
     })
 
   }

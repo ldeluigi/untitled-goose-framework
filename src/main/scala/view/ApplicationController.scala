@@ -1,7 +1,7 @@
 package view
 
 import engine.core.vertx.GooseEngine
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import model.actions.Action
 import model.entities.DialogContent
 import model.game.{Game, MutableGameState}

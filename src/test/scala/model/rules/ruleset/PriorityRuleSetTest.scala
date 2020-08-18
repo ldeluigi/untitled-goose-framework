@@ -1,7 +1,7 @@
 package model.rules.ruleset
 
 import engine.core.EventSink
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import model.actions.Action
 import model.entities.board.{Position, TileDefinition}
 import model.game.MutableGameState

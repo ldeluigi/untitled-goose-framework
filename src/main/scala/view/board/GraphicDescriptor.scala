@@ -27,11 +27,11 @@ trait GraphicDescriptor {
 
 }
 
-object GraphicDescriptor{
+object GraphicDescriptor {
 
   //creare la classe gruppo
 
-  private class GraphicDescriptorImpl extends GraphicDescriptor{
+  private class GraphicDescriptorImpl extends GraphicDescriptor {
 
     override implicit def map(tileIdentifier: TileIdentifier): GraphicDescriptor = {
       ???
@@ -40,4 +40,5 @@ object GraphicDescriptor{
 
     override def color: Shape = ???
   }
+
 }

@@ -1,6 +1,6 @@
 package model.game
 
-import engine.events.{DiceRollEvent, TileEnteredEvent, TurnShouldEndEvent}
+import engine.events.consumable.DiceRollEvent
 import mock.MatchMock
 import mock.MatchMock._
 import model.Color
@@ -34,7 +34,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
     val gameEvent = TurnShouldEndEvent(gameMatch.currentState.currentTurn)
     gameMatch.submitEvent(gameEvent)
 
-    gameMatch.currentState.history should contain(gameEvent)
+    gameMatch.currentState.consumableEvents should contain(gameEvent)
   }
 
   it should "submit events to players" in {

@@ -1,8 +1,7 @@
 package model.actions
 
 import engine.core.EventSink
-import engine.events.StepMovementEvent
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import model.game.MutableGameState
 
 class StepForwardAction() extends Action {

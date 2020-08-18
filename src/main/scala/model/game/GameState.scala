@@ -1,14 +1,14 @@
 package model.game
 
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import model.Player
 import model.entities.board.Piece
 
 trait GameState {
 
-  def newTurnStarted: Boolean
-
   def currentTurn: Int
+
+  def currentCycle: Int
 
   def currentPlayer: Player
 
@@ -18,7 +18,7 @@ trait GameState {
 
   def gameBoard: GameBoard
 
-  def history: List[GameEvent]
+  def consumableEvents: Seq[GameEvent]
 
   def players: Set[Player] = playerPieces.keySet
 

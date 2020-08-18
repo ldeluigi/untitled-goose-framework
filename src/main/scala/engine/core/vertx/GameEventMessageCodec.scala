@@ -2,7 +2,7 @@ package engine.core.vertx
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import io.vertx.core.buffer.Buffer
 import io.vertx.core.eventbus.MessageCodec
 

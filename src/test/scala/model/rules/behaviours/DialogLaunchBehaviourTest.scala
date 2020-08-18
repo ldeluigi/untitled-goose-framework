@@ -1,10 +1,8 @@
 package model.rules.behaviours
 
-import engine.events.DialogLaunchEvent
 import mock.MatchMock
 import model.entities.DialogContent
 import model.game.Game
-import model.rules.operations.SpecialOperation.DialogOperation
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

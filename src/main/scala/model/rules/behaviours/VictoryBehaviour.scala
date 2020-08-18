@@ -1,12 +1,10 @@
 package model.rules.behaviours
 
-import engine.events.VictoryEvent
-import engine.events.root.ExitEvent
+import engine.events.ExitEvent
+import engine.events.persistent.player.VictoryEvent
 import model.entities.DialogContent
 import model.game.GameState
-import model.game.GameStateExtensions.PimpedHistory
-import model.rules.BehaviourRule
-import model.rules.operations.{Operation, SpecialOperation}
+import model.rules.operations.Operation
 
 case class VictoryBehaviour() extends BehaviourRule {
   override def name: Option[String] = Some("Victory")

@@ -1,7 +1,8 @@
 package model.game
 
-import engine.events.root.GameEvent
-import engine.events.{LoseTurnEvent, SkipTurnEvent}
+import engine.events.consumable.SkipTurnEvent
+import engine.events.persistent.player.LoseTurnEvent
+import engine.events.{GameEvent, consumable}
 import model.Player
 import model.game.GameStateExtensions.PimpedHistory
 import org.scalatest.BeforeAndAfterEach
@@ -10,11 +11,11 @@ import org.scalatest.matchers.should.Matchers
 
 class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
 
-  var h: Seq[SkipTurnEvent] = Seq(SkipTurnEvent(Player("a"), 1))
+  var h: Seq[SkipTurnEvent] = Seq(consumable.SkipTurnEvent(Player("a"), 1))
   var ph: PimpedHistory[GameEvent] = new PimpedHistory[GameEvent](h)
 
   override protected def beforeEach(): Unit = {
-    h = Seq(SkipTurnEvent(Player("a"), 1))
+    h = Seq(consumable.SkipTurnEvent(Player("a"), 1))
     ph = new PimpedHistory[GameEvent](h)
   }
 
@@ -38,7 +39,7 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   "PimpedHistory.only" should "filter events by type and cast them" in {
     ph.only[LoseTurnEvent] should have size 0
     ph.only[SkipTurnEvent] should contain theSameElementsAs h
-    ph.only[SkipTurnEvent].foreach(_.source.name should equal("a"))
+    ph.only[SkipTurnEvent].foreach(_.player.name should equal("a"))
   }
 
   it should "MatchStateExtensions" in {

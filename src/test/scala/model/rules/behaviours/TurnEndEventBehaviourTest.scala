@@ -1,6 +1,5 @@
 package model.rules.behaviours
 
-import engine.events.TurnShouldEndEvent
 import mock.MatchMock
 import model.game.Game
 import model.rules.operations.Operation

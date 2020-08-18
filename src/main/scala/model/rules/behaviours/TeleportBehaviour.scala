@@ -1,10 +1,9 @@
 package model.rules.behaviours
 
-import engine.events.{StopOnTileEvent, TeleportEvent, TileEnteredEvent, TileExitedEvent}
+import engine.events.consumable.TeleportEvent
 import model.entities.board.{Piece, Position}
 import model.game.GameState
 import model.game.GameStateExtensions.PimpedHistory
-import model.rules.BehaviourRule
 import model.rules.operations.Operation
 import model.{Player, Tile}
 
@@ -30,7 +29,7 @@ case class TeleportBehaviour() extends BehaviourRule {
       }
     })
 
-    val teleport = Operation.execute(state => {
+    val teleport = Operation.updateState(state => {
       state.updatePlayerPiece(player, piece => {
         Piece(piece, Some(Position(tile)))
       })

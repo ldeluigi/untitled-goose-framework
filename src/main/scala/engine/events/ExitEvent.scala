@@ -1,4 +1,4 @@
-package engine.events.root
+package engine.events
 
 case object ExitEvent extends GameEvent {
   override def name: String = "Exit"
@@ -10,4 +10,6 @@ case object ExitEvent extends GameEvent {
   override def consume(): Unit = {}
 
   override def groups: Set[String] = Set()
+
+  override def cycle: Int = -1
 }

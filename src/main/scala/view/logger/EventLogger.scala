@@ -3,7 +3,7 @@ package view.logger
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
 

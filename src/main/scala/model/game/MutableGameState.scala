@@ -1,29 +1,36 @@
 package model.game
 
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import model.Player
 import model.entities.board.Piece
 
 trait MutableGameState extends GameState {
 
-  def newTurnStarted_=(value: Boolean): Unit
-
   def currentPlayer_=(player: Player): Unit
 
   def currentTurn_=(turn: Int): Unit
 
-  def history_=(history: List[GameEvent]): Unit
+  def consumableEvents_=(events: Seq[GameEvent]): Unit
 
   def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
 }
 
+
+trait CycleManager {
+  def currentCycle_=(cycle: Int): Unit
+}
+
 object MutableGameState {
 
-  private class GameStateImpl(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
-                              val gameBoard: GameBoard) extends MutableGameState {
 
-    var history: List[GameEvent] = List()
-    var currentTurn: Int = startTurn
+  private class GameStateImpl(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
+                              val gameBoard: GameBoard) extends MutableGameState with CycleManager {
+
+    var consumableEvents: Seq[GameEvent] = Seq()
+
+    var currentTurn: Int = 0
+
+    var currentCycle: Int = 0
 
     private var currentTurnPlayer: Player = startPlayer
 
@@ -43,12 +50,11 @@ object MutableGameState {
 
     override def playerPieces: Map[Player, Piece] = playerPiecesMap
 
-    var newTurnStarted: Boolean = true
-
     override def nextPlayer: Player = nextPlayerStrategy()
+
   }
 
-  def apply(startTurn: Int, startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: GameBoard): MutableGameState =
-    new GameStateImpl(startTurn, startPlayer, nextPlayerStrategy, pieces, board)
+  def apply(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: GameBoard): MutableGameState with CycleManager =
+    new GameStateImpl(startPlayer, nextPlayerStrategy, pieces, board)
 }
 

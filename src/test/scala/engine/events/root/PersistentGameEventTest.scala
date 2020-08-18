@@ -1,15 +1,20 @@
 package engine.events.root
 
+import engine.events.persistent.PersistentGameEvent
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 class PersistentGameEventTest extends AnyFlatSpec with BeforeAndAfterEach with Matchers {
 
-  var p: PersistentGameEvent = new PersistentGameEvent(0)
+  var p: PersistentGameEvent = new PersistentGameEvent(0) {
+
+  }
 
   override def beforeEach() {
-    p = new PersistentGameEvent(5, Set("a", "b"))
+    p = new PersistentGameEvent(5, Set("a", "b")) {
+
+    }
   }
 
   behavior of "ConsumableGameEventTest"

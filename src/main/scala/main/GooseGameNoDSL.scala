@@ -2,20 +2,22 @@ package main
 
 import java.awt.{Dimension, Toolkit}
 
-import engine.events._
-import engine.events.root.GameEvent
+import engine.events.consumable._
+import engine.events.persistent.player.{LoseTurnEvent, TurnEndedEvent}
+import engine.events.persistent.{player, tile}
+import engine.events.{GameEvent, consumable}
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board._
 import model.entities.{DialogContent, Dice}
 import model.game.{Game, GameState}
+import model.rules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.actionrules.LoseTurnActionRule
 import model.rules.behaviours._
-import model.rules.operations.{Operation, SpecialOperation}
+import model.rules.operations.Operation
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
-import model.rules.{ActionRule, BehaviourRule}
 import model.{Color, Player, Tile}
 import scalafx.application.JFXApp
 import view.ApplicationController
@@ -94,8 +96,8 @@ object GooseGameNoDSL extends JFXApp {
       })
     if (stopped.isDefined) {
       Seq(
-        Operation.trigger(s => Some(VictoryEvent(s.currentTurn, s.currentPlayer))),
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+        Operation.trigger(s => Some(VictoryEvent(s.currentPlayer, s.currentTurn))),
+        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
     } else Seq()
   }
@@ -190,8 +192,8 @@ object GooseGameNoDSL extends JFXApp {
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+        Operation.trigger(s => Some(player.LoseTurnEvent(state.currentPlayer, s.currentTurn))),
+        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
     } else Seq()
   }
@@ -218,7 +220,7 @@ object GooseGameNoDSL extends JFXApp {
           override def options: Map[String, GameEvent] = Map()
         }),
         Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
     } else Seq()
   }
@@ -239,8 +241,8 @@ object GooseGameNoDSL extends JFXApp {
 
 
     if (stopped.isDefined) {
-      Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+
+      Seq.fill(3)(Operation.trigger(s => Some(player.LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
+        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+
         SpecialOperation.DialogOperation(s => new DialogContent {
           override def title: String = "The Well"
 
@@ -261,7 +263,7 @@ object GooseGameNoDSL extends JFXApp {
 
     if (passedEvent.isDefined) {
       passedEvent.get.consume()
-      Seq(Operation.execute(s =>
+      Seq(Operation.updateState(s =>
         passedEvent.get.playerPassed.history =
           passedEvent.get.playerPassed.history.filter(e => !e.isConsumed && e.isInstanceOf[LoseTurnEvent])
       ))
@@ -283,8 +285,8 @@ object GooseGameNoDSL extends JFXApp {
         e
       })
     if (stopped.isDefined) {
-      Seq.fill(3)(Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+
+      Seq.fill(3)(Operation.trigger(s => Some(player.LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
+        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+
         SpecialOperation.DialogOperation(s => new DialogContent {
           override def title: String = "The Prison"
 
@@ -305,7 +307,7 @@ object GooseGameNoDSL extends JFXApp {
 
     if (passedEvent.isDefined) {
       passedEvent.get.consume()
-      Seq(Operation.execute(s =>
+      Seq(Operation.updateState(s =>
         passedEvent.get.playerPassed.history =
           passedEvent.get.playerPassed.history.filter(e => !e.isConsumed && e.isInstanceOf[LoseTurnEvent])
       ))
@@ -334,8 +336,8 @@ object GooseGameNoDSL extends JFXApp {
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.execute(s => Some(TeleportEvent(s.getTile(37).get, s.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+        Operation.updateState(s => Some(consumable.TeleportEvent(s.getTile(37).get, s.currentPlayer, s.currentTurn))),
+        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
     } else Seq()
   }
@@ -361,8 +363,8 @@ object GooseGameNoDSL extends JFXApp {
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.trigger(s => Some(TeleportEvent(s.getTile(1).get, s.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(TileActivatedEvent(stopped.get.tile, s.currentTurn)))
+        Operation.trigger(s => Some(consumable.TeleportEvent(s.getTile(1).get, s.currentPlayer, s.currentTurn))),
+        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
       )
     } else Seq()
   }

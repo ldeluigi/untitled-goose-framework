@@ -1,14 +1,14 @@
 package engine.core.vertx
 
 import engine.core.{DialogDisplay, EventSink}
-import engine.events.root.{ExitEvent, GameEvent, NoOpEvent}
+import engine.events.GameEvent
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
 import model.entities.DialogContent
 import model.game.Game
 import model.rules.operations.Operation
-import model.rules.operations.SpecialOperation.{DialogOperation, SpecialOperation}
+import model.rules.operations.Operation.{DialogOperation, SpecialOperation}
 import view.GooseController
 
 import scala.concurrent.Await
@@ -48,7 +48,7 @@ object GooseEngine {
       if (!stopped && stack.nonEmpty) {
         val op = stack.head
         stack = stack.tail
-        op.execute(gameMatch.currentState, onEvent)
+        op.execute(gameMatch.currentState)
         op match {
           case operation: SpecialOperation =>
             operation match {
@@ -58,15 +58,17 @@ object GooseEngine {
                   stopped = false
                   res match {
                     case Failure(_) => executeOperation()
-                    case Success(event) => onEvent(event)
+                    case Success(event) => {
+                      stack = Operation.trigger(event) +: stack
+                      executeOperation()
+                    }
                   }
                 })
-              //              case _: TerminateTurnOperation =>
-              //                stack = Seq()
             }
           case _ => Unit
         }
         controller.update(gameMatch.currentState)
+        stack = gameMatch.stateBasedOperations ++ stack
         executeOperation()
       }
     }
@@ -78,21 +80,11 @@ object GooseEngine {
     override def stop(): Unit = vertx.close()
 
     private def onEvent(event: GameEvent): Unit = {
-      event match {
-        case ExitEvent => controller.close()
-
-        case NoOpEvent => executeOperation()
-
-        case _ =>
-          controller.logEvent(event)
-          if (stack.isEmpty) {
-            stack = stack :+ gameMatch.cleanup
-          }
-          gameMatch.submitEvent(event)
-          stack = gameMatch.stateBasedOperations ++ stack
-          executeOperation()
+      if (stack.isEmpty) {
+        stack = stack :+ gameMatch.cleanup
       }
-
+      stack = Operation.trigger(event) +: stack
+      executeOperation()
     }
   }
 

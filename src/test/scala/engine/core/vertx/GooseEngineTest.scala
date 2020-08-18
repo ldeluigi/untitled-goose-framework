@@ -1,6 +1,6 @@
 package engine.core.vertx
 
-import engine.events.root.{GameEvent, NoOpEvent}
+import engine.events.{GameEvent, NoOpEvent}
 import model.entities.DialogContent
 import model.entities.board.{Board, Disposition, Piece}
 import model.game.{Game, MutableGameState}

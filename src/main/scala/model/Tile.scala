@@ -1,6 +1,6 @@
 package model
 
-import engine.events.root.TileEvent
+import engine.events.TileEvent
 import model.entities.board.TileDefinition
 
 trait Tile extends TileDefinition {

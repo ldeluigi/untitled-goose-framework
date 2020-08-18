@@ -1,10 +1,10 @@
-package engine.events
+package engine.events.consumable
 
-import engine.events.root.{ConsumableGameEvent, PlayerEvent}
+import engine.events.PlayerEvent
 import model.Player
 
-class DiceRollEvent[DiceSide](val source: Player, currentTurn: Int, val result: DiceSide*)
-  extends ConsumableGameEvent(currentTurn) with PlayerEvent {
+class DiceRollEvent[DiceSide](val player: Player, val turn: Int, val cycle: Int, val result: DiceSide*)
+  extends ConsumableGameEvent with PlayerEvent {
 
   override def toString: String = super.toString + " result: " + result.mkString("+")
 }

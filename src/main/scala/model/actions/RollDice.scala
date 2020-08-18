@@ -1,8 +1,8 @@
 package model.actions
 
 import engine.core.EventSink
-import engine.events.DiceRollEvent
-import engine.events.root.GameEvent
+import engine.events.GameEvent
+import engine.events.consumable.DiceRollEvent
 import model.entities.Dice.Dice
 import model.game.MutableGameState
 
