@@ -1,6 +1,6 @@
 package view.board
 
-import model.Tile
+import model.{Tile, TileIdentifier}
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label
@@ -20,6 +20,18 @@ trait TileVisualization extends StackPane {
 
   def rectangle: Rectangle
 }
+
+/* Per una data tile se nella mappa c'è una data entry allora diventa quello
+* passo una mappa con tileidentifier e graphdescriptor
+* se la val tile ha un nome vado nella mappa e faccio contains o try get con optional se c'è o non c'è (uso metodi della mappa).
+* se c'è una entry che corrisponde ad un tileidentifier di quel nome. <- per fare la contains devo dargli un nuovo tileIdentifier
+* creato con la stringa che prendo dalla tile.
+*
+* ho la mappa, ho la tile, guardo la tile se questa ha il nome allora provo a vedere se la mappa aha un valore relativo al tile identifirer(nome)
+* se c'è vado a vedere cosa c'è scritto e lo applico alla tile
+* altrimenti passo ai numeri oppure ai gruppi.
+* Al primo che trovo mi fermo!
+* */
 
 object TileVisualization {
 
