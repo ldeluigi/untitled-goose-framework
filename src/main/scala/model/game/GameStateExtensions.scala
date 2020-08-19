@@ -10,22 +10,23 @@ import scala.reflect.ClassTag
 
 object GameStateExtensions {
 
-  implicit class MatchStateExtensions(state: MutableGameState) {
-
+  implicit class MutableStateExtensions(mutable: MutableGameState) {
     def submitEvent(event: GameEvent): Unit = {
       event match {
-        case event: ConsumableGameEvent => state.consumableEvents = event :: state.consumableEvents
+        case event: ConsumableGameEvent => mutable.consumableEvents = event +: mutable.consumableEvents
         case event: PersistentGameEvent => event match {
-          case event: PlayerEvent with TileEvent => {
+          case event: PlayerEvent with TileEvent =>
             event.player.history = event :: event.player.history
             event.tile.history = event :: event.tile.history
-          }
-          case event: PlayerEvent => event.player.history = event :: event.player.history
-          case event: TileEvent => event.tile.history = event :: event.tile.history
+          case event: PlayerEvent => event.player.history = event +: event.player.history
+          case event: TileEvent => event.tile.history = event +: event.tile.history
           case _ => ???
         }
       }
     }
+  }
+
+  implicit class MatchStateExtensions(state: GameState) {
 
     def getTile(number: Int): Option[Tile] = {
       state.gameBoard.tiles.find(t => t.number.isDefined && t.number.get == number)
@@ -47,6 +48,10 @@ object GameStateExtensions {
 
   implicit class PimpedHistory[H <: GameEvent](history: Seq[H]) {
     type History = Seq[H]
+
+    def remove[T: ClassTag](n: Int = 1): Seq[H] = {
+      history.filterNot(e => history.only[T].take(n).contains(e))
+    }
 
     def filterTurn(turn: Int): History = history.filter(_.turn == turn)
 

@@ -1,9 +1,9 @@
 package model.rules.cleanup
 
 import engine.events.consumable.TurnShouldEndEvent
-import engine.events.persistent.player.GainTurnEvent
-import model.game.GameStateExtensions.PimpedHistory
-import model.game.MutableGameState
+import engine.events.persistent.player.{GainTurnEvent, TurnEndedEvent}
+import model.game.GameStateExtensions._
+import model.game.{GameState, MutableGameState}
 import model.rules.CleanupRule
 
 object TurnEndConsumer extends CleanupRule {
@@ -12,22 +12,22 @@ object TurnEndConsumer extends CleanupRule {
     consumeTurn(state)
 
   private def consumeTurn(state: MutableGameState): Unit = {
-    val eventList = state.consumableEvents
+    val shouldEnd = state.consumableEvents
       .filterTurn(state.currentTurn)
-      .filterNotConsumed()
+      .only[TurnShouldEndEvent].nonEmpty
 
-    if (eventList.exists(_.isInstanceOf[TurnShouldEndEvent])) {
-      eventList.filter(_.isInstanceOf[TurnShouldEndEvent]).consumeAll()
-      state.currentPlayer.history = state.currentPlayer.history :+ TurnEndedEvent(state.currentPlayer, state.currentTurn)
-
-      val playerEvent = state.currentPlayer.history.filter(!_.isConsumed)
-
-      if (playerEvent.exists(_.isInstanceOf[GainTurnEvent])) {
-        eventList.filter(_.isInstanceOf[GainTurnEvent]).head.consume()
-      } else {
+    if (shouldEnd) {
+      state.submitEvent(TurnEndedEvent(state.currentPlayer, state.currentTurn, state.currentCycle))
+      if (shouldPassTurn(state)) {
         state.currentTurn = state.currentTurn + 1
         state.currentPlayer = state.nextPlayer
       }
     }
   }
+
+  private def shouldPassTurn(state: GameState): Boolean =
+    state.currentPlayer.history
+      .filterTurn(state.currentTurn)
+      .only[GainTurnEvent]
+      .isEmpty
 }

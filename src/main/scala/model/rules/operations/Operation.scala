@@ -2,7 +2,7 @@ package model.rules.operations
 
 import engine.events.GameEvent
 import model.entities.DialogContent
-import model.game.{GameState, MutableGameState}
+import model.game.MutableGameState
 
 sealed trait Operation {
   def execute(state: MutableGameState): Unit
@@ -10,7 +10,7 @@ sealed trait Operation {
 
 object Operation {
 
-  import model.game.GameStateExtensions.MatchStateExtensions
+  import model.game.GameStateExtensions.MutableStateExtensions
 
   def trigger(event: GameEvent*): Operation = new Operation {
     override def execute(state: MutableGameState): Unit = event.foreach(state.submitEvent)
@@ -22,12 +22,9 @@ object Operation {
 
   sealed trait SpecialOperation extends Operation
 
-  case class DialogOperation(createDialog: GameState => DialogContent) extends SpecialOperation {
-    var content: DialogContent = _
+  case class DialogOperation(dialogContent: DialogContent) extends SpecialOperation {
 
-    override def execute(state: MutableGameState): Unit = {
-      content = createDialog(state)
-    }
+    override def execute(state: MutableGameState): Unit = {}
   }
 
 }
