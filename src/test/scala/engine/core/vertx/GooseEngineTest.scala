@@ -58,19 +58,6 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     }
   }
 
-  it should "be a correct eventSink" in {
-    val p: Promise[Boolean] = Promise[Boolean]()
-    val ge: GooseEngine = GooseEngine(m, cGenerator(ev => if (e == ev) p.success(true)))
-    //ge.eventSink.accept(NoOpEvent)
-    ge.eventSink.accept(e)
-    try {
-      Await.result(p.future, 5 seconds)
-    } finally {
-      ge.stop()
-    }
-    p.future.value.get.get should be(true)
-  }
-
   it should "currentMatch" in {
     val ge = GooseEngine(m, cGenerator(_ => {}))
     ge.currentMatch should equal(m)
