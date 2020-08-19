@@ -11,7 +11,7 @@ class RollDice[DiceSide](dice: Dice[DiceSide]) extends Action {
   override def name: String = "Roll a " + dice.name + " dice"
 
   override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
-    sink.accept(DiceRollEvent(state.currentPlayer, state.currentTurn, dice.roll))
+    sink.accept(DiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, dice.roll))
   }
 }
 

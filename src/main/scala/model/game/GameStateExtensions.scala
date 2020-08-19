@@ -10,23 +10,7 @@ import scala.reflect.ClassTag
 
 object GameStateExtensions {
 
-  implicit class MutableStateExtensions(mutable: MutableGameState) {
-    def submitEvent(event: GameEvent): Unit = {
-      event match {
-        case event: ConsumableGameEvent => mutable.consumableEvents = event +: mutable.consumableEvents
-        case event: PersistentGameEvent => event match {
-          case event: PlayerEvent with TileEvent =>
-            event.player.history = event +: event.player.history
-            event.tile.history = event +: event.tile.history
-          case event: PlayerEvent => event.player.history = event +: event.player.history
-          case event: TileEvent => event.tile.history = event +: event.tile.history
-          case _ => ???
-        }
-      }
-    }
-  }
-
-  implicit class MatchStateExtensions(state: GameState) {
+  implicit class GameStateExtensions(state: GameState) {
 
     def getTile(number: Int): Option[Tile] = {
       state.gameBoard.tiles.find(t => t.number.isDefined && t.number.get == number)
@@ -46,11 +30,31 @@ object GameStateExtensions {
       .map(_.turn).reduceOption(_ max _)
   }
 
+  implicit class MutableStateExtensions(mutable: MutableGameState) extends GameStateExtensions(mutable) {
+    def submitEvent(event: GameEvent): Unit = {
+      event match {
+        case event: ConsumableGameEvent => mutable.consumableEvents = event +: mutable.consumableEvents
+        case event: PersistentGameEvent => event match {
+          case event: PlayerEvent with TileEvent =>
+            event.player.history = event +: event.player.history
+            event.tile.history = event +: event.tile.history
+          case event: PlayerEvent => event.player.history = event +: event.player.history
+          case event: TileEvent => event.tile.history = event +: event.tile.history
+          case _ => ???
+        }
+      }
+    }
+  }
+
   implicit class PimpedHistory[H <: GameEvent](history: Seq[H]) {
     type History = Seq[H]
 
     def remove[T: ClassTag](n: Int = 1): Seq[H] = {
       history.filterNot(e => history.only[T].take(n).contains(e))
+    }
+
+    def removeAll[T: ClassTag](): Seq[H] = {
+      history.filterNot(e => history.only[T].contains(e))
     }
 
     def filterTurn(turn: Int): History = history.filter(_.turn == turn)

@@ -2,23 +2,24 @@ package main
 
 import java.awt.{Dimension, Toolkit}
 
+import engine.events.GameEvent
 import engine.events.consumable._
-import engine.events.persistent.player.{LoseTurnEvent, TurnEndedEvent}
-import engine.events.persistent.{player, tile}
-import engine.events.{GameEvent, consumable}
+import engine.events.persistent.player.{GainTurnEvent, LoseTurnEvent, TurnEndedEvent, VictoryEvent}
+import engine.events.persistent.tile.TileActivatedEvent
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board._
 import model.entities.{DialogContent, Dice}
-import model.game.{Game, GameState}
+import model.game.Game
 import model.rules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.actionrules.LoseTurnActionRule
 import model.rules.behaviours._
 import model.rules.operations.Operation
+import model.rules.operations.Operation.DialogOperation
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
-import model.{Color, Player, Tile}
+import model.{Color, Player}
 import scalafx.application.JFXApp
 import view.ApplicationController
 
@@ -68,307 +69,206 @@ object GooseGameNoDSL extends JFXApp {
   // If your dice roll is more than you need then you move in to square 63 and then bounce back out again,
   // each spot on the dice is still one square in this move.
   // If you land on any of the special squares while you are doing this then you must follow the normal instructions.
-  val bounceBackOnLastTile: BehaviourRule = (state: GameState) =>
-    state.getTile(theEnd).get.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[TileEnteredEvent])
-      .map(_.asInstanceOf[TileEnteredEvent])
-      .map(e => {
-        e.consume()
-        e
-      })
-      .map(_ => Seq(Operation.trigger(s => Some(InvertMovementEvent(s.currentPlayer, s.currentTurn)))))
-      .getOrElse(Seq())
+  val bounceBackOnLastTile: BehaviourRule = BehaviourRule[TileEnteredEvent](
+    filterStrategy = _.tile.name.contains(theEnd),
+    operations = (events, state) => {
+      events.map(e => Operation.trigger(InvertMovementEvent(e.player, state.currentTurn, state.currentCycle)))
+    })
 
   //When you land on square 63 exactly you are the winner!
-
-  val stopOnTheEnd: BehaviourRule = (state: GameState) => {
-    val stopped = state.currentPlayer.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[StopOnTileEvent])
-      .map(_.asInstanceOf[StopOnTileEvent])
-      .find(_.tile.equals(state.getTile(theEnd).get))
-      .map(e => {
-        e.consume()
-        e
-      })
-    if (stopped.isDefined) {
-      Seq(
-        Operation.trigger(s => Some(VictoryEvent(s.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
-      )
-    } else Seq()
-  }
+  val stopOnTheEnd: BehaviourRule = BehaviourRule[StopOnTileEvent](
+    filterStrategy = _.tile.name.contains(theEnd),
+    operations = (events, state) => {
+      events.flatMap(e => Seq(
+        Operation.trigger(VictoryEvent(e.player, state.currentTurn, state.currentCycle),
+          TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle))
+      ))
+    })
 
   //To Play:
 
   //If you throw a 3 on your first turn you can move straight to square 26.
-  val teleportTo26OnFirstTurn: BehaviourRule = (state: GameState) => {
-    if (state.getTile(26).isDefined &&
-      !state.currentPlayer.history.exists(_.isInstanceOf[TurnEndedEvent])) { //is first turn
-      val teleportTo: Tile = state.getTile(26).get
-      state.currentPlayer.history
-        .filterTurn(state.currentTurn)
-        .filterNotConsumed()
-        .find(_.isInstanceOf[MovementDiceRollEvent])
-        .map(_.asInstanceOf[MovementDiceRollEvent])
-        .filter(_.res.contains(3))
-        .map(e => {
-          e.consume()
-          e
-        })
-        .map(_ => Seq(
-          SpecialOperation.DialogOperation(s => new DialogContent {
+  val teleportTo26OnFirstTurn: BehaviourRule = BehaviourRule[MovementDiceRollEvent](
+    filterStrategy = _.res.contains(3),
+    operations = (_, state) => {
+      if (!state.currentPlayer.history.exists(_.isInstanceOf[TurnEndedEvent])) {
+        Seq(
+          DialogOperation(new DialogContent {
             override def title: String = "Special first throw!"
 
             override def text: String = "You roll a 3 on your first turn, go to tile 26"
 
             override def options: Map[String, GameEvent] = Map()
           }),
-          Operation.trigger(s => Some(TeleportEvent(teleportTo, state.currentPlayer, state.currentTurn))))
+          Operation.trigger(TeleportEvent(state.getTile(26).get, state.currentPlayer, state.currentTurn, state.currentCycle))
         )
-        .getOrElse(Seq())
+      } else Seq()
     }
-    else Seq()
-  }
+  )
 
-  //If your counter lands on a Goose square you can move again without throwing the dice.
-  // You move the number of spots of your original throw.
-  // For example throw a 4, land on a Goose, move four squares forward again.
+  //If your counter lands on a Goose square you can throw your dice again.
 
-  val stopOnGooseTile: BehaviourRule = (state: GameState) => {
-    val stoppedOnGoose = state.currentPlayer.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[StopOnTileEvent])
-      .map(_.asInstanceOf[StopOnTileEvent])
-      .find(_.tile.belongsTo(gooseTileGroup))
-      .map(e => {
-        e.consume()
-        e
-      })
+  val stopOnGooseTile: BehaviourRule = BehaviourRule[StopOnTileEvent](
+    filterStrategy = _.tile.belongsTo(gooseTileGroup),
+    operations = (events, state) => {
+      events.flatMap(e => Seq(
+        Operation.trigger(GainTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
+        ),
+        DialogOperation(new DialogContent {
+          override def title: String = "Landed on a goose"
 
-    if (stoppedOnGoose.isDefined) {
-      state.currentPlayer.history
-        .filterTurn(state.currentTurn)
-        .find(_.isInstanceOf[StepMovementEvent])
-        .map(_.asInstanceOf[StepMovementEvent])
-        .map(_ => Operation.trigger(s => Some(GainTurnEvent(state.currentPlayer, s.currentTurn))))
-        .map(Seq(
-          _,
-          SpecialOperation.DialogOperation(s => new DialogContent {
-            override def title: String = "Landed on a goose"
+          override def text: String = "You can roll your dices again"
 
-            override def text: String = "You can roll your dices again"
-
-            override def options: Map[String, GameEvent] = Map()
-          }),
-          Operation.trigger(s => Some(TileActivatedEvent(stoppedOnGoose.get.tile, s.currentTurn)))))
-        .getOrElse(Seq())
+          override def options: Map[String, GameEvent] = Map()
+        })
+      ))
     }
-    else Seq()
-  }
+  )
 
   //If you land on the Bridge, square 6, miss a turn while you pay the toll.
-  val stopOnBridge: BehaviourRule = (state: GameState) => {
-    val stopped = state.currentPlayer.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[StopOnTileEvent])
-      .map(_.asInstanceOf[StopOnTileEvent])
-      .find(_.tile.equals(state.getTile(theBridge).get))
-      .map(e => {
-        e.consume()
-        e
-      })
-    if (stopped.isDefined) {
-      Seq(
-        SpecialOperation.DialogOperation(s => new DialogContent {
+  val stopOnBridge: BehaviourRule = BehaviourRule[StopOnTileEvent](
+    filterStrategy = _.tile.name.contains(theBridge),
+    operations = (events, state) => {
+      events.flatMap(e => Seq(
+        DialogOperation(new DialogContent {
           override def title: String = "The Bridge"
 
           override def text: String = "You landed on the Bridge. Miss a turn while you pay the toll"
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.trigger(s => Some(player.LoseTurnEvent(state.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
-      )
-    } else Seq()
-  }
+        Operation.trigger(LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle))
+      ))
+    }
+  )
+
 
   //If you land on the Inn, square 19, miss a turn while you stop for some tasty dinner.
-  val stopOnTheInn: BehaviourRule = (state: GameState) => {
-    val stopped = state.currentPlayer.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[StopOnTileEvent])
-      .map(_.asInstanceOf[StopOnTileEvent])
-      .find(_.tile.equals(state.getTile(theInn).get))
-      .map(e => {
-        e.consume()
-        e
-      })
-    if (stopped.isDefined) {
-      Seq(
-        SpecialOperation.DialogOperation(s => new DialogContent {
+  val stopOnTheInn: BehaviourRule = BehaviourRule[StopOnTileEvent](
+    filterStrategy = _.tile.name.contains(theInn),
+    operations = (events, state) => {
+      events.flatMap(e => Seq(
+        DialogOperation(new DialogContent {
           override def title: String = "The Inn"
 
           override def text: String = "You landed on the Inn. Miss a turn while you stop for some tasty dinner"
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.trigger(s => Some(LoseTurnEvent(state.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
-      )
-    } else Seq()
-  }
+        Operation.trigger(LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle))
+      ))
+    }
+  )
 
   //If you you land on the Well, square 31, make a wish and miss three turns.
   //If another player passes you before your three turns are up you can start moving again on your next go.
-  val stopOnTheWell: BehaviourRule = (state: GameState) => {
-    val stopped = state.currentPlayer.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[StopOnTileEvent])
-      .map(_.asInstanceOf[StopOnTileEvent])
-      .find(_.tile.equals(state.getTile(theWell).get))
-      .map(e => {
-        e.consume()
-        e
-      })
-
-
-    if (stopped.isDefined) {
-      Seq.fill(3)(Operation.trigger(s => Some(player.LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
-        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+
-        SpecialOperation.DialogOperation(s => new DialogContent {
+  val stopOnTheWell: BehaviourRule = BehaviourRule[StopOnTileEvent](
+    filterStrategy = _.tile.name.contains(theWell),
+    operations = (events, state) => {
+      events.flatMap(e => Seq(
+        Operation.trigger(
+          LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
+        ),
+        DialogOperation(new DialogContent {
           override def title: String = "The Well"
 
-          override def text: String = "You landed on the Well! Miss 3 turns and make a wish... if another player passes you before the three turns are up you can start moving again"
+          override def text: String = "You landed on the Well! Miss 3 turns and make a wish... " +
+            "\nIf another player passes you before the three turns are up you can start moving again"
 
           override def options: Map[String, GameEvent] = Map()
         })
-    } else Seq()
-  }
-
-  val passedOnTheWell: BehaviourRule = (state: GameState) => {
-    val passedEvent: Option[PlayerPassedEvent] =
-      state.getTile(theWell).get.history
-        .filterTurn(state.currentTurn)
-        .filterNotConsumed()
-        .find(_.isInstanceOf[PlayerPassedEvent])
-        .map(_.asInstanceOf[PlayerPassedEvent])
-
-    if (passedEvent.isDefined) {
-      passedEvent.get.consume()
-      Seq(Operation.updateState(s =>
-        passedEvent.get.playerPassed.history =
-          passedEvent.get.playerPassed.history.filter(e => !e.isConsumed && e.isInstanceOf[LoseTurnEvent])
       ))
-    } else Seq()
-  }
+    }
+  )
+
+  val passedOnTheWell: BehaviourRule = BehaviourRule[PlayerPassedEvent](
+    filterStrategy = _.tile.name.contains(theWell),
+    operations = (events, _) => {
+      events.map(e => Operation.updateState(_ => {
+        e.player.history.removeAll[LoseTurnEvent]()
+      }))
+    }
+  )
 
   //If you land on the Prison, square 52, you will have to miss three turns while you are behind bars.
   // If another player passes you before your three turns are up you can start moving again on your next go.
 
-  val stopOnPrison: BehaviourRule = (state: GameState) => {
-    val stopped = state.currentPlayer.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[StopOnTileEvent])
-      .map(_.asInstanceOf[StopOnTileEvent])
-      .find(_.tile.equals(state.getTile(thePrison).get))
-      .map(e => {
-        e.consume()
-        e
-      })
-    if (stopped.isDefined) {
-      Seq.fill(3)(Operation.trigger(s => Some(player.LoseTurnEvent(state.currentPlayer, s.currentTurn)))) :+
-        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn))) :+
-        SpecialOperation.DialogOperation(s => new DialogContent {
+  val stopOnPrison: BehaviourRule = BehaviourRule[StopOnTileEvent](
+    filterStrategy = _.tile.name.contains(thePrison),
+    operations = (events, state) => {
+      events.flatMap(e => Seq(
+        Operation.trigger(
+          LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
+          TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
+        ),
+        DialogOperation(new DialogContent {
           override def title: String = "The Prison"
 
-          override def text: String = "You landed on the Prison! Miss 3 turns while you are behind bars"
+          override def text: String = "You landed on the Prison! Miss 3 turns while you are behind bars" +
+            "\nIf another player passes you before the three turns are up you can start moving again"
 
           override def options: Map[String, GameEvent] = Map()
         })
-    } else Seq()
-  }
-
-  val passedOnPrison: BehaviourRule = (state: GameState) => {
-    val passedEvent: Option[PlayerPassedEvent] =
-      state.getTile(thePrison).get.history
-        .filterTurn(state.currentTurn)
-        .filterNotConsumed()
-        .find(_.isInstanceOf[PlayerPassedEvent])
-        .map(_.asInstanceOf[PlayerPassedEvent])
-
-    if (passedEvent.isDefined) {
-      passedEvent.get.consume()
-      Seq(Operation.updateState(s =>
-        passedEvent.get.playerPassed.history =
-          passedEvent.get.playerPassed.history.filter(e => !e.isConsumed && e.isInstanceOf[LoseTurnEvent])
       ))
-    } else Seq()
-  }
+    }
+  )
+
+  val passedOnPrison: BehaviourRule = BehaviourRule[PlayerPassedEvent](
+    filterStrategy = _.tile.name.contains(thePrison),
+    operations = (events, _) => {
+      events.map(e => Operation.updateState(_ => {
+        e.player.history.removeAll[LoseTurnEvent]()
+      }))
+    }
+  )
 
   //If you land on the Labyrinth, square 42, you will get lost in the maze and have to move back to square 37.
-  val stopOnLabyrinth: BehaviourRule = (state: GameState) => {
-    val stopped = state.currentPlayer.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[StopOnTileEvent])
-      .map(_.asInstanceOf[StopOnTileEvent])
-      .find(_.tile.equals(state.getTile(theLabyrinth).get))
-      .map(e => {
-        e.consume()
-        e
-      })
-
-    if (stopped.isDefined) {
-      Seq(
-        SpecialOperation.DialogOperation(s => new DialogContent {
+  val stopOnLabyrinth: BehaviourRule = BehaviourRule[StopOnTileEvent](
+    filterStrategy = _.tile.name.contains(theLabyrinth),
+    operations = (events, state) => {
+      events.flatMap(e => Seq(
+        DialogOperation(new DialogContent {
           override def title: String = "The Labyrinth"
 
           override def text: String = "You enter the labyrinth but you get lost. You exit on tile 37"
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.updateState(s => Some(consumable.TeleportEvent(s.getTile(37).get, s.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
-      )
-    } else Seq()
-  }
+        Operation.trigger(
+          TeleportEvent(state.getTile(37).get, e.player, state.currentTurn, state.currentCycle),
+          TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
+        )
+      ))
+    }
+  )
 
   //If you land on Death, square 58, you have to go back to square 1 and start all over again!
-  val stopOnDeath: BehaviourRule = (state: GameState) => {
-    val stopped = state.currentPlayer.history
-      .filterTurn(state.currentTurn)
-      .filterNotConsumed()
-      .find(_.isInstanceOf[StopOnTileEvent])
-      .map(_.asInstanceOf[StopOnTileEvent])
-      .find(_.tile.equals(state.getTile(theDeath).get))
-      .map(e => {
-        e.consume()
-        e
-      })
-    if (stopped.isDefined) {
-      Seq(
-        SpecialOperation.DialogOperation(_ => new DialogContent {
+  val stopOnDeath: BehaviourRule = BehaviourRule[StopOnTileEvent](
+    filterStrategy = _.tile.name.contains(theDeath),
+    operations = (events, state) => {
+      events.flatMap(e => Seq(
+        DialogOperation(new DialogContent {
           override def title: String = "The Death"
 
           override def text: String = "You died. Go back to the beginning and try again to reach the end!"
 
           override def options: Map[String, GameEvent] = Map()
         }),
-        Operation.trigger(s => Some(consumable.TeleportEvent(s.getTile(1).get, s.currentPlayer, s.currentTurn))),
-        Operation.trigger(s => Some(tile.TileActivatedEvent(stopped.get.tile, s.currentTurn)))
-      )
-    } else Seq()
-  }
-
+        Operation.trigger(
+          TeleportEvent(state.getTile(1).get, e.player, state.currentTurn, state.currentCycle),
+          TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
+        )
+      ))
+    }
+  )
   //Players may not share squares, so if your dice roll would land you on an occupied square
   // you will have to stay where you are until it is your turn again.
   //TODO ?????
