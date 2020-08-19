@@ -19,14 +19,4 @@ class LoseTurnActionRuleTest extends AnyFlatSpec with Matchers {
     loseTurnActionRule.allowedActions(MatchMock.default.currentState).isEmpty should be(true)
   }
 
-  it should "deny actions with lose turn event" in {
-    val matchMock = MatchMock.default
-    matchMock.submitEvent(player.LoseTurnEvent(matchMock.currentState.players.head, matchMock.currentState.currentTurn))
-    loseTurnActionRule.allowedActions(MatchMock.default.currentState).exists {
-      case ActionAvailability(false, _, action) if action.isInstanceOf[StepForwardAction] => true
-      case _ => false
-    }
-
-  }
-
 }

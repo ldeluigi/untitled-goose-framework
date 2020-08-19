@@ -30,29 +30,6 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
     gameMatch.currentState should not be null
   }
 
-  it should "submit general events to the stateHistory" in {
-    val gameEvent = TurnShouldEndEvent(gameMatch.currentState.currentTurn)
-    gameMatch.submitEvent(gameEvent)
-
-    gameMatch.currentState.consumableEvents should contain(gameEvent)
-  }
-
-  it should "submit events to players" in {
-    val state = gameMatch.currentState
-    val playerEvent = DiceRollEvent(state.currentPlayer, 1, state.currentTurn)
-    gameMatch.submitEvent(playerEvent)
-
-    state.currentPlayer.history should contain(playerEvent)
-  }
-
-  it should "submit events to tiles" in {
-    val state = gameMatch.currentState
-    val tileEvent = TileEnteredEvent(state.currentPlayer, state.gameBoard.first, state.currentTurn)
-    gameMatch.submitEvent(tileEvent)
-
-    state.gameBoard.first.history should contain(tileEvent)
-  }
-
   "A matchState" should "have a current player" in {
     val state = gameMatch.currentState
 

@@ -36,11 +36,9 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
     override def turn: Int = -1
 
-    override def isConsumed: Boolean = false
-
-    override def consume(): Unit = {}
-
     override def groups: Set[String] = Set()
+
+    override def cycle: Int = 1
   }
 
   it should "stop" in {
