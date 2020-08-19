@@ -10,5 +10,5 @@ class DiceRollEvent[DiceSide](val player: Player, val turn: Int, val cycle: Int,
 }
 
 object DiceRollEvent {
-  def apply[DiceSide](source: Player, currentTurn: Int, result: DiceSide*): DiceRollEvent[DiceSide] = new DiceRollEvent(source, currentTurn, result: _*)
+  def apply[DiceSide](source: Player, currentTurn: Int, cycle: Int, result: DiceSide*): DiceRollEvent[DiceSide] = new DiceRollEvent(source, currentTurn, cycle, result: _*)
 }

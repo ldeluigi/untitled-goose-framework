@@ -4,6 +4,8 @@ import engine.events.GameEvent
 import model.game.GameState
 import model.rules.operations.Operation
 
+import scala.reflect.ClassTag
+
 sealed trait BehaviourRule {
   def applyRule(state: GameState): Seq[Operation]
 }
@@ -18,7 +20,7 @@ object BehaviourRule {
     filterStrategy: GameEvent => Boolean = _ => true,
     countStrategy: Int => Boolean = _ > 0,
     operationsStrategy: (Seq[T], GameState) => Seq[Operation]
-  )
+  )(implicit t: ClassTag[T])
     extends BehaviourRule {
     override def applyRule(state: GameState): Seq[Operation] = {
       val events = state.consumableEvents
@@ -34,7 +36,7 @@ object BehaviourRule {
   def apply(eventName: String, countStrategy: Int => Boolean = _ > 0, operations: (Seq[GameEvent], GameState) => Seq[Operation]): BehaviourRule =
     new BehaviourRuleImpl(_.name == eventName, countStrategy, operations)
 
-  def apply[T <: GameEvent](countStrategy: Int => Boolean = _ > 0, operations: (Seq[T], GameState) => Seq[Operation]): BehaviourRule =
+  def apply[T <: GameEvent](countStrategy: Int => Boolean = _ > 0, operations: (Seq[T], GameState) => Seq[Operation])(implicit t: ClassTag[T]): BehaviourRule =
     new BehaviourRuleImpl(_ => true, countStrategy, operations)
 
 }

@@ -22,7 +22,7 @@ object Operation {
 
   sealed trait SpecialOperation extends Operation
 
-  case class DialogOperation(dialogContent: DialogContent) extends SpecialOperation {
+  case class DialogOperation(content: DialogContent) extends SpecialOperation {
 
     override def execute(state: MutableGameState): Unit = {}
   }

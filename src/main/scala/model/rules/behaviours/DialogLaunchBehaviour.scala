@@ -5,5 +5,5 @@ import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.Operation.DialogOperation
 
 private[rules] case class DialogLaunchBehaviour() extends BehaviourRuleImpl[DialogLaunchEvent](
-  operationsStrategy = (events, state) => events.map(e => DialogOperation(e.createDialog(state)))
+  operationsStrategy = (events, _) => events.map(e => DialogOperation(e.content))
 )

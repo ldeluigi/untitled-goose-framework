@@ -3,6 +3,7 @@ package main
 import java.awt.{Dimension, Toolkit}
 
 import engine.core.EventSink
+import engine.events.consumable.{DialogLaunchEvent, StepMovementEvent}
 import engine.events.{GameEvent, NoOpEvent}
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
@@ -29,10 +30,11 @@ object Main extends JFXApp {
     override def name: String = "Launch Dialog!"
 
     override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
-      sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent(
+      sink.accept(DialogLaunchEvent(state.currentTurn, state.currentCycle, DialogContent(
         "Movement Bonus",
         "Make 10 step?",
-        "Yes" -> StepMovementEvent(10, s.currentPlayer, s.currentTurn),
+        answers =
+          "Yes" -> StepMovementEvent(10, state.currentPlayer, state.currentTurn, state.currentCycle),
         "No" -> NoOpEvent
       )))
     }

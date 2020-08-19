@@ -4,18 +4,17 @@ import engine.events.TileEvent
 import model.entities.board.TileDefinition
 
 trait Tile extends TileDefinition {
-  def history: List[TileEvent]
+  def history: Seq[TileEvent]
 
-  def history_=(history: List[TileEvent]): Unit
+  def history_=(history: Seq[TileEvent]): Unit
 
-  // TODO controllare se inserire un metodo per modificare la history aggiungendo eventi
 }
 
 object Tile {
 
   private class TileImpl(tile: TileDefinition) extends Tile {
 
-    var history: List[TileEvent] = List()
+    var history: Seq[TileEvent] = List()
 
     override def number: Option[Int] = tile.number
 

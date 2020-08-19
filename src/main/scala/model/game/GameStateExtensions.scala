@@ -16,8 +16,8 @@ object GameStateExtensions {
         case event: ConsumableGameEvent => mutable.consumableEvents = event +: mutable.consumableEvents
         case event: PersistentGameEvent => event match {
           case event: PlayerEvent with TileEvent =>
-            event.player.history = event :: event.player.history
-            event.tile.history = event :: event.tile.history
+            event.player.history = event +: event.player.history
+            event.tile.history = event +: event.tile.history
           case event: PlayerEvent => event.player.history = event +: event.player.history
           case event: TileEvent => event.tile.history = event +: event.tile.history
           case _ => ???
