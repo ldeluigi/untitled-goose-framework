@@ -6,7 +6,7 @@ trait TileEvent extends GameEvent {
 
   def tile: Tile
 
-  override def toString: String = super.toString + " Source: " + tile.toString
+  override def toString: String = super.toString + " " + tile.toString
 }
 
 object TileEvent {

@@ -45,7 +45,7 @@ object GooseEngine {
     }
 
     def executeOperation(): Unit = {
-      if (!stopped && stack.nonEmpty) {
+      if (!stopped) {
         val op = stack.head
         stack = stack.tail
         op.execute(gameMatch.currentState)
@@ -67,8 +67,10 @@ object GooseEngine {
           case _ => Unit
         }
         controller.update(gameMatch.currentState)
-        stack = gameMatch.stateBasedOperations ++ stack
-        executeOperation()
+        if (stack.nonEmpty) {
+          stack = gameMatch.stateBasedOperations ++ stack
+          executeOperation()
+        }
       }
     }
 

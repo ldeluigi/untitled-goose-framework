@@ -30,15 +30,20 @@ object GameStateExtensions {
 
   implicit class MutableStateExtensions(mutable: MutableGameState) extends GameStateExtensions(mutable) {
 
-    def submitEvent(event: GameEvent): Unit =
+    def submitEvent(event: GameEvent): Unit = {
+      println(event)
       event match {
         case NoOpEvent | ExitEvent => Unit
         case event: ConsumableGameEvent => mutable.consumableEvents = event +: mutable.consumableEvents
         case event: PersistentGameEvent => caseMatch(event)
+        case event => mutable.gameHistory = event +: mutable.gameHistory
       }
+    }
 
-    def saveEvent(event: ConsumableGameEvent): Unit =
+    def saveEvent(event: ConsumableGameEvent): Unit = {
+      mutable.gameHistory = event +: mutable.gameHistory
       caseMatch(event)
+    }
 
     private def caseMatch(event: GameEvent): Unit =
       event match {
@@ -47,7 +52,6 @@ object GameStateExtensions {
           event.tile.history = event +: event.tile.history
         case event: PlayerEvent => event.player.history = event +: event.player.history
         case event: TileEvent => event.tile.history = event +: event.tile.history
-        case event: GameEvent => mutable.gameHistory = event +: mutable.gameHistory
       }
 
   }
@@ -60,8 +64,10 @@ object GameStateExtensions {
     def remove[T: ClassTag](n: Int = 1): History =
       history.filterNot(e => history.only[T].take(n).contains(e))
 
-    def removeAll[T: ClassTag](): History =
+    def removeAll[T: ClassTag](): History = {
+      println(history.filterNot(e => history.only[T].contains(e)))
       history.filterNot(e => history.only[T].contains(e))
+    }
 
     def filterTurn(turn: Int): History = history.filter(_.turn == turn)
 

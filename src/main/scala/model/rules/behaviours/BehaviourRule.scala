@@ -25,8 +25,6 @@ object BehaviourRule {
   )(implicit t: ClassTag[T])
     extends BehaviourRule {
 
-    protected def extraOperations(events: Seq[T]): Seq[Operation] = Seq()
-
     final override def applyRule(state: GameState): Seq[Operation] = {
       val events = state.consumableEvents
         .filterCycle(state.currentCycle)

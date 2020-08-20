@@ -6,7 +6,7 @@ trait PlayerEvent extends GameEvent {
 
   def player: Player
 
-  override def toString: String = super.toString + " Source: " + player.toString
+  override def toString: String = super.toString + " " + player.toString
 }
 
 object PlayerEvent {
