@@ -31,7 +31,8 @@ object StepOperation {
       .only[InvertMovementEvent]
       .count(_.player == player) % 2 != 0
 
-    val stepTile: Option[Tile] = state.playerPieces(player).position match {
+
+    val stepFunction: Option[Position] => Option[Tile] = {
       case Some(pos) => if (forward) {
         if (!inverted) {
           state.gameBoard
@@ -52,19 +53,21 @@ object StepOperation {
       case None => Some(state.gameBoard.first) //TODO Check this
     }
 
+
     opSeq = opSeq :+ Operation.updateState(state => {
-      state.updatePlayerPiece(player, piece => Piece(piece, stepTile.map(Position(_))))
+      state.updatePlayerPiece(player, piece => Piece(piece, stepFunction(state.playerPieces(player).position).map(Position(_))))
     })
 
-    if (stepTile.isDefined) {
-      opSeq = opSeq :+ Operation.trigger(TileEnteredEvent(player, stepTile.get, state.currentTurn, state.currentCycle))
-    }
 
-    if (remainingSteps == 0) {
-      opSeq :+ Operation.trigger(StopOnTileEvent(player, stepTile.get, state.currentTurn, state.currentCycle))
-    } else {
-      opSeq
-    }
+    opSeq = opSeq :+ Operation.triggerWhen(
+      s => s.playerPieces(player).position.isDefined,
+      s => Seq(TileEnteredEvent(player, s.playerPieces(player).position.get.tile, state.currentTurn, state.currentCycle))
+    )
+
+    opSeq :+ Operation.triggerWhen(
+      s => s.playerPieces(player).position.isDefined && remainingSteps == 0,
+      s => Seq(StopOnTileEvent(player, s.playerPieces(player).position.get.tile, state.currentTurn, state.currentCycle))
+    )
   }
 
   private def checkAndTriggerPassedPlayers(state: GameState, player: Player): Seq[Operation] = {
