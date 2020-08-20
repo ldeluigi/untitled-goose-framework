@@ -8,7 +8,7 @@ import model.{Player, Tile}
 
 trait RuleSet {
 
-  def stateBasedOperations(state: GameState): Seq[Operation]
+  def stateBasedOperations(state: MutableGameState): Seq[Operation]
 
   def cleanupOperations(state: MutableGameState): Unit
 

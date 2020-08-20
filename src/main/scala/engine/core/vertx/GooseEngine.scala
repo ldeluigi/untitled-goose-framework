@@ -46,7 +46,7 @@ object GooseEngine {
 
     def executeOperation(): Unit = {
       if (!stopped) {
-        val op = stack.head
+        val op: Operation = stack.head
         stack = stack.tail
         op.execute(gameMatch.currentState)
         op match {
