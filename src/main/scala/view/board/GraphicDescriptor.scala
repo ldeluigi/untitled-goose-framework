@@ -36,4 +36,6 @@ object GraphicDescriptor {
 
   def apply(path: String): GraphicDescriptor = new GraphicDescriptorImpl(None, Some(path))
 
+  def apply(specifiedColor: Color, path: String): GraphicDescriptor = new GraphicDescriptorImpl(Some(specifiedColor), Some(path))
+
 }
