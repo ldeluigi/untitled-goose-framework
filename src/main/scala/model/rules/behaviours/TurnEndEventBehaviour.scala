@@ -6,5 +6,6 @@ import model.rules.operations.Operation
 
 private[rules] case class TurnEndEventBehaviour() extends BehaviourRuleImpl[TurnShouldEndEvent](
   countStrategy = _ == 0,
-  operationsStrategy = (_, state) => Seq(Operation.trigger(TurnShouldEndEvent(state.currentTurn, state.currentCycle)))
+  operationsStrategy = (_, state) => Seq(Operation.trigger(TurnShouldEndEvent(state.currentTurn, state.currentCycle))),
+  consume = false
 )

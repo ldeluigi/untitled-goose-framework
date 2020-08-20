@@ -2,10 +2,10 @@ package main
 
 import java.awt.{Dimension, Toolkit}
 
-import engine.events.GameEvent
 import engine.events.consumable._
-import engine.events.persistent.player.{GainTurnEvent, LoseTurnEvent, TurnEndedEvent, VictoryEvent}
+import engine.events.persistent.player.{GainTurnEvent, LoseTurnEvent, TurnEndedEvent}
 import engine.events.persistent.tile.TileActivatedEvent
+import engine.events.{GameEvent, consumable}
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
@@ -80,7 +80,7 @@ object GooseGameNoDSL extends JFXApp {
     filterStrategy = _.tile.name.contains(theEnd),
     operations = (events, state) => {
       events.flatMap(e => Seq(
-        Operation.trigger(VictoryEvent(e.player, state.currentTurn, state.currentCycle),
+        Operation.trigger(consumable.VictoryEvent(e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle))
       ))
     })
