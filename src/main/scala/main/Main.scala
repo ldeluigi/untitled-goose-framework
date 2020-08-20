@@ -6,9 +6,8 @@ import engine.core.EventSink
 import engine.events.root.{GameEvent, NoOpEvent}
 import engine.events.{DialogLaunchEvent, StepMovementEvent}
 import javafx.scene.input.KeyCode
-import scalafx.scene.paint.Color
 import model.TileIdentifier
-import model.TileIdentifier.{Group}
+import model.TileIdentifier.Group
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Position}
@@ -19,6 +18,8 @@ import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.rules.{ActionRule, BehaviourRule}
 import scalafx.application.JFXApp
+import scalafx.scene.paint.Color
+import view.TileIdentifierImplicit._
 import view.board.GraphicDescriptor
 import view.playerselection.PlayerSelection
 
@@ -55,14 +56,14 @@ object Main extends JFXApp {
   )
   val ruleSet: RuleSet = priorityRuleSet
 
-  val oca : BufferedSource = Source.fromResource("oca.jpg")
+  val pathToOca = "/res/oca.png"
+  val oca: BufferedSource = Source.fromResource("/res/oca.png")
   println("Prova visualizza path oca!!! --> " + oca)
 
-  import view.TileIdentifierImplicit._
-  val tupla: (TileIdentifier, GraphicDescriptor) = "oca" -> GraphicDescriptor("oca.jpg")
+  val tupla: (TileIdentifier, GraphicDescriptor) = "oca" -> GraphicDescriptor("/res/oca.png")
 
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
-    "oca" -> GraphicDescriptor("oca.jpg"),
+    "oca" -> GraphicDescriptor("oca.png"),
     15 -> GraphicDescriptor("pozzo.jpg"),
     Group("verde") -> GraphicDescriptor(Color.Green)
   )

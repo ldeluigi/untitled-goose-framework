@@ -1,6 +1,6 @@
 package model
 
-import model.TileIdentifier.{Group}
+import model.TileIdentifier.Group
 
 trait TileIdentifier {
 
@@ -14,7 +14,9 @@ trait TileIdentifier {
 
 object TileIdentifier {
 
-  case class Group(val group: String){
+  case class Group(group: String) {
+
+    def apply(group: String): Group = new Group(group)
   }
 
   private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Option[Group]) extends TileIdentifier {
@@ -28,18 +30,27 @@ object TileIdentifier {
     override def equals(obj: Any): Boolean = {
       obj match {
         case obj: TileIdentifier =>
-          (this.name == obj.name || this.number == obj.number || this.groups == obj.groups)
+          this.name == obj.name || this.number == obj.number || this.groups == obj.groups
       }
     }
   }
 
-
-
+  // Only one parameter given
   def apply(number: Int): TileIdentifier = new TileIdentifierImpl(Some(number), None, None)
 
   def apply(name: String): TileIdentifier = new TileIdentifierImpl(None, Some(name), None)
 
   def apply(groups: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(groups))
+
+  // Combinations of two parameters given
+  def apply(number: Int, name: String): TileIdentifier = new TileIdentifierImpl(Some(number), Some(name), None)
+
+  def apply(number: Int, groups: Group): TileIdentifier = new TileIdentifierImpl(Some(number), None, Some(groups))
+
+  def apply(name: String, groups: Group): TileIdentifier = new TileIdentifierImpl(None, Some(name), Some(groups))
+
+  // All three parameters given
+  def apply(number: Int, name: String, groups: Group): TileIdentifier = new TileIdentifierImpl(Some(number), Some(name), Some(groups))
 }
 
 
