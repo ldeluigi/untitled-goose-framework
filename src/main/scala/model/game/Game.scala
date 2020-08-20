@@ -39,9 +39,9 @@ object Game {
 
     override def cleanup: Operation = {
       Operation.updateState(state => {
+        rules.cleanupOperations(state)
         currentState.consumableEvents = List()
         this.currentState.currentCycle = this.currentState.currentCycle + 1
-        rules.cleanupOperations(state)
       })
 
     }
