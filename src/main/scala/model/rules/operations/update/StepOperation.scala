@@ -32,30 +32,36 @@ object StepOperation {
       .count(_.player == player) % 2 != 0
 
 
-    val stepFunction: Option[Position] => Option[Tile] = {
-      case Some(pos) => if (forward) {
-        if (!inverted) {
-          state.gameBoard
-            .next(pos.tile)
+    val stepFunction: (Option[Position], GameState) => Option[Tile] = (p, state) => {
+      val inverted = state.consumableEvents
+        .filterCycle(state.currentCycle)
+        .only[InvertMovementEvent]
+        .count(_.player == player) % 2 != 0
+      p match {
+        case Some(pos) => if (forward) {
+          if (!inverted) {
+            state.gameBoard
+              .next(pos.tile)
+          } else {
+            state.gameBoard
+              .prev(pos.tile)
+          }
         } else {
-          state.gameBoard
-            .prev(pos.tile)
+          if (inverted) {
+            state.gameBoard
+              .next(pos.tile)
+          } else {
+            state.gameBoard
+              .prev(pos.tile)
+          }
         }
-      } else {
-        if (inverted) {
-          state.gameBoard
-            .next(pos.tile)
-        } else {
-          state.gameBoard
-            .prev(pos.tile)
-        }
+        case None => Some(state.gameBoard.first) //TODO Check this
       }
-      case None => Some(state.gameBoard.first) //TODO Check this
     }
 
 
     opSeq = opSeq :+ Operation.updateState(state => {
-      state.updatePlayerPiece(player, piece => Piece(piece, stepFunction(state.playerPieces(player).position).map(Position(_))))
+      state.updatePlayerPiece(player, piece => Piece(piece, stepFunction(state.playerPieces(player).position, state).map(Position(_))))
     })
 
 
