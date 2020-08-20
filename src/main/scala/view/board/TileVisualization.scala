@@ -36,9 +36,14 @@ trait TileVisualization extends StackPane {
 object TileVisualization {
 
   private class TileVisualizationImpl(val tile: Tile, parentWidth: ReadOnlyDoubleProperty,
-                                      parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int) extends TileVisualization {
+                                      parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, val graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends TileVisualization {
 
     val strokeSize = 3
+
+    if(tile.name.isDefined){
+      /*se definito applicarlo alla tyle visualization -> ad esempio se ho il colore allora lo applico MA ricordarsi la lista di priorità*/
+      graphicMap.get(TileIdentifier(tile.name.get))
+    }
 
     var rectangle: Rectangle = new Rectangle {
       fill = White
@@ -84,7 +89,7 @@ object TileVisualization {
 
   }
 
-  def apply(tile: Tile, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int): TileVisualization =
-    new TileVisualizationImpl(tile, parentWidth, parentHeight, rows, cols)
+  def apply(tile: Tile, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, map: Map[TileIdentifier, GraphicDescriptor]): TileVisualization =
+    new TileVisualizationImpl(tile, parentWidth, parentHeight, rows, cols, map)
 }
 

@@ -16,9 +16,10 @@ import model.rules.behaviours._
 import model.rules.operations.{Operation, SpecialOperation}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.rules.{ActionRule, BehaviourRule}
-import model.{Color, Player, Tile}
+import model.{Color, Player, Tile, TileIdentifier}
 import scalafx.application.JFXApp
 import view.ApplicationController
+import view.board.GraphicDescriptor
 
 
 object GooseGameNoDSL extends JFXApp {
@@ -416,6 +417,8 @@ object GooseGameNoDSL extends JFXApp {
 
   val currentMatch: Game = Game(board, players, ruleSet)
 
+  val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
+
   //View launch
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
   stage = new JFXApp.PrimaryStage {
@@ -423,7 +426,7 @@ object GooseGameNoDSL extends JFXApp {
     //fullScreen = true
     minWidth = 0.75 * screenSize.width
     minHeight = 0.75 * screenSize.height
-    scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch)
+    scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch, graphicMap)
     fullScreenExitHint = "Premi esc per uscire"
   }
 

@@ -1,5 +1,6 @@
 package view.board
 
+import model.TileIdentifier
 import model.game.{GameBoard, MutableGameState}
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
@@ -11,7 +12,7 @@ trait BoardDisplay extends ScrollPane {
 
 object BoardDisplay {
 
-  private class BoardDisplayImpl(matchBoard: GameBoard) extends BoardDisplay {
+  private class BoardDisplayImpl(matchBoard: GameBoard, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends BoardDisplay {
     val boardPane = new Pane()
 
     var tiles: List[TileVisualization] = Nil
@@ -27,7 +28,7 @@ object BoardDisplay {
     var cols: Int = matchBoard.board.disposition.columns
 
     for (t <- matchBoard.tiles.toList.sorted) {
-      val currentTile = TileVisualization(t, width, height, rows, cols)
+      val currentTile = TileVisualization(t, width, height, rows, cols, graphicMap)
       currentTile.layoutX <== this.width / cols * matchBoard.board.disposition.tilePlacement(i)._1
       currentTile.layoutY <== this.height / rows * matchBoard.board.disposition.tilePlacement(i)._2
       boardPane.children.add(currentTile)
@@ -57,6 +58,6 @@ object BoardDisplay {
   }
 
 
-  def apply(board: GameBoard): BoardDisplay = new BoardDisplayImpl(board)
+  def apply(board: GameBoard, graphicMap: Map[TileIdentifier, GraphicDescriptor]): BoardDisplay = new BoardDisplayImpl(board, graphicMap)
 }
 

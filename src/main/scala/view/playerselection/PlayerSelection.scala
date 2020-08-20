@@ -1,6 +1,6 @@
 package view.playerselection
 
-import model.Player
+import model.{Player, TileIdentifier}
 import model.entities.board.{Board, Piece}
 import model.game.Game
 import model.rules.ruleset.RuleSet
@@ -13,8 +13,9 @@ import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import view.ApplicationController
+import view.board.GraphicDescriptor
 
-class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int) extends Scene {
+class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
 
   var enrolledPlayers: Map[Player, Piece] = Map()
   val borderPane = new BorderPane
@@ -104,7 +105,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   startGame.onAction = _ => {
     if (enrolledPlayers.nonEmpty) {
       val currentMatch: Game = Game(board, enrolledPlayers, ruleSet)
-      val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch)
+      val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
       stage.scene = appView
     } else {
       new Alert(AlertType.Error) {

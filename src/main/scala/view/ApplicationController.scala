@@ -2,6 +2,7 @@ package view
 
 import engine.core.vertx.GooseEngine
 import engine.events.root.GameEvent
+import model.TileIdentifier
 import model.actions.Action
 import model.entities.DialogContent
 import model.game.{Game, MutableGameState}
@@ -10,7 +11,7 @@ import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
 import scalafx.stage.Stage
 import view.actionmenu.ActionMenu
-import view.board.BoardDisplay
+import view.board.{BoardDisplay, GraphicDescriptor}
 import view.logger.EventLogger
 
 import scala.concurrent.{Future, Promise}
@@ -31,7 +32,7 @@ trait GooseController {
 
 object ApplicationController {
 
-  private class ApplicationControllerImpl(stage: Stage, widthSize: Int, heightSize: Int, gameMatch: Game)
+  private class ApplicationControllerImpl(stage: Stage, widthSize: Int, heightSize: Int, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends ApplicationController with GooseController {
 
     val boardProportion = 0.8
@@ -43,7 +44,7 @@ object ApplicationController {
 
     val engine: GooseEngine = GooseEngine(gameMatch, this)
 
-    val boardView: BoardDisplay = BoardDisplay(gameMatch.board)
+    val boardView: BoardDisplay = BoardDisplay(gameMatch.board, graphicMap)
     borderPane.center = boardView
     boardView.prefWidth <== this.width * boardProportion
     boardView.prefHeight <== this.height - logHeight
@@ -96,8 +97,8 @@ object ApplicationController {
     }
   }
 
-  def apply(stage: Stage, width: Int, height: Int, gameMatch: Game): ApplicationController = new
-      ApplicationControllerImpl(stage, width, height, gameMatch)
+  def apply(stage: Stage, width: Int, height: Int, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor]): ApplicationController = new
+      ApplicationControllerImpl(stage, width, height, gameMatch, graphicMap)
 }
 
 

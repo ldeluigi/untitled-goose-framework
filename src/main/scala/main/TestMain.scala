@@ -15,9 +15,10 @@ import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.rules.{ActionRule, BehaviourRule}
-import model.{Color, Player}
+import model.{Color, Player, TileIdentifier}
 import scalafx.application.JFXApp
 import view.ApplicationController
+import view.board.GraphicDescriptor
 import view.playerselection.PlayerSelection
 
 object TestMain extends JFXApp {
@@ -61,14 +62,13 @@ object TestMain extends JFXApp {
 
   val currentMatch: Game = Game(board, players, ruleSet)
 
-  val playerSelection = new PlayerSelection(stage, board, ruleSet, screenSize.width, screenSize.height)
-
+  val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
     //fullScreen = true
     minWidth = 0.75 * screenSize.width
     minHeight = 0.75 * screenSize.height
-    scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch)
+    scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch, graphicMap)
     fullScreenExitHint = "Premi esc per uscire"
   }
 

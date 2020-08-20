@@ -61,7 +61,7 @@ object Main extends JFXApp {
   import view.TileIdentifierImplicit._
   val tupla: (TileIdentifier, GraphicDescriptor) = "oca" -> GraphicDescriptor("oca.jpg")
 
-  def graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
+  val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
     "oca" -> GraphicDescriptor("oca.jpg"),
     15 -> GraphicDescriptor("pozzo.jpg"),
     Group("verde") -> GraphicDescriptor(Color.Green)
@@ -75,7 +75,7 @@ object Main extends JFXApp {
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = new PlayerSelection(this, board, ruleSet, screenSize.width, screenSize.height)
+    scene = new PlayerSelection(this, board, ruleSet, screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Premi esc per uscire"
   }
 
