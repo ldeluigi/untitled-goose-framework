@@ -1,9 +1,9 @@
 package model.game
 
+import engine.events._
 import engine.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
 import engine.events.persistent.PersistentGameEvent
 import engine.events.persistent.player.TurnEndedEvent
-import engine.events.{GameEvent, PlayerEvent, TileEvent}
 import model.{Player, Tile}
 
 import scala.reflect.ClassTag
@@ -31,19 +31,30 @@ object GameStateExtensions {
   }
 
   implicit class MutableStateExtensions(mutable: MutableGameState) extends GameStateExtensions(mutable) {
+
     def submitEvent(event: GameEvent): Unit = {
       event match {
+        case NoOpEvent | ExitEvent => Unit
         case event: ConsumableGameEvent => mutable.consumableEvents = event +: mutable.consumableEvents
-        case event: PersistentGameEvent => event match {
-          case event: PlayerEvent with TileEvent =>
-            event.player.history = event +: event.player.history
-            event.tile.history = event +: event.tile.history
-          case event: PlayerEvent => event.player.history = event +: event.player.history
-          case event: TileEvent => event.tile.history = event +: event.tile.history
-          case _ => ???
-        }
+        case event: PersistentGameEvent => caseMatch(event)
       }
     }
+
+    def saveEvent(event: ConsumableGameEvent): Unit = {
+      caseMatch(event)
+    }
+
+    private def caseMatch(event: GameEvent): Unit = {
+      event match {
+        case event: PlayerEvent with TileEvent =>
+          event.player.history = event +: event.player.history
+          event.tile.history = event +: event.tile.history
+        case event: PlayerEvent => event.player.history = event +: event.player.history
+        case event: TileEvent => event.tile.history = event +: event.tile.history
+        case event: GameEvent => mutable.gameHistory = event +: mutable.gameHistory
+      }
+    }
+
   }
 
   implicit class PimpedHistory[H <: GameEvent](history: Seq[H]) {

@@ -58,10 +58,9 @@ object GooseEngine {
                   stopped = false
                   res match {
                     case Failure(_) => executeOperation()
-                    case Success(event) => {
+                    case Success(event) =>
                       stack = Operation.trigger(event) +: stack
                       executeOperation()
-                    }
                   }
                 })
             }
@@ -80,6 +79,7 @@ object GooseEngine {
     override def stop(): Unit = vertx.close()
 
     private def onEvent(event: GameEvent): Unit = {
+      controller.logEvent(event)
       if (stack.isEmpty) {
         stack = stack :+ gameMatch.cleanup
       }

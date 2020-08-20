@@ -12,6 +12,8 @@ trait MutableGameState extends GameState {
 
   def consumableEvents_=(events: Seq[GameEvent]): Unit
 
+  def gameHistory_=(events: Seq[GameEvent]): Unit
+
   def updatePlayerPiece(player: Player, update: Piece => Piece): Unit
 }
 
@@ -27,6 +29,8 @@ object MutableGameState {
                               val gameBoard: GameBoard) extends MutableGameState with CycleManager {
 
     var consumableEvents: Seq[GameEvent] = Seq()
+
+    var gameHistory: Seq[GameEvent] = Seq()
 
     var currentTurn: Int = 0
 
@@ -51,7 +55,6 @@ object MutableGameState {
     override def playerPieces: Map[Player, Piece] = playerPiecesMap
 
     override def nextPlayer: Player = nextPlayerStrategy()
-
   }
 
   def apply(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: GameBoard): MutableGameState with CycleManager =

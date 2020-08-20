@@ -38,9 +38,12 @@ object Game {
     override def stateBasedOperations: Seq[Operation] = rules.stateBasedOperations(currentState)
 
     override def cleanup: Operation = {
-      currentState.consumableEvents = List()
-      this.currentState.currentCycle = this.currentState.currentCycle + 1
-      Operation.updateState(rules.cleanupOperations)
+      Operation.updateState(state => {
+        currentState.consumableEvents = List()
+        this.currentState.currentCycle = this.currentState.currentCycle + 1
+        rules.cleanupOperations(state)
+      })
+
     }
   }
 

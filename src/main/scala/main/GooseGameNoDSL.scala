@@ -100,7 +100,8 @@ object GooseGameNoDSL extends JFXApp {
 
             override def options: Map[String, GameEvent] = Map()
           }),
-          Operation.trigger(TeleportEvent(state.getTile(26).get, state.currentPlayer, state.currentTurn, state.currentCycle))
+          Operation.trigger(TeleportEvent(state.getTile(26).get, state.currentPlayer, state.currentTurn, state.currentCycle)),
+          Operation.updateState(state => state.consumableEvents.removeAll[MovementDiceRollEvent]())
         )
       } else Seq()
     }

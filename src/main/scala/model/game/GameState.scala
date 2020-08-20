@@ -20,6 +20,8 @@ trait GameState {
 
   def consumableEvents: Seq[GameEvent]
 
+  def gameHistory: Seq[GameEvent]
+
   def players: Set[Player] = playerPieces.keySet
 
 }
