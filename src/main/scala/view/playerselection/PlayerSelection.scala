@@ -1,14 +1,14 @@
 package view.playerselection
 
-import model.{Player, TileIdentifier}
 import model.entities.board.{Board, Piece}
 import model.game.Game
 import model.rules.ruleset.RuleSet
+import model.{Player, TileIdentifier}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
-import scalafx.scene.layout.{AnchorPane, BorderPane, HBox, VBox}
+import scalafx.scene.layout.{BorderPane, HBox, VBox}
 import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
@@ -19,7 +19,6 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   var enrolledPlayers: Map[Player, Piece] = Map()
   val borderPane = new BorderPane
-  val anchorPane = new AnchorPane
 
   root = borderPane
 

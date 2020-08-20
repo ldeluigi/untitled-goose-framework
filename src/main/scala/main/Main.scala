@@ -62,11 +62,14 @@ object Main extends JFXApp {
 
   val tupla: (TileIdentifier, GraphicDescriptor) = "oca" -> GraphicDescriptor("/res/oca.png")
 
+  // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
-    "oca" -> GraphicDescriptor("oca.png"),
+    "oca" -> GraphicDescriptor("oca.jpg"),
     15 -> GraphicDescriptor("pozzo.jpg"),
     Group("verde") -> GraphicDescriptor(Color.Green)
   )
+
+  //for ((k,v) <- graphicMap) println("key: " + k, "value: " + v)
 
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
@@ -77,7 +80,7 @@ object Main extends JFXApp {
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
     scene = new PlayerSelection(this, board, ruleSet, screenSize.width, screenSize.height, graphicMap)
-    fullScreenExitHint = "Premi esc per uscire"
+    fullScreenExitHint = "Press esc to leave full screen mode"
   }
 
   stage.getScene.setOnKeyPressed(

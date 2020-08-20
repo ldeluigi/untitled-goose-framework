@@ -20,6 +20,7 @@ object TileIdentifier {
   }
 
   private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Option[Group]) extends TileIdentifier {
+
     override def number: Option[Int] = tileNum
 
     override def name: Option[String] = tileName

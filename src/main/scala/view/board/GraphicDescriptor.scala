@@ -16,11 +16,7 @@ import scalafx.scene.paint.Color
 //poi guardare nella view come gestire queste cose, leggendo la mappa e convertirle in aspetti grafici con le priorità seguenti -> nome > gruppo > num
 
 
-/*classe contenente una descrizione grafica*/
 trait GraphicDescriptor {
-
-  // implicit conversion che dice che una tupla numero group qualcosa diventa graphicdescriptor
-  // creo tante conversioni implicite da tupla sopra a sotto...
 
   def color: Option[Color]
 

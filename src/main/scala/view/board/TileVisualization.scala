@@ -4,9 +4,13 @@ import model.{Tile, TileIdentifier}
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label
+import scalafx.scene.image.Image
 import scalafx.scene.layout.StackPane
+import scalafx.scene.paint.Color
 import scalafx.scene.paint.Color._
 import scalafx.scene.shape.{Rectangle, StrokeType}
+
+import scala.util.control.Breaks.break
 
 trait TileVisualization extends StackPane {
 
@@ -19,6 +23,8 @@ trait TileVisualization extends StackPane {
   def removePieces(): Unit
 
   def rectangle: Rectangle
+
+  def applyStyle(): Unit
 }
 
 /* Per una data tile se nella mappa c'è una data entry allora diventa quello
@@ -38,15 +44,31 @@ object TileVisualization {
   private class TileVisualizationImpl(val tile: Tile, parentWidth: ReadOnlyDoubleProperty,
                                       parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, val graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends TileVisualization {
 
-    val strokeSize = 3
+    var colorToApply: Color = Color.White // default tile background
+    var backgroundToApply: Image = ???
 
-    if(tile.name.isDefined){
-      /*se definito applicarlo alla tyle visualization -> ad esempio se ho il colore allora lo applico MA ricordarsi la lista di priorità*/
+    if (tile.name.isDefined) {
+      /*se definito applicarlo alla tile visualization -> ad esempio se ho il colore allora lo applico MA ricordarsi la lista di priorità*/
       graphicMap.get(TileIdentifier(tile.name.get))
+      applyStyle()
+
+    } else if (tile.number.isDefined) {
+      graphicMap.get(TileIdentifier(tile.number.get))
+      applyStyle()
+
+    } else if (tile.groups.nonEmpty) {
+      // prendo elemento dal set e controllo che ci sia nella mappa; per ora breakkiamo dopo aver trovato un primo elemento corrispondente
+      for (group <- tile.groups) {
+        if (graphicMap.contains(TileIdentifier(group))) {
+          applyStyle()
+          break
+        }
+      }
     }
 
+    val strokeSize = 3
     var rectangle: Rectangle = new Rectangle {
-      fill = White
+      fill = colorToApply
       stroke = Black
       strokeType = StrokeType.Inside
       strokeWidth = strokeSize
@@ -87,6 +109,9 @@ object TileVisualization {
       pieceList = Nil
     }
 
+    override def applyStyle(): Unit = {
+      //colorToApply = graphicMap.get(TileIdentifier(group))
+    }
   }
 
   def apply(tile: Tile, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, map: Map[TileIdentifier, GraphicDescriptor]): TileVisualization =
