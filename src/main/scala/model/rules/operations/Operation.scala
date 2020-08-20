@@ -6,6 +6,7 @@ import model.game.{GameState, MutableGameState}
 
 sealed trait Operation {
   def name: String
+
   def execute(state: MutableGameState): Unit
 }
 

@@ -104,7 +104,8 @@ object GooseGameNoDSL extends JFXApp {
           Operation.updateState(state => state.consumableEvents.removeAll[MovementDiceRollEvent]())
         )
       } else Seq()
-    }
+    },
+    consume = false
   )
 
   //If your counter lands on a Goose square you can throw your dice again.

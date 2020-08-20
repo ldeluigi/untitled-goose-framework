@@ -64,10 +64,8 @@ object GameStateExtensions {
     def remove[T: ClassTag](n: Int = 1): History =
       history.filterNot(e => history.only[T].take(n).contains(e))
 
-    def removeAll[T: ClassTag](): History = {
-      println(history.filterNot(e => history.only[T].contains(e)))
+    def removeAll[T: ClassTag](): History =
       history.filterNot(e => history.only[T].contains(e))
-    }
 
     def filterTurn(turn: Int): History = history.filter(_.turn == turn)
 
