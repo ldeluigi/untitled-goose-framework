@@ -1,7 +1,7 @@
 package engine.core.vertx
 
 import engine.core.{DialogDisplay, EventSink}
-import engine.events.GameEvent
+import engine.events.{ExitEvent, GameEvent, NoOpEvent}
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
@@ -58,9 +58,12 @@ object GooseEngine {
                   stopped = false
                   res match {
                     case Failure(_) => executeOperation()
-                    case Success(event) =>
-                      stack = Operation.trigger(event) +: stack
-                      executeOperation()
+                    case Success(event) => event match {
+                      case ExitEvent => controller.close()
+                      case NoOpEvent => executeOperation()
+                      case _ => stack = Operation.trigger(event) +: stack
+                        executeOperation()
+                    }
                   }
                 })
             }
@@ -82,6 +85,9 @@ object GooseEngine {
 
     private def onEvent(event: GameEvent): Unit = {
       controller.logEvent(event)
+      event match {
+        case ExitEvent => controller.close()
+      }
       if (stack.isEmpty) {
         stack = stack :+ gameMatch.cleanup
       }
