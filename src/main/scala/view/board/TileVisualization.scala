@@ -28,35 +28,23 @@ trait TileVisualization extends StackPane {
   def applyStyle(graphicDescriptor: GraphicDescriptor): Unit
 }
 
-/* Per una data tile se nella mappa c'è una data entry allora diventa quello
-* passo una mappa con tileidentifier e graphdescriptor
-* se la val tile ha un nome vado nella mappa e faccio contains o try get con optional se c'è o non c'è (uso metodi della mappa).
-* se c'è una entry che corrisponde ad un tileidentifier di quel nome. <- per fare la contains devo dargli un nuovo tileIdentifier
-* creato con la stringa che prendo dalla tile.
-*
-* ho la mappa, ho la tile, guardo la tile se questa ha il nome allora provo a vedere se la mappa aha un valore relativo al tile identifirer(nome)
-* se c'è vado a vedere cosa c'è scritto e lo applico alla tile
-* altrimenti passo ai numeri oppure ai gruppi.
-* Al primo che trovo mi fermo!
-* */
-
 object TileVisualization {
 
   private class TileVisualizationImpl(val tile: Tile, parentWidth: ReadOnlyDoubleProperty,
                                       parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, val graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends TileVisualization {
 
-    var colorToApply: Color = Color.White // default tile background
+    var colorToApply: Color = Color.White
     var backgroundToApply: Image = ???
+    var strokeColor = Color.Black
+    //val text: String = Some(tile.name)
 
     if (tile.name.isDefined) {
-      /*se definito applicarlo alla tile visualization -> ad esempio se ho il colore allora lo applico MA ricordarsi la lista di priorità*/
       graphicMap.get(TileIdentifier(tile.name.get)).foreach(applyStyle)
 
     } else if (tile.number.isDefined) {
       graphicMap.get(TileIdentifier(tile.number.get)).foreach(applyStyle)
 
     } else if (tile.groups.nonEmpty) {
-      //prendo elemento dal set e controllo che ci sia nella mappa; per ora breakkiamo dopo aver trovato un primo elemento corrispondente
       for (group <- tile.groups) {
         if (graphicMap.contains(TileIdentifier(Group(group)))) {
           graphicMap.get(TileIdentifier(Group(group))).foreach(applyStyle)
@@ -72,13 +60,21 @@ object TileVisualization {
       if(graphicDescriptor.path.isDefined){
         /**/
       }
+      if(graphicDescriptor.strokeColor.isDefined){
+        strokeColor = graphicDescriptor.strokeColor.get
+      }
+      /*
+      if(graphicDescriptor.tileName.isDefined){
+
+      }
+      */
     }
 
     val strokeSize = 3
 
     var rectangle: Rectangle = new Rectangle {
       fill = colorToApply
-      stroke = Black
+      stroke = strokeColor
       strokeType = StrokeType.Inside
       strokeWidth = strokeSize
       width <== (parentWidth / cols)
