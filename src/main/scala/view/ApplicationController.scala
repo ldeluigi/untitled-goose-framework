@@ -4,7 +4,7 @@ import engine.core.vertx.GooseEngine
 import engine.events.GameEvent
 import model.actions.Action
 import model.entities.DialogContent
-import model.game.{Game, MutableGameState}
+import model.game.{Game, GameState}
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
@@ -20,7 +20,7 @@ trait ApplicationController extends Scene {
 }
 
 trait GooseController {
-  def update(state: MutableGameState)
+  def update(state: GameState)
 
   def showDialog(content: DialogContent): Future[GameEvent]
 
@@ -34,6 +34,7 @@ object ApplicationController {
   private class ApplicationControllerImpl(stage: Stage, widthSize: Int, heightSize: Int, gameMatch: Game)
     extends ApplicationController with GooseController {
 
+    var previousState: GameState = gameMatch.currentState
     val boardProportion = 0.8
     val appBarOffset = 40
     val logHeight = 200
@@ -70,10 +71,15 @@ object ApplicationController {
       action.execute(engine.eventSink, engine.currentMatch.currentState)
     }
 
-    override def update(state: MutableGameState): Unit = Platform.runLater(() => {
+    override def update(state: GameState): Unit = Platform.runLater(() => {
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
     })
+
+    private def logHistoryDiff(state: GameState): Unit = {
+      logger.logEvent(???)
+      previousState = state
+    }
 
     override def close(): Unit = Platform.runLater(() => {
       stopEngine()
