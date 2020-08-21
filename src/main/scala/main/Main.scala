@@ -56,10 +56,10 @@ object Main extends JFXApp {
   )
   val ruleSet: RuleSet = priorityRuleSet
 
-  val pathToOca = "oca.png"
+  val pathToOca = "oca.jpg"
   val oca: BufferedSource = Source.fromResource(pathToOca)
 
-  //val tupla: (TileIdentifier, GraphicDescriptor) = "oca" -> GraphicDescriptor("oca.png")
+  //val tupla: (TileIdentifier, GraphicDescriptor) = "oca" -> GraphicDescriptor("oca.jpg")
 
   // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
