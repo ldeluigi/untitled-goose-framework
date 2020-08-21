@@ -12,7 +12,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
 import view.GooseController
 
-import scala.concurrent.{Await, Future, Promise}
+import scala.concurrent.Future
 import scala.math.abs
 
 class GooseEngineTest extends AnyFlatSpec with Matchers {
@@ -26,7 +26,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
     override def showDialog(content: DialogContent): Future[GameEvent] = Future.successful(NoOpEvent)
 
-    override def logEvent(event: GameEvent): Unit = handler(event)
+    override def logAsyncEvent(event: GameEvent): Unit = handler(event)
 
     override def close(): Unit = {}
   }

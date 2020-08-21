@@ -24,7 +24,7 @@ trait GooseController {
 
   def showDialog(content: DialogContent): Future[GameEvent]
 
-  def logEvent(event: GameEvent)
+  def logAsyncEvent(event: GameEvent)
 
   def close(): Unit
 }
@@ -82,7 +82,7 @@ object ApplicationController {
 
     private def stopEngine(): Unit = engine.stop()
 
-    override def logEvent(event: GameEvent): Unit = Platform.runLater(() => {
+    override def logAsyncEvent(event: GameEvent): Unit = Platform.runLater(() => {
       logger.logEvent(event)
     })
 

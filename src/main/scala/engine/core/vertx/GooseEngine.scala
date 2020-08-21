@@ -1,5 +1,7 @@
 package engine.core.vertx
 
+import java.util.concurrent.atomic.AtomicBoolean
+
 import engine.core.{DialogDisplay, EventSink}
 import engine.events.{ExitEvent, GameEvent, NoOpEvent}
 import io.vertx.lang.scala.VertxExecutionContext
@@ -38,14 +40,14 @@ object GooseEngine {
     vertx.eventBus.registerCodec(new GameEventMessageCodec)
     Await.result(vertx.deployVerticleFuture(gv), Duration.Inf)
     private var stack: Seq[Operation] = Seq()
-    private var stopped = false
+    private val stopped: AtomicBoolean = new AtomicBoolean(false)
 
     override def accept(event: GameEvent): Unit = {
       vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(GameEventMessageCodec.name))
     }
 
     def executeOperation(): Unit = {
-      if (!stopped) {
+      if (!stopped.get()) {
         val op: Operation = stack.head
         stack = stack.tail
         op.execute(gameMatch.currentState)
@@ -53,17 +55,12 @@ object GooseEngine {
           case operation: SpecialOperation =>
             operation match {
               case o: DialogOperation =>
-                stopped = true
+                stopped.set(true)
                 dialogDisplay.display(o.content).onComplete(res => {
-                  stopped = false
+                  stopped.set(false)
                   res match {
                     case Failure(_) => executeOperation()
-                    case Success(event) => event match {
-                      case ExitEvent => controller.close()
-                      case NoOpEvent => executeOperation()
-                      case _ => stack = Operation.trigger(event) +: stack
-                        executeOperation()
-                    }
+                    case Success(event) => accept(event)
                   }
                 })
             }
@@ -84,15 +81,17 @@ object GooseEngine {
     override def stop(): Unit = vertx.close()
 
     private def onEvent(event: GameEvent): Unit = {
-      controller.logEvent(event)
       event match {
         case ExitEvent => controller.close()
+        case NoOpEvent => executeOperation()
+        case _ =>
+          controller.logAsyncEvent(event)
+          if (stack.isEmpty) {
+            stack = stack :+ gameMatch.cleanup
+          }
+          stack = Operation.trigger(event) +: stack
+          executeOperation()
       }
-      if (stack.isEmpty) {
-        stack = stack :+ gameMatch.cleanup
-      }
-      stack = Operation.trigger(event) +: stack
-      executeOperation()
     }
   }
 
