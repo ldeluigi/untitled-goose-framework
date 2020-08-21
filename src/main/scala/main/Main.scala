@@ -63,7 +63,7 @@ object Main extends JFXApp {
 
   // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
-    "oca" -> GraphicDescriptor("oca.jpg"),
+    "oca" -> GraphicDescriptor(pathToOca),
     15 -> GraphicDescriptor("pozzo.jpg"),
     Group("verde") -> GraphicDescriptor(Color.Green)
   )

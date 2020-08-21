@@ -5,9 +5,9 @@ import model.{Tile, TileIdentifier}
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label
+import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color
-import scalafx.scene.paint.Color._
 import scalafx.scene.shape.{Rectangle, StrokeType}
 
 import scala.util.control.Breaks.break
@@ -36,6 +36,9 @@ object TileVisualization {
     var strokeColor: Color = Color.Black // default stroke color -> applied if not specified by the user
     val strokeSize = 3
 
+    var image: Image = _
+    var imageContainer: ImageView = _
+
     if (tile.name.isDefined) {
       graphicMap.get(TileIdentifier(tile.name.get)).foreach(applyStyle)
 
@@ -61,18 +64,18 @@ object TileVisualization {
       }
 
       if (graphicDescriptor.path.isDefined) {
-        var backgroundToApply = graphicDescriptor.path.getOrElse()
-        //var image = new Image(backgroundToApply)
-        //var imageView = new ImageView(image)
+        var backgroundToApply: String = graphicDescriptor.path.get
+        image = new Image(backgroundToApply)
+        imageContainer = new ImageView(image)
       }
     }
 
     var rectangle: Rectangle = new Rectangle {
       fill = colorToApply
-      stroke = Black
+      stroke = strokeColor
       strokeType = StrokeType.Inside
       strokeWidth = strokeSize
-      width <== (parentWidth / cols)
+      width <== parentWidth / cols
       height <== parentHeight / rows
     }
 
@@ -84,6 +87,7 @@ object TileVisualization {
     var label = new Label(text)
 
     this.children.addAll(rectangle, label)
+    //prima rectangle e label poi imageview
 
     var pieceList: List[PieceVisualization] = Nil
 
