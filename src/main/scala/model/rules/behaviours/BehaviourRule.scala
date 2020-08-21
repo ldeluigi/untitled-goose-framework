@@ -20,6 +20,7 @@ object BehaviourRule {
     filterStrategy: T => Boolean = (_: T) => true,
     countStrategy: Int => Boolean = _ > 0,
     operationsStrategy: (Seq[T], GameState) => Seq[Operation],
+    when: GameState => Boolean = _ => true,
     consume: Boolean = true,
     save: Boolean = false
   )(implicit t: ClassTag[T])
@@ -30,7 +31,7 @@ object BehaviourRule {
         .filterCycle(state.currentCycle)
         .only[T]
         .filter(filterStrategy)
-      if (countStrategy(events.size)) {
+      if (countStrategy(events.size) && when(state)) {
         if (consume) state.consumableEvents = state.consumableEvents.removeAll[T]()
         (if (save) Seq(Operation.updateState(s => events.foreach(s.saveEvent))) else Seq()) ++
           operationsStrategy(events, state)
@@ -39,12 +40,7 @@ object BehaviourRule {
     }
   }
 
-  /* TODO FIX DEFAULT PARAMS ERROR
-  def apply(eventName: String, filterStrategy: GameEvent => Boolean = (_: GameEvent) => true, countStrategy: Int => Boolean = _ > 0, operations: (Seq[GameEvent], GameState) => Seq[Operation]): BehaviourRule =
-    new BehaviourRuleImpl((e: GameEvent) => e.name == eventName && filterStrategy(e), countStrategy, operations)
-*/
-
-  def apply[T <: ConsumableGameEvent](filterStrategy: T => Boolean = (_: T) => true, countStrategy: Int => Boolean = _ > 0, operations: (Seq[T], GameState) => Seq[Operation], consume: Boolean = true, save: Boolean = false)(implicit t: ClassTag[T]): BehaviourRule =
-    new BehaviourRuleImpl(filterStrategy, countStrategy, operations, consume, save)
+  def apply[T <: ConsumableGameEvent](filterStrategy: T => Boolean = (_: T) => true, countStrategy: Int => Boolean = _ > 0, when: GameState => Boolean = _ => true, operations: (Seq[T], GameState) => Seq[Operation], consume: Boolean = true, save: Boolean = false)(implicit t: ClassTag[T]): BehaviourRule =
+    new BehaviourRuleImpl(filterStrategy, countStrategy, operations, when, consume, save)
 
 }

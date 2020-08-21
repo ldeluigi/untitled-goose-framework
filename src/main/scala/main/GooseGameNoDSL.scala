@@ -90,20 +90,18 @@ object GooseGameNoDSL extends JFXApp {
   //If you throw a 3 on your first turn you can move straight to square 26.
   val teleportTo26OnFirstTurn: BehaviourRule = BehaviourRule[MovementDiceRollEvent](
     filterStrategy = _.res.contains(3),
+    when = _.currentPlayer.history.only[TurnEndedEvent].isEmpty,
     operations = (_, state) => {
-      if (!state.currentPlayer.history.exists(_.isInstanceOf[TurnEndedEvent])) {
-        Seq(
-          DialogOperation(new DialogContent {
-            override def title: String = "Special first throw!"
+      Seq(
+        DialogOperation(new DialogContent {
+          override def title: String = "Special first throw!"
 
-            override def text: String = "You roll a 3 on your first turn, go to tile 26"
+          override def text: String = "You roll a 3 on your first turn, go to tile 26"
 
-            override def options: Map[String, GameEvent] = Map()
-          }),
-          Operation.trigger(TeleportEvent(state.getTile(26).get, state.currentPlayer, state.currentTurn, state.currentCycle)),
-          Operation.updateState(state => state.consumableEvents.removeAll[MovementDiceRollEvent]())
+          override def options: Map[String, GameEvent] = Map()
+        }),
+        Operation.trigger(TeleportEvent(state.getTile(26).get, state.currentPlayer, state.currentTurn, state.currentCycle))
         )
-      } else Seq()
     },
     consume = false
   )
