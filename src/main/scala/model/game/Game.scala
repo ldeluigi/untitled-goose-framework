@@ -17,6 +17,7 @@ trait Game {
   def stateBasedOperations: Seq[Operation]
 
   def cleanup: Operation
+
 }
 
 object Game {
@@ -33,7 +34,11 @@ object Game {
       board
     )
 
-    override def availableActions: Set[Action] = rules.actions(currentState)
+    override def availableActions: Set[Action] =
+      if (currentState.consumableEvents.isEmpty)
+        rules.actions(currentState)
+      else Set()
+
 
     override def stateBasedOperations: Seq[Operation] = rules.stateBasedOperations(currentState)
 
