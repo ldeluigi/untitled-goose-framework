@@ -2,19 +2,30 @@ package model.rules
 
 trait PlayerCardinalityRule {
 
-  def minimumPlayers: Int = 2
+  var fixedMinimum: Int = 2
 
-  def maximumNumberPlayers(): Unit = Option[Int]
+  def minimumPlayers: Unit
+
+  def maximumPlayers: Option[Int]
 
 }
 
 object PlayerCardinalityRule {
 
-  private class PlayerCardinalityRuleImpl(minimum: Int) extends PlayerCardinalityRule {
+  private class PlayerCardinalityRuleImpl(definedMin: Option[Int], definedMax: Option[Int]) extends PlayerCardinalityRule {
 
-    override def minimumPlayers: Int = minimum
+    override def minimumPlayers: Unit = {
+      if (definedMin.isDefined) {
+        fixedMinimum = definedMin.get
+      }
+    }
+
+    override def maximumPlayers: Option[Int] = definedMax
+
   }
 
-  def apply(minimumPlayers: Int): PlayerCardinalityRule = new PlayerCardinalityRuleImpl(minimumPlayers)
+  def apply(max: Int): PlayerCardinalityRule = new PlayerCardinalityRuleImpl(None, Some(max))
+
+  def apply(min: Int, max: Int): PlayerCardinalityRule = new PlayerCardinalityRuleImpl(Some(min), Some(max))
 }
 
