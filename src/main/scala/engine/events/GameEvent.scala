@@ -6,7 +6,7 @@ trait GameEvent extends Serializable with Groupable {
 
   override def groups: Set[String] = Set()
 
-  def name: String = this.getClass.getSimpleName //TODO CHECK
+  def name: String = this.getClass.getSimpleName
 
   def turn: Int
 

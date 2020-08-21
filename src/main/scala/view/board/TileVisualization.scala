@@ -36,9 +36,9 @@ object TileVisualization {
       width <== (parentWidth / cols)
       height <== parentHeight / rows
     }
-    val text: String = tile.name match {
+    val text: String = tile.definition.name match {
       case Some(value) => value
-      case None => tile.number.get.toString
+      case None => tile.definition.number.get.toString
     }
 
     var label = new Label(text)

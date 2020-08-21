@@ -25,12 +25,6 @@ object StepOperation {
 
     opSeq = opSeq ++ checkAndTriggerPassedPlayers(state, player)
 
-    //TODO inverted should be relative to a cycle or to a whole turn and so persistent and relevant to the player?
-    val inverted = state.consumableEvents
-      .filterCycle(state.currentCycle)
-      .only[InvertMovementEvent]
-      .count(_.player == player) % 2 != 0
-
 
     val stepFunction: (Option[Position], GameState) => Option[Tile] = (p, state) => {
       val inverted = state.consumableEvents
@@ -55,7 +49,7 @@ object StepOperation {
               .prev(pos.tile)
           }
         }
-        case None => Some(state.gameBoard.first) //TODO Check this
+        case None => Some(state.gameBoard.first)
       }
     }
 

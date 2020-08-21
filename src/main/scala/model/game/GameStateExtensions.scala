@@ -13,10 +13,10 @@ object GameStateExtensions {
   implicit class GameStateExtensions(state: GameState) {
 
     def getTile(number: Int): Option[Tile] =
-      state.gameBoard.tiles.find(t => t.number.isDefined && t.number.get == number)
+      state.gameBoard.tiles.find(t => t.definition.number.isDefined && t.definition.number.get == number)
 
     def getTile(name: String): Option[Tile] =
-      state.gameBoard.tiles.find(t => t.name.isDefined && t.name.get == name)
+      state.gameBoard.tiles.find(t => t.definition.name.isDefined && t.definition.name.get == name)
 
     def playerStopsTurns(tile: Tile, player: Player): Seq[Int] = tile.history
       .only[StopOnTileEvent]

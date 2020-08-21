@@ -29,9 +29,4 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
     ph.only[SkipTurnEvent] should contain theSameElementsAs h
     ph.only[SkipTurnEvent].foreach(_.player.name should equal("a"))
   }
-
-  it should "MatchStateExtensions" in {
-    pending // TODO after tile identifier
-  }
-
 }
