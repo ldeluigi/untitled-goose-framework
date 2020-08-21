@@ -38,6 +38,7 @@ object TileVisualization {
 
     var image: Image = _
     var imageContainer: ImageView = _
+    var imageFlag: Boolean = false
 
     if (tile.name.isDefined) {
       graphicMap.get(TileIdentifier(tile.name.get)).foreach(applyStyle)
@@ -65,8 +66,9 @@ object TileVisualization {
 
       if (graphicDescriptor.path.isDefined) {
         var backgroundToApply: String = graphicDescriptor.path.get
-        image = new Image(backgroundToApply)
-        imageContainer = new ImageView(image)
+        image = new Image(backgroundToApply, parentWidth.getValue / cols, parentHeight.getValue / rows, true, true)
+        imageContainer = new ImageView(backgroundToApply)
+        imageFlag = true
       }
     }
 
@@ -86,8 +88,11 @@ object TileVisualization {
 
     var label = new Label(text)
 
+    // to stack things up correctly, add the rectangle itself and the label, then add the image if present
     this.children.addAll(rectangle, label)
-    //prima rectangle e label poi imageview
+    if (imageFlag) {
+      this.children.add(imageContainer)
+    }
 
     var pieceList: List[PieceVisualization] = Nil
 
