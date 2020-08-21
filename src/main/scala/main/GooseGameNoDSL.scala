@@ -18,7 +18,8 @@ import model.rules.actionrules.LoseTurnActionRule
 import model.rules.behaviours._
 import model.rules.operations.Operation
 import model.rules.operations.Operation.DialogOperation
-import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
+import model.rules.ruleset.RulePriorities.GooseFrameworkPriorities
+import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RulePriorities, RuleSet}
 import model.{Color, Player}
 import scalafx.application.JFXApp
 import view.ApplicationController
@@ -27,6 +28,7 @@ import view.ApplicationController
 object GooseGameNoDSL extends JFXApp {
 
   import model.game.GameStateExtensions._
+  import RulePriorities.DefaultPriorities
 
   //You will need:
   val totalTiles = 63
