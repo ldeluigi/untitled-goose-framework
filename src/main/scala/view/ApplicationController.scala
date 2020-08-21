@@ -74,10 +74,14 @@ object ApplicationController {
     override def update(state: GameState): Unit = Platform.runLater(() => {
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
+      logHistoryDiff(state)
     })
 
     private def logHistoryDiff(state: GameState): Unit = {
-      logger.logEvent(???)
+      (state.consumableEvents.diff(previousState.consumableEvents) ++
+        state.players.flatMap(_.history).diff(previousState.players.flatMap(_.history)) ++
+        state.gameBoard.tiles.flatMap(_.history).diff(previousState.gameBoard.tiles.flatMap(_.history)))
+        .foreach(logger.logEvent)
       previousState = state
     }
 
