@@ -27,8 +27,6 @@ object PlayerCardinalityRule {
     //override def rangeOfPlayers: Range = fixedMinimum to maximumPlayers.getOrElse()
   }
 
-  def apply(max: Int): PlayerCardinalityRule = new PlayerCardinalityRuleImpl(None, Some(max))
-
   def apply(min: Int, max: Int): PlayerCardinalityRule = new PlayerCardinalityRuleImpl(Some(min), Some(max))
 
   //def apply(range: Range): PlayerCardinalityRule = new PlayerCardinalityRuleImpl(range)
