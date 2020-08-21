@@ -36,22 +36,12 @@ object TileIdentifier {
     }
   }
 
-  // Only one parameter given
   def apply(number: Int): TileIdentifier = new TileIdentifierImpl(Some(number), None, None)
 
   def apply(name: String): TileIdentifier = new TileIdentifierImpl(None, Some(name), None)
 
   def apply(groups: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(groups))
 
-  // Combinations of two parameters given
-  def apply(number: Int, name: String): TileIdentifier = new TileIdentifierImpl(Some(number), Some(name), None)
-
-  def apply(number: Int, groups: Group): TileIdentifier = new TileIdentifierImpl(Some(number), None, Some(groups))
-
-  def apply(name: String, groups: Group): TileIdentifier = new TileIdentifierImpl(None, Some(name), Some(groups))
-
-  // All three parameters given
-  def apply(number: Int, name: String, groups: Group): TileIdentifier = new TileIdentifierImpl(Some(number), Some(name), Some(groups))
 }
 
 

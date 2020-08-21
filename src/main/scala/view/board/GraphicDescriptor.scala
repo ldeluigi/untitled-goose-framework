@@ -21,6 +21,7 @@ trait GraphicDescriptor {
   def color: Option[Color]
 
   def path: Option[String]
+
 }
 
 object GraphicDescriptor {

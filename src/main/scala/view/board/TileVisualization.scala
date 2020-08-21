@@ -1,5 +1,6 @@
 package view.board
 
+import model.TileIdentifier.Group
 import model.{Tile, TileIdentifier}
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
@@ -24,7 +25,7 @@ trait TileVisualization extends StackPane {
 
   def rectangle: Rectangle
 
-  def applyStyle(): Unit
+  def applyStyle(graphicDescriptor: GraphicDescriptor): Unit
 }
 
 /* Per una data tile se nella mappa c'è una data entry allora diventa quello
@@ -49,24 +50,32 @@ object TileVisualization {
 
     if (tile.name.isDefined) {
       /*se definito applicarlo alla tile visualization -> ad esempio se ho il colore allora lo applico MA ricordarsi la lista di priorità*/
-      graphicMap.get(TileIdentifier(tile.name.get))
-      applyStyle()
+      graphicMap.get(TileIdentifier(tile.name.get)).foreach(applyStyle)
 
     } else if (tile.number.isDefined) {
-      graphicMap.get(TileIdentifier(tile.number.get))
-      applyStyle()
+      graphicMap.get(TileIdentifier(tile.number.get)).foreach(applyStyle)
 
     } else if (tile.groups.nonEmpty) {
-      // prendo elemento dal set e controllo che ci sia nella mappa; per ora breakkiamo dopo aver trovato un primo elemento corrispondente
+      //prendo elemento dal set e controllo che ci sia nella mappa; per ora breakkiamo dopo aver trovato un primo elemento corrispondente
       for (group <- tile.groups) {
-        if (graphicMap.contains(TileIdentifier(group))) {
-          applyStyle()
+        if (graphicMap.contains(TileIdentifier(Group(group)))) {
+          graphicMap.get(TileIdentifier(Group(group))).foreach(applyStyle)
           break
         }
       }
     }
 
+    override def applyStyle(graphicDescriptor: GraphicDescriptor): Unit = {
+      if(graphicDescriptor.color.isDefined){
+        colorToApply = graphicDescriptor.color.get
+      }
+      if(graphicDescriptor.path.isDefined){
+        /**/
+      }
+    }
+
     val strokeSize = 3
+
     var rectangle: Rectangle = new Rectangle {
       fill = colorToApply
       stroke = Black
@@ -75,6 +84,7 @@ object TileVisualization {
       width <== (parentWidth / cols)
       height <== parentHeight / rows
     }
+
     val text: String = tile.name match {
       case Some(value) => value
       case None => tile.number.get.toString
@@ -107,10 +117,6 @@ object TileVisualization {
         this.children.remove(p)
       }
       pieceList = Nil
-    }
-
-    override def applyStyle(): Unit = {
-      //colorToApply = graphicMap.get(TileIdentifier(group))
     }
   }
 
