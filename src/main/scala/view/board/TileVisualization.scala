@@ -12,6 +12,9 @@ import scalafx.scene.shape.{Rectangle, StrokeType}
 
 import scala.util.control.Breaks.break
 
+/**
+ * An object which models how a single tile is rendered.
+ */
 trait TileVisualization extends StackPane {
 
   def tile: Tile

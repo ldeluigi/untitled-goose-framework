@@ -5,6 +5,9 @@ import scalafx.scene.layout.{Pane, VBox}
 import view.ApplicationController
 import view.board.BoardDisplay
 
+
+/** An object that organizes a set of actions into a graphical menu.
+ */
 trait ActionMenu extends Pane {
 
   def displayActions(actions: Set[Action])
@@ -18,6 +21,10 @@ object ActionMenu {
     val actionBox = new VBox(15)
     this.children.add(actionBox)
 
+    /** Utility method to add every action into a VBox.
+     *
+     * @param actions the set containing the actions
+     */
     override def displayActions(actions: Set[Action]): Unit = {
       actionBox.children.removeAll(actionBox.children)
       for (a <- actions) {
@@ -26,5 +33,6 @@ object ActionMenu {
     }
   }
 
+  /** A factory which creates a new ActionMenu. */
   def apply(boardView: BoardDisplay, controller: ApplicationController): ActionMenu = new ActionMenuImpl(boardView, controller)
 }
