@@ -16,10 +16,12 @@ import view.logger.EventLogger
 
 import scala.concurrent.{Future, Promise}
 
+/** A scene used to display the game. */
 trait ApplicationController extends Scene {
   def resolveAction(action: Action)
 }
 
+/** The game's controller. */
 trait GooseController {
   def update(state: MutableGameState)
 
@@ -59,35 +61,48 @@ object ApplicationController {
     val logger: EventLogger = EventLogger(logHeight)
     borderPane.bottom = logger
     logger.prefWidth <== this.width
-    /*
-    val showLogger: Button = new Button("logger")
-    showLogger.onMouseClicked = _ => logger.setVisible(!logger.isVisible)
-    borderPane.left = showLogger
-     */
 
     stage.setOnCloseRequest(_ => stopEngine())
 
+    /** Method to execute action.
+     *
+     * @param action the action to process.
+     */
     def resolveAction(action: Action): Unit = {
       action.execute(engine.eventSink, engine.currentMatch.currentState)
     }
 
+    /** Updates the board with the new current match state and possible actions.
+     *
+     * @param state the state used to update the board.
+     */
     override def update(state: MutableGameState): Unit = Platform.runLater(() => {
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
     })
 
+    /** Utility method to correctly stop the engine and close the stage containing the game. */
     override def close(): Unit = Platform.runLater(() => {
       stopEngine()
       stage.close()
     })
 
+    /** Stops the game's engine. */
     private def stopEngine(): Unit = engine.stop()
 
+    /** Logs the event (as soon as the EDT is ready).
+     *
+     * @param event the event to log.
+     */
     override def logEvent(event: GameEvent): Unit = Platform.runLater(() => {
       logger.logEvent(event)
     })
 
-
+    /** Shows a dialog to the user.
+     *
+     * @param content the content of the dialog itself.
+     * @return a future of a GameEvent.
+     */
     override def showDialog(content: DialogContent): Future[GameEvent] = {
       val promise: Promise[GameEvent] = Promise()
       Platform.runLater(() => {
@@ -97,6 +112,7 @@ object ApplicationController {
     }
   }
 
+  /** A factory used to creare a new ApplicationController, given a certain stage, width, height, game and graphic properties container. */
   def apply(stage: Stage, width: Int, height: Int, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor]): ApplicationController = new
       ApplicationControllerImpl(stage, width, height, gameMatch, graphicMap)
 }

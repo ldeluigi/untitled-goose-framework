@@ -15,6 +15,15 @@ import scalafx.stage.Stage
 import view.ApplicationController
 import view.board.GraphicDescriptor
 
+/** A scene used to be able to add new players to the game.
+ *
+ * @param stage      the stage on which to render the selection.
+ * @param board      a board on which the game is played.
+ * @param ruleSet    the rules container for the current game.
+ * @param widthSize  width of the scene
+ * @param heightSize height of the scene
+ * @param graphicMap the graphic properties container.
+ */
 class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
 
   var enrolledPlayers: Map[Player, Piece] = Map()
@@ -116,6 +125,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
     }
   }
 
+  /** Utility method to add new user specified players to the panel containing the current list of players. */
   def refreshPlayersList(): Unit = {
     activePlayersList.appendText("Name: " + playerNameFromInput.getText + "\t" + "color: " + colorsChoice.getValue + "\n")
   }
@@ -124,5 +134,4 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   borderPane.center = centerPlayerConsole
   borderPane.bottom = bottomGameControls
   borderPane.right = activePlayersPanel
-
 }

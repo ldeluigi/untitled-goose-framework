@@ -58,6 +58,10 @@ object TileVisualization {
       }
     }
 
+    /** Utility method that apply a certain style based on which property is specified by the user.
+     *
+     * @param graphicDescriptor a map used to contain graphic properties.
+     */
     override def applyStyle(graphicDescriptor: GraphicDescriptor): Unit = {
       if (graphicDescriptor.color.isDefined) {
         colorToApply = graphicDescriptor.color.get
@@ -99,6 +103,10 @@ object TileVisualization {
 
     var pieceList: List[PieceVisualization] = Nil
 
+    /** Sets the position of the tile's piece on the piece itself.
+     *
+     * @param piece the piece to be placed.
+     */
     override def setPiece(piece: PieceVisualization): Unit = {
       pieceList.size match {
         case 0 => piece.alignment = CenterLeft
@@ -115,6 +123,7 @@ object TileVisualization {
       pieceList = piece :: pieceList
     }
 
+    /** Remove all pieces from the tile. */
     override def removePieces(): Unit = {
       for (p <- pieceList) {
         this.children.remove(p)
@@ -123,6 +132,7 @@ object TileVisualization {
     }
   }
 
+  /** A factory used to render a new Tile, given the tile itself, its parent and panel dimension and the graphic properties that need to be set. */
   def apply(tile: Tile, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, map: Map[TileIdentifier, GraphicDescriptor]): TileVisualization =
     new TileVisualizationImpl(tile, parentWidth, parentHeight, rows, cols, map)
 }

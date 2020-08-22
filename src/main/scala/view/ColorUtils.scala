@@ -3,8 +3,13 @@ package view
 import model.Color.{Color => ModelColor}
 import scalafx.scene.paint.Color
 
+/** Matches the model's color to their ScalaFX actual counterparts. */
 object ColorUtils {
 
+  /**
+   * @param color the application model's mapped color.
+   * @return the matching ScalaFX color.
+   */
   def getColor(color: ModelColor): Color = {
     color match {
       case model.Color.Red => Color.Red

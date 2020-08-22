@@ -7,8 +7,13 @@ import scalafx.scene.control.{Alert, ButtonType}
 
 import scala.concurrent.Promise
 
+/** Custom dialog properties modeling.  */
 object DialogUtils {
 
+  /**
+   * @param content the content of the dialog to be diplayed.
+   * @param promise the promise used to check the action the user has choosen.
+   */
   def launchDialog(content: DialogContent, promise: Promise[GameEvent]): Unit = {
     val alert = new Alert(AlertType.Confirmation) {
       title = content.title
