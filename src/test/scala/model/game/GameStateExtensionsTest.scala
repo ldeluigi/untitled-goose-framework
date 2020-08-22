@@ -24,9 +24,55 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
     ph.filterTurn(1) should contain theSameElementsAs h
   }
 
+  "PimpedHistory.filterCycle" should "filter events by cycle" in {
+    pending
+  }
+
+  "PimpedHistory.filterName" should "filter events by name" in {
+    pending
+  }
+
   "PimpedHistory.only" should "filter events by type and cast them" in {
     ph.only[LoseTurnEvent] should have size 0
     ph.only[SkipTurnEvent] should contain theSameElementsAs h
     ph.only[SkipTurnEvent].foreach(_.player.name should equal("a"))
   }
+
+  "PimpedHistory.removeEvent" should "remove a specific event" in {
+    pending
+  }
+
+  "PimpedHistory.remove[T]" should "remove N events of type T event" in {
+    pending
+  }
+
+  "PimpedHistory.removeAll[T]" should "remove all the events of type T event" in {
+    pending
+  }
+
+  "MutableStateExtensions.submitEvent" should "submit a given event in the right histories" in {
+    pending
+  }
+
+  "MutableStateExtensions.saveEvent" should "save a consumable event onto the correct persistent history" in {
+    pending
+  }
+
+  "GameStateExtensions.getTile(num)" should "return the tile with that number if it exists" in {
+    pending
+  }
+
+  "GameStateExtensions.getTile(name)" should "return the tile with that name if it exists" in {
+    pending
+  }
+
+  "GameStateExtensions.playerStopsTurn" should "return the turns on which a player has stopped on a tile" in {
+    pending
+  }
+
+  "GameStateExtensions.playerLastTurn" should "return the last turn of a player" in {
+    pending
+  }
+
+
 }

@@ -69,9 +69,9 @@ object GameStateExtensions {
 
     def filterTurn(turn: Int): History = history.filter(_.turn == turn)
 
-    def filterName(name: String): History = history.filter(_.name == name)
-
     def filterCycle(cycle: Int): History = history.filter(_.cycle == cycle)
+
+    def filterName(name: String): History = history.filter(_.name == name)
 
     def only[T: ClassTag]: Seq[T] = history.filter({
       case _: T => true
