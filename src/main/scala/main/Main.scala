@@ -25,6 +25,9 @@ import view.playerselection.PlayerSelection
 
 import scala.io.{BufferedSource, Source}
 
+/**
+ * Main application used to specify all game rules, actions, behaviours and graphical properties
+ */
 object Main extends JFXApp {
 
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize

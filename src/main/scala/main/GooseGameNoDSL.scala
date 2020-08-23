@@ -21,7 +21,7 @@ import scalafx.application.JFXApp
 import view.ApplicationController
 import view.board.GraphicDescriptor
 
-
+/** Example of a Goose Game without the use of a support DSL. */
 object GooseGameNoDSL extends JFXApp {
 
   import model.game.GameStateExtensions._

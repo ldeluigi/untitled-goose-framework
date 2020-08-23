@@ -19,10 +19,12 @@ import model.{Color, Player, TileIdentifier}
 import scalafx.application.JFXApp
 import view.ApplicationController
 import view.board.GraphicDescriptor
-import view.playerselection.PlayerSelection
 
+/**
+ * Example of a Goose Game without the use of a support DSL.
+ * -- as of now, the use of the DSL itself is simulated --
+ */
 object TestMain extends JFXApp {
-
 
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
 
