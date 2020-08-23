@@ -2,16 +2,30 @@ package model.entities
 
 import engine.events.root.GameEvent
 
+/**
+ * A dialog to display events.
+ */
 trait DialogContent {
 
+  /**
+   * @return the dialog's title
+   */
   def title: String
 
+  /**
+   * @return the dialog's main info text
+   */
   def text: String
 
+  /**
+   * @return a map linking the dialog's user answers to its related event.
+   */
   def options: Map[String, GameEvent]
 }
 
 object DialogContent {
+
+  /** A factory creating a new user dialog based on a title, a text, and possible user answers. */
   def apply(dialogTitle: String, dialogText: String, answers: (String, GameEvent)*): DialogContent =
     new DialogContent {
       override def title: String = dialogTitle

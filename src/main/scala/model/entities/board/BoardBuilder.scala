@@ -1,6 +1,6 @@
 package model.entities.board
 
-
+/** The board's builder */
 case class BoardBuilder() {
 
   private var name = ""
@@ -10,23 +10,45 @@ case class BoardBuilder() {
   private var groupMap: Map[Int, Set[String]] = Map()
   private var disposition: Disposition = _
 
-
+  /** Specifies a board's name.
+   *
+   * @param name the name of the board
+   * @return the partial board builder object
+   */
   def withName(name: String): BoardBuilder = {
     this.name = name
     this
   }
 
+  /** Specifies the board's tile numeration.
+   *
+   * @param total the global number of tiles in the game
+   * @param from  the initial tile index
+   * @return the partial board builder object
+   */
   def withNumberedTiles(total: Int, from: Int = 1): BoardBuilder = {
     this.from = from
     this.totalTiles = total
     this
   }
 
+  /** Specifies the tile's name
+   *
+   * @param number the tile's index to name
+   * @param name   the name to set to the specified tile
+   * @return the partial board builder object
+   */
   def withNamedTile(number: Int, name: String): BoardBuilder = {
     nameMap = nameMap + (number -> name)
     this
   }
 
+  /** Specifies the a tile's group details.
+   *
+   * @param group  the group to analyze
+   * @param number the tile's index to potentially add to a certain group
+   * @return the partial board builder object
+   */
   def withGroupedTiles(group: String, number: Int*): BoardBuilder = {
     for (n <- number) {
       if (groupMap.contains(n)) {
@@ -38,11 +60,20 @@ case class BoardBuilder() {
     this
   }
 
+  /** Specifies the board's disposition.
+   *
+   * @param createDisposition mapping parameters that links an index to a certain disposition type
+   * @return the partial board builder object
+   */
   def withDisposition(createDisposition: Int => Disposition): BoardBuilder = {
     this.disposition = createDisposition(totalTiles)
     this
   }
 
+  /** Completes the board's building process.
+   *
+   * @return the parameter-complete board
+   */
   def complete(): Board = {
     val tileSet = (from to totalTiles).toList
       .map({

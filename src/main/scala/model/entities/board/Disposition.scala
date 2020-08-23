@@ -1,18 +1,34 @@
 package model.entities.board
 
-
+/**
+ * Models different types of tiles disposition.
+ */
 trait Disposition {
+
+  /** Total number of tiles. */
   def totalTiles: Int
 
+  /** Total number of tile rows */
   def rows: Int
 
+  /** Total number of tile coloums */
   def columns: Int
 
+  /** Sets the coordinate - row and coloumn - of a specified tile
+   *
+   * @param tileIndex the index of the tile to specify coordinates to
+   * @return the tile's coordinates
+   */
   def tilePlacement(tileIndex: Int): (Int, Int)
 }
 
 object Disposition {
 
+  /** Models the possibilty to have different tiles disposition in the game.
+   *
+   * @param totalTiles the total number of tiles
+   * @param ratio      parameter used to compute tile's height
+   */
   private abstract class BaseDisposition(val totalTiles: Int, val ratio: Int) extends Disposition {
     private val height: Double = Math.sqrt(totalTiles / ratio)
 
@@ -21,6 +37,11 @@ object Disposition {
     override val columns: Int = Math.max((totalTiles / height).ceil.toInt, 1)
   }
 
+  /** Type of disposition where the tiles go from left to right and then back in an S direction.
+   *
+   * @param totalTiles the total number of tiles
+   * @param ratio      parameter used to compute tile's height
+   */
   private class SnakeDisposition(totalTiles: Int, ratio: Int) extends BaseDisposition(totalTiles, ratio) {
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
       val rowIndex = tileIndex / columns
@@ -30,6 +51,11 @@ object Disposition {
     }
   }
 
+  /** Type of disposition where the tiles start filling the board up from the outside to the inside.
+   *
+   * @param totalTiles the total number of tiles
+   * @param ratio      parameter used to compute tile's height
+   */
   private class SpiralDisposition(totalTiles: Int, ratio: Int) extends BaseDisposition(totalTiles, ratio) {
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
@@ -53,7 +79,11 @@ object Disposition {
     }
   }
 
-
+  /** SType of disposition square-like.
+   *
+   * @param totalTiles
+   * @param ratio
+   */
   private class LoopDisposition(val totalTiles: Int, ratio: Int) extends Disposition {
 
     private val rowsPlusColumns: Int = (totalTiles + totalTiles % 2) / 2 + 2
@@ -73,10 +103,13 @@ object Disposition {
     }
   }
 
+  /** A factory that creates a new snake type tiles disposition. */
   def snake(total: Int, ratio: Int = 1): Disposition = new SnakeDisposition(total, ratio)
 
+  /** A factory that creates a new spiral type tiles disposition. */
   def spiral(total: Int, ratio: Int = 1): Disposition = new SpiralDisposition(total, ratio)
 
+  /** A factory that creates a new loop type tiles disposition. */
   def loop(total: Int, ratio: Int = 1): Disposition = new LoopDisposition(total, ratio)
 
 }
