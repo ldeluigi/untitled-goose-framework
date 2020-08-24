@@ -9,7 +9,6 @@ import model.rules.operations.Operation
 import model.rules.{ActionRule, CleanupRule}
 import model.{Player, Tile}
 
-/** Models the concept of a rule set with a certain priority. */
 class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                       playerOrdering: PlayerOrdering,
                       actionRules: Set[ActionRule],

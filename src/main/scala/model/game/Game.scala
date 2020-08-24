@@ -6,12 +6,8 @@ import model.entities.board.{Board, Piece}
 import model.rules.operations.Operation
 import model.rules.ruleset.RuleSet
 
-/** Models the game concept. */
 trait Game {
 
-  /**
-   * @return a specific game's set of all available action
-   */
   def availableActions: Set[Action]
 
   /**
@@ -24,9 +20,6 @@ trait Game {
    */
   def currentState: MutableGameState
 
-  /**
-   * @return a sequence of all state based available operations.
-   */
   def stateBasedOperations: Seq[Operation]
 
   def cleanup: Operation

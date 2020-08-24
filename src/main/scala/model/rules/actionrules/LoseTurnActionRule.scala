@@ -11,10 +11,6 @@ case class LoseTurnActionRule(private val allOtherActions: Set[Action])
                              (implicit val rulePriorities: GooseFrameworkPriorities)
   extends ActionRule {
 
-  /**
-   * @param state a MutableGameState on which to check the actions
-   * @return a set of allowrd actions
-   */
   override def allowedActions(state: MutableGameState): Set[ActionAvailability] =
     if (state.currentPlayer.history.only[LoseTurnEvent].nonEmpty)
       allOtherActions.map(ActionAvailability(_, rulePriorities.loseTurnPriority, allowed = false)) +

@@ -2,13 +2,8 @@ package model
 
 import engine.events.PlayerEvent
 
-/** Models the concept of a player. */
 trait Player {
 
-  /** Player's name.
-   *
-   * @return the player's name
-   */
   def name: String
 
   def history: Seq[PlayerEvent]
@@ -34,7 +29,7 @@ object Player {
   /** Player's factory.
    *
    * @param name the player's name
-   * @return thw newly created Player object
+   * @return the newly created Player object
    */
   def apply(name: String): Player = new PlayerImpl(name)
 }

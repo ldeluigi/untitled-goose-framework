@@ -8,7 +8,6 @@ import model.{Player, Tile}
 
 import scala.reflect.ClassTag
 
-/** Models the concept of game state extension */
 object GameStateExtensions {
 
   implicit class GameStateExtensions(state: GameState) {

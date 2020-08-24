@@ -2,7 +2,6 @@ package model
 
 import scala.util.Random
 
-/** Application domain colors. */
 object Color extends Enumeration {
 
   /** Selects a random domain-defined color.

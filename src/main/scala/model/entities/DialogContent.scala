@@ -2,9 +2,6 @@ package model.entities
 
 import engine.events.GameEvent
 
-/**
- * A dialog to display events.
- */
 trait DialogContent {
 
   /**

@@ -1,6 +1,5 @@
 package model.entities.board
 
-/** The board's builder */
 case class BoardBuilder() {
 
   private var name = ""
@@ -43,12 +42,6 @@ case class BoardBuilder() {
     this
   }
 
-  /** Specifies the a tile's group details.
-   *
-   * @param group  the group to analyze
-   * @param number the tile's index to potentially add to a certain group
-   * @return the partial board builder object
-   */
   def withGroupedTiles(group: String, number: Int*): BoardBuilder = {
     for (n <- number) {
       if (groupMap.contains(n)) {
@@ -62,11 +55,11 @@ case class BoardBuilder() {
 
   /** Specifies the board's disposition.
    *
-   * @param createDisposition mapping parameters that links an index to a certain disposition type
+   * @param disposition a certain disposition type
    * @return the partial board builder object
    */
-  def withDisposition(createDisposition: Int => Disposition): BoardBuilder = {
-    this.disposition = createDisposition(totalTiles)
+  def withDisposition(disposition: Disposition): BoardBuilder = {
+    this.disposition = disposition
     this
   }
 

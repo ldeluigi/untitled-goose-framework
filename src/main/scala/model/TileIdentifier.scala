@@ -2,25 +2,12 @@ package model
 
 import model.TileIdentifier.Group
 
-/** Models the concet of a TileIdentifier. */
 trait TileIdentifier {
 
-  /** Tile's number (highest priority).
-   *
-   * @return the tile's index identifying number, if present
-   */
   def number: Option[Int]
 
-  /** Tile's name (middle priority).
-   *
-   * @return the identifying tile's name, if present
-   */
   def name: Option[String]
 
-  /** Tile's group (lowest priority)
-   *
-   * @return the tile's identifying group, if present
-   */
   def group: Option[Group]
 
 }

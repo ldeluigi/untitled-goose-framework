@@ -30,11 +30,6 @@ object Tile {
         (if (definition.name.isDefined) definition.name.get else "")
   }
 
-  /** A tile's factory.
-   *
-   * @param tileDefinition the TileDefinition input object
-   * @return the newly created tile
-   */
   def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)
 
   implicit def compare[A <: Tile]: Ordering[A] = (x: A, y: A) => TileDefinition.compare.compare(x.definition, y.definition)

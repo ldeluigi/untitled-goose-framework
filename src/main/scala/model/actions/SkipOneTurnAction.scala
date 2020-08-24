@@ -5,7 +5,6 @@ import engine.events.GameEvent
 import engine.events.consumable.SkipTurnEvent
 import model.game.MutableGameState
 
-/** Models the possibility to make a player skip a turn during the game. */
 class SkipOneTurnAction extends Action {
 
   override def name: String = "Skip one turn"
@@ -17,6 +16,5 @@ class SkipOneTurnAction extends Action {
 
 object SkipOneTurnAction {
 
-  /** A factory which creates a new skip action. */
   def apply(): SkipOneTurnAction = new SkipOneTurnAction()
 }
