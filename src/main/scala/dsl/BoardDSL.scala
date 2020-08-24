@@ -1,31 +1,51 @@
 package dsl
 
-import dsl.BoardDSL.BoardState
-import dsl.BoardDSL.BoardState.TilesKeyword
-
 object BoardDSL {
 
-  sealed trait BoardState
+  trait DefineKeyWord {
+    val board: BoardDefinition = BoardDefinition()
+  }
 
-  object BoardState {
+  private case class BoardDefinition() {
+    def named(name: String): NameDefined = NameDefined()
+  }
 
-    sealed trait Initialized extends BoardState
+  private case class NameDefined() {
+    def has(totalTiles: Int): NumberDefined = NumberDefined()
+  }
 
-    sealed trait NameDefined extends BoardState
+  private case class NumberDefined() {
+    def tiles(text: String): TilesKeyword = TilesKeyword()
+  }
 
-    sealed trait BoardKeyword extends BoardState
+  private case class TilesKeyword() {
 
-    sealed trait NumberDefined extends BoardState
+    def in(disposition: Any): DispositionDefined = DispositionDefined()
+  }
 
-    sealed trait TilesKeyword extends BoardState
+  private case class DispositionDefined() {
 
-    sealed trait DispositionDefined extends BoardState
+    def disposition(tile: TileNameNumber*): BoardCompleted = BoardCompleted()
+  }
 
-    sealed trait DispositionKeyword extends BoardState
+  private case class TileNameNumber() {
 
   }
 
+  private case class BoardCompleted() {
+
+  }
+
+
+  private class test extends DefineKeyWord {
+    board named "goose game" has 63 tiles "placed" in "Spiral" disposition(
+      TileNameNumber(),
+      TileNameNumber()
+    )
+  }
+
 }
+
 
 /*
 A "goose game" board has 63 tiles in Spiral disposition {
@@ -37,26 +57,3 @@ A "goose game" board has 63 tiles in Spiral disposition {
  */
 
 //TODO tiles with no number??
-
-class BoardDSL[S <: BoardState] {
-
-  import BoardDSL._
-
-  def A(name: String)(implicit ev: S =:= BoardState.Initialized): BoardDSL[BoardState.NameDefined] = ???
-
-  def board(implicit ev: S =:= BoardState.NameDefined): BoardDSL[BoardState.BoardKeyword] = ???
-
-  def has(totalTiles: Int)(implicit ev: S =:= BoardState.BoardKeyword): BoardDSL[BoardState.NumberDefined] = ???
-
-  def tiles(implicit ev: S =:= BoardState.NumberDefined): BoardDSL[TilesKeyword] = ???
-
-  def in(dispositionType: Any)(implicit ev: S =:= BoardState.TilesKeyword): BoardDSL[BoardState.DispositionDefined] = ???
-
-  def disposition(implicit ev: S =:= BoardState.DispositionDefined): BoardDSL[BoardState.DispositionKeyword] = ???
-
-}
-
-object test {
-
-  new BoardDSL[BoardState.Initialized].A("Ciao").board.has(63).tiles.in("Spiral").disposition
-}
