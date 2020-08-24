@@ -5,6 +5,7 @@ import engine.events.root.GameEvent
 import model.entities.DialogContent
 import model.game.MutableGameState
 
+/** Models the concept of a special game operation. */
 object SpecialOperation {
 
   sealed trait SpecialOperation extends Operation
