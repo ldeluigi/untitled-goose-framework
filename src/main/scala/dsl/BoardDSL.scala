@@ -3,7 +3,7 @@ package dsl
 object BoardDSL {
 
   trait DefineKeyWord {
-    val board: BoardDefinition = BoardDefinition()
+    //val board: BoardDefinition = BoardDefinition()
   }
 
   private case class BoardDefinition() {
@@ -36,14 +36,7 @@ object BoardDSL {
 
   }
 
-
-  private class test extends DefineKeyWord {
-    board named "goose game" has 63 tiles "placed" in "Spiral" disposition(
-      TileNameNumber(),
-      TileNameNumber()
-    )
-  }
-
+  
 }
 
 

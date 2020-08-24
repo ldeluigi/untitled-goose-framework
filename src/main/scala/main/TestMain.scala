@@ -16,9 +16,10 @@ import model.rules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
-import model.{Color, Player}
+import model.{Color, Player, TileIdentifier}
 import scalafx.application.JFXApp
 import view.ApplicationController
+import view.board.GraphicDescriptor
 import view.playerselection.PlayerSelection
 
 /**

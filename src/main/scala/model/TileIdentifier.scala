@@ -26,17 +26,7 @@ trait TileIdentifier {
 }
 
 object TileIdentifier {
-
-  private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Set[String]) extends TileIdentifier {
-  case class Group(group: String) {
-
-    /** A factory that creates a new group
-     *
-     * @param group the group's name
-     * @return the newly created Group object
-     */
-    def apply(group: String): Group = new Group(group)
-  }
+  case class Group(group: String)
 
   private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Option[Group]) extends TileIdentifier {
 

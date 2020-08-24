@@ -3,7 +3,6 @@ package model.game
 import model.Player
 import model.actions.Action
 import model.entities.board.{Board, Piece}
-import model.rules.PlayerCardinalityRule
 import model.rules.operations.Operation
 import model.rules.ruleset.RuleSet
 
@@ -54,11 +53,6 @@ object Game {
         rules.actions(currentState)
       else Set()
 
-    def maxMinPlayers(ruleSet: RuleSet): PlayerCardinalityRule = {
-      PlayerCardinalityRule(desiredMinPlayers, desiredMaxPlayers)
-    }
-
-    override def availableActions: Set[Action] = rules.actions(currentState)
 
     override def stateBasedOperations: Seq[Operation] = rules.stateBasedOperations(currentState)
 

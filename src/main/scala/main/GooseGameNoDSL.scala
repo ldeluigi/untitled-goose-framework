@@ -18,9 +18,10 @@ import model.rules.behaviours._
 import model.rules.operations.Operation
 import model.rules.operations.Operation.DialogOperation
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RulePriorities, RuleSet}
-import model.{Color, Player}
+import model.{Color, Player, TileIdentifier}
 import scalafx.application.JFXApp
 import view.ApplicationController
+import view.board.GraphicDescriptor
 
 
 object GooseGameNoDSL extends JFXApp {
@@ -319,13 +320,14 @@ object GooseGameNoDSL extends JFXApp {
   val currentMatch: Game = Game(board, players, ruleSet)
 
   //View launch
+  val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
     //fullScreen = true
     minWidth = 0.75 * screenSize.width
     minHeight = 0.75 * screenSize.height
-    scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch)
+    scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch, graphicMap)
     fullScreenExitHint = "Premi esc per uscire"
   }
 
