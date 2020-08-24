@@ -3,7 +3,8 @@ package engine.core.vertx
 import java.util.concurrent.atomic.AtomicBoolean
 
 import engine.core.{DialogDisplay, EventSink}
-import engine.events.{ExitEvent, GameEvent, NoOpEvent}
+import engine.events.GameEvent
+import engine.events.special.{ExitEvent, NoOpEvent}
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
@@ -47,30 +48,30 @@ object GooseEngine {
     }
 
     def executeOperation(): Unit = {
-      if (!stopped.get()) {
-        val op: Operation = stack.head
-        stack = stack.tail
-        op.execute(gameMatch.currentState)
-        op match {
-          case operation: SpecialOperation =>
-            operation match {
-              case o: DialogOperation =>
-                stopped.set(true)
-                dialogDisplay.display(o.content).onComplete(res => {
-                  stopped.set(false)
-                  res match {
-                    case Failure(_) => executeOperation()
-                    case Success(event) => accept(event)
-                  }
-                })
-            }
-          case _ => Unit
-        }
-        controller.update(gameMatch.currentState)
-        if (stack.nonEmpty) {
-          stack = gameMatch.stateBasedOperations ++ stack
-          executeOperation()
-        }
+      if (stopped.get()) return
+      val op: Operation = stack.head
+      stack = stack.tail
+      op.execute(gameMatch.currentState)
+      op match {
+        case operation: SpecialOperation =>
+          operation match {
+            case o: DialogOperation =>
+              stopped.set(true)
+              dialogDisplay.display(o.content).onComplete(res => {
+                stopped.set(false)
+                res match {
+                  case Failure(_) => executeOperation()
+                  case Success(event) => accept(event)
+                }
+              })
+          }
+        case _ => Unit
+      }
+      if (stopped.get()) return
+      controller.update(gameMatch.currentState)
+      if (stack.nonEmpty) {
+        stack = gameMatch.stateBasedOperations ++ stack
+        executeOperation()
       }
     }
 

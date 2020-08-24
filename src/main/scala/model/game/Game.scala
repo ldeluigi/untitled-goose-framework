@@ -27,7 +27,7 @@ object Game {
   private class GameImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Game {
 
     override val board: GameBoard = GameBoard(gameBoard)
-    override val currentState: MutableGameState with CycleManager = MutableGameState(
+    override val currentState: CycleMutableGameState = CycleMutableGameState(
       rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
       playerPieces,
@@ -35,7 +35,7 @@ object Game {
     )
 
     override def availableActions: Set[Action] =
-      if (currentState.consumableEvents.isEmpty)
+      if (currentState.consumableBuffer.isEmpty)
         rules.actions(currentState)
       else Set()
 
@@ -45,7 +45,7 @@ object Game {
     override def cleanup: Operation = {
       Operation.updateState(state => {
         rules.cleanupOperations(state)
-        currentState.consumableEvents = currentState.consumableEvents.filter(_.cycle > currentState.currentCycle)
+        currentState.consumableBuffer = currentState.consumableBuffer.filter(_.cycle > currentState.currentCycle)
         this.currentState.currentCycle = this.currentState.currentCycle + 1
       })
     }

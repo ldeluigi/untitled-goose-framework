@@ -1,7 +1,6 @@
-package engine.events.persistent.tile
+package engine.events.persistent
 
 import engine.events.TileEvent
-import engine.events.persistent.PersistentGameEvent
 import model.Tile
 
 case class TileActivatedEvent(tile: Tile, turn: Int, cycle: Int)

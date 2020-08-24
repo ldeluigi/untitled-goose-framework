@@ -1,6 +1,7 @@
 package model.game
 
 import engine.events.GameEvent
+import engine.events.consumable.ConsumableGameEvent
 import model.Player
 import model.entities.board.Piece
 
@@ -18,7 +19,7 @@ trait GameState {
 
   def gameBoard: GameBoard
 
-  def consumableEvents: Seq[GameEvent]
+  def consumableBuffer: Seq[ConsumableGameEvent]
 
   def gameHistory: Seq[GameEvent]
 

@@ -1,7 +1,7 @@
 package model.rules.cleanup
 
 import engine.events.consumable.TurnShouldEndEvent
-import engine.events.persistent.player.{GainTurnEvent, TurnEndedEvent}
+import engine.events.persistent.{GainTurnEvent, TurnEndedEvent}
 import model.game.GameStateExtensions._
 import model.game.MutableGameState
 import model.rules.CleanupRule
@@ -12,7 +12,7 @@ object TurnEndConsumer extends CleanupRule {
     consumeTurn(state)
 
   private def consumeTurn(state: MutableGameState): Unit = {
-    val shouldEnd = state.consumableEvents
+    val shouldEnd = state.consumableBuffer
       .filterTurn(state.currentTurn)
       .only[TurnShouldEndEvent].nonEmpty
 

@@ -78,7 +78,7 @@ object ApplicationController {
     })
 
     private def logHistoryDiff(state: GameState): Unit = {
-      (state.consumableEvents.diff(previousState.consumableEvents) ++
+      (state.consumableBuffer.diff(previousState.consumableBuffer) ++
         state.players.flatMap(_.history).diff(previousState.players.flatMap(_.history)) ++
         state.gameBoard.tiles.flatMap(_.history).diff(previousState.gameBoard.tiles.flatMap(_.history)))
         .foreach(logger.logEvent)

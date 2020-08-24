@@ -27,7 +27,7 @@ object StepOperation {
 
 
     val stepFunction: (Option[Position], GameState) => Option[Tile] = (p, state) => {
-      val inverted = state.consumableEvents
+      val inverted = state.consumableBuffer
         .filterCycle(state.currentCycle)
         .only[InvertMovementEvent]
         .count(_.player == player) % 2 != 0

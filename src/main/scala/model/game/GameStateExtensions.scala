@@ -2,8 +2,8 @@ package model.game
 
 import engine.events._
 import engine.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
-import engine.events.persistent.PersistentGameEvent
-import engine.events.persistent.player.TurnEndedEvent
+import engine.events.persistent.{PersistentGameEvent, TurnEndedEvent}
+import engine.events.special.{ExitEvent, NoOpEvent}
 import model.{Player, Tile}
 
 import scala.reflect.ClassTag
@@ -34,7 +34,7 @@ object GameStateExtensions {
       println(event)
       event match {
         case NoOpEvent | ExitEvent => Unit
-        case event: ConsumableGameEvent => mutable.consumableEvents = event +: mutable.consumableEvents
+        case event: ConsumableGameEvent => mutable.consumableBuffer = event +: mutable.consumableBuffer
         case event: PersistentGameEvent => caseMatch(event)
         case event => mutable.gameHistory = event +: mutable.gameHistory
       }

@@ -21,18 +21,18 @@ object BehaviourRule {
     countStrategy: Int => Boolean = _ > 0,
     operationsStrategy: (Seq[T], GameState) => Seq[Operation],
     when: GameState => Boolean = _ => true,
-    consume: Boolean = true,
-    save: Boolean = false
+    consume: Boolean,
+    save: Boolean
   )(implicit t: ClassTag[T])
     extends BehaviourRule {
 
     final override def applyRule(state: MutableGameState): Seq[Operation] = {
-      val events = state.consumableEvents
+      val events = state.consumableBuffer
         .filterCycle(state.currentCycle)
         .only[T]
         .filter(filterStrategy)
       if (countStrategy(events.size) && when(state)) {
-        if (consume) state.consumableEvents = state.consumableEvents.removeAll[T]()
+        if (consume) state.consumableBuffer = state.consumableBuffer.removeAll[T]()
         (if (save) Seq(Operation.updateState(s => events.foreach(s.saveEvent))) else Seq()) ++
           operationsStrategy(events, state)
       }

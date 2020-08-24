@@ -1,6 +1,6 @@
 package model.rules.actionrules
 
-import engine.events.persistent.player.LoseTurnEvent
+import engine.events.persistent.LoseTurnEvent
 import model.actions.{Action, SkipOneTurnAction}
 import model.game.GameStateExtensions._
 import model.game.MutableGameState

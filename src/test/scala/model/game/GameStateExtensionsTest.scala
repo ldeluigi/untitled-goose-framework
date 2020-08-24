@@ -1,7 +1,7 @@
 package model.game
 
 import engine.events.consumable.SkipTurnEvent
-import engine.events.persistent.player.LoseTurnEvent
+import engine.events.persistent.LoseTurnEvent
 import engine.events.{GameEvent, consumable}
 import model.Player
 import model.game.GameStateExtensions.PimpedHistory

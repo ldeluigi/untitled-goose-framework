@@ -2,7 +2,7 @@ package model.rules.ruleset
 
 import model.actions.Action
 import model.entities.board.Position
-import model.game.{GameState, MutableGameState}
+import model.game.MutableGameState
 import model.rules.operations.Operation
 import model.{Player, Tile}
 

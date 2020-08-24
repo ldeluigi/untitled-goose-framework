@@ -1,4 +1,6 @@
-package engine.events
+package engine.events.special
+
+import engine.events.GameEvent
 
 case object NoOpEvent extends GameEvent {
   override def name: String = ""
