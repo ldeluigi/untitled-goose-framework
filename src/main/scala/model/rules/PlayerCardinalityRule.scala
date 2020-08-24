@@ -27,13 +27,13 @@ object PlayerCardinalityRule {
 
     override def maximumPlayers: Option[Int] = definedMax
 
-    //override def rangeOfPlayers: Range = fixedMinimum to maximumPlayers.getOrElse()
+    //override def rangeOfPlayers: Range = fixedMinimum to maximumPlayers.getOrElse
   }
 
   /** A factory for a new PlayerCardinality rule.
    *
    * @param min minimum number of players
-   * @param max mixumum number of players
+   * @param max maximum number of players
    * @return the newly created PlayerCardinality rule.
    */
   def apply(min: Int, max: Int): PlayerCardinalityRule = new PlayerCardinalityRuleImpl(Some(min), Some(max))

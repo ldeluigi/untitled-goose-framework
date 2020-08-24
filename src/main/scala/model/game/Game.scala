@@ -4,6 +4,7 @@ import engine.events.root.{GameEvent, PlayerEvent, TileEvent}
 import model.Player
 import model.actions.Action
 import model.entities.board.{Board, Piece}
+import model.rules.PlayerCardinalityRule
 import model.rules.operations.Operation
 import model.rules.ruleset.RuleSet
 
@@ -47,6 +48,8 @@ object Game {
   private class GameImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Game {
 
     private val firstTurn = 0
+    private val desiredMinPlayers = 3
+    private val desiredMaxPlayers = 10
 
     override val board: GameBoard = GameBoard(gameBoard)
     override val currentState: MutableGameState = MutableGameState(
@@ -56,6 +59,10 @@ object Game {
       playerPieces,
       board
     )
+
+    def maxMinPlayers(ruleSet: RuleSet): PlayerCardinalityRule = {
+      PlayerCardinalityRule(desiredMinPlayers, desiredMaxPlayers)
+    }
 
     override def availableActions: Set[Action] = rules.actions(currentState)
 
