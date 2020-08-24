@@ -5,11 +5,16 @@ import model.game.GameStateExtensions.PimpedHistory
 import model.game.MutableGameState
 import model.rules.CleanupRule
 
+/** Models the concept of an end turn event consumer. */
 object TurnEndConsumer extends CleanupRule {
 
   override def applyRule(state: MutableGameState): Unit =
     consumeTurn(state)
 
+  /** Consumes the turn.
+   *
+   * @param state the MutableGameState from which consume a turn
+   */
   private def consumeTurn(state: MutableGameState): Unit = {
     val eventList = state.history
       .filterTurn(state.currentTurn)
