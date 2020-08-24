@@ -9,6 +9,7 @@ import model.rules.operations.Operation
 import model.rules.{ActionRule, BehaviourRule, CleanupRule}
 import model.{Player, Tile}
 
+/** Models the concept of a rule set with a certain priority. */
 class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                       playerOrdering: PlayerOrdering,
                       actionRules: Set[ActionRule],
@@ -16,7 +17,9 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                       cleanupRules: Seq[CleanupRule]
                      ) extends RuleSet {
 
+
   override def startPosition(tiles: Set[Tile]): Position = firstPosition(tiles)
+
 
   override def actions(state: MutableGameState): Set[Action] =
     actionRules
@@ -52,6 +55,15 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
 }
 
 object PriorityRuleSet {
+
+  /** A factory that produces a new priority rule set.
+   *
+   * @param startTile      the starting tile
+   * @param playerOrdering a random player ordering
+   * @param actionRules    a set of action rules
+   * @param behaviourRule  behaviour rule
+   * @param cleanupRules   cleanup rule
+   */
   def apply(startTile: Set[Tile] => Position = tiles => Position(tiles.toList.sorted.take(1).head),
             playerOrdering: PlayerOrdering = PlayerOrdering.orderedRandom,
             actionRules: Set[ActionRule] = Set(),

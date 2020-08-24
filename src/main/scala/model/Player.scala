@@ -2,9 +2,19 @@ package model
 
 import engine.events.root.PlayerEvent
 
+/** Models the concept of a player. */
 trait Player {
+
+  /** Player's name.
+   *
+   * @return the player's name
+   */
   def name: String
 
+  /** Player's history.
+   *
+   * @return a list of player triggered events.
+   */
   def history: List[PlayerEvent]
 
   def history_=(history: List[PlayerEvent]): Unit
@@ -27,5 +37,10 @@ object Player {
     override def toString: String = "Player: " + name
   }
 
+  /** Player's factory.
+   *
+   * @param name the player's name
+   * @return thw newly created Player object
+   */
   def apply(name: String): Player = new PlayerImpl(name)
 }

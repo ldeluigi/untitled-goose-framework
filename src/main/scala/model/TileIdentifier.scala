@@ -2,13 +2,26 @@ package model
 
 import model.TileIdentifier.Group
 
+/** Models the concet of a TileIdentifier. */
 trait TileIdentifier {
 
+  /** Tile's number (highest priority).
+   *
+   * @return the tile's index identifying number, if present
+   */
   def number: Option[Int]
 
+  /** Tile's name (middle priority).
+   *
+   * @return the identifying tile's name, if present
+   */
   def name: Option[String]
 
-  def groups: Option[Group]
+  /** Tile's group (lowest priority)
+   *
+   * @return the tile's identifying group, if present
+   */
+  def group: Option[Group]
 
 }
 
@@ -16,6 +29,11 @@ object TileIdentifier {
 
   case class Group(group: String) {
 
+    /** A factory that creates a new group
+     *
+     * @param group the group's name
+     * @return the newly created Group object
+     */
     def apply(group: String): Group = new Group(group)
   }
 
@@ -25,22 +43,37 @@ object TileIdentifier {
 
     override def name: Option[String] = tileName
 
-    override def groups: Option[Group] = tileGroups
+    override def group: Option[Group] = tileGroups
 
     //override della equals: due tileidentifier sono uguali se hanno lo stesso nome o numero o gruppo -> così posso usare la cointains
     override def equals(obj: Any): Boolean = {
       obj match {
         case obj: TileIdentifier =>
-          this.name == obj.name || this.number == obj.number || this.groups == obj.groups
+          this.name == obj.name || this.number == obj.number || this.group == obj.group
       }
     }
   }
 
+  /** A factory to create a new TileIdentifier, based on the tile's number.
+   *
+   * @param number the identifying number
+   * @return the newly created TileIdentifier object
+   */
   def apply(number: Int): TileIdentifier = new TileIdentifierImpl(Some(number), None, None)
 
+  /** A factory to create a new TileIdentifier, based on the tile's name.
+   *
+   * @param name the identifying name
+   * @return the newly created TileIdentifier object
+   */
   def apply(name: String): TileIdentifier = new TileIdentifierImpl(None, Some(name), None)
 
-  def apply(groups: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(groups))
+  /** A factory to create a new TileIdentifier, based on the tile's group.
+   *
+   * @param group the identifying group
+   * @return the newly created TileIdentifier object
+   */
+  def apply(group: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(group))
 
 }
 

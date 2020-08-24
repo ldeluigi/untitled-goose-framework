@@ -3,7 +3,13 @@ package model
 import engine.events.root.TileEvent
 import model.entities.board.TileDefinition
 
+/** Models the concept of a tile. */
 trait Tile extends TileDefinition {
+
+  /** Tile's history.
+   *
+   * @return the list of tile's event
+   */
   def history: List[TileEvent]
 
   def history_=(history: List[TileEvent]): Unit
@@ -38,5 +44,10 @@ object Tile {
         (if (name.isDefined) name.get else "")
   }
 
+  /** A tile's factory.
+   *
+   * @param tileDefinition the TileDefinition input object
+   * @return the newly created tile
+   */
   def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)
 }
