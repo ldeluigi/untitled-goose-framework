@@ -1,9 +1,7 @@
 package model.rules.actionrules
 
-import engine.events.LoseTurnEvent
 import mock.MatchMock
 import model.actions.StepForwardAction
-import model.rules.ActionAvailability
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -17,16 +15,6 @@ class LoseTurnActionRuleTest extends AnyFlatSpec with Matchers {
 
   it should "do nothing without event" in {
     loseTurnActionRule.allowedActions(MatchMock.default.currentState).isEmpty should be(true)
-  }
-
-  it should "deny actions with lose turn event" in {
-    val matchMock = MatchMock.default
-    matchMock.submitEvent(LoseTurnEvent(matchMock.currentState.players.head, matchMock.currentState.currentTurn))
-    loseTurnActionRule.allowedActions(MatchMock.default.currentState).exists {
-      case ActionAvailability(false, _, action) if action.isInstanceOf[StepForwardAction] => true
-      case _ => false
-    }
-
   }
 
 }

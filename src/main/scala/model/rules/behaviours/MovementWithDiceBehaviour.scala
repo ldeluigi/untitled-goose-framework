@@ -1,24 +1,12 @@
 package model.rules.behaviours
 
-import engine.events.{MovementDiceRollEvent, StepMovementEvent}
-import model.game.GameState
-import model.game.GameStateExtensions.PimpedHistory
-import model.rules.BehaviourRule
+import engine.events.consumable.{MovementDiceRollEvent, StepMovementEvent}
+import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.Operation
 
-/** Creates a movement-with-dice related behaviour rule. */
-case class MovementWithDiceBehaviour() extends BehaviourRule {
 
-  override def name: Option[String] = None
-
-  override def applyRule(matchState: GameState): Seq[Operation] = {
-    matchState.currentPlayer.history
-      .filterTurn(matchState.currentTurn)
-      .filterNotConsumed()
-      .filter(_.isInstanceOf[MovementDiceRollEvent])
-      .map(_.asInstanceOf[MovementDiceRollEvent])
-      .consumeAll()
-      .map(e => Operation.trigger(s => Some(StepMovementEvent(e.result.sum, e.source, s.currentTurn))))
-  }
-
-}
+case class MovementWithDiceBehaviour() extends BehaviourRuleImpl[MovementDiceRollEvent](
+  operationsStrategy = (events, state) =>
+    events.map(e => Operation.trigger(StepMovementEvent(e.result.sum, e.player, e.turn, state.currentCycle))),
+  consume = true, save = true
+)

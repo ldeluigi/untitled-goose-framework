@@ -1,8 +1,8 @@
 package model.actions
 
 import engine.core.EventSink
-import engine.events.MovementDiceRollEvent
-import engine.events.root.GameEvent
+import engine.events.GameEvent
+import engine.events.consumable.MovementDiceRollEvent
 import model.entities.Dice.MovementDice
 import model.game.MutableGameState
 
@@ -18,7 +18,7 @@ private class RollMovementDice(dice: MovementDice, diceNumber: Int) extends Acti
    */
   override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
     val result = for (i <- 0 until diceNumber) yield dice.roll
-    sink.accept(MovementDiceRollEvent(state.currentPlayer, state.currentTurn, result: _*))
+    sink.accept(MovementDiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, result: _*))
   }
 }
 

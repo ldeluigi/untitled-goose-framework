@@ -3,22 +3,23 @@ package main
 import java.awt.{Dimension, Toolkit}
 
 import engine.core.EventSink
-import engine.events.root.{GameEvent, NoOpEvent}
-import engine.events.{DialogLaunchEvent, StepMovementEvent}
+import engine.events.GameEvent
+import engine.events.consumable.{DialogLaunchEvent, StepMovementEvent}
+import engine.events.special.NoOpEvent
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Piece, Position}
 import model.entities.{DialogContent, Dice}
 import model.game.{Game, MutableGameState}
+import model.rules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
-import model.rules.behaviours.{MovementWithDiceBehaviour, MultipleStepBehaviour}
+import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
-import model.rules.{ActionRule, BehaviourRule}
-import model.{Color, Player, TileIdentifier}
+import model.{Color, Player}
 import scalafx.application.JFXApp
 import view.ApplicationController
-import view.board.GraphicDescriptor
+import view.playerselection.PlayerSelection
 
 /**
  * Example of a Goose Game without the use of a support DSL.
@@ -36,10 +37,10 @@ object TestMain extends JFXApp {
     override def name: String = "Launch Dialog!"
 
     override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
-      sink.accept(DialogLaunchEvent(state.currentTurn, s => DialogContent(
+      sink.accept(DialogLaunchEvent(state.currentTurn, state.currentCycle, DialogContent(
         "Movement Bonus",
         "Make 10 step?",
-        "Yes" -> StepMovementEvent(10, s.currentPlayer, s.currentTurn),
+        "Yes" -> StepMovementEvent(10, state.currentPlayer, state.currentTurn, state.currentCycle),
         "No" -> NoOpEvent
       )))
     }

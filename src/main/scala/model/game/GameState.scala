@@ -1,25 +1,17 @@
 package model.game
 
-import engine.events.root.GameEvent
+import engine.events.GameEvent
+import engine.events.consumable.ConsumableGameEvent
 import model.Player
 import model.entities.board.Piece
 
 /** Models the game's state concept. */
 trait GameState {
 
-  /**
-   * @return the value representing the game being started or not.
-   */
-  def newTurnStarted: Boolean
-
-  /**
-   * @return the current turn index
-   */
   def currentTurn: Int
 
-  /**
-   * @return the current player playing
-   */
+  def currentCycle: Int
+
   def currentPlayer: Player
 
   /**
@@ -37,10 +29,9 @@ trait GameState {
    */
   def gameBoard: GameBoard
 
-  /**
-   * @return the history of past game events
-   */
-  def history: List[GameEvent]
+  def consumableBuffer: Seq[ConsumableGameEvent]
+
+  def gameHistory: Seq[GameEvent]
 
   /**
    * @return a set of players pieces

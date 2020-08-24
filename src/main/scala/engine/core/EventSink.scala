@@ -1,6 +1,6 @@
 package engine.core
 
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 
 trait EventSink[E <: GameEvent] {
 

@@ -27,6 +27,7 @@ trait TileIdentifier {
 
 object TileIdentifier {
 
+  private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Set[String]) extends TileIdentifier {
   case class Group(group: String) {
 
     /** A factory that creates a new group
@@ -76,5 +77,3 @@ object TileIdentifier {
   def apply(group: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(group))
 
 }
-
-

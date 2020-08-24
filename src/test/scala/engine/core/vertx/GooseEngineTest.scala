@@ -1,9 +1,10 @@
 package engine.core.vertx
 
-import engine.events.root.{GameEvent, NoOpEvent}
+import engine.events.GameEvent
+import engine.events.special.NoOpEvent
 import model.entities.DialogContent
 import model.entities.board.{Board, Disposition, Piece}
-import model.game.{Game, MutableGameState}
+import model.game.{Game, GameState, MutableGameState}
 import model.rules.ruleset.PriorityRuleSet
 import model.{Color, Player}
 import org.scalatest.concurrent.{Eventually, Waiters}
@@ -12,7 +13,7 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
 import view.GooseController
 
-import scala.concurrent.{Await, Future, Promise}
+import scala.concurrent.Future
 import scala.math.abs
 
 class GooseEngineTest extends AnyFlatSpec with Matchers {
@@ -22,11 +23,11 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
   val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet())
 
   def cGenerator(handler: GameEvent => Unit): GooseController = new GooseController {
-    override def update(state: MutableGameState): Unit = {}
+    override def update(state: GameState): Unit = {}
 
     override def showDialog(content: DialogContent): Future[GameEvent] = Future.successful(NoOpEvent)
 
-    override def logEvent(event: GameEvent): Unit = handler(event)
+    override def logAsyncEvent(event: GameEvent): Unit = handler(event)
 
     override def close(): Unit = {}
   }
@@ -36,11 +37,9 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
     override def turn: Int = -1
 
-    override def isConsumed: Boolean = false
-
-    override def consume(): Unit = {}
-
     override def groups: Set[String] = Set()
+
+    override def cycle: Int = 1
   }
 
   it should "stop" in {
@@ -58,19 +57,6 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
       Thread.currentThread().getThreadGroup.enumerate(b)
       abs(prev - now) should be <= 1
     }
-  }
-
-  it should "be a correct eventSink" in {
-    val p: Promise[Boolean] = Promise[Boolean]()
-    val ge: GooseEngine = GooseEngine(m, cGenerator(ev => if (e == ev) p.success(true)))
-    //ge.eventSink.accept(NoOpEvent)
-    ge.eventSink.accept(e)
-    try {
-      Await.result(p.future, 5 seconds)
-    } finally {
-      ge.stop()
-    }
-    p.future.value.get.get should be(true)
   }
 
   it should "currentMatch" in {

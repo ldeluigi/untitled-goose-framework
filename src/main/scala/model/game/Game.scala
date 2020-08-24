@@ -1,6 +1,5 @@
 package model.game
 
-import engine.events.root.{GameEvent, PlayerEvent, TileEvent}
 import model.Player
 import model.actions.Action
 import model.entities.board.{Board, Piece}
@@ -33,11 +32,6 @@ trait Game {
 
   def cleanup: Operation
 
-  /** Submits an event to the game's history.
-   *
-   * @param event the event to be submitted
-   */
-  def submitEvent(event: GameEvent): Unit
 }
 
 object Game {
@@ -47,18 +41,18 @@ object Game {
 
   private class GameImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Game {
 
-    private val firstTurn = 0
-    private val desiredMinPlayers = 3
-    private val desiredMaxPlayers = 10
-
     override val board: GameBoard = GameBoard(gameBoard)
-    override val currentState: MutableGameState = MutableGameState(
-      firstTurn,
+    override val currentState: CycleMutableGameState = CycleMutableGameState(
       rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
       playerPieces,
       board
     )
+
+    override def availableActions: Set[Action] =
+      if (currentState.consumableBuffer.isEmpty)
+        rules.actions(currentState)
+      else Set()
 
     def maxMinPlayers(ruleSet: RuleSet): PlayerCardinalityRule = {
       PlayerCardinalityRule(desiredMinPlayers, desiredMaxPlayers)
@@ -68,16 +62,13 @@ object Game {
 
     override def stateBasedOperations: Seq[Operation] = rules.stateBasedOperations(currentState)
 
-    override def submitEvent(event: GameEvent): Unit = {
-      currentState.history = event :: currentState.history
-      event match {
-        case event: PlayerEvent => event.source.history = event :: event.source.history
-        case event: TileEvent => event.source.history = event :: event.source.history
-        case event: GameEvent => event :: this.currentState.history
-      }
+    override def cleanup: Operation = {
+      Operation.updateState(state => {
+        rules.cleanupOperations(state)
+        currentState.consumableBuffer = currentState.consumableBuffer.filter(_.cycle > currentState.currentCycle)
+        this.currentState.currentCycle = this.currentState.currentCycle + 1
+      })
     }
-
-    override def cleanup: Operation = Operation.execute(rules.cleanupOperations)
   }
 
 }

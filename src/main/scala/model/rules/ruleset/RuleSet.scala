@@ -2,19 +2,14 @@ package model.rules.ruleset
 
 import model.actions.Action
 import model.entities.board.Position
-import model.game.{GameState, MutableGameState}
+import model.game.MutableGameState
 import model.rules.operations.Operation
 import model.{Player, Tile}
 
 /** Defines a rule set */
 trait RuleSet {
 
-  /** Returns a sequence of operation based on a GameState.
-   *
-   * @param state the GameState on which to base to withdraw the operations sequence
-   * @return the subsequent sequence of operations
-   */
-  def stateBasedOperations(state: GameState): Seq[Operation]
+  def stateBasedOperations(state: MutableGameState): Seq[Operation]
 
   /** Performs a clean up operation.
    *

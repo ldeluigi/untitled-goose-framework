@@ -2,11 +2,11 @@ package model.rules.ruleset
 
 import model.actions.Action
 import model.entities.board.Position
-import model.game.{GameState, MutableGameState}
-import model.rules.behaviours.{DialogLaunchBehaviour, TurnEndEventBehaviour}
+import model.game.MutableGameState
+import model.rules.behaviours.{BehaviourRule, DialogLaunchBehaviour, TurnEndEventBehaviour}
 import model.rules.cleanup.TurnEndConsumer
 import model.rules.operations.Operation
-import model.rules.{ActionRule, BehaviourRule, CleanupRule}
+import model.rules.{ActionRule, CleanupRule}
 import model.{Player, Tile}
 
 /** Models the concept of a rule set with a certain priority. */
@@ -39,7 +39,7 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
   override def first(players: Set[Player]): Player =
     playerOrdering.first(players)
 
-  override def stateBasedOperations(state: GameState): Seq[Operation] =
+  override def stateBasedOperations(state: MutableGameState): Seq[Operation] =
     TurnEndEventBehaviour().applyRule(state) ++
       behaviourRules.flatMap(_.applyRule(state)) ++
       DialogLaunchBehaviour().applyRule(state)

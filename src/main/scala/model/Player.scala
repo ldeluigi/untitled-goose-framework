@@ -1,6 +1,6 @@
 package model
 
-import engine.events.root.PlayerEvent
+import engine.events.PlayerEvent
 
 /** Models the concept of a player. */
 trait Player {
@@ -11,15 +11,9 @@ trait Player {
    */
   def name: String
 
-  /** Player's history.
-   *
-   * @return a list of player triggered events.
-   */
-  def history: List[PlayerEvent]
+  def history: Seq[PlayerEvent]
 
-  def history_=(history: List[PlayerEvent]): Unit
-
-  // TODO controllare se inserire un metodo per modificare la history aggiungendo eventi
+  def history_=(history: Seq[PlayerEvent]): Unit
 }
 
 object Player {
@@ -28,7 +22,7 @@ object Player {
 
     override def name: String = playerName
 
-    var history: List[PlayerEvent] = List()
+    var history: Seq[PlayerEvent] = List()
 
     override def equals(obj: Any): Boolean = obj match {
       case obj: Player => this.name == obj.name

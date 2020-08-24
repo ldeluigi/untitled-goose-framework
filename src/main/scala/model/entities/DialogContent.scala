@@ -1,6 +1,6 @@
 package model.entities
 
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 
 /**
  * A dialog to display events.
