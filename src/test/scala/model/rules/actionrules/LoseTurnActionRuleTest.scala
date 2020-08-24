@@ -1,9 +1,7 @@
 package model.rules.actionrules
 
-import engine.events.persistent.player
 import mock.MatchMock
 import model.actions.StepForwardAction
-import model.rules.ActionAvailability
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
