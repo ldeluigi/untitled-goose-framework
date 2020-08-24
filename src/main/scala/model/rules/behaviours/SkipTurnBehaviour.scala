@@ -6,6 +6,7 @@ import model.game.{GameState, MutableGameState}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
+/** Creates a movement-with-dice related behaviour rule. */
 case class SkipTurnBehaviour() extends BehaviourRule {
   override def name: Option[String] = None
 
@@ -29,6 +30,11 @@ case class SkipTurnBehaviour() extends BehaviourRule {
   }
 
 
+  /** Consumes a turn.
+   *
+   * @param toSkip numbers of turn to skip
+   * @return the resulting operation
+   */
   def consumeTurn(toSkip: Int): Operation = {
     Operation.execute((state: MutableGameState) =>
       state.currentPlayer.history

@@ -9,6 +9,7 @@ import model.game.GameStateExtensions.{MatchStateExtensions, PimpedHistory}
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
+/** Creates a multiple-step related behaviour rule. */
 case class MultipleStepBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = Some("Multiple StepRule")
@@ -23,12 +24,28 @@ case class MultipleStepBehaviour() extends BehaviourRule {
       .flatMap(e => generateStep(state, e.movement, e.source, e.movement >= 0))
   }
 
+  /** Generates a step in the game.
+   *
+   * @param state   the current game state
+   * @param step    the number of steps to process
+   * @param player  the player that steps forward or backwards
+   * @param forward the direction of the step
+   * @return the resulting sequence of operation
+   */
   private def generateStep(state: GameState, step: Int, player: Player, forward: Boolean): Seq[Operation] = {
     (1 to step).toList.flatMap(i => {
       stepOperation(state, player, forward, step - i)
     })
   }
 
+  /** Actual step action.
+   *
+   * @param state          the current game state
+   * @param player         the player that steps forward or backwards
+   * @param forward        the direction of the step
+   * @param remainingSteps the remaining number of steps to process
+   * @return the resulting sequence of operation
+   */
   private def stepOperation(state: GameState, player: Player, forward: Boolean, remainingSteps: Int): Seq[Operation] = {
 
     val tileExited = Operation.trigger(s => {
@@ -99,6 +116,12 @@ case class MultipleStepBehaviour() extends BehaviourRule {
     }
   }
 
+  /** Triggers the corresponding operations related to a certain tile the player has stepped onto.
+   *
+   * @param state  the current game state
+   * @param player the player to check
+   * @return the resulting sequence of operation
+   */
   private def checkAndTriggerPassedPlayers(state: GameState, player: Player): Seq[Operation] = {
     for (other <- state.players.toSeq if !other.equals(player))
       yield Operation.trigger(s => {

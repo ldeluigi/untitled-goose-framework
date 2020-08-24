@@ -8,6 +8,7 @@ import model.game.GameStateExtensions.PimpedHistory
 import model.rules.BehaviourRule
 import model.rules.operations.{Operation, SpecialOperation}
 
+/** Creates a victory related behaviour rule. */
 case class VictoryBehaviour() extends BehaviourRule {
   override def name: Option[String] = Some("Victory")
 

@@ -8,7 +8,9 @@ import model.rules.BehaviourRule
 import model.rules.operations.Operation
 import model.{Player, Tile}
 
+/** Creates a teleport related behaviour rule. */
 case class TeleportBehaviour() extends BehaviourRule {
+
   override def name: Option[String] = Some("Teleport")
 
   override def applyRule(state: GameState): Seq[Operation] =
@@ -20,6 +22,13 @@ case class TeleportBehaviour() extends BehaviourRule {
       .consumeAll()
       .flatMap(e => teleportOperation(state, state.currentPlayer, e.teleportTo))
 
+  /** Gives the player the ability to teleport to a certain non necessarily subsequent tile.
+   *
+   * @param state  the current game state
+   * @param player the player to move tiles
+   * @param tile   the tile the player will have to move to
+   * @return the resulting sequence of operation
+   */
   def teleportOperation(state: GameState, player: Player, tile: Tile): Seq[Operation] = {
     val tileExited = Operation.trigger(s => {
       val tile = s.playerPieces(player).position.map(_.tile)

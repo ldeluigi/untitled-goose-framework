@@ -6,6 +6,7 @@ import model.game.GameStateExtensions.PimpedHistory
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
+/** Creates an end turn behaviour rule. */
 private[rules] case class TurnEndEventBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = Some("Turn Event Rule")

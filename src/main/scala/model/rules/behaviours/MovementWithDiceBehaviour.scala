@@ -6,6 +6,7 @@ import model.game.GameStateExtensions.PimpedHistory
 import model.rules.BehaviourRule
 import model.rules.operations.Operation
 
+/** Creates a movement-with-dice related behaviour rule. */
 case class MovementWithDiceBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = None

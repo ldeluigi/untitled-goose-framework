@@ -7,6 +7,7 @@ import model.rules.BehaviourRule
 import model.rules.operations.Operation
 import model.rules.operations.SpecialOperation.DialogOperation
 
+/** Creates a dialog launch related behaviour rule. */
 private[rules] case class DialogLaunchBehaviour() extends BehaviourRule {
 
   override def name: Option[String] = None
