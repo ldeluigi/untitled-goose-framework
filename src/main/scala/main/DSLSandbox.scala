@@ -12,5 +12,5 @@ object DSLSandbox extends GooseDSL {
 
   The board has(Spiral disposition)
 
-  //The tile(6)(has (12 tiles))
+  //6th has(Spiral disposition) // how to add tile word???
 }

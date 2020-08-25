@@ -6,6 +6,4 @@ object Subjects {
 
   val board: BoardPropertyChanger => Unit = ???
 
-  //val tile : Int => (BoardPropertyChanger => Unit) = ???
-
 }
