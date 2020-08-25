@@ -5,7 +5,7 @@ import model.entities.board.Board
 import model.rules.ActionRule
 import model.rules.behaviours.BehaviourRule
 
-object GameDataTree {
+object GameData {
 
   var board: Option[Board] = None
 
