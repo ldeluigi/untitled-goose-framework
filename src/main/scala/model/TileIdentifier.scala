@@ -2,40 +2,18 @@ package model
 
 import model.TileIdentifier.Group
 
-/** Models the concet of a TileIdentifier. */
 trait TileIdentifier {
 
-  /** Tile's number (highest priority).
-   *
-   * @return the tile's index identifying number, if present
-   */
   def number: Option[Int]
 
-  /** Tile's name (middle priority).
-   *
-   * @return the identifying tile's name, if present
-   */
   def name: Option[String]
 
-  /** Tile's group (lowest priority)
-   *
-   * @return the tile's identifying group, if present
-   */
   def group: Option[Group]
 
 }
 
 object TileIdentifier {
-
-  case class Group(group: String) {
-
-    /** A factory that creates a new group
-     *
-     * @param group the group's name
-     * @return the newly created Group object
-     */
-    def apply(group: String): Group = new Group(group)
-  }
+  case class Group(group: String)
 
   private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Option[Group]) extends TileIdentifier {
 
@@ -76,5 +54,3 @@ object TileIdentifier {
   def apply(group: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(group))
 
 }
-
-

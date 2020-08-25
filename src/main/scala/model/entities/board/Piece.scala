@@ -2,17 +2,10 @@ package model.entities.board
 
 import model.Color.Color
 
-/**
- * Model a placeholder that sits on a tile, indication where a certain player is currently located.
- **/
 trait Piece {
 
-  /**
-   * @return the piece's position, if present
-   */
   def position: Option[Position]
 
-  /** The piece's color. */
   def color: Color
 }
 

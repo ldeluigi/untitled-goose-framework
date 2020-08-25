@@ -1,8 +1,5 @@
 package model.entities.board
 
-/**
- * Models different types of tiles disposition.
- */
 trait Disposition {
 
   /** Total number of tiles. */
@@ -79,11 +76,6 @@ object Disposition {
     }
   }
 
-  /** SType of disposition square-like.
-   *
-   * @param totalTiles
-   * @param ratio
-   */
   private class LoopDisposition(val totalTiles: Int, ratio: Int) extends Disposition {
 
     private val rowsPlusColumns: Int = (totalTiles + totalTiles % 2) / 2 + 2

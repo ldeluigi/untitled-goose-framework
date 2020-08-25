@@ -43,14 +43,14 @@ object TileVisualization {
     var imageContainer: ImageView = _
     var imageFlag: Boolean = false
 
-    if (tile.name.isDefined) {
-      graphicMap.get(TileIdentifier(tile.name.get)).foreach(applyStyle)
+    if (tile.definition.name.isDefined) {
+      graphicMap.get(TileIdentifier(tile.definition.name.get)).foreach(applyStyle)
 
-    } else if (tile.number.isDefined) {
-      graphicMap.get(TileIdentifier(tile.number.get)).foreach(applyStyle)
+    } else if (tile.definition.number.isDefined) {
+      graphicMap.get(TileIdentifier(tile.definition.number.get)).foreach(applyStyle)
 
-    } else if (tile.groups.nonEmpty) {
-      for (group <- tile.groups) {
+    } else if (tile.definition.groups.nonEmpty) {
+      for (group <- tile.definition.groups) {
         if (graphicMap.contains(TileIdentifier(Group(group)))) {
           graphicMap.get(TileIdentifier(Group(group))).foreach(applyStyle)
           break //prendo elemento dal set e controllo che ci sia nella mappa; per ora breakkiamo dopo aver trovato un primo elemento corrispondente
@@ -88,9 +88,9 @@ object TileVisualization {
       height <== parentHeight / rows
     }
 
-    val text: String = tile.name match {
+    val text: String = tile.definition.name match {
       case Some(value) => value
-      case None => tile.number.get.toString
+      case None => tile.definition.number.get.toString
     }
 
     var label = new Label(text)

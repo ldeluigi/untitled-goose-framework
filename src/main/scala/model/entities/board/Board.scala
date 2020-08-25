@@ -1,18 +1,11 @@
 package model.entities.board
 
-/** The board of the actual game itself. */
 trait Board {
 
-  /** The whole tile set belonging to a certain board of a certain game. */
   def tiles: Set[TileDefinition]
 
-  /** The board's name. */
   def name: String
 
-  /** Board's specific tiles disposition.
-   *
-   * @return the disposition type
-   */
   def disposition: Disposition
 
   /** Returns the next tile.
@@ -24,7 +17,7 @@ trait Board {
 
   /** Returns the previous tile.
    *
-   * @param tile the tile of which to return the next one
+   * @param tile the tile of which to return the previous one
    * @return the previous tile, if present
    */
   def prev(tile: TileDefinition): Option[TileDefinition]
@@ -68,13 +61,10 @@ object Board {
     override def first: TileDefinition = tiles.toSeq.min
   }
 
-  /** A factory that creates a new board, given a certain tile number and based on a specific disposition */
   def apply(tileNum: Int, disposition: Disposition): Board = new GeneratedBoard(tileNum, disposition)
 
-  /** A factory that creates a new board, given a certain name, a tile's set and based on a specific disposition */
   def apply(name: String, tiles: Set[TileDefinition], disposition: Disposition): Board = new BoardImpl(name, tiles, disposition)
 
-  /** Iniziates the board builder. */
   def create(): BoardBuilder = BoardBuilder()
 
 }

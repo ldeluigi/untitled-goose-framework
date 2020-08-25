@@ -2,21 +2,10 @@ package model.entities.board
 
 import model.Groupable
 
-/**
- * Models the concept of a single tile.
- */
 trait TileDefinition extends Groupable {
 
-  /** Number identifying a certain tile.
-   *
-   * @return the tile's index, if present
-   */
   def number: Option[Int]
 
-  /** Name identifying a certain tile.
-   *
-   * @return the tile's name, if present
-   */
   def name: Option[String]
 }
 

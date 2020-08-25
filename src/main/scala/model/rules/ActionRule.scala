@@ -2,14 +2,8 @@ package model.rules
 
 import model.game.MutableGameState
 
-/** Defines the concept of an ActionRule. */
 trait ActionRule {
 
-  /** Allowed actions for an action rule.
-   *
-   * @param state the current MutableGameState
-   * @return the set of allowed actions
-   */
   def allowedActions(state: MutableGameState): Set[ActionAvailability]
 
 }

@@ -1,11 +1,11 @@
 package view
 
 import engine.core.vertx.GooseEngine
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import model.TileIdentifier
 import model.actions.Action
 import model.entities.DialogContent
-import model.game.{Game, MutableGameState}
+import model.game.{Game, GameState}
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
@@ -16,18 +16,16 @@ import view.logger.EventLogger
 
 import scala.concurrent.{Future, Promise}
 
-/** A scene used to display the game. */
 trait ApplicationController extends Scene {
   def resolveAction(action: Action)
 }
 
-/** The game's controller. */
 trait GooseController {
-  def update(state: MutableGameState)
+  def update(state: GameState)
 
   def showDialog(content: DialogContent): Future[GameEvent]
 
-  def logEvent(event: GameEvent)
+  def logAsyncEvent(event: GameEvent)
 
   def close(): Unit
 }
@@ -37,6 +35,7 @@ object ApplicationController {
   private class ApplicationControllerImpl(stage: Stage, widthSize: Int, heightSize: Int, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends ApplicationController with GooseController {
 
+    var previousState: GameState = gameMatch.currentState
     val boardProportion = 0.8
     val appBarOffset = 40
     val logHeight = 200
@@ -64,45 +63,36 @@ object ApplicationController {
 
     stage.setOnCloseRequest(_ => stopEngine())
 
-    /** Method to execute action.
-     *
-     * @param action the action to process.
-     */
     def resolveAction(action: Action): Unit = {
       action.execute(engine.eventSink, engine.currentMatch.currentState)
     }
 
-    /** Updates the board with the new current match state and possible actions.
-     *
-     * @param state the state used to update the board.
-     */
-    override def update(state: MutableGameState): Unit = Platform.runLater(() => {
+    override def update(state: GameState): Unit = Platform.runLater(() => {
       boardView.updateMatchState(state)
       actionMenu.displayActions(engine.currentMatch.availableActions)
+      logHistoryDiff(state)
     })
 
-    /** Utility method to correctly stop the engine and close the stage containing the game. */
+    private def logHistoryDiff(state: GameState): Unit = {
+      (state.consumableBuffer.diff(previousState.consumableBuffer) ++
+        state.players.flatMap(_.history).diff(previousState.players.flatMap(_.history)) ++
+        state.gameBoard.tiles.flatMap(_.history).diff(previousState.gameBoard.tiles.flatMap(_.history)))
+        .foreach(logger.logEvent)
+      previousState = state
+    }
+
     override def close(): Unit = Platform.runLater(() => {
       stopEngine()
       stage.close()
     })
 
-    /** Stops the game's engine. */
     private def stopEngine(): Unit = engine.stop()
 
-    /** Logs the event (as soon as the EDT is ready).
-     *
-     * @param event the event to log.
-     */
-    override def logEvent(event: GameEvent): Unit = Platform.runLater(() => {
+    override def logAsyncEvent(event: GameEvent): Unit = Platform.runLater(() => {
       logger.logEvent(event)
     })
 
-    /** Shows a dialog to the user.
-     *
-     * @param content the content of the dialog itself.
-     * @return a future of a GameEvent.
-     */
+
     override def showDialog(content: DialogContent): Future[GameEvent] = {
       val promise: Promise[GameEvent] = Promise()
       Platform.runLater(() => {

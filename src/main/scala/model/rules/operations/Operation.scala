@@ -1,37 +1,47 @@
 package model.rules.operations
 
-import engine.core.EventSink
-import engine.events.root.GameEvent
+import engine.events.GameEvent
+import model.entities.DialogContent
 import model.game.{GameState, MutableGameState}
 
-/** Models the concept of a game operation. */
-trait Operation {
+sealed trait Operation {
+  def name: String
 
-  /** Executes an operation.
-   *
-   * @param state     the state from which withdraw the operation.
-   * @param eventSink the event sink to register the happened event into.
-   */
-  def execute(state: MutableGameState, eventSink: EventSink[GameEvent]): Unit
+  def execute(state: MutableGameState): Unit
 }
 
 object Operation {
 
-  /** Triggers a certain operation.
-   *
-   * @param gameState the GameState from which withdraw the operation to execute
-   * @return the operation to be executed
-   */
-  def trigger(gameState: GameState => Option[GameEvent]): Operation = (state: MutableGameState, eventSink: EventSink[GameEvent]) => {
-    gameState(state).foreach(eventSink.accept)
+  import model.game.GameStateExtensions.MutableStateExtensions
+
+  def trigger(event: GameEvent*): Operation = new Operation {
+    override def execute(state: MutableGameState): Unit = event.foreach(state.submitEvent)
+
+    val name: String = "Trigger: " + event.map(_.name).mkString(",")
   }
 
-  /** Executes an operation.
-   *
-   * @param mutableGameState the MutableGameState from which withdraw the operation to execute
-   * @return the operation to be executed
-   */
-  def execute(mutableGameState: MutableGameState => Unit): Operation = (state: MutableGameState, _: EventSink[GameEvent]) => {
-    mutableGameState(state)
+
+  def triggerWhen(condition: GameState => Boolean, createEvent: GameState => Seq[GameEvent]): Operation = new Operation {
+    override def execute(state: MutableGameState): Unit =
+      if (condition(state))
+        createEvent(state).foreach(state.submitEvent)
+
+    val name: String = "Trigger (When)"
   }
+
+  def updateState(f: MutableGameState => Unit): Operation = new Operation {
+    override def execute(state: MutableGameState): Unit = f(state)
+
+    val name: String = "State Update"
+  }
+
+  sealed trait SpecialOperation extends Operation
+
+  case class DialogOperation(content: DialogContent) extends SpecialOperation {
+
+    override def execute(state: MutableGameState): Unit = {}
+
+    val name: String = "DialogOperation (" + content.title + ")"
+  }
+
 }

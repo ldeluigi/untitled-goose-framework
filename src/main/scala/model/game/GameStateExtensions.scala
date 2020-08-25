@@ -1,40 +1,26 @@
 package model.game
 
-import engine.events.root.GameEvent
-import engine.events.{StopOnTileEvent, TurnEndedEvent}
+import engine.events._
+import engine.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
+import engine.events.persistent.{PersistentGameEvent, TurnEndedEvent}
+import engine.events.special.{ExitEvent, NoOpEvent}
 import model.{Player, Tile}
 
 import scala.reflect.ClassTag
 
-/** Models the concept of game state extension */
 object GameStateExtensions {
 
-  implicit class MatchStateExtensions(state: GameState) {
+  implicit class GameStateExtensions(state: GameState) {
 
-    /**
-     * @param number the index of the tile to return
-     * @return the tile, if present
-     */
-    def getTile(number: Int): Option[Tile] = {
-      state.gameBoard.tiles.find(t => t.number.isDefined && t.number.get == number)
-    }
+    def getTile(number: Int): Option[Tile] =
+      state.gameBoard.tiles.find(t => t.definition.number.isDefined && t.definition.number.get == number)
 
-    /**
-     * @param name the name of the tile to return
-     * @return the tile, if present
-     */
-    def getTile(name: String): Option[Tile] = {
-      state.gameBoard.tiles.find(t => t.name.isDefined && t.name.get == name)
-    }
+    def getTile(name: String): Option[Tile] =
+      state.gameBoard.tiles.find(t => t.definition.name.isDefined && t.definition.name.get == name)
 
-    /**
-     * @param tile   the tile on which the players stops its turn
-     * @param player the player that stops its turn
-     * @return a sequence containing the events triggered by the player who has stopped its turn
-     */
     def playerStopsTurns(tile: Tile, player: Player): Seq[Int] = tile.history
       .only[StopOnTileEvent]
-      .filter(_.source.equals(player))
+      .filter(_.player.equals(player))
       .map(_.turn)
 
     def playerLastTurn(player: Player): Option[Int] = player.history
@@ -42,17 +28,50 @@ object GameStateExtensions {
       .map(_.turn).reduceOption(_ max _)
   }
 
+  implicit class MutableStateExtensions(mutable: MutableGameState) extends GameStateExtensions(mutable) {
+
+    def submitEvent(event: GameEvent): Unit = {
+      println(event)
+      event match {
+        case NoOpEvent | ExitEvent => Unit
+        case event: ConsumableGameEvent => mutable.consumableBuffer = event +: mutable.consumableBuffer
+        case event: PersistentGameEvent => caseMatch(event)
+        case event => mutable.gameHistory = event +: mutable.gameHistory
+      }
+    }
+
+    def saveEvent(event: ConsumableGameEvent): Unit = {
+      mutable.gameHistory = event +: mutable.gameHistory
+      caseMatch(event)
+    }
+
+    private def caseMatch(event: GameEvent): Unit =
+      event match {
+        case event: PlayerEvent with TileEvent =>
+          event.player.history = event +: event.player.history
+          event.tile.history = event +: event.tile.history
+        case event: PlayerEvent => event.player.history = event +: event.player.history
+        case event: TileEvent => event.tile.history = event +: event.tile.history
+      }
+
+  }
+
   implicit class PimpedHistory[H <: GameEvent](history: Seq[H]) {
     type History = Seq[H]
 
+    def removeEvent(event: GameEvent): History = history.filterNot(_ == event)
+
+    def remove[T: ClassTag](n: Int = 1): History =
+      history.filterNot(e => history.only[T].take(n).contains(e))
+
+    def removeAll[T: ClassTag](): History =
+      history.filterNot(e => history.only[T].contains(e))
+
     def filterTurn(turn: Int): History = history.filter(_.turn == turn)
 
-    def filterNotConsumed(): History = history.filterNot(_.isConsumed)
+    def filterCycle(cycle: Int): History = history.filter(_.cycle == cycle)
 
-    def consumeAll(): History = history.map(e => {
-      e.consume()
-      e
-    })
+    def filterName(name: String): History = history.filter(_.name == name)
 
     def only[T: ClassTag]: Seq[T] = history.filter({
       case _: T => true

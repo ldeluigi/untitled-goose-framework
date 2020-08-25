@@ -1,5 +1,6 @@
 package view.board
 
+import model.game.{GameBoard, GameState}
 import model.TileIdentifier
 import model.game.{GameBoard, MutableGameState}
 import scalafx.scene.control.ScrollPane
@@ -9,7 +10,7 @@ import scalafx.scene.layout.Pane
  *
  */
 trait BoardDisplay extends ScrollPane {
-  def updateMatchState(matchState: MutableGameState)
+  def updateMatchState(matchState: GameState)
 }
 
 object BoardDisplay {
@@ -38,11 +39,7 @@ object BoardDisplay {
       tiles = currentTile :: tiles
     }
 
-    /** Utility method that update the state of match.
-     *
-     * @param matchState the state of match on which base the game will be updated to.
-     */
-    override def updateMatchState(matchState: MutableGameState): Unit = {
+    override def updateMatchState(matchState: GameState): Unit = {
       for (t <- tiles) {
         t.removePieces()
       }
@@ -57,10 +54,6 @@ object BoardDisplay {
       }
     }
 
-    /** A method that computes a certain tile's new coordinates based on its previous coordinates and the dimension of the board itself.
-     *
-     * @param positionTile the tile used to compute the neww coordinates.
-     */
     private def setFocus(positionTile: TileVisualization): Unit = {
       this.setHvalue(positionTile.getLayoutX / boardPane.getWidth)
       this.setVvalue(positionTile.getLayoutY / boardPane.getHeight)

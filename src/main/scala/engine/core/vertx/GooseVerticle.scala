@@ -1,6 +1,6 @@
 package engine.core.vertx
 
-import engine.events.root.GameEvent
+import engine.events.GameEvent
 import io.vertx.lang.scala.ScalaVerticle
 
 private[vertx] class GooseVerticle(val handler: GameEvent => Unit) extends ScalaVerticle {

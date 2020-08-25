@@ -1,7 +1,7 @@
 package model.actions
 
-import engine.events.DiceRollEvent
-import engine.events.root.GameEvent
+import engine.events.GameEvent
+import engine.events.consumable.DiceRollEvent
 import mock.MatchMock._
 import model.entities.Dice.Dice
 import org.scalatest.flatspec.AnyFlatSpec
