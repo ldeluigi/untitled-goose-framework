@@ -1,5 +1,5 @@
 package dsl
-
+/*
 object BoardDSL {
 
   trait DefineKeyWord {
@@ -63,13 +63,13 @@ object BoardDSL {
 }
 
 
-/*
 A "goose game" board has 63 tiles in Spiral disposition {
   - 6 "the well",
   [...]
   -4,9, .. 54, 59 Group("goose")
   - 63 "The End"
  }
- */
+
 
 //TODO tiles with no number??
+*/
