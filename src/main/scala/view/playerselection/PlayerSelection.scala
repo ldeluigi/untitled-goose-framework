@@ -31,27 +31,9 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   root = borderPane
 
-  val playerNameFromInput = new TextField()
-
-  /*val cmb = new ComboBox()
-  cmb.getItems.addAll()
-
-  cmb.setCellFactory(new Callback[ListView[Color], ListCell[Color]]() {
-     override def call(p: ListView[Color]): ListCell[Color] = new ListCell() {
-       private val rectangle = Rectangle(5, 5)
-
-       override def updateItem(item: Color, empty: Boolean): Unit = {
-        super.updateItem(item, empty)
-        if (item == null || empty) graphic
-        else {
-          rectangle.fill
-          graphic = (rectangle)
-        }
-      }
-    }
-  })*/
-
+  val playerNameFromInput = new TextField
   val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
+  colorsChoice.getSelectionModel.selectFirst()
 
   val addPlayer: Button = new Button {
     text = "Add"
@@ -98,29 +80,28 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   val activePlayersPanel: VBox = new VBox {
     spacing = 15
-    padding = Insets(20)
+    padding = Insets(15)
     children = List(activePlayersList)
   }
 
   val bottomGameControls: HBox = new HBox {
     alignment = Pos.BottomCenter
     spacing = 15
-    padding = Insets(20)
+    padding = Insets(15)
     children = List(startGame)
   }
 
   addPlayer.onAction = _ => {
-    if (playerNameFromInput.getText.nonEmpty) { // TODO colors emptiness check
+    if (playerNameFromInput.getText.nonEmpty) {
       if (!enrolledPlayers.contains(Player(playerNameFromInput.getText))) {
         enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
-        for ((k, v) <- enrolledPlayers) println("key: " + k, "value: " + v)
         renderGraphicalAddition()
         playerNameFromInput.clear()
       } else {
         new Alert(AlertType.Error) {
           initOwner(stage)
           title = "Error!"
-          headerText = "This player's already present!"
+          headerText = "This username is already taken!"
           contentText = "Choose a different name."
         }.showAndWait()
       }
@@ -137,7 +118,6 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   removePlayer.onAction = _ => {
     if (playerNameFromInput.getText.nonEmpty) {
       enrolledPlayers -= Player(playerNameFromInput.getText)
-      for ((k, v) <- enrolledPlayers) println("key: " + k, "value: " + v)
       renderGraphicalRemoval()
       playerNameFromInput.clear()
     } else {
@@ -173,7 +153,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   /** Utility method to remove a user specified players to the panel containing the current list of players. */
   def renderGraphicalRemoval(): Unit = {
-    activePlayersList.deleteText(activePlayersList.getSelection)
+    //activePlayersList.deleteText(activePlayersList.getSelection) // TODO rework completely
   }
 
   borderPane.top = upperGameNameHeader
