@@ -317,7 +317,7 @@ object GooseGameNoDSL extends JFXApp {
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
-  val currentMatch: Game = Game(board, players, ruleSet)
+  val currentMatch: Game = Game(board, players, ruleSet, 3, 10)
 
   //View launch
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()

@@ -32,8 +32,16 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   root = borderPane
 
   val playerNameFromInput = new TextField
+  var minPlayersFromInput = new TextField
+  var maxPlayersFromInput = new TextField
+
+  minPlayersFromInput.prefWidth = 30
+  maxPlayersFromInput.prefWidth = 30
+
   val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
   colorsChoice.getSelectionModel.selectFirst()
+  //val minimumPlayers: Int = Some
+  //val maximumPlayers: Int = Some
 
   val addPlayer: Button = new Button {
     text = "Add"
@@ -72,16 +80,22 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
     children = List(playerName, playerNameFromInput, colorsChoice, addPlayer, removePlayer)
   }
 
+  val cardinalityPanel: HBox = new HBox {
+    alignment = Pos.Center
+    spacing = 15
+    padding = Insets(30)
+    children = List(minPlayersFromInput, maxPlayersFromInput)
+  }
+
   val activePlayersList: TextArea = new TextArea {
     text = "Currently enrolled players:" + "\n"
   }
   activePlayersList.setMaxSize(widthSize * 0.15, heightSize)
 
-
   val activePlayersPanel: VBox = new VBox {
     spacing = 15
     padding = Insets(15)
-    children = List(activePlayersList)
+    children = List(activePlayersList, cardinalityPanel)
   }
 
   val bottomGameControls: HBox = new HBox {
@@ -128,12 +142,11 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
         contentText = "Specify player's name to remove him/her from the game."
       }.showAndWait()
     }
-
   }
 
   startGame.onAction = _ => {
     if (enrolledPlayers.nonEmpty) {
-      val currentMatch: Game = Game(board, enrolledPlayers, ruleSet)
+      val currentMatch: Game = Game(board, enrolledPlayers, ruleSet, minPlayersFromInput.getText.toInt, maxPlayersFromInput.getText.toInt)
       val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
       stage.scene = appView
     } else {
