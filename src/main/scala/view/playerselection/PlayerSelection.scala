@@ -17,12 +17,12 @@ import view.board.GraphicDescriptor
 
 /** A scene used to be able to add new players to the game.
  *
- * @param stage      the stage on which to render the selection.
- * @param board      a board on which the game is played.
- * @param ruleSet    the rules container for the current game.
+ * @param stage      the stage on which to render the selection
+ * @param board      a board on which the game is played
+ * @param ruleSet    the rules container for the current game
  * @param widthSize  width of the scene
  * @param heightSize height of the scene
- * @param graphicMap the graphic properties container.
+ * @param graphicMap the graphic properties container
  */
 class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
 
@@ -54,7 +54,12 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
 
   val addPlayer: Button = new Button {
-    text = "Enroll player"
+    text = "Add"
+    style = "-fx-font-size: 12pt"
+  }
+
+  val removePlayer: Button = new Button {
+    text = "Remove"
     style = "-fx-font-size: 12pt"
   }
 
@@ -80,9 +85,9 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   val centerPlayerConsole: HBox = new HBox {
     alignment = Pos.Center
-    spacing = 30
+    spacing = 15
     padding = Insets(30)
-    children = List(playerName, playerNameFromInput, colorsChoice, addPlayer)
+    children = List(playerName, playerNameFromInput, colorsChoice, addPlayer, removePlayer)
   }
 
   val activePlayersList: TextArea = new TextArea {
@@ -105,9 +110,45 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   }
 
   addPlayer.onAction = _ => {
-    enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
-    refreshPlayersList()
-    playerNameFromInput.clear()
+    if (playerNameFromInput.getText.nonEmpty) { // TODO colors emptiness check
+      if (!enrolledPlayers.contains(Player(playerNameFromInput.getText))) {
+        enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
+        for ((k, v) <- enrolledPlayers) println("key: " + k, "value: " + v)
+        renderGraphicalAddition()
+        playerNameFromInput.clear()
+      } else {
+        new Alert(AlertType.Error) {
+          initOwner(stage)
+          title = "Error!"
+          headerText = "This player's already present!"
+          contentText = "Choose a different name."
+        }.showAndWait()
+      }
+    } else {
+      new Alert(AlertType.Error) {
+        initOwner(stage)
+        title = "Error!"
+        headerText = "Missing parameters!"
+        contentText = "Specify player's name and color."
+      }.showAndWait()
+    }
+  }
+
+  removePlayer.onAction = _ => {
+    if (playerNameFromInput.getText.nonEmpty) {
+      enrolledPlayers -= Player(playerNameFromInput.getText)
+      for ((k, v) <- enrolledPlayers) println("key: " + k, "value: " + v)
+      renderGraphicalRemoval()
+      playerNameFromInput.clear()
+    } else {
+      new Alert(AlertType.Error) {
+        initOwner(stage)
+        title = "Error!"
+        headerText = "Missing player to remove!"
+        contentText = "Specify player's name to remove him/her from the game."
+      }.showAndWait()
+    }
+
   }
 
   startGame.onAction = _ => {
@@ -126,8 +167,13 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   }
 
   /** Utility method to add new user specified players to the panel containing the current list of players. */
-  def refreshPlayersList(): Unit = {
+  def renderGraphicalAddition(): Unit = {
     activePlayersList.appendText("Name: " + playerNameFromInput.getText + "\t" + "color: " + colorsChoice.getValue + "\n")
+  }
+
+  /** Utility method to remove a user specified players to the panel containing the current list of players. */
+  def renderGraphicalRemoval(): Unit = {
+    activePlayersList.deleteText(activePlayersList.getSelection)
   }
 
   borderPane.top = upperGameNameHeader
