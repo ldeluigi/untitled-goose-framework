@@ -15,6 +15,8 @@ import scalafx.stage.Stage
 import view.ApplicationController
 import view.board.GraphicDescriptor
 
+import scala.collection.mutable.ListBuffer
+
 /** A scene used to be able to add new players to the game.
  *
  * @param stage      the stage on which to render the selection
@@ -37,6 +39,8 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   minPlayersFromInput.prefWidth = 30
   maxPlayersFromInput.prefWidth = 30
+
+  val graphicList = new ListBuffer[String]
 
   val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
   colorsChoice.getSelectionModel.selectFirst()
@@ -84,18 +88,16 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
     alignment = Pos.Center
     spacing = 15
     padding = Insets(30)
-    children = List(minPlayersFromInput, maxPlayersFromInput)
+    children = List(new Label("Min"), minPlayersFromInput, new Label("Max"), maxPlayersFromInput)
   }
 
-  val activePlayersList: TextArea = new TextArea {
-    text = "Currently enrolled players:" + "\n"
-  }
+  val activePlayersList: TextArea = new TextArea
   activePlayersList.setMaxSize(widthSize * 0.15, heightSize)
 
   val activePlayersPanel: VBox = new VBox {
     spacing = 15
     padding = Insets(15)
-    children = List(activePlayersList, cardinalityPanel)
+    children = List(new Label("Currently enrolled players:"), activePlayersList, cardinalityPanel)
   }
 
   val bottomGameControls: HBox = new HBox {
@@ -166,7 +168,8 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   /** Utility method to remove a user specified players to the panel containing the current list of players. */
   def renderGraphicalRemoval(): Unit = {
-    //activePlayersList.deleteText(activePlayersList.getSelection) // TODO rework completely
+    activePlayersList.clear()
+    enrolledPlayers.foreach(entry => activePlayersList.appendText("Name: " + entry._1.name + "\t" + "color: " + entry._2.color + "\n"))
   }
 
   borderPane.top = upperGameNameHeader
