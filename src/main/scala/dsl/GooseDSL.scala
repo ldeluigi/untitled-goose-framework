@@ -1,15 +1,18 @@
 package dsl
 
-import dsl.words.RulesWord
+import dsl.board.properties.BoardHasProperty
+import dsl.words.{RulesWord, TilePropertyWords}
 
 
-trait GooseDSL extends App with Implicits {
+trait GooseDSL extends App with Implicits with Subjects with BoardHasProperty with TilePropertyWords {
 
   protected implicit val ruleBook: RuleBook = new RuleBook()
 
   val Rules: RulesWord = new RulesWord()
 
-  def The: Subjects.type = Subjects
+  def The: Subjects = this
+
+  def the: Subjects = this
 
   override def main(args: Array[String]): Unit = {
     super.main(args)
@@ -25,3 +28,4 @@ trait GooseDSL extends App with Implicits {
   private def start(): Unit = println(ruleBook)
 
 }
+
