@@ -1,7 +1,7 @@
 package dsl.words
 
-import dsl.board.properties.BoardProperty._
-import dsl.board.properties.DispositionType
+import dsl.properties.board.BoardProperty._
+import dsl.properties.board.DispositionType
 
 trait BoardPropertyWords {
 

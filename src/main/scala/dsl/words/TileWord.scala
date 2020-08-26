@@ -1,8 +1,8 @@
 package dsl.words
 
-import dsl.tile.properties.TileHasProperty
+import dsl.properties.tile.TileHasProperty
 
-case class TileWord() {
+class TileWord() {
 
   def apply(n: Int): TileHasProperty = ???
 

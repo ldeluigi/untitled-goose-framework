@@ -1,4 +1,4 @@
-package dsl.tile.properties
+package dsl.properties.tile
 
 import scalafx.scene.paint.Color
 

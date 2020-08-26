@@ -1,6 +1,6 @@
-package dsl.tile.properties
+package dsl.properties.tile
 
-import dsl.tile.properties.TileProperty._
+import dsl.properties.tile.TileProperty._
 
 trait TileHasProperty {
   def has(name: NameProperty): Unit = ???

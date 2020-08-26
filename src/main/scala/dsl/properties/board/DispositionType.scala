@@ -1,4 +1,4 @@
-package dsl.board.properties
+package dsl.properties.board
 
 case class DispositionType(name: String) {
 

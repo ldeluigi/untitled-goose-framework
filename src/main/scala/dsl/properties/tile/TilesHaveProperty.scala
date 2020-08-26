@@ -1,6 +1,6 @@
-package dsl.tile.properties
+package dsl.properties.tile
 
-import dsl.tile.properties.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty}
+import dsl.properties.tile.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty}
 
 trait TilesHaveProperty {
 

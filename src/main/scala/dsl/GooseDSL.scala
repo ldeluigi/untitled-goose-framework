@@ -9,6 +9,8 @@ trait GooseDSL extends App with Subjects with TilePropertyWords with BoardProper
 
   val Rules: RulesWord = new RulesWord()
 
+  def All: CumulativeSubjects = ???
+
   def The: Subjects = this
 
   def the: Subjects = this

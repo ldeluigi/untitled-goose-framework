@@ -1,7 +1,7 @@
 package main
 
 import dsl.GooseDSL
-import dsl.board.properties.DispositionType.Spiral
+import dsl.properties.board.DispositionType.Spiral
 import scalafx.scene.paint.Color._
 
 
@@ -24,13 +24,11 @@ object DSLSandbox extends GooseDSL {
     background("well.png")
   )
 
-  "The well" has color(Red)
-
   The tile "The well" has color(Red)
 
   The tiles(6, 3, 4) have group("Goose")
 
+  All tiles "Stop Once" have color(Red)
+
   the tile 4 has group("goose")
-
-
 }

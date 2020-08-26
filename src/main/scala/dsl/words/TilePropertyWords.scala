@@ -1,6 +1,6 @@
 package dsl.words
 
-import dsl.tile.properties.TileProperty._
+import dsl.properties.tile.TileProperty._
 import scalafx.scene.paint.Color
 
 trait TilePropertyWords {

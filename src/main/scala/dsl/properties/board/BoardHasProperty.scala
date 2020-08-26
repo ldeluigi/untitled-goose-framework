@@ -1,6 +1,6 @@
-package dsl.board.properties
+package dsl.properties.board
 
-import dsl.board.properties.BoardProperty._
+import dsl.properties.board.BoardProperty._
 
 trait BoardHasProperty {
 
