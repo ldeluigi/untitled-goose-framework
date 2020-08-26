@@ -8,9 +8,9 @@ object DSLSandbox extends GooseDSL {
 
   Rules of "Goose Game"
 
-  The board has(12 tiles)
+  The board "Goose Game" has (12 tiles)
 
-  The board has(Spiral disposition)
+  The board "Goose Game" has (Spiral disposition)
 
-  //6th has(Spiral disposition) // how to add tile word???
+  The tile 6 has ???
 }

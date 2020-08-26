@@ -3,7 +3,7 @@ package dsl
 import dsl.words.RulesWord
 
 
-trait GooseDSL extends App with HasPropertyBuilder with Implicits {
+trait GooseDSL extends App with Implicits {
 
   protected implicit val ruleBook: RuleBook = new RuleBook()
 
