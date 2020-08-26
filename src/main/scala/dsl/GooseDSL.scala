@@ -1,5 +1,6 @@
 package dsl
 
+import dsl.nodes.RuleBook
 import dsl.words.{BoardPropertyWords, RulesWord, TilePropertyWords}
 
 

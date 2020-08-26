@@ -1,4 +1,4 @@
-package dsl
+package dsl.nodes
 
 class SingleValueNode[T] extends RuleBookNode {
   private var v: Option[T] = None

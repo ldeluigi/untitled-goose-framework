@@ -1,8 +1,7 @@
 package dsl.words
 
-import dsl.properties.board.BoardHasProperty
+import dsl.properties.board.BoardHasBuilder
 
 class GameWord() {
-
-  def apply(board: BoardWord): BoardHasProperty = new BoardHasProperty {}
+  def apply(board: BoardWord): BoardHasBuilder = board.builder
 }

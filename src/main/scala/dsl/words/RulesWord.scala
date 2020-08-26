@@ -1,6 +1,6 @@
 package dsl.words
 
-import dsl.RuleBook
+import dsl.nodes.RuleBook
 
 class RulesWord {
 

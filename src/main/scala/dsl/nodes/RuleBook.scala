@@ -1,4 +1,4 @@
-package dsl
+package dsl.nodes
 
 class RuleBook extends RuleBookNode {
 
@@ -8,8 +8,11 @@ class RuleBook extends RuleBookNode {
     gameName value = name
   }
 
-  override def toString: String =
+  override def toString: String = {
     gameName value
+  }
 
-  override def check: Boolean = gameName.check
+  override def check: Boolean = {
+    gameName.check
+  }
 }

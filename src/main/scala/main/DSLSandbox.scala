@@ -11,12 +11,12 @@ object DSLSandbox extends GooseDSL {
 
   The game board has tiles(63)
 
+  the game board has disposition(Spiral)
+
   The game board has(
     tiles(63),
     disposition(Spiral)
   )
-
-  the game board has disposition(Spiral)
 
   The tile 6 has(
     name("The well"),
