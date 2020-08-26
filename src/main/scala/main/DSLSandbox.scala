@@ -24,6 +24,10 @@ object DSLSandbox extends GooseDSL {
     background("well.png")
   )
 
+  "The well" has color(Red)
+
+  The tile "The well" has color(Red)
+
   The tiles(6, 3, 4) have group("Goose")
 
   the tile 4 has group("goose")
