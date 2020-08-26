@@ -1,11 +1,10 @@
 package dsl
 
-import dsl.board.properties.BoardPropertyChanger
-import dsl.words.TileWord
+import dsl.words.{GameWord, TileWord}
 
 trait Subjects {
 
-  val board: BoardPropertyChanger => Unit = ???
+  def game: GameWord = ???
 
   val tile: TileWord = ???
 

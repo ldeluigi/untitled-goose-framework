@@ -1,10 +1,9 @@
 package dsl
 
-import dsl.board.properties.BoardHasProperty
-import dsl.words.{RulesWord, TilePropertyWords}
+import dsl.words.{BoardPropertyWords, RulesWord, TilePropertyWords}
 
 
-trait GooseDSL extends App with Implicits with Subjects with BoardHasProperty with TilePropertyWords {
+trait GooseDSL extends App with Implicits with Subjects with TilePropertyWords with BoardPropertyWords {
 
   protected implicit val ruleBook: RuleBook = new RuleBook()
 
