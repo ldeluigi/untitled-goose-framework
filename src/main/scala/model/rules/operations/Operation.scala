@@ -20,7 +20,6 @@ object Operation {
     val name: String = "Trigger: " + event.map(_.name).mkString(",")
   }
 
-
   def triggerWhen(condition: GameState => Boolean, createEvent: GameState => Seq[GameEvent]): Operation = new Operation {
     override def execute(state: MutableGameState): Unit =
       if (condition(state))

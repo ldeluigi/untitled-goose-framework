@@ -33,4 +33,3 @@ object PlayerCardinalityRule {
    */
   def apply(min: Int, max: Int): PlayerCardinalityRule = new PlayerCardinalityRuleImpl(Some(min), Some(max))
 }
-
