@@ -1,7 +1,7 @@
 package main
 
 import dsl.GooseDSL
-import dsl.words.DispositionTypeWord.Spiral
+import dsl.board.properties.DispositionType.Spiral
 
 
 object DSLSandbox extends GooseDSL {
@@ -10,7 +10,7 @@ object DSLSandbox extends GooseDSL {
 
   The game board has (63 tiles)
 
-  the game board has (Spiral disposition)
+  the game board has disposition(Spiral)
 
   the tile 6 has name("The well")
 }
