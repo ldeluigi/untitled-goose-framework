@@ -3,7 +3,6 @@
   <component name="ScalaCompilerConfiguration">
     <profile name="sbt 1" modules="untitled-goose-framework">
       <option name="postfixOps" value="true" />
-      <option name="implicitConversions" value="true" />
     </profile>
   </component>
 </project>

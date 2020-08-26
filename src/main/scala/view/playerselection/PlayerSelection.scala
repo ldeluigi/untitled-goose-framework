@@ -15,6 +15,8 @@ import scalafx.stage.Stage
 import view.ApplicationController
 import view.board.GraphicDescriptor
 
+import scala.collection.mutable.ListBuffer
+
 /** A scene used to be able to add new players to the game.
  *
  * @param stage      the stage on which to render the selection
@@ -31,27 +33,19 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   root = borderPane
 
-  val playerNameFromInput = new TextField()
+  val playerNameFromInput = new TextField
+  var minPlayersFromInput = new TextField
+  var maxPlayersFromInput = new TextField
 
-  /*val cmb = new ComboBox()
-  cmb.getItems.addAll()
+  minPlayersFromInput.prefWidth = 30
+  maxPlayersFromInput.prefWidth = 30
 
-  cmb.setCellFactory(new Callback[ListView[Color], ListCell[Color]]() {
-     override def call(p: ListView[Color]): ListCell[Color] = new ListCell() {
-       private val rectangle = Rectangle(5, 5)
-
-       override def updateItem(item: Color, empty: Boolean): Unit = {
-        super.updateItem(item, empty)
-        if (item == null || empty) graphic
-        else {
-          rectangle.fill
-          graphic = (rectangle)
-        }
-      }
-    }
-  })*/
+  val graphicList = new ListBuffer[String]
 
   val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
+  colorsChoice.getSelectionModel.selectFirst()
+  //val minimumPlayers: Int = Some
+  //val maximumPlayers: Int = Some
 
   val addPlayer: Button = new Button {
     text = "Add"
@@ -90,37 +84,40 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
     children = List(playerName, playerNameFromInput, colorsChoice, addPlayer, removePlayer)
   }
 
-  val activePlayersList: TextArea = new TextArea {
-    text = "Currently enrolled players:" + "\n"
+  val cardinalityPanel: HBox = new HBox {
+    alignment = Pos.Center
+    spacing = 15
+    padding = Insets(30)
+    children = List(new Label("Min"), minPlayersFromInput, new Label("Max"), maxPlayersFromInput)
   }
-  activePlayersList.setMaxSize(widthSize * 0.15, heightSize)
 
+  val activePlayersList: TextArea = new TextArea
+  activePlayersList.setMaxSize(widthSize * 0.15, heightSize)
 
   val activePlayersPanel: VBox = new VBox {
     spacing = 15
-    padding = Insets(20)
-    children = List(activePlayersList)
+    padding = Insets(15)
+    children = List(new Label("Currently enrolled players:"), activePlayersList, cardinalityPanel)
   }
 
   val bottomGameControls: HBox = new HBox {
     alignment = Pos.BottomCenter
     spacing = 15
-    padding = Insets(20)
+    padding = Insets(15)
     children = List(startGame)
   }
 
   addPlayer.onAction = _ => {
-    if (playerNameFromInput.getText.nonEmpty) { // TODO colors emptiness check
+    if (playerNameFromInput.getText.nonEmpty) {
       if (!enrolledPlayers.contains(Player(playerNameFromInput.getText))) {
         enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
-        for ((k, v) <- enrolledPlayers) println("key: " + k, "value: " + v)
         renderGraphicalAddition()
         playerNameFromInput.clear()
       } else {
         new Alert(AlertType.Error) {
           initOwner(stage)
           title = "Error!"
-          headerText = "This player's already present!"
+          headerText = "This username is already taken!"
           contentText = "Choose a different name."
         }.showAndWait()
       }
@@ -137,7 +134,6 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
   removePlayer.onAction = _ => {
     if (playerNameFromInput.getText.nonEmpty) {
       enrolledPlayers -= Player(playerNameFromInput.getText)
-      for ((k, v) <- enrolledPlayers) println("key: " + k, "value: " + v)
       renderGraphicalRemoval()
       playerNameFromInput.clear()
     } else {
@@ -148,12 +144,11 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
         contentText = "Specify player's name to remove him/her from the game."
       }.showAndWait()
     }
-
   }
 
   startGame.onAction = _ => {
     if (enrolledPlayers.nonEmpty) {
-      val currentMatch: Game = Game(board, enrolledPlayers, ruleSet)
+      val currentMatch: Game = Game(board, enrolledPlayers, ruleSet, minPlayersFromInput.getText.toInt, maxPlayersFromInput.getText.toInt)
       val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
       stage.scene = appView
     } else {
@@ -173,7 +168,8 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   /** Utility method to remove a user specified players to the panel containing the current list of players. */
   def renderGraphicalRemoval(): Unit = {
-    activePlayersList.deleteText(activePlayersList.getSelection)
+    activePlayersList.clear()
+    enrolledPlayers.foreach(entry => activePlayersList.appendText("Name: " + entry._1.name + "\t" + "color: " + entry._2.color + "\n"))
   }
 
   borderPane.top = upperGameNameHeader

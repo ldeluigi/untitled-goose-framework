@@ -4,7 +4,7 @@ import engine.events.GameEvent
 import engine.events.special.NoOpEvent
 import model.entities.DialogContent
 import model.entities.board.{Board, Disposition, Piece}
-import model.game.{Game, GameState, MutableGameState}
+import model.game.{Game, GameState}
 import model.rules.ruleset.PriorityRuleSet
 import model.{Color, Player}
 import org.scalatest.concurrent.{Eventually, Waiters}
@@ -20,7 +20,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   behavior of "GooseEngineTest"
 
-  val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet())
+  val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet(), 3, 10)
 
   def cGenerator(handler: GameEvent => Unit): GooseController = new GooseController {
     override def update(state: GameState): Unit = {}
