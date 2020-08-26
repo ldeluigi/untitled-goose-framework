@@ -1,9 +1,9 @@
 package dsl.words
 
-import dsl.board.properties.TileNumProperty
+import dsl.tile.properties.TilesHaveProperty
 
-class TilesWord(num: Int) {
-  def tiles: TileNumProperty = TileNumProperty(num)
+case class TilesWord() {
+
+  def apply(n: Int*): TilesHaveProperty = new TilesHaveProperty {}
+
 }
-
-

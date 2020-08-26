@@ -1,5 +1,0 @@
-package dsl
-
-trait PropertyBuilder {
-
-}

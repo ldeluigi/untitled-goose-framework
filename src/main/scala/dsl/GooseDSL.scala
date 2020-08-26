@@ -3,7 +3,7 @@ package dsl
 import dsl.words.{BoardPropertyWords, RulesWord, TilePropertyWords}
 
 
-trait GooseDSL extends App with Implicits with Subjects with TilePropertyWords with BoardPropertyWords {
+trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords {
 
   protected implicit val ruleBook: RuleBook = new RuleBook()
 
