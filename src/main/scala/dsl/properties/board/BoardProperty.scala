@@ -1,5 +1,7 @@
 package dsl.properties.board
 
+import dsl.properties.board.DispositionType.DispositionType
+
 sealed trait BoardProperty
 
 object BoardProperty {

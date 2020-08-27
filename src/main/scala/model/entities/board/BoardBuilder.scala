@@ -7,7 +7,7 @@ case class BoardBuilder() {
   private var totalTiles = 0
   private var nameMap: Map[Int, String] = Map()
   private var groupMap: Map[Int, Set[String]] = Map()
-  private var disposition: Disposition = _
+  private var disposition: Int => Disposition = _ => Disposition.snake(0)
 
   /** Specifies a board's name.
    *
@@ -58,7 +58,7 @@ case class BoardBuilder() {
    * @param disposition a certain disposition type
    * @return the partial board builder object
    */
-  def withDisposition(disposition: Disposition): BoardBuilder = {
+  def withDisposition(disposition: Int => Disposition): BoardBuilder = {
     this.disposition = disposition
     this
   }
@@ -75,7 +75,7 @@ case class BoardBuilder() {
         case num if groupMap.contains(num) => TileDefinition(num, groupMap(num))
         case num => TileDefinition(num)
       }).toSet
-    Board(name, tileSet, disposition)
+    Board(name, tileSet, disposition(totalTiles))
   }
 
 }

@@ -1,15 +1,9 @@
 package dsl.properties.board
 
-case class DispositionType(name: String) {
+object DispositionType extends Enumeration {
 
+  type DispositionType = Value
+
+  val Spiral, Snake, Loop = Value
 }
 
-object DispositionType {
-
-  val Spiral: DispositionType = new DispositionType("Spiral")
-
-  val Loop: DispositionType = new DispositionType("Loop")
-
-  val Snake: DispositionType = new DispositionType("Snake")
-
-}

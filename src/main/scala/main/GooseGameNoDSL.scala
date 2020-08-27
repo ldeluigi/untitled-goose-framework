@@ -45,7 +45,7 @@ object GooseGameNoDSL extends JFXApp {
   val board: Board = Board.create()
     .withNumberedTiles(totalTiles)
     .withName("Original Goose Game")
-    .withDisposition(Disposition.spiral(totalTiles))
+    .withDisposition(Disposition.spiral(_))
     .withNamedTile(6, theBridge)
     .withNamedTile(19, theInn)
     .withNamedTile(31, theWell)
