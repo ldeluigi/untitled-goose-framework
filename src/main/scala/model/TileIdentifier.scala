@@ -4,9 +4,9 @@ import model.TileIdentifier.Group
 
 trait TileIdentifier {
 
-  def number: Option[Int]
-
   def name: Option[String]
+
+  def number: Option[Int]
 
   def group: Option[Group]
 

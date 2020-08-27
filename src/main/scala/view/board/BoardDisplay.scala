@@ -1,10 +1,12 @@
 package view.board
 
-import model.game.{GameBoard, GameState}
 import model.TileIdentifier
-import model.game.{GameBoard, MutableGameState}
+import model.TileIdentifier.Group
+import model.game.{GameBoard, GameState}
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
+
+import scala.util.control.Breaks.break
 
 /** A custom pane that contains the game board.
  *
@@ -30,8 +32,40 @@ object BoardDisplay {
     var rows: Int = matchBoard.board.disposition.rows
     var cols: Int = matchBoard.board.disposition.columns
 
-    for (t <- matchBoard.tiles.toList.sorted) {
-      val currentTile = TileVisualization(t, width, height, rows, cols, graphicMap)
+    for (tile <- matchBoard.tiles.toList.sorted) {
+
+
+      if (tile.definition.name.isDefined) {
+        if (graphicMap.contains(TileIdentifier(tile.definition.name.get))) {
+          val descriptor = graphicMap.get(TileIdentifier(tile.definition.name.get))
+          val currentTile = TileVisualization(tile, width, height, rows, cols, descriptor)
+          styleAndRenderTile(currentTile, descriptor)
+        }
+
+      } else if (tile.definition.number.isDefined) {
+        if (graphicMap.contains(TileIdentifier(tile.definition.number.get))) {
+          val descriptor = graphicMap.get(TileIdentifier(tile.definition.number.get))
+          val currentTile = TileVisualization(tile, width, height, rows, cols, descriptor)
+          styleAndRenderTile(currentTile, descriptor)
+        }
+
+      } else if (tile.definition.groups.nonEmpty) {
+        for (group <- tile.definition.groups) {
+          if (graphicMap.contains(TileIdentifier(Group(group)))) {
+            val descriptor = graphicMap.get(TileIdentifier(Group(group)))
+            val currentTile = TileVisualization(tile, width, height, rows, cols, descriptor)
+            styleAndRenderTile(currentTile, descriptor)
+            break
+          }
+        }
+      } else {
+        val currentTile = TileVisualization(tile, width, height, rows, cols, None)
+      }
+    }
+
+    private def styleAndRenderTile(currentTile: TileVisualization, descriptor: Option[GraphicDescriptor]): Unit = {
+      currentTile.applyStyle(descriptor.get)
+      //println(descriptor.get.color.toString) -> CORRETTO: CONTIENE IL VERDE SPECIFICATO NEL MAIN
       currentTile.layoutX <== this.width / cols * matchBoard.board.disposition.tilePlacement(i)._1
       currentTile.layoutY <== this.height / rows * matchBoard.board.disposition.tilePlacement(i)._2
       boardPane.children.add(currentTile)
