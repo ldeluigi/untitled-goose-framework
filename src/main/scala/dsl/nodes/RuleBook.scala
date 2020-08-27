@@ -14,7 +14,7 @@ object RuleBook {
 
   private class RuleBookImpl() extends RuleBook {
 
-    private val gameName: SingleValueNode[String] = new SingleValueNode()
+    private val gameName: SingleValueNode[String] = new SingleValueNode("Game Name")
 
     val boardBuilder: BoardBuilder = BoardBuilder()
 
@@ -22,14 +22,17 @@ object RuleBook {
 
     def setGameName(name: String): Unit = {
       gameName value = name
+      boardBuilder.withName(name)
     }
 
     override def toString: String = {
       gameName value
     }
 
-    override def check: Boolean = {
-      gameName.check
+    override def check: Seq[String] = {
+      gameName.check ++
+        (if (boardBuilder.isCompletable) Seq() else Seq("Board definition not complete")) ++
+        graphicMap.check
     }
   }
 

@@ -24,8 +24,11 @@ trait GooseDSL extends App with Subjects with TilePropertyWords with BoardProper
   }
 
   private def checkModel: Boolean = {
-    ruleBook.check
+    val checkMessage = ruleBook.check
+    checkMessage.foreach(System.err.println)
+    checkMessage.isEmpty
   }
+
 
   private def start(): Unit = println(ruleBook)
 

@@ -328,7 +328,7 @@ object GooseGameNoDSL extends JFXApp {
     minWidth = 0.75 * screenSize.width
     minHeight = 0.75 * screenSize.height
     scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch, graphicMap)
-    fullScreenExitHint = "Premi esc per uscire"
+    fullScreenExitHint = "ESC to exit full screen mode"
   }
 
   stage.getScene.setOnKeyPressed(

@@ -12,8 +12,8 @@ import scala.concurrent.Promise
 object DialogUtils {
 
   /**
-   * @param content the content of the dialog to be diplayed.
-   * @param promise the promise used to check the action the user has choosen.
+   * @param content the content of the dialog to be displayed.
+   * @param promise the promise used to check the action the user has chosen.
    */
   def launchDialog(content: DialogContent, promise: Promise[GameEvent]): Unit = {
     val alert = new Alert(AlertType.Confirmation) {

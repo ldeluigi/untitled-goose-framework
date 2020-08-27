@@ -8,10 +8,10 @@ trait Disposition {
   /** Total number of tile rows */
   def rows: Int
 
-  /** Total number of tile coloums */
+  /** Total number of tile columns */
   def columns: Int
 
-  /** Sets the coordinate - row and coloumn - of a specified tile
+  /** Sets the coordinate - row and column - of a specified tile
    *
    * @param tileIndex the index of the tile to specify coordinates to
    * @return the tile's coordinates
@@ -21,7 +21,7 @@ trait Disposition {
 
 object Disposition {
 
-  /** Models the possibilty to have different tiles disposition in the game.
+  /** Models the possibility to have different tiles disposition in the game.
    *
    * @param totalTiles the total number of tiles
    * @param ratio      parameter used to compute tile's height

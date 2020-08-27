@@ -102,7 +102,7 @@ object ApplicationController {
     }
   }
 
-  /** A factory used to creare a new ApplicationController, given a certain stage, width, height, game and graphic properties container. */
+  /** A factory used to create a new ApplicationController, given a certain stage, width, height, game and graphic properties container. */
   def apply(stage: Stage, width: Int, height: Int, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor]): ApplicationController = new
       ApplicationControllerImpl(stage, width, height, gameMatch, graphicMap)
 }

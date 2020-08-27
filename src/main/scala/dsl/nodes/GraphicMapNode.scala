@@ -10,5 +10,5 @@ class GraphicMapNode() extends RuleBookNode {
   def addGraphicDescription(tileIdentifier: TileIdentifier, graphicDescriptor: GraphicDescriptor): Unit =
     graphicMap = graphicMap + (tileIdentifier -> graphicDescriptor)
 
-  override def check: Boolean = true
+  override def check: Seq[String] = Seq()
 }
