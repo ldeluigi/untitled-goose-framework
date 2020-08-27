@@ -1,9 +1,10 @@
 package dsl.words
 
-import dsl.properties.tile.TilesHaveProperty
+import dsl.nodes.RuleBook
+import dsl.properties.tile.TilesHaveBuilder
 
 class TilesWord() {
 
-  def apply(n: Int*): TilesHaveProperty = new TilesHaveProperty {}
+  def apply(n: Int*)(implicit ruleBook: RuleBook): TilesHaveBuilder = TilesHaveBuilder(n, ruleBook.boardBuilder, ruleBook.graphicMap)
 
 }

@@ -26,10 +26,10 @@ object TileHasBuilder {
       builder.withNamedTile(tileIdentifier.number.get, name.name)
 
     override def has(group: GroupProperty): Unit =
-      builder.withGroupedTiles(group.group, tileIdentifier.number.get)
+      builder.withGroupedTiles(group.value, tileIdentifier.number.get)
 
     override def has(color: ColorProperty): Unit =
-      graphicMap.addGraphicDescription(tileIdentifier, GraphicDescriptor(color.color))
+      graphicMap.addGraphicDescription(tileIdentifier, GraphicDescriptor(color.value))
 
     override def has(background: BackgroundProperty): Unit =
       graphicMap.addGraphicDescription(tileIdentifier, GraphicDescriptor(background.path))

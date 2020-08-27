@@ -6,8 +6,8 @@ trait Subjects {
 
   def game: GameWord = new GameWord
 
-  val tile: TileWord = ???
+  val tile: TileWord = new TileWord
 
-  val tiles: TilesWord = ???
+  val tiles: TilesWord = new TilesWord
 
 }

@@ -13,7 +13,7 @@ trait TileIdentifier {
 }
 
 object TileIdentifier {
-  case class Group(group: String)
+  case class Group(groupName: String)
 
   private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Option[Group]) extends TileIdentifier {
 
