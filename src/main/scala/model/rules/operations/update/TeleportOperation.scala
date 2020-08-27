@@ -11,6 +11,7 @@ object TeleportOperation {
 
     var opSeq: Seq[Operation] = Seq()
     val tileExited = state.playerPieces(player).position.map(_.tile)
+
     if (tileExited.isDefined) {
       opSeq = opSeq :+ Operation.trigger(TileExitedEvent(player, tileExited.get, state.currentTurn, state.currentCycle))
     }
