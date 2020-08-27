@@ -14,7 +14,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   var gameMatch: Game = MatchMock.default
 
   override def beforeEach(): Unit = {
-    gameMatch = Game(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))), 3, 10)
+    gameMatch = Game(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))), minimumPlayers = 1, maximumPlayers = 10)
   }
 
   "A Match" should "have a MatchBoard" in {

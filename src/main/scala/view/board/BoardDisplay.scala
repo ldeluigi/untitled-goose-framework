@@ -33,8 +33,6 @@ object BoardDisplay {
     var cols: Int = matchBoard.board.disposition.columns
 
     for (tile <- matchBoard.tiles.toList.sorted) {
-
-
       if (tile.definition.name.isDefined) {
         if (graphicMap.contains(TileIdentifier(tile.definition.name.get))) {
           val descriptor = graphicMap.get(TileIdentifier(tile.definition.name.get))
@@ -65,7 +63,6 @@ object BoardDisplay {
 
     private def styleAndRenderTile(currentTile: TileVisualization, descriptor: Option[GraphicDescriptor]): Unit = {
       currentTile.applyStyle(descriptor.get)
-      //println(descriptor.get.color.toString) -> CORRETTO: CONTIENE IL VERDE SPECIFICATO NEL MAIN
       currentTile.layoutX <== this.width / cols * matchBoard.board.disposition.tilePlacement(i)._1
       currentTile.layoutY <== this.height / rows * matchBoard.board.disposition.tilePlacement(i)._2
       boardPane.children.add(currentTile)

@@ -29,7 +29,7 @@ trait Game {
 
 object Game {
 
-  /** A factory that created a game based on a given board, players and rules. */
+  /** A factory that creates a game based on a given board, players and rules. */
   def apply(board: Board, players: Map[Player, Piece], rules: RuleSet, minimumPlayers: Int, maximumPlayers: Int): Game = new GameImpl(board, players, rules, minimumPlayers, maximumPlayers)
 
   private class GameImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet, minimumPlayers: Int, maximumPlayers: Int) extends Game {

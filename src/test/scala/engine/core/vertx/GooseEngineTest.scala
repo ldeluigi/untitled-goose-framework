@@ -20,7 +20,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   behavior of "GooseEngineTest"
 
-  val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet(), 3, 10)
+  val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet(), minimumPlayers = 1, maximumPlayers = 10)
 
   def cGenerator(handler: GameEvent => Unit): GooseController = new GooseController {
     override def update(state: GameState): Unit = {}
