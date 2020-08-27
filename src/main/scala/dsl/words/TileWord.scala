@@ -1,11 +1,12 @@
 package dsl.words
 
-import dsl.properties.tile.TileHasProperty
+import dsl.nodes.RuleBook
+import dsl.properties.tile.TileHasBuilder
 
 class TileWord() {
 
-  def apply(n: Int): TileHasProperty = ???
+  def apply(n: Int)(implicit ruleBook: RuleBook): TileHasBuilder = TileHasBuilder(n, ruleBook.boardBuilder, ruleBook.graphicMap)
 
-  def apply(name: String): TileHasProperty = ???
+  def apply(name: String)(implicit ruleBook: RuleBook): TileHasBuilder = TileHasBuilder(name, ruleBook.boardBuilder, ruleBook.graphicMap)
 }
 

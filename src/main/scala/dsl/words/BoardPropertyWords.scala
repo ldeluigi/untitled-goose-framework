@@ -5,7 +5,7 @@ import dsl.properties.board.DispositionType.DispositionType
 
 trait BoardPropertyWords {
 
-  val board: BoardWord = BoardWord
+  val board: BoardWord = BoardWord()
 
   def disposition(disType: DispositionType): DispositionProperty = DispositionProperty(disType)
 
