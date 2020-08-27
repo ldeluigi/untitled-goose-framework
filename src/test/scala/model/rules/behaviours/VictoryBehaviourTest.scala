@@ -6,8 +6,8 @@ class VictoryBehaviourTest extends AnyFlatSpec {
 
   behavior of "VictoryBehaviourTest"
 
-  it should "return a correct sequence of Operations" in {
-
+  it should "look for players with victory events, consume and launch dialog if found at least one" in {
+    pending
   }
 
 }
