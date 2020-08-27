@@ -78,4 +78,6 @@ case class BoardBuilder() {
     Board(name.get, tileSet, disposition.get(totalTiles.get))
   }
 
+  def isCompletable: Boolean = from.isDefined && totalTiles.isDefined && name.isDefined && disposition.isDefined
+
 }
