@@ -1,7 +1,8 @@
 package dsl.words
 
-import dsl.properties.tile.TilesHaveProperty
+import dsl.nodes.RuleBook
+import dsl.properties.tile.TilesHaveBuilder
 
-case class GroupedTilesWord() {
-  def apply(group: String): TilesHaveProperty = new TilesHaveProperty {}
+class GroupedTilesWord() {
+  def apply(group: String)(implicit ruleBook: RuleBook): TilesHaveBuilder = TilesHaveBuilder(group, ruleBook.boardBuilder, ruleBook.graphicMap)
 }

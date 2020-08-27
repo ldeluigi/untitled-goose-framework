@@ -13,22 +13,10 @@ object DSLSandbox extends GooseDSL {
 
   the game board has disposition(Spiral)
 
-  The game board has(
-    tiles(63),
-    disposition(Spiral)
-  )
+  The tile 6 has name("The well")
 
-  The tile 6 has(
-    name("The well"),
-    color(Red),
-    background("well.png")
-  )
+  The tile "The well" has color(Blue)
 
-  The tile "The well" has color(Red)
+  All tiles "Goose" have color(Green)
 
-  The tiles(6, 3, 4) have group("Goose")
-
-  All tiles "Stop Once" have color(Red)
-
-  the tile 4 has group("goose")
 }

@@ -11,7 +11,7 @@ private class RollMovementDice(dice: MovementDice, diceNumber: Int) extends Acti
   override def name: String = "Roll " + diceNumber + " " + dice.name
 
   override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
-    val result = for (i <- 0 until diceNumber) yield dice.roll
+    val result = for (_ <- 0 until diceNumber) yield dice.roll
     sink.accept(MovementDiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, result: _*))
   }
 }

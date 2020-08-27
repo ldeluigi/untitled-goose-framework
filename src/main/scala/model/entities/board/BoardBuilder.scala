@@ -43,6 +43,16 @@ case class BoardBuilder() {
   }
 
   def withGroupedTiles(group: String, number: Int*): BoardBuilder = {
+    this.assignGroup(group, number)
+    this
+  }
+
+  def withGroupedTiles(originGroup: String, newGroup: String): BoardBuilder = {
+    this.assignGroup(newGroup, groupMap.filter(_._2.contains(originGroup)).keys.toSeq)
+    this
+  }
+
+  private def assignGroup(group: String, number: Seq[Int]): Unit =
     for (n <- number) {
       if (groupMap.contains(n)) {
         groupMap = groupMap + (n -> groupMap(n).+(group))
@@ -50,8 +60,7 @@ case class BoardBuilder() {
         groupMap = groupMap + (n -> Set(group))
       }
     }
-    this
-  }
+
 
   /** Specifies the board's disposition.
    *

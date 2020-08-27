@@ -1,9 +1,8 @@
 package view.playerselection
 
-import model.entities.board.{Board, Piece}
+import model.entities.board.Piece
 import model.game.Game
-import model.rules.ruleset.RuleSet
-import model.{Player, TileIdentifier}
+import model.{GameData, Player, TileIdentifier}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
@@ -20,13 +19,12 @@ import scala.collection.mutable.ListBuffer
 /** A scene used to be able to add new players to the game.
  *
  * @param stage      the stage on which to render the selection
- * @param board      a board on which the game is played
- * @param ruleSet    the rules container for the current game
+ * @param gameData   a container of the board definition and ruleSet of the current game
  * @param widthSize  width of the scene
  * @param heightSize height of the scene
  * @param graphicMap the graphic properties container
  */
-class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
+class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
 
   var enrolledPlayers: Map[Player, Piece] = Map()
   val borderPane = new BorderPane
@@ -42,7 +40,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   val graphicList = new ListBuffer[String]
 
-  val colorsChoice = new ComboBox(List(model.Color.Red, model.Color.Blue, model.Color.Yellow, model.Color.Orange, model.Color.Green, model.Color.Purple))
+  val colorsChoice = new ComboBox(model.Color.values.toList)
   colorsChoice.getSelectionModel.selectFirst()
   //val minimumPlayers: Int = Some
   //val maximumPlayers: Int = Some
@@ -148,7 +146,7 @@ class PlayerSelection(stage: Stage, board: Board, ruleSet: RuleSet, widthSize: I
 
   startGame.onAction = _ => {
     if (enrolledPlayers.nonEmpty) {
-      val currentMatch: Game = Game(board, enrolledPlayers, ruleSet, minPlayersFromInput.getText.toInt, maxPlayersFromInput.getText.toInt)
+      val currentMatch: Game = Game(gameData.board, enrolledPlayers, gameData.ruleSet, minPlayersFromInput.getText.toInt, maxPlayersFromInput.getText.toInt)
       val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
       stage.scene = appView
     } else {
