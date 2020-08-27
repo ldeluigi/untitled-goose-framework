@@ -7,7 +7,6 @@ import engine.events.GameEvent
 import engine.events.consumable.{DialogLaunchEvent, StepMovementEvent}
 import engine.events.special.NoOpEvent
 import javafx.scene.input.KeyCode
-import model.TileIdentifier
 import model.TileIdentifier.Group
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
@@ -18,6 +17,7 @@ import model.rules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
+import model.{GameData, TileIdentifier}
 import scalafx.application.JFXApp
 import scalafx.scene.paint.Color
 import view.TileIdentifierImplicit._
@@ -83,7 +83,7 @@ object Main extends JFXApp {
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = new PlayerSelection(this, board, ruleSet, screenSize.width, screenSize.height, graphicMap)
+    scene = new PlayerSelection(this, GameData(board, ruleSet), screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Press esc to leave full screen mode"
   }
 
