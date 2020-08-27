@@ -2,12 +2,12 @@ package model.entities.board
 
 case class BoardBuilder() {
 
-  private var name = ""
-  private var from = 0
-  private var totalTiles = 0
+  private var name: Option[String] = None
+  private var from: Option[Int] = None
+  private var totalTiles: Option[Int] = None
   private var nameMap: Map[Int, String] = Map()
   private var groupMap: Map[Int, Set[String]] = Map()
-  private var disposition: Int => Disposition = _ => Disposition.snake(0)
+  private var disposition: Option[Int => Disposition] = None
 
   /** Specifies a board's name.
    *
@@ -15,7 +15,7 @@ case class BoardBuilder() {
    * @return the partial board builder object
    */
   def withName(name: String): BoardBuilder = {
-    this.name = name
+    this.name = Some(name)
     this
   }
 
@@ -26,8 +26,8 @@ case class BoardBuilder() {
    * @return the partial board builder object
    */
   def withNumberedTiles(total: Int, from: Int = 1): BoardBuilder = {
-    this.from = from
-    this.totalTiles = total
+    this.from = Some(from)
+    this.totalTiles = Some(total)
     this
   }
 
@@ -59,7 +59,7 @@ case class BoardBuilder() {
    * @return the partial board builder object
    */
   def withDisposition(disposition: Int => Disposition): BoardBuilder = {
-    this.disposition = disposition
+    this.disposition = Some(disposition)
     this
   }
 
@@ -68,14 +68,14 @@ case class BoardBuilder() {
    * @return the parameter-complete board
    */
   def complete(): Board = {
-    val tileSet = (from to totalTiles).toList
+    val tileSet = (from.get to totalTiles.get).toList
       .map({
         case num if nameMap.contains(num) && groupMap.contains(num) => TileDefinition(num, nameMap(num), groupMap(num))
         case num if nameMap.contains(num) => TileDefinition(num, nameMap(num))
         case num if groupMap.contains(num) => TileDefinition(num, groupMap(num))
         case num => TileDefinition(num)
       }).toSet
-    Board(name, tileSet, disposition(totalTiles))
+    Board(name.get, tileSet, disposition.get(totalTiles.get))
   }
 
 }
