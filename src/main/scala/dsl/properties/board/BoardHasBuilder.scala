@@ -31,6 +31,6 @@ object BoardHasBuilder {
       }
   }
 
-  def apply(): BoardHasBuilder = new BoardHasBuilderImpl(new BoardBuilder)
+  def apply(builder: BoardBuilder): BoardHasBuilder = new BoardHasBuilderImpl(builder)
 
 }

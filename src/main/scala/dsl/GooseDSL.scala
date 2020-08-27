@@ -6,7 +6,7 @@ import dsl.words.{BoardPropertyWords, RulesWord, TilePropertyWords}
 
 trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords {
 
-  protected implicit val ruleBook: RuleBook = new RuleBook()
+  protected implicit val ruleBook: RuleBook = RuleBook()
 
   val Rules: RulesWord = new RulesWord()
 

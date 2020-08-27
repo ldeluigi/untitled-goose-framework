@@ -4,7 +4,7 @@ import dsl.words.{GameWord, TileWord, TilesWord}
 
 trait Subjects {
 
-  def game: GameWord = ???
+  def game: GameWord = new GameWord
 
   val tile: TileWord = ???
 
