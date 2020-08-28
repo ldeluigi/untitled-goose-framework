@@ -47,7 +47,8 @@ object BoardDisplay {
       if (tile.definition.name.isDefined) {
         graphicMap.get(TileIdentifier(tile.definition.name.get))
           .foreach(g => graphicSeq = graphicSeq :+ g)
-      } else if (tile.definition.number.isDefined) {
+      }
+      if (tile.definition.number.isDefined) {
         graphicMap.get(TileIdentifier(tile.definition.number.get))
           .foreach(g => graphicSeq = graphicSeq :+ g)
       }
