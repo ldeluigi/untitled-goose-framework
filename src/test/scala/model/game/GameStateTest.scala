@@ -1,45 +1,60 @@
 package model.game
 
+import mock.MatchMock
+import model.entities.board.{Board, Disposition, Piece}
+import model.{Color, Player}
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class GameStateTest extends AnyFlatSpec {
+class GameStateTest extends AnyFlatSpec with Matchers {
+
+  var gameMatch: Game = MatchMock.default
+  val gameState: GameState = gameMatch.currentState
+
+  val board: Board = Board(10, Disposition.snake(10))
+  val p1: Player = Player("P1")
+  val p2: Player = Player("P2")
+  val players: Map[Player, Piece] = Map(p1 -> Piece(Color.Red), p2 -> Piece(Color.Blue))
+  //def default: Game = Game(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))), 3, 10)
+
+  val gameBoard: GameBoard = gameState.gameBoard
 
   behavior of "GameStateTest"
 
   it should "currentCycle" in {
-    pending
+    gameState.currentCycle should be(0)
   }
 
   it should "nextPlayer" in {
-    pending
+    gameState.nextPlayer should equal(p2)
   }
 
   it should "currentPlayer" in {
-    pending
+    gameState.currentPlayer should equal(p1)
   }
 
   it should "playerPieces" in {
-    pending
+    gameState.playerPieces should equal(players)
   }
 
   it should "players" in {
-    pending
+    gameState.players should equal(players.keys.toSet)
   }
 
   it should "gameHistory" in {
-    pending
+    gameState.gameHistory.size should be(0)
   }
 
   it should "currentTurn" in {
-    pending
+    gameState.currentTurn should be(0)
   }
 
   it should "consumableEvents" in {
-    pending
+    gameState.consumableBuffer.size should be(0)
   }
 
   it should "gameBoard" in {
-    pending
+    gameState.gameBoard should equal(gameBoard)
   }
 
 }
