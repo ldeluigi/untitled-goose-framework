@@ -32,11 +32,6 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   root = borderPane
 
   val playerNameFromInput = new TextField
-  var minPlayersFromInput = new TextField
-  var maxPlayersFromInput = new TextField
-
-  minPlayersFromInput.prefWidth = 30
-  maxPlayersFromInput.prefWidth = 30
 
   val graphicList = new ListBuffer[String]
 
@@ -82,12 +77,6 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
     children = List(playerName, playerNameFromInput, colorsChoice, addPlayer, removePlayer)
   }
 
-  val cardinalityPanel: HBox = new HBox {
-    alignment = Pos.Center
-    spacing = 15
-    padding = Insets(30)
-    children = List(new Label("Min"), minPlayersFromInput, new Label("Max"), maxPlayersFromInput)
-  }
 
   val activePlayersList: TextArea = new TextArea
   activePlayersList.setMaxSize(widthSize * 0.15, heightSize)
@@ -95,7 +84,7 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   val activePlayersPanel: VBox = new VBox {
     spacing = 15
     padding = Insets(15)
-    children = List(new Label("Currently enrolled players:"), activePlayersList, cardinalityPanel)
+    children = List(new Label("Currently enrolled players:"), activePlayersList)
   }
 
   val bottomGameControls: HBox = new HBox {
@@ -146,7 +135,7 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
 
   startGame.onAction = _ => {
     if (enrolledPlayers.nonEmpty) {
-      val currentMatch: Game = Game(gameData.board, enrolledPlayers, gameData.ruleSet, minPlayersFromInput.getText.toInt, maxPlayersFromInput.getText.toInt)
+      val currentMatch: Game = Game(gameData.board, enrolledPlayers, gameData.ruleSet)
       val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
       stage.scene = appView
     } else {

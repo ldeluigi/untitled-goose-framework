@@ -63,7 +63,7 @@ object TestMain extends JFXApp {
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
-  val currentMatch: Game = Game(board, players, ruleSet, minimumPlayers = 1, maximumPlayers = 10)
+  val currentMatch: Game = Game(board, players, ruleSet)
 
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
   stage = new JFXApp.PrimaryStage {
