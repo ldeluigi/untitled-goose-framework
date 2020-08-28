@@ -2,7 +2,7 @@ package dsl.nodes
 
 import model.entities.board.{Board, BoardBuilder, BoardBuilderImpl, Disposition}
 
-case class BoardBuilderNode() extends RuleBookNode with BoardBuilder {
+case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with DefinedTileIdentifiers {
 
   private val builder: BoardBuilderImpl = BoardBuilderImpl()
   private var nameDefined = false
@@ -16,11 +16,11 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder {
 
   private var tileRange: Range = 0 to 0
 
-  def nameIsDefined(name: String): Boolean = definedTileNames.contains(name)
+  override def containsName(name: String): Boolean = definedTileNames.contains(name)
 
-  def groupIsDefined(group: String): Boolean = definedGroups.contains(group)
+  override def containsGroup(group: String): Boolean = definedGroups.contains(group)
 
-  def definedTiles: Range = tileRange
+  override def containsNumber(num: Int): Boolean = tileRange.contains(num)
 
   private var errorMessages: Seq[String] = Seq()
 

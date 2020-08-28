@@ -8,6 +8,7 @@ import scalafx.scene.paint.Color._
 object GooseGame extends GooseDSL {
 
   Rules of "Goose Game"
+  2 to 4 players
 
   The game board has tiles(63)
   the game board has disposition(Spiral)
@@ -18,11 +19,12 @@ object GooseGame extends GooseDSL {
   the tile 42 has name("The labyrinth")
   the tile 52 has name("The prison")
   the tile 58 has name("The death")
-  the tile 63 has name("The end")
-  The tile 63 has color(Yellow)
 
   The tiles(6, 19, 31, 42, 52, 58) have group("Special")
   All tiles "Special" have color(LightBlue)
+
+  the tile 63 has name("The end")
+  The tile 63 has color(Yellow)
 
   The tiles(5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59) have group("Goose")
   All tiles "Goose" have color(LightGreen)
