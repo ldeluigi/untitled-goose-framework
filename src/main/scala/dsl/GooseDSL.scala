@@ -38,6 +38,7 @@ trait GooseDSL extends App with Subjects with TilePropertyWords with BoardProper
     val ruleSet: RuleSet = PriorityRuleSet(
       tiles => Position(tiles.toList.sorted.take(1).head),
       PlayerOrdering.orderedRandom,
+      1 to 10,
       Set(),
       Seq())
     GameData(ruleBook.boardBuilder.complete(), ruleSet)

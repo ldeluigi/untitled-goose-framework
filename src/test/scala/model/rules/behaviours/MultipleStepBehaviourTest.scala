@@ -27,6 +27,8 @@ class MultipleStepBehaviourTest extends AnyFlatSpec with Matchers {
     // evento entrato sulla tile, evento fermato sulla tile
     // più condizioni in uno stesso test
 
+    state.consumableBuffer.contains()
+
 
     // verificare modifica corretta di game state
 
