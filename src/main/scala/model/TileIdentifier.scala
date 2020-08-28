@@ -23,11 +23,18 @@ object TileIdentifier {
 
     override def group: Option[Group] = tileGroups
 
-    //override della equals: due tileidentifier sono uguali se hanno lo stesso nome o numero o gruppo -> così posso usare la cointains
     override def equals(obj: Any): Boolean = {
       obj match {
         case obj: TileIdentifier =>
-          this.name == obj.name || this.number == obj.number || this.group == obj.group
+          if (this.name.isDefined && obj.name.isDefined) {
+            this.name.get == obj.name.get
+          } else if (this.number.isDefined && obj.number.isDefined) {
+            this.number.get == obj.number.get
+          } else if (this.group.isDefined && obj.group.isDefined) {
+            this.group.get == obj.group.get
+          } else {
+            false
+          }
       }
     }
   }

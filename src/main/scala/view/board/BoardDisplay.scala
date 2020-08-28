@@ -1,12 +1,10 @@
 package view.board
 
-import model.TileIdentifier
 import model.TileIdentifier.Group
 import model.game.{GameBoard, GameState}
+import model.{Tile, TileIdentifier}
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
-
-import scala.util.control.Breaks.break
 
 /** A custom pane that contains the game board.
  *
@@ -27,48 +25,42 @@ object BoardDisplay {
     this.hbarPolicy = ScrollPane.ScrollBarPolicy.Always
     this.vbarPolicy = ScrollPane.ScrollBarPolicy.Always
 
-    //Draw tile
     var i = 0
-    var rows: Int = matchBoard.board.disposition.rows
-    var cols: Int = matchBoard.board.disposition.columns
+    val rows: Int = matchBoard.board.disposition.rows
+    val cols: Int = matchBoard.board.disposition.columns
 
     for (tile <- matchBoard.tiles.toList.sorted) {
-      if (tile.definition.name.isDefined) {
-        if (graphicMap.contains(TileIdentifier(tile.definition.name.get))) {
-          val descriptor = graphicMap.get(TileIdentifier(tile.definition.name.get))
-          val currentTile = TileVisualization(tile, width, height, rows, cols, descriptor)
-          styleAndRenderTile(currentTile, descriptor)
-        }
-
-      } else if (tile.definition.number.isDefined) {
-        if (graphicMap.contains(TileIdentifier(tile.definition.number.get))) {
-          val descriptor = graphicMap.get(TileIdentifier(tile.definition.number.get))
-          val currentTile = TileVisualization(tile, width, height, rows, cols, descriptor)
-          styleAndRenderTile(currentTile, descriptor)
-        }
-
-      } else if (tile.definition.groups.nonEmpty) {
-        for (group <- tile.definition.groups) {
-          if (graphicMap.contains(TileIdentifier(Group(group)))) {
-            val descriptor = graphicMap.get(TileIdentifier(Group(group)))
-            val currentTile = TileVisualization(tile, width, height, rows, cols, descriptor)
-            styleAndRenderTile(currentTile, descriptor)
-            break
-          }
-        }
-      } else {
-        val currentTile = TileVisualization(tile, width, height, rows, cols, None)
-      }
+      renderTile(TileVisualization(tile, width, height, rows, cols, getGraphicDescriptor(tile)))
     }
 
-    private def styleAndRenderTile(currentTile: TileVisualization, descriptor: Option[GraphicDescriptor]): Unit = {
-      currentTile.applyStyle(descriptor.get)
+    private def renderTile(currentTile: TileVisualization): Unit = {
       currentTile.layoutX <== this.width / cols * matchBoard.board.disposition.tilePlacement(i)._1
       currentTile.layoutY <== this.height / rows * matchBoard.board.disposition.tilePlacement(i)._2
       boardPane.children.add(currentTile)
       i = i + 1
       tiles = currentTile :: tiles
     }
+
+
+    private def getGraphicDescriptor(tile: Tile): Option[GraphicDescriptor] = {
+      var graphicSeq: Seq[GraphicDescriptor] = Seq()
+      if (tile.definition.name.isDefined) {
+        graphicMap.get(TileIdentifier(tile.definition.name.get))
+          .foreach(g => graphicSeq = graphicSeq :+ g)
+      } else if (tile.definition.number.isDefined) {
+        graphicMap.get(TileIdentifier(tile.definition.number.get))
+          .foreach(g => graphicSeq = graphicSeq :+ g)
+      } else {
+        for (group <- tile.definition.groups) {
+          graphicMap.get(TileIdentifier(Group(group)))
+            .foreach(g => graphicSeq = graphicSeq :+ g)
+        }
+      }
+      if (graphicSeq.nonEmpty) {
+        Some(graphicSeq.reduce(GraphicDescriptor.merge))
+      } else None
+    }
+
 
     override def updateMatchState(matchState: GameState): Unit = {
       for (t <- tiles) {
