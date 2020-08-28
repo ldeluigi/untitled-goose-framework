@@ -1,9 +1,8 @@
 package dsl.properties.tile
 
-import dsl.nodes.GraphicMapNode
+import dsl.nodes.{BoardBuilderNode, GraphicMapNode}
 import dsl.properties.tile.TileProperty._
 import model.TileIdentifier
-import model.entities.board.BoardBuilder
 import view.board.GraphicDescriptor
 
 trait TileHasBuilder {
@@ -20,7 +19,7 @@ trait TileHasBuilder {
 
 object TileHasBuilder {
 
-  private class TileHasBuilderImpl(tileIdentifier: TileIdentifier, builder: BoardBuilder, graphicMap: GraphicMapNode) extends TileHasBuilder {
+  private class TileHasBuilderImpl(tileIdentifier: TileIdentifier, builder: BoardBuilderNode, graphicMap: GraphicMapNode) extends TileHasBuilder {
 
     override def has(name: NameProperty): Unit =
       builder.withNamedTile(tileIdentifier.number.get, name.name)
@@ -43,10 +42,10 @@ object TileHasBuilder {
       }
   }
 
-  def apply(number: Int, builder: BoardBuilder, graphicMap: GraphicMapNode): TileHasBuilder =
+  def apply(number: Int, builder: BoardBuilderNode, graphicMap: GraphicMapNode): TileHasBuilder =
     new TileHasBuilderImpl(TileIdentifier(number), builder, graphicMap)
 
-  def apply(name: String, builder: BoardBuilder, graphicMap: GraphicMapNode): TileHasBuilder =
+  def apply(name: String, builder: BoardBuilderNode, graphicMap: GraphicMapNode): TileHasBuilder =
     new TileHasBuilderImpl(TileIdentifier(name), builder, graphicMap)
 }
 
