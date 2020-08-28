@@ -15,7 +15,6 @@ class GameStateTest extends AnyFlatSpec with Matchers {
   val p1: Player = Player("P1")
   val p2: Player = Player("P2")
   val players: Map[Player, Piece] = Map(p1 -> Piece(Color.Red), p2 -> Piece(Color.Blue))
-  //def default: Game = Game(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))), 3, 10)
 
   val gameBoard: GameBoard = gameState.gameBoard
 
