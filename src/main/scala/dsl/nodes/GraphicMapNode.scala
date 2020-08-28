@@ -17,7 +17,7 @@ class GraphicMapNode(builderNode: BoardBuilderNode) extends RuleBookNode {
       .filter(_.number.isDefined)
       .map(_.number.get)
       .filter(!builderNode.definedTiles.contains(_))
-      .map(_ + " number define style but is not assigned to any tile")
+      .map("Tile " + _ + " define style but is not valid in this board")
       .toSeq
     seq ++= graphicMap.keys
       .filter(_.name.isDefined)

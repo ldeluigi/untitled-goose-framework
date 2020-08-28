@@ -12,9 +12,9 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder {
 
   private var definedTileNames: Set[String] = Set()
   private var definedGroups: Set[String] = Set()
+  private var definedNumbers: Set[Int] = Set()
 
   private var tileRange: Range = 0 to 0
-
 
   def nameIsDefined(name: String): Boolean = definedTileNames.contains(name)
 
@@ -22,9 +22,11 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder {
 
   def definedTiles: Range = tileRange
 
+  private var errorMessages: Seq[String] = Seq()
+
 
   override def check: Seq[String] = {
-    var errorMessages = if (isCompletable) Seq() else Seq("Board definition not complete: ")
+    errorMessages ++= (if (isCompletable) Seq() else Seq("Board definition not complete: "))
 
     if (!nameDefined) {
       errorMessages :+= "\tName not defined"
@@ -35,7 +37,7 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder {
     if (!numberDefined) {
       errorMessages :+= "\tNumber of tiles not defined"
     }
-    errorMessages
+    errorMessages ++ definedNumbers.filter(!tileRange.contains(_)).map("Tile " + _ + " define properties but is not valid in this board")
   }
 
   override def withName(name: String): BoardBuilder = {
@@ -59,12 +61,14 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder {
 
   override def withNamedTile(number: Int, name: String): BoardBuilder = {
     builder withNamedTile(number, name)
+    definedNumbers += number
     definedTileNames += name
     this
   }
 
   override def withGroupedTiles(group: String, number: Int*): BoardBuilder = {
     builder.withGroupedTiles(group, number: _*)
+    definedNumbers ++= number
     definedGroups += group
     this
   }
