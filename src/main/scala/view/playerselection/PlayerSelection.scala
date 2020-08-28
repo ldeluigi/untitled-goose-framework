@@ -41,12 +41,12 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   //val maximumPlayers: Int = Some
 
   val addPlayer: Button = new Button {
-    text = "Add"
+    text = "Enroll"
     style = "-fx-font-size: 12pt"
   }
 
   val removePlayer: Button = new Button {
-    text = "Remove"
+    text = "Withdraw"
     style = "-fx-font-size: 12pt"
   }
 
@@ -66,25 +66,43 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   }
 
   val playerName: Text = new Text {
-    text = "Insert player name:"
+    text = "Insert player data:"
     style = "-fx-font-size: 12pt"
   }
 
-  val centerPlayerConsole: HBox = new HBox {
-    alignment = Pos.Center
-    spacing = 15
-    padding = Insets(30)
-    children = List(playerName, playerNameFromInput, colorsChoice, addPlayer, removePlayer)
+  val playersLabel: Text = new Text {
+    text = "Currently enrolled players:"
+    style = "-fx-font-size: 12pt"
   }
 
+  val inputPlayers: HBox = new HBox {
+    alignment = Pos.Center
+    spacing = 15
+    padding = Insets(5)
+    children = List(playerName, playerNameFromInput, colorsChoice)
+  }
+
+  val playerControls: HBox = new HBox {
+    alignment = Pos.TopCenter
+    spacing = 15
+    padding = Insets(5)
+    children = List(addPlayer, removePlayer)
+  }
+
+  val centerConsole: VBox = new VBox {
+    alignment = Pos.Center
+    spacing = 30
+    padding = Insets(15)
+    children = List(inputPlayers, playerControls)
+  }
 
   val activePlayersList: TextArea = new TextArea
   activePlayersList.setMaxSize(widthSize * 0.15, heightSize)
 
   val activePlayersPanel: VBox = new VBox {
-    spacing = 15
-    padding = Insets(15)
-    children = List(new Label("Currently enrolled players:"), activePlayersList)
+    spacing = 30
+    padding = Insets(30)
+    children = List(playersLabel, activePlayersList)
   }
 
   val bottomGameControls: HBox = new HBox {
@@ -160,7 +178,7 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   }
 
   borderPane.top = upperGameNameHeader
-  borderPane.center = centerPlayerConsole
+  borderPane.center = centerConsole
   borderPane.bottom = bottomGameControls
   borderPane.right = activePlayersPanel
 }

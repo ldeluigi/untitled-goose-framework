@@ -111,4 +111,3 @@ object TileVisualization {
   def apply(tile: Tile, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, graphicDescriptor: Option[GraphicDescriptor]): TileVisualization =
     new TileVisualizationImpl(tile, parentWidth, parentHeight, rows, cols, graphicDescriptor: Option[GraphicDescriptor])
 }
-
