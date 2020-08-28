@@ -2,7 +2,7 @@ package dsl
 
 import dsl.nodes.RuleBook
 import dsl.words.{BoardPropertyWords, RulesWord, TilePropertyWords}
-import model.entities.board.{Board, Position}
+import model.entities.board.Position
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 import model.{GameData, TileIdentifier}
 import view.View
@@ -34,19 +34,14 @@ trait GooseDSL extends App with Subjects with TilePropertyWords with BoardProper
     checkMessage.isEmpty
   }
 
-  private def gameGeneration(): GameData =
-    new GameData {
-      override def board: Board = ruleBook.boardBuilder.complete()
-
-      override def ruleSet: RuleSet = PriorityRuleSet(
-        tiles => Position(tiles.toList.sorted.take(1).head),
-        PlayerOrdering.orderedRandom,
-        1 to 10,
-        Set(),
-        Seq(),
-        Seq(),
-      )
-    }
+  private def gameGeneration(): GameData = {
+    val ruleSet: RuleSet = PriorityRuleSet(
+      tiles => Position(tiles.toList.sorted.take(1).head),
+      PlayerOrdering.orderedRandom,
+      Set(),
+      Seq())
+    GameData(ruleBook.boardBuilder.complete(), ruleSet)
+  }
 
   private def start(gameData: GameData, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
     new View(gameData, graphicMap).main(Array())

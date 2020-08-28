@@ -9,16 +9,6 @@ case class BoardBuilderImpl() extends BoardBuilder {
   private var groupMap: Map[Int, Set[String]] = Map()
   private var disposition: Option[Int => Disposition] = None
 
-  private def assignGroup(group: String, number: Seq[Int]): Unit =
-    for (n <- number) {
-      if (groupMap.contains(n)) {
-        groupMap = groupMap + (n -> groupMap(n).+(group))
-      } else {
-        groupMap = groupMap + (n -> Set(group))
-      }
-    }
-
-
   override def withName(name: String): BoardBuilder = {
     this.name = Some(name)
     this
@@ -37,7 +27,7 @@ case class BoardBuilderImpl() extends BoardBuilder {
   }
 
   override def withGroupedTiles(group: String, number: Int*): BoardBuilder = {
-    this.assignGroup(group, number)
+    this.assignGroup(group, number.toSeq)
     this
   }
 
@@ -45,6 +35,15 @@ case class BoardBuilderImpl() extends BoardBuilder {
     this.assignGroup(newGroup, groupMap.filter(_._2.contains(originGroup)).keys.toSeq)
     this
   }
+
+  private def assignGroup(group: String, number: Seq[Int]): Unit =
+    for (n <- number) {
+      if (groupMap.contains(n)) {
+        groupMap = groupMap + (n -> groupMap(n).+(group))
+      } else {
+        groupMap = groupMap + (n -> Set(group))
+      }
+    }
 
   override def withDisposition(disposition: Int => Disposition): BoardBuilder = {
     this.disposition = Some(disposition)

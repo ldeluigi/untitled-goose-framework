@@ -10,13 +10,19 @@ object DSLSandbox extends GooseDSL {
   Rules of "Goose Game"
 
   The game board has tiles(63)
-
   the game board has disposition(Spiral)
 
-  The tile 6 has name("The well")
+  the tile 6 has name("The bridge")
+  the tile 19 has name("The Inn")
+  the tile 31 has name("The well")
+  the tile 42 has name("The labyrinth")
+  the tile 52 has name("The prison")
+  the tile 58 has name("The death")
+  the tile 63 has name("The end")
 
-  The tile "The well" has color(Blue)
+  The tiles(5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59) have group("Goose")
 
   All tiles "Goose" have color(Green)
+
 
 }

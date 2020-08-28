@@ -50,11 +50,10 @@ object BoardDisplay {
       } else if (tile.definition.number.isDefined) {
         graphicMap.get(TileIdentifier(tile.definition.number.get))
           .foreach(g => graphicSeq = graphicSeq :+ g)
-      } else {
-        for (group <- tile.definition.groups) {
-          graphicMap.get(TileIdentifier(Group(group)))
-            .foreach(g => graphicSeq = graphicSeq :+ g)
-        }
+      }
+      for (group <- tile.definition.groups) {
+        graphicMap.get(TileIdentifier(Group(group)))
+          .foreach(g => graphicSeq = graphicSeq :+ g)
       }
       if (graphicSeq.nonEmpty) {
         Some(graphicSeq.reduce(GraphicDescriptor.merge))
