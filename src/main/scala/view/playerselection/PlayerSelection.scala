@@ -113,11 +113,19 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   addPlayer.onAction = _ => {
     if (playerNameFromInput.getText.nonEmpty) {
       if (!enrolledPlayers.contains(Player(playerNameFromInput.getText))) {
-        // controllare che ci sia ancora posto per aggiungere giocatori
-        //if (gameData.ruleSet.admissiblePlayers())
-        enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
-        renderGraphicalAddition()
-        playerNameFromInput.clear()
+        if (enrolledPlayers.size >= gameData.ruleSet.admissiblePlayers.last) {
+          // giocatori massimi raggiunti
+          new Alert(AlertType.Error) {
+            initOwner(stage)
+            title = "Error!"
+            headerText = "Maximum number of players reached!"
+            contentText = "Remove one and try again."
+          }.showAndWait()
+        } else {
+          enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
+          renderGraphicalAddition()
+          playerNameFromInput.clear()
+        }
       } else {
         new Alert(AlertType.Error) {
           initOwner(stage)
@@ -152,16 +160,25 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   }
 
   startGame.onAction = _ => {
-    // nell'if controllare che non sia minore del minimo
+    val minimumNeededPlayers: Int = gameData.ruleSet.admissiblePlayers.head
     if (enrolledPlayers.nonEmpty) {
-      val currentMatch: Game = Game(gameData.board, enrolledPlayers, gameData.ruleSet)
-      val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
-      stage.scene = appView
+      if (enrolledPlayers.size >= minimumNeededPlayers) {
+        val currentMatch: Game = Game(gameData.board, enrolledPlayers, gameData.ruleSet)
+        val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
+        stage.scene = appView
+      } else {
+        new Alert(AlertType.Error) {
+          initOwner(stage)
+          title = "Error!"
+          headerText = "You need at least " + minimumNeededPlayers + " players to start this game!"
+          contentText = "Add " + (minimumNeededPlayers - enrolledPlayers.size) + " more players."
+        }.showAndWait()
+      }
     } else {
       new Alert(AlertType.Error) {
         initOwner(stage)
         title = "Error!"
-        headerText = "Missing players"
+        headerText = "Missing players!"
         contentText = "Can't start a game without players"
       }.showAndWait()
     }
