@@ -41,8 +41,10 @@ trait GooseDSL extends App with Subjects with TilePropertyWords with BoardProper
       override def ruleSet: RuleSet = PriorityRuleSet(
         tiles => Position(tiles.toList.sorted.take(1).head),
         PlayerOrdering.orderedRandom,
+        1 to 10,
         Set(),
-        Seq()
+        Seq(),
+        Seq(),
       )
     }
 

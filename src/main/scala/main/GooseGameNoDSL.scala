@@ -308,8 +308,10 @@ object GooseGameNoDSL extends JFXApp {
   val ruleSet: RuleSet = PriorityRuleSet(
     tiles => Position(tiles.toList.sorted.take(1).head),
     PlayerOrdering.orderedRandom,
+    1 to 10,
     actionRules,
-    behaviourRule
+    behaviourRule,
+    Seq(),
   )
 
   //From a menu GUI that select and creates player and pieces on the press of a "Start game" button

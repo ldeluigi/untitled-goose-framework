@@ -13,6 +13,6 @@ class DialogLaunchBehaviourTest extends AnyFlatSpec with Matchers {
     m.submitEvent(e)
     DialogLaunchBehaviour().applyRule(m.currentState) should equal(Seq(DialogOperation(e.createDialog)))
     DialogLaunchBehaviour().applyRule(m.currentState) should have size 0
-  }
-  */
+  }*/
+
 }

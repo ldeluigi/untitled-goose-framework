@@ -11,6 +11,7 @@ import model.{Player, Tile}
 
 class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                       playerOrdering: PlayerOrdering,
+                      playersRange: Range,
                       actionRules: Set[ActionRule],
                       behaviourRules: Seq[BehaviourRule],
                       cleanupRules: Seq[CleanupRule]
@@ -51,6 +52,7 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
     TurnEndConsumer.applyRule(state)
   }
 
+  override def admissiblePlayers: Range = playersRange
 }
 
 object PriorityRuleSet {
@@ -65,10 +67,11 @@ object PriorityRuleSet {
    */
   def apply(startTile: Set[Tile] => Position = tiles => Position(tiles.toList.sorted.take(1).head),
             playerOrdering: PlayerOrdering = PlayerOrdering.orderedRandom,
+            admissiblePlayers: Range,
             actionRules: Set[ActionRule] = Set(),
             behaviourRule: Seq[BehaviourRule] = Seq(TurnEndEventBehaviour()),
-            cleanupRules: Seq[CleanupRule] = Seq()
+            cleanupRules: Seq[CleanupRule] = Seq(),
            ): PriorityRuleSet =
-    new PriorityRuleSet(startTile, playerOrdering, actionRules, behaviourRule, cleanupRules)
+    new PriorityRuleSet(startTile, playerOrdering, admissiblePlayers, actionRules, behaviourRule, cleanupRules)
 
 }

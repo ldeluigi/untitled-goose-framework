@@ -16,14 +16,15 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
   val t2: Tile = Tile(TileDefinition(2))
   val tileSet: Set[Tile] = Set(t1, t2)
   val firstPosition: Set[Tile] => Position = tiles => Position(tiles.toList.sorted.take(1).head)
+  val playersRange: Range = 1 to 10
   val p1: Player = Player("P1")
   val p2: Player = Player("P2")
   val ordering: PlayerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))
 
-  var ruleSet: PriorityRuleSet = PriorityRuleSet(firstPosition, ordering)
+  var ruleSet: PriorityRuleSet = PriorityRuleSet(firstPosition, ordering, playersRange)
 
   override protected def beforeEach(): Unit = {
-    ruleSet = PriorityRuleSet(firstPosition, ordering)
+    ruleSet = PriorityRuleSet(firstPosition, ordering, playersRange)
   }
 
   val myAction: Action = new Action {
@@ -48,14 +49,14 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
   it should "permit an action if the priority of the negation is lower than the permission" in {
     val negation = AlwaysNegatedActionRule(1, myAction)
     val permission = AlwaysPermittedActionRule(2, myAction)
-    val ruleSet = PriorityRuleSet(actionRules = Set(negation, permission))
+    val ruleSet = PriorityRuleSet(admissiblePlayers = 1 to 10, actionRules = Set(negation, permission))
     assert(ruleSet.actions(null).contains(myAction))
   }
 
   it should "negate the action if the priority of the permission is lower than the negation" in {
     val negation = AlwaysNegatedActionRule(2, myAction)
     val permission = AlwaysPermittedActionRule(1, myAction)
-    val ruleSet = PriorityRuleSet(actionRules = Set(negation, permission))
+    val ruleSet = PriorityRuleSet(admissiblePlayers = 1 to 10, actionRules = Set(negation, permission))
     assert(!ruleSet.actions(null).contains(myAction))
   }
 

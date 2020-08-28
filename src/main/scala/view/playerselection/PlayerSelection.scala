@@ -37,8 +37,6 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
 
   val colorsChoice = new ComboBox(model.Color.values.toList)
   colorsChoice.getSelectionModel.selectFirst()
-  //val minimumPlayers: Int = Some
-  //val maximumPlayers: Int = Some
 
   val addPlayer: Button = new Button {
     text = "Enroll"
@@ -115,6 +113,8 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   addPlayer.onAction = _ => {
     if (playerNameFromInput.getText.nonEmpty) {
       if (!enrolledPlayers.contains(Player(playerNameFromInput.getText))) {
+        // controllare che ci sia ancora posto per aggiungere giocatori
+        //if (gameData.ruleSet.admissiblePlayers())
         enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
         renderGraphicalAddition()
         playerNameFromInput.clear()
@@ -152,6 +152,7 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   }
 
   startGame.onAction = _ => {
+    // nell'if controllare che non sia minore del minimo
     if (enrolledPlayers.nonEmpty) {
       val currentMatch: Game = Game(gameData.board, enrolledPlayers, gameData.ruleSet)
       val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)

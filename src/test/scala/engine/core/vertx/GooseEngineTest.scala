@@ -3,9 +3,9 @@ package engine.core.vertx
 import engine.events.GameEvent
 import engine.events.special.NoOpEvent
 import model.entities.DialogContent
-import model.entities.board.{Board, Disposition, Piece}
+import model.entities.board.{Board, Disposition, Piece, Position}
 import model.game.{Game, GameState}
-import model.rules.ruleset.PriorityRuleSet
+import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import model.{Color, Player}
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
@@ -20,7 +20,14 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   behavior of "GooseEngineTest"
 
-  val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet())
+  val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet(
+    tiles => Position(tiles.toList.sorted.take(1).head),
+    PlayerOrdering.orderedRandom,
+    1 to 10,
+    Set(),
+    Seq(),
+    Seq())
+  )
 
   def cGenerator(handler: GameEvent => Unit): GooseController = new GooseController {
     override def update(state: GameState): Unit = {}

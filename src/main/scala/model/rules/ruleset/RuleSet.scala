@@ -20,6 +20,8 @@ trait RuleSet {
 
   def actions(state: MutableGameState): Set[Action]
 
+  def admissiblePlayers: Range
+
 }
 
 
