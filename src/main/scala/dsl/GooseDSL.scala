@@ -1,15 +1,13 @@
 package dsl
 
 import dsl.nodes.RuleBook
-import dsl.words.{BoardPropertyWords, RulesWord, TilePropertyWords}
-import model.entities.board.Position
-import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
+import dsl.words.{BoardPropertyWords, RuleSetWords, RulesWord, TilePropertyWords}
 import model.{GameData, TileIdentifier}
 import view.View
 import view.board.GraphicDescriptor
 
 
-trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords with Implicits {
+trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords with RuleSetWords with Implicits {
 
   protected implicit val ruleBook: RuleBook = RuleBook()
 
@@ -35,13 +33,8 @@ trait GooseDSL extends App with Subjects with TilePropertyWords with BoardProper
   }
 
   private def gameGeneration(): GameData = {
-    val ruleSet: RuleSet = PriorityRuleSet(
-      tiles => Position(tiles.toList.sorted.take(1).head),
-      PlayerOrdering.orderedRandom,
-      1 to 10,
-      Set(),
-      Seq())
-    GameData(ruleBook.boardBuilder.complete(), ruleSet)
+
+    GameData(ruleBook.boardBuilder.complete(), ruleBook.ruleSet.getRuleSet)
   }
 
   private def start(gameData: GameData, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =

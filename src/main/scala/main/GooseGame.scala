@@ -10,6 +10,8 @@ object GooseGame extends GooseDSL {
   Rules of "Goose Game"
   2 to 4 players
 
+  Players start on tile 1
+
   The game board has tiles(63)
   the game board has disposition(Spiral)
 
