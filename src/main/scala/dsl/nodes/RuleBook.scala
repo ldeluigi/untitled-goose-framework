@@ -5,6 +5,8 @@ trait RuleBook extends RuleBookNode {
 
   def graphicMap: GraphicMapNode
 
+  def ruleSet: RuleSetNode
+
   def setGameName(name: String): Unit
 }
 
@@ -18,19 +20,18 @@ object RuleBook {
 
     val graphicMap: GraphicMapNode = new GraphicMapNode(boardBuilder)
 
+    val ruleSet: RuleSetNode = RuleSetNode(boardBuilder)
+
     def setGameName(name: String): Unit = {
       gameName value = name
       boardBuilder.withName(name)
     }
 
-    override def toString: String = {
-      gameName value
-    }
-
     override def check: Seq[String] = {
       gameName.check ++
         boardBuilder.check ++
-        graphicMap.check
+        graphicMap.check ++
+        ruleSet.check
     }
   }
 

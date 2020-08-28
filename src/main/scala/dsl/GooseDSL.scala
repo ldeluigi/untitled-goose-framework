@@ -9,7 +9,7 @@ import view.View
 import view.board.GraphicDescriptor
 
 
-trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords {
+trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords with Implicits {
 
   protected implicit val ruleBook: RuleBook = RuleBook()
 
