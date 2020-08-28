@@ -7,7 +7,6 @@ import engine.events.GameEvent
 import engine.events.consumable.{DialogLaunchEvent, StepMovementEvent}
 import engine.events.special.NoOpEvent
 import javafx.scene.input.KeyCode
-import model.TileIdentifier.Group
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Position}
@@ -64,17 +63,10 @@ object Main extends JFXApp {
   val pathToOca = "oca.jpg"
   val oca: BufferedSource = Source.fromResource(pathToOca)
 
-  //val tupla: (TileIdentifier, GraphicDescriptor) = "oca" -> GraphicDescriptor("oca.jpg")
-
   // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
-    "oca" -> GraphicDescriptor(pathToOca),
-    15 -> GraphicDescriptor("pozzo.jpg"),
-    Group("verde") -> GraphicDescriptor(Color.Green)
+    1 -> GraphicDescriptor(Color.Red)
   )
-
-  //for ((k,v) <- graphicMap) println("key: " + k, "value: " + v)
-
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
     width = 0.5 * screenSize.width

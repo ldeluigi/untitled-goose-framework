@@ -23,8 +23,6 @@ trait TileVisualization extends StackPane {
   def removePieces(): Unit
 
   def rectangle: Rectangle
-
-  def applyStyle(graphicDescriptor: GraphicDescriptor): Unit
 }
 
 object TileVisualization {
@@ -33,49 +31,16 @@ object TileVisualization {
                                       parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
 
     var colorToApply: Color = Color.White // default tile background -> applied if not specified by the user
-    var strokeColor: Color = Color.Black // default stroke color -> applied if not specified by the user
+    val strokeColor: Color = Color.Black // default stroke color -> applied if not specified by the user
     val strokeSize = 3
 
     var image: Image = _
     var imageContainer: ImageView = _
     var imageFlag: Boolean = false
 
-    /*if (tile.definition.name.isDefined) {
-      graphicMap.get(TileIdentifier(tile.definition.name.get)).foreach(applyStyle)
+    graphicDescriptor.foreach(applyStyle)
 
-    } else if (tile.definition.number.isDefined) {
-      graphicMap.get(TileIdentifier(tile.definition.number.get)).foreach(applyStyle)
-
-    } else if (tile.definition.groups.nonEmpty) {
-      for (group <- tile.definition.groups) {
-        if (graphicMap.contains(TileIdentifier(Group(group)))) {
-          graphicMap.get(TileIdentifier(Group(group))).foreach(applyStyle)
-          break //prendo elemento dal set e controllo che ci sia nella mappa; per ora breakkiamo dopo aver trovato un primo elemento corrispondente
-        }
-      }
-    }*/
-
-    override def applyStyle(graphicDescriptor: GraphicDescriptor): Unit = {
-      if (graphicDescriptor.color.isDefined) {
-        println(graphicDescriptor.color.get.toString)
-        colorToApply = graphicDescriptor.color.get
-      }
-
-      if (graphicDescriptor.strokeColor.isDefined) {
-        strokeColor = graphicDescriptor.strokeColor.get
-      }
-
-      if (graphicDescriptor.path.isDefined) {
-        val backgroundToApply: String = graphicDescriptor.path.get
-        image = new Image(backgroundToApply, parentWidth.getValue / cols, parentHeight.getValue / rows, true, true)
-        imageContainer = new ImageView(backgroundToApply)
-        imageFlag = true
-      }
-    }
-
-    applyStyle(graphicDescriptor.get)
-
-    var rectangle: Rectangle = new Rectangle {
+    val rectangle: Rectangle = new Rectangle {
       fill = colorToApply
       stroke = strokeColor
       strokeType = StrokeType.Inside
@@ -89,7 +54,7 @@ object TileVisualization {
       case None => tile.definition.number.get.toString
     }
 
-    var label = new Label(text)
+    val label = new Label(text)
 
     // to stack things up correctly, add the rectangle itself and the label, then add the image if present
     this.children.addAll(rectangle, label)
@@ -125,6 +90,20 @@ object TileVisualization {
         this.children.remove(p)
       }
       pieceList = Nil
+    }
+
+
+    private def applyStyle(graphicDescriptor: GraphicDescriptor): Unit = {
+      if (graphicDescriptor.color.isDefined) {
+        colorToApply = graphicDescriptor.color.get
+      }
+
+      if (graphicDescriptor.path.isDefined) {
+        val backgroundToApply: String = graphicDescriptor.path.get
+        image = new Image(backgroundToApply, parentWidth.getValue / cols, parentHeight.getValue / rows, true, true)
+        imageContainer = new ImageView(backgroundToApply)
+        imageFlag = true
+      }
     }
   }
 
