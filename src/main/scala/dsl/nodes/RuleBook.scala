@@ -1,9 +1,7 @@
 package dsl.nodes
 
-import model.entities.board.BoardBuilder
-
 trait RuleBook extends RuleBookNode {
-  def boardBuilder: BoardBuilder
+  def boardBuilder: BoardBuilderNode
 
   def graphicMap: GraphicMapNode
 
@@ -16,9 +14,9 @@ object RuleBook {
 
     private val gameName: SingleValueNode[String] = new SingleValueNode("Game Name")
 
-    val boardBuilder: BoardBuilder = BoardBuilder()
+    val boardBuilder: BoardBuilderNode = BoardBuilderNode()
 
-    val graphicMap: GraphicMapNode = new GraphicMapNode()
+    val graphicMap: GraphicMapNode = new GraphicMapNode(boardBuilder)
 
     def setGameName(name: String): Unit = {
       gameName value = name
@@ -31,7 +29,7 @@ object RuleBook {
 
     override def check: Seq[String] = {
       gameName.check ++
-        (if (boardBuilder.isCompletable) Seq() else Seq("Board definition not complete")) ++
+        boardBuilder.check ++
         graphicMap.check
     }
   }

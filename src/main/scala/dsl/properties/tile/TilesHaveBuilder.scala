@@ -1,10 +1,9 @@
 package dsl.properties.tile
 
-import dsl.nodes.GraphicMapNode
+import dsl.nodes.{BoardBuilderNode, GraphicMapNode}
 import dsl.properties.tile.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty}
 import model.TileIdentifier
 import model.TileIdentifier.Group
-import model.entities.board.BoardBuilder
 import view.board.GraphicDescriptor
 
 trait TilesHaveBuilder {
@@ -19,7 +18,7 @@ trait TilesHaveBuilder {
 
 object TilesHaveBuilder {
 
-  private class NumberedTilesHaveBuilder(numbers: Seq[Int], builder: BoardBuilder, graphicMap: GraphicMapNode) extends TilesHaveBuilder {
+  private class NumberedTilesHaveBuilder(numbers: Seq[Int], builder: BoardBuilderNode, graphicMap: GraphicMapNode) extends TilesHaveBuilder {
     override def have(group: GroupProperty): Unit =
       builder.withGroupedTiles(group.value, numbers: _*)
 
@@ -33,7 +32,7 @@ object TilesHaveBuilder {
     })
   }
 
-  private class GroupHaveBuilder(tileIdentifier: TileIdentifier, builder: BoardBuilder, graphicMap: GraphicMapNode) extends TilesHaveBuilder {
+  private class GroupHaveBuilder(tileIdentifier: TileIdentifier, builder: BoardBuilderNode, graphicMap: GraphicMapNode) extends TilesHaveBuilder {
     override def have(group: GroupProperty): Unit =
       builder.withGroupedTiles(tileIdentifier.group.get.groupName, group.value)
 
@@ -44,9 +43,9 @@ object TilesHaveBuilder {
       graphicMap.addGraphicDescription(tileIdentifier, GraphicDescriptor(background.path))
   }
 
-  def apply(numbers: Seq[Int], builder: BoardBuilder, graphicMap: GraphicMapNode): TilesHaveBuilder =
+  def apply(numbers: Seq[Int], builder: BoardBuilderNode, graphicMap: GraphicMapNode): TilesHaveBuilder =
     new NumberedTilesHaveBuilder(numbers, builder, graphicMap)
 
-  def apply(group: String, builder: BoardBuilder, graphicMap: GraphicMapNode): TilesHaveBuilder =
+  def apply(group: String, builder: BoardBuilderNode, graphicMap: GraphicMapNode): TilesHaveBuilder =
     new GroupHaveBuilder(TileIdentifier(Group(group)), builder, graphicMap)
 }
