@@ -20,39 +20,39 @@ class GameStateTest extends AnyFlatSpec with Matchers {
 
   behavior of "GameStateTest"
 
-  "GameState.currentCycle" should "return its current cycle of execution" in {
+  it should "return its current cycle of execution" in {
     gameState.currentCycle should be(0)
   }
 
-  "GameState.nextPlayer" should "return who is the next player" in {
+  it should "return who is the next player" in {
     gameState.nextPlayer should equal(p2)
   }
 
-  "GameState.currentPlayer" should "return its current player of execution" in {
+  it should "return its current player of execution" in {
     gameState.currentPlayer should equal(p1)
   }
 
-  "GameState.playerPicies" should "return a map of players and relative picies" in {
+  it should "return a map of players and relative picies" in {
     gameState.playerPieces should equal(players)
   }
 
-  "GameState.players" should "return a seq of players" in {
+  it should "return a seq of players" in {
     gameState.players should equal(players.keys.toSet)
   }
 
-  "GameState.gameHistory" should "return a seq of game events" in {
+  it should "return a seq of game events" in {
     gameState.gameHistory.size should be(0)
   }
 
-  "GameState.currentTurn" should "return the current turn of execution" in {
+  it should "return the current turn of execution" in {
     gameState.currentTurn should be(0)
   }
 
-  "GameState.consumableBuffer" should "return a seq of consumable game events" in {
+  it should "return a seq of consumable game events" in {
     gameState.consumableBuffer.size should be(0)
   }
 
-  "GameState.gameBoard" should "return its gameBoard" in {
+  it should "return its gameBoard" in {
     gameState.gameBoard should equal(gameBoard)
   }
 
