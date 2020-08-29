@@ -67,11 +67,15 @@ object ApplicationController {
       action.execute(engine.eventSink, engine.currentMatch.currentState)
     }
 
-    override def update(state: GameState): Unit = Platform.runLater(() => {
-      boardView.updateMatchState(state)
-      actionMenu.displayActions(engine.currentMatch.availableActions)
-      logHistoryDiff(state)
-    })
+    override def update(state: GameState): Unit = {
+      val clonedState: GameState = state.clone()
+      Platform.runLater(() => {
+        boardView.updateMatchState(clonedState)
+        actionMenu.displayActions(engine.currentMatch.availableActions)
+        logHistoryDiff(clonedState)
+      })
+    }
+
 
     private def logHistoryDiff(state: GameState): Unit = {
       (state.consumableBuffer.diff(previousState.consumableBuffer) ++

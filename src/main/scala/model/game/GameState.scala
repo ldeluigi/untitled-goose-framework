@@ -28,4 +28,7 @@ trait GameState {
 
   def players: Set[Player] = playerPieces.keySet
 
+  override def clone(): GameState = ClonedGameState(this)
+
 }
+

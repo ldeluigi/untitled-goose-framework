@@ -1,8 +1,8 @@
 package dsl
 
-import dsl.words.PlayersWord
+import dsl.words.PlayerRangeWord
 
 trait Implicits {
 
-  implicit def rangeToPlayerNumber(range: Range): PlayersWord = PlayersWord(range)
+  implicit def rangeToPlayerNumber(range: Range): PlayerRangeWord = PlayerRangeWord(range)
 }
