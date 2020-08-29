@@ -11,17 +11,17 @@ import org.scalatest.matchers.should.Matchers
 
 class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
 
-  var h: Seq[SkipTurnEvent] = Seq(consumable.SkipTurnEvent(Player("a"), 1, 1))
-  var ph: PimpedHistory[GameEvent] = new PimpedHistory[GameEvent](h)
+  var skipTurnSequence: Seq[SkipTurnEvent] = Seq(consumable.SkipTurnEvent(Player("a"), 1, 1))
+  var pimpedHistory: PimpedHistory[GameEvent] = new PimpedHistory[GameEvent](skipTurnSequence)
 
   override protected def beforeEach(): Unit = {
-    h = Seq(consumable.SkipTurnEvent(Player("a"), 1, 1))
-    ph = new PimpedHistory[GameEvent](h)
+    skipTurnSequence = Seq(consumable.SkipTurnEvent(Player("a"), 1, 1))
+    pimpedHistory = new PimpedHistory[GameEvent](skipTurnSequence)
   }
 
   "PimpedHistory.filterTurn" should "filter events by turn" in {
-    ph.filterTurn(2) should have size 0
-    ph.filterTurn(1) should contain theSameElementsAs h
+    pimpedHistory.filterTurn(2) should have size 0
+    pimpedHistory.filterTurn(1) should contain theSameElementsAs skipTurnSequence
   }
 
   "PimpedHistory.filterCycle" should "filter events by cycle" in {
@@ -33,9 +33,9 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   }
 
   "PimpedHistory.only" should "filter events by type and cast them" in {
-    ph.only[LoseTurnEvent] should have size 0
-    ph.only[SkipTurnEvent] should contain theSameElementsAs h
-    ph.only[SkipTurnEvent].foreach(_.player.name should equal("a"))
+    pimpedHistory.only[LoseTurnEvent] should have size 0
+    pimpedHistory.only[SkipTurnEvent] should contain theSameElementsAs skipTurnSequence
+    pimpedHistory.only[SkipTurnEvent].foreach(_.player.name should equal("a"))
   }
 
   "PimpedHistory.removeEvent" should "remove a specific event" in {
