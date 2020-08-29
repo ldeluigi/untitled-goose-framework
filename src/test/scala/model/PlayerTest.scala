@@ -14,8 +14,7 @@ class PlayerTest extends AnyFlatSpec with Matchers {
   }
 
   it should "have a history of happened player events" in {
-    //player.history should be (0)
-    pending
+    player.history should have size 0
   }
 
 }
