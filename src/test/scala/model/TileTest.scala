@@ -2,16 +2,16 @@ package model
 
 import model.entities.board.TileDefinition
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class TileTest extends AnyFlatSpec {
+class TileTest extends AnyFlatSpec with Matchers {
 
-  val tile: TileDefinition = TileDefinition(1)
+  behavior of "TileTest"
 
-  "A tile" should "have a history of happened tiles events" in {
-    pending
-  }
+  val tile1: Tile = Tile(TileDefinition(1))
+  val tile2: Tile = Tile(TileDefinition(1))
 
-  it should "be able to compare tiles" in {
-    pending
+  it should "have a history of happened tiles events" in {
+    tile1.history should have size 0
   }
 }

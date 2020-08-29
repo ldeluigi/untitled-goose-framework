@@ -5,6 +5,8 @@ import org.scalatest.matchers.should.Matchers
 
 class BoardTest extends AnyFlatSpec with Matchers {
 
+  behavior of "BoardTest"
+
   val tile1: TileDefinition = TileDefinition(1)
   val tile2: TileDefinition = TileDefinition(2)
   val tile3: TileDefinition = TileDefinition(3)
@@ -13,7 +15,7 @@ class BoardTest extends AnyFlatSpec with Matchers {
   val disposition: Disposition = Disposition.snake(tiles.size)
   val board: Board = Board(name, tiles, disposition)
 
-  "A Board" should "have a name" in {
+  it should "have a name" in {
     board.name should equal(name)
   }
 
