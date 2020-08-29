@@ -1,25 +1,17 @@
 package model
 
+import model.entities.board.TileDefinition
 import org.scalatest.flatspec.AnyFlatSpec
 
 class TileTest extends AnyFlatSpec {
 
-  behavior of "TileTest"
+  val tile: TileDefinition = TileDefinition(1)
 
-  it should "history_$eq" in {
+  "A tile" should "have a history of happened tiles events" in {
     pending
   }
 
-  it should "history" in {
+  it should "be able to compare tiles" in {
     pending
   }
-
-  it should "definition" in {
-    pending
-  }
-
-  it should "compare" in {
-    pending
-  }
-
 }

@@ -7,7 +7,7 @@ class StepOperationTest extends AnyFlatSpec {
   behavior of "StepOperationTest"
 
   it should "return a correct sequence of Operations" in {
-
+    pending
   }
 
 }
