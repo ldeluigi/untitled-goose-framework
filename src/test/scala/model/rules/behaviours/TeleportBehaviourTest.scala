@@ -6,7 +6,7 @@ class TeleportBehaviourTest extends AnyFlatSpec {
 
   behavior of "TeleportBehaviourTest"
 
-  it should "applyRule" in {
+  it should "teleport a player from a tile to another and check if the game state has been altered correctly" in {
     pending
   }
 

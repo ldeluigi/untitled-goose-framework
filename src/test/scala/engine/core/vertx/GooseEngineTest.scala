@@ -49,7 +49,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     override def cycle: Int = 1
   }
 
-  it should "stop" in {
+  it should "stop the engine in a reasonable amount of time " in {
     val prev: Int =
       Thread.currentThread().getThreadGroup.activeCount()
     val a: Array[Thread] = Array.ofDim(prev)
@@ -66,7 +66,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     }
   }
 
-  it should "currentMatch" in {
+  it should "check whether the engine matches a certain custom game" in {
     val ge = GooseEngine(m, cGenerator(_ => {}))
     ge.currentMatch should equal(m)
     ge.stop()

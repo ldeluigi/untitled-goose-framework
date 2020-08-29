@@ -6,7 +6,7 @@ class SkipTurnBehaviourTest extends AnyFlatSpec {
 
   behavior of "SkipTurnBehaviourTest"
 
-  it should "applyRule" in {
+  it should "skip a turn and check if the game state has been altered correctly" in {
     pending
   }
 

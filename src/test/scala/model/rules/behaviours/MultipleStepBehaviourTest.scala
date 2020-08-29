@@ -7,7 +7,7 @@ class MultipleStepBehaviourTest extends AnyFlatSpec with Matchers {
 
   behavior of "MultipleStepBehaviourTest"
 
-  it should "apply rule and check if the game state has been altered correctly" in {
+  it should "execute multiple steps and check if the game state has been altered correctly" in {
     /*val game: Game = MatchMock.default
     val event = StepMovementEvent(1, game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
     val state: MutableGameState = game.currentState

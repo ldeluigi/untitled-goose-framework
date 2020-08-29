@@ -16,24 +16,24 @@ class MutableGameStateTest extends AnyFlatSpec with Matchers {
 
   behavior of "MutableGameStateTest"
 
-  it should "currentTurn_$eq" in {
+  it should "have a current turn" in {
     gameMutableState.currentTurn should be(0)
   }
 
-  it should "gameHistory_$eq" in {
+  it should "have a happened game events history" in {
     gameMutableState.gameHistory.size should be(0)
   }
 
-  it should "currentPlayer_$eq" in {
+  it should "have the current player" in {
     gameMutableState.currentPlayer should equal(p1)
   }
 
-  it should "updatePlayerPiece" in {
+  it should "update player pieces as told" in {
     gameMutableState.updatePlayerPiece(p1, _ => piece)
     gameMutableState.playerPieces(p1).color should equal(piece.color)
   }
 
-  it should "consumableEvents_$eq" in {
+  it should "have its buffer of consumable events of size" in {
     gameMutableState.consumableBuffer.size should be(0)
   }
 

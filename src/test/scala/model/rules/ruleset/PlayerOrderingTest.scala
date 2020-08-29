@@ -6,11 +6,11 @@ class PlayerOrderingTest extends AnyFlatSpec {
 
   behavior of "PlayerOrderingTest"
 
-  it should "orderedRandom" in {
+  it should "shuffle the given players into a randomized order" in {
     pending
   }
 
-  it should "givenOrder" in {
+  it should "order the given players following a custom specified criteria" in {
     pending
   }
 

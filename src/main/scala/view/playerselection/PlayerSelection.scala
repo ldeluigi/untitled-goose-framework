@@ -114,7 +114,6 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
     if (playerNameFromInput.getText.nonEmpty) {
       if (!enrolledPlayers.contains(Player(playerNameFromInput.getText))) {
         if (enrolledPlayers.size >= gameData.ruleSet.admissiblePlayers.last) {
-          // giocatori massimi raggiunti
           new Alert(AlertType.Error) {
             initOwner(stage)
             title = "Error!"
