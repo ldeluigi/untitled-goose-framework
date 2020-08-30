@@ -3,8 +3,9 @@ package dsl.nodes
 import model.PlayerOrderingType.PlayerOrderingType
 import model.Tile
 import model.entities.board.Position
+import model.rules.actionrules.ActionRule
 import model.rules.behaviours.BehaviourRule
-import model.rules.{ActionRule, CleanupRule}
+import model.rules.cleanup.CleanupRule
 
 trait RuleSetNode extends RuleBookNode {
 

@@ -1,4 +1,4 @@
-package model.rules
+package model.rules.cleanup
 
 import model.game.MutableGameState
 

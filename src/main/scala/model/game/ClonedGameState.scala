@@ -12,7 +12,7 @@ object ClonedGameState {
   private class ClonedGameState(state: GameState) extends GameState {
 
     private val clonedBoard = GameBoard(state.gameBoard.board)
-    clonedBoard.tiles.foreach(t => t.history = state.gameBoard.tiles.find(_ == t).get.history)
+    clonedBoard.tiles.foreach(t => t.history = state.gameBoard.tiles.find(_.definition == t.definition).get.history)
 
     private val clonedCurrentPlayer = clonePlayer(state.currentPlayer)
 

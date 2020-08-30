@@ -1,4 +1,4 @@
-package model.rules
+package model.rules.actionrules
 
 import model.actions.Action
 

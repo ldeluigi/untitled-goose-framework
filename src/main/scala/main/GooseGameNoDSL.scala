@@ -11,9 +11,8 @@ import model.entities.Dice.MovementDice
 import model.entities.board._
 import model.entities.{DialogContent, Dice}
 import model.game.Game
-import model.rules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
-import model.rules.actionrules.LoseTurnActionRule
+import model.rules.actionrules.{ActionRule, LoseTurnActionRule}
 import model.rules.behaviours._
 import model.rules.operations.Operation
 import model.rules.operations.Operation.DialogOperation
