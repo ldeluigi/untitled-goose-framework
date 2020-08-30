@@ -32,7 +32,7 @@ class GameStateTest extends AnyFlatSpec with Matchers {
     gameState.currentPlayer should equal(p1)
   }
 
-  it should "return a map of players and relative picies" in {
+  it should "return a map of players and relative pieces" in {
     gameState.playerPieces should equal(players)
   }
 

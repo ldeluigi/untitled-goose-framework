@@ -25,10 +25,13 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   }
 
   "PimpedHistory.filterCycle" should "filter events by cycle" in {
-    pending
+    pimpedHistory.filterCycle(2) should have size 0
+    pimpedHistory.filterCycle(1) should contain theSameElementsAs skipTurnSequence
   }
 
   "PimpedHistory.filterName" should "filter events by name" in {
+    pimpedHistory.filterName("b") should have size 0
+    //pimpedHistory.filterName("a") should contain theSameElementsAs skipTurnSequence
     pending
   }
 
@@ -39,6 +42,7 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   }
 
   "PimpedHistory.removeEvent" should "remove a specific event" in {
+    //pimpedHistory.removeEvent(skipTurnSequence.head)
     pending
   }
 

@@ -90,7 +90,7 @@ object GooseGameNoDSL extends JFXApp {
 
   //If you throw a 3 on your first turn you can move straight to square 26.
   val teleportTo26OnFirstTurn: BehaviourRule = BehaviourRule[MovementDiceRollEvent](
-    filterStrategy = _.res.contains(3),
+    filterStrategy = _.diceResult.contains(3),
     when = _.currentPlayer.history.only[TurnEndedEvent].isEmpty,
     operations = (_, state) => {
       Seq(
