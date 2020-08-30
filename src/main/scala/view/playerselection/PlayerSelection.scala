@@ -3,18 +3,28 @@ package view.playerselection
 import model.entities.board.Piece
 import model.game.Game
 import model.{GameData, Player, TileIdentifier}
+import scalafx.beans.property.{ObjectProperty, StringProperty}
+import scalafx.collections.ObservableBuffer
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
+import scalafx.scene.control.TableColumn._
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox, VBox}
+import scalafx.scene.paint.Color
 import scalafx.scene.paint.Color.DarkGreen
+import scalafx.scene.shape.Circle
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
-import view.ApplicationController
 import view.board.GraphicDescriptor
+import view.{ApplicationController, ColorUtils}
 
 import scala.collection.mutable.ListBuffer
+
+class PlayerPiece(n: String, val color: model.Color.Color) {
+  val name = new StringProperty(this, "Name", n)
+  val colorProp = new ObjectProperty(this, "Piece", ColorUtils.getColor(color))
+}
 
 /** A scene used to be able to add new players to the game.
  *
@@ -26,14 +36,48 @@ import scala.collection.mutable.ListBuffer
  */
 class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
 
-  var enrolledPlayers: Map[Player, Piece] = Map()
+
   val borderPane = new BorderPane
 
   root = borderPane
 
+  var playerPieces: ObservableBuffer[PlayerPiece] = ObservableBuffer()
+
+  val activePlayersTable: TableView[PlayerPiece] = new TableView(playerPieces) {
+    columns ++= List(
+      new TableColumn[PlayerPiece, String] {
+        text = "Name"
+        cellValueFactory = {
+          _.value.name
+        }
+      },
+      new TableColumn[PlayerPiece, Color] {
+        text = "Piece"
+        cellValueFactory = {
+          _.value.colorProp
+        }
+        cellFactory = { _ =>
+          new TableCell[PlayerPiece, Color] {
+            item.onChange { (_, _, newColor) =>
+              graphic = if (newColor != null)
+                new Circle {
+                  fill = newColor
+                  radius = 8
+                } else null
+            }
+          }
+        }
+      }
+    )
+  }
+  activePlayersTable.setMaxSize(widthSize * 0.15, heightSize)
+
+
   val playerNameFromInput = new TextField
 
   val graphicList = new ListBuffer[String]
+
+  var playerOrderList: Seq[Player] = Seq()
 
   val colorsChoice = new ComboBox(model.Color.values.toList)
   colorsChoice.getSelectionModel.selectFirst()
@@ -94,13 +138,10 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
     children = List(inputPlayers, playerControls)
   }
 
-  val activePlayersList: TextArea = new TextArea
-  activePlayersList.setMaxSize(widthSize * 0.15, heightSize)
-
   val activePlayersPanel: VBox = new VBox {
     spacing = 30
     padding = Insets(30)
-    children = List(playersLabel, activePlayersList)
+    children = List(playersLabel, activePlayersTable)
   }
 
   val bottomGameControls: HBox = new HBox {
@@ -111,9 +152,9 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   }
 
   addPlayer.onAction = _ => {
-    if (playerNameFromInput.getText.nonEmpty) {
-      if (!enrolledPlayers.contains(Player(playerNameFromInput.getText))) {
-        if (enrolledPlayers.size >= gameData.ruleSet.admissiblePlayers.last) {
+    if (playerNameFromInput.text.value.nonEmpty) {
+      if (!playerPieces.exists(_.name.value == playerNameFromInput.text.get)) {
+        if (playerPieces.size >= gameData.playersRange.`end`) {
           new Alert(AlertType.Error) {
             initOwner(stage)
             title = "Error!"
@@ -121,8 +162,9 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
             contentText = "Remove one and try again."
           }.showAndWait()
         } else {
-          enrolledPlayers += (Player(playerNameFromInput.getText) -> Piece(colorsChoice.getValue))
-          renderGraphicalAddition()
+          val player = Player(playerNameFromInput.text.value)
+          playerOrderList :+= player
+          playerPieces += new PlayerPiece(playerNameFromInput.text.value, colorsChoice.value.get)
           playerNameFromInput.clear()
         }
       } else {
@@ -144,9 +186,9 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   }
 
   removePlayer.onAction = _ => {
-    if (playerNameFromInput.getText.nonEmpty) {
-      enrolledPlayers -= Player(playerNameFromInput.getText)
-      renderGraphicalRemoval()
+    if (playerNameFromInput.text.value.nonEmpty) {
+      playerOrderList = playerOrderList.filterNot(_.name == playerNameFromInput.text.value)
+      playerPieces.removeIf(_.name.value == playerNameFromInput.text.value)
       playerNameFromInput.clear()
     } else {
       new Alert(AlertType.Error) {
@@ -158,11 +200,14 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
     }
   }
 
+  def createPlayerMap(): Map[Player, Piece] =
+    playerPieces.map(p => Player(p.name.value) -> Piece(p.color)).toMap
+
   startGame.onAction = _ => {
-    val minimumNeededPlayers: Int = gameData.ruleSet.admissiblePlayers.head
-    if (enrolledPlayers.nonEmpty) {
-      if (enrolledPlayers.size >= minimumNeededPlayers) {
-        val currentMatch: Game = Game(gameData.board, enrolledPlayers, gameData.ruleSet)
+    val minimumNeededPlayers: Int = gameData.playersRange.start
+    if (playerPieces.nonEmpty) {
+      if (playerPieces.size >= minimumNeededPlayers) {
+        val currentMatch: Game = gameData.createGame(playerOrderList, createPlayerMap())
         val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
         stage.scene = appView
       } else {
@@ -170,7 +215,7 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
           initOwner(stage)
           title = "Error!"
           headerText = "You need at least " + minimumNeededPlayers + " players to start this game!"
-          contentText = "Add " + (minimumNeededPlayers - enrolledPlayers.size) + " more players."
+          contentText = "Add " + (minimumNeededPlayers - playerPieces.size) + " more players."
         }.showAndWait()
       }
     } else {
@@ -181,17 +226,6 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
         contentText = "Can't start a game without players"
       }.showAndWait()
     }
-  }
-
-  /** Utility method to add new user specified players to the panel containing the current list of players. */
-  def renderGraphicalAddition(): Unit = {
-    activePlayersList.appendText("Name: " + playerNameFromInput.getText + "\t" + "color: " + colorsChoice.getValue + "\n")
-  }
-
-  /** Utility method to remove a user specified players to the panel containing the current list of players. */
-  def renderGraphicalRemoval(): Unit = {
-    activePlayersList.clear()
-    enrolledPlayers.foreach(entry => activePlayersList.appendText("Name: " + entry._1.name + "\t" + "color: " + entry._2.color + "\n"))
   }
 
   borderPane.top = upperGameNameHeader

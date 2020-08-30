@@ -66,7 +66,7 @@ object PriorityRuleSet {
    * @param cleanupRules   cleanup rule
    */
   def apply(startTile: Set[Tile] => Position = tiles => Position(tiles.toList.sorted.take(1).head),
-            playerOrdering: PlayerOrdering = PlayerOrdering.orderedRandom,
+            playerOrdering: PlayerOrdering = PlayerOrdering.randomOrder,
             admissiblePlayers: Range,
             actionRules: Set[ActionRule] = Set(),
             behaviourRule: Seq[BehaviourRule] = Seq(TurnEndEventBehaviour()),

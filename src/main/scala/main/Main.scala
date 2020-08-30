@@ -15,8 +15,7 @@ import model.game.MutableGameState
 import model.rules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
-import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
-import model.{GameData, TileIdentifier}
+import model.{GameData, PlayerOrderingType, TileIdentifier}
 import scalafx.application.JFXApp
 import scalafx.scene.paint.Color
 import view.TileIdentifierImplicit._
@@ -52,15 +51,15 @@ object Main extends JFXApp {
   val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollMovementDice(movementDice), testDialog))
   val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour())
 
-  val priorityRuleSet: RuleSet = PriorityRuleSet(
+  val gameData: GameData = GameData(
+    board,
     tiles => Position(tiles.toList.sorted.take(1).head),
-    PlayerOrdering.orderedRandom,
+    PlayerOrderingType.GivenOrder,
     1 to 10,
     actionRules,
     behaviourRule,
     Seq(),
   )
-  val ruleSet: RuleSet = priorityRuleSet
 
   val pathToOca = "oca.jpg"
   val oca: BufferedSource = Source.fromResource(pathToOca)
@@ -77,7 +76,7 @@ object Main extends JFXApp {
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = new PlayerSelection(this, GameData(board, ruleSet), screenSize.width, screenSize.height, graphicMap)
+    scene = new PlayerSelection(this, gameData, screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Press esc to leave full screen mode"
   }
 

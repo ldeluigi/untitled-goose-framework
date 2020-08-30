@@ -22,7 +22,7 @@ object PlayerOrdering {
     override def next(current: Player, players: Set[Player]): Player = PlayerUtils.selectRandom(players)
   }
 
-  def orderedRandom: PlayerOrdering = new PlayerOrdering {
+  def randomOrder: PlayerOrdering = new PlayerOrdering {
 
     private var playerList: Seq[Player] = List()
 

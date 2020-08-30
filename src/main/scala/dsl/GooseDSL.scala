@@ -33,8 +33,15 @@ trait GooseDSL extends App with Subjects with TilePropertyWords with BoardProper
   }
 
   private def gameGeneration(): GameData = {
+    GameData(ruleBook.boardBuilder.complete(),
+      ruleBook.ruleSet.getFirstTileSelector,
+      ruleBook.ruleSet.playerOrderingType,
+      ruleBook.ruleSet.playerRange,
+      ruleBook.ruleSet.actionRules,
+      ruleBook.ruleSet.behaviourRules,
+      ruleBook.ruleSet.cleanupRules)
 
-    GameData(ruleBook.boardBuilder.complete(), ruleBook.ruleSet.getRuleSet)
+
   }
 
   private def start(gameData: GameData, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
