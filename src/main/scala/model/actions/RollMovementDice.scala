@@ -1,18 +1,17 @@
 package model.actions
 
-import engine.core.EventSink
 import engine.events.GameEvent
 import engine.events.consumable.MovementDiceRollEvent
 import model.entities.Dice.MovementDice
-import model.game.MutableGameState
+import model.game.GameState
 
 private class RollMovementDice(dice: MovementDice, diceNumber: Int) extends Action {
 
   override def name: String = "Roll " + diceNumber + " " + dice.name
 
-  override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
+  override def trigger(state: GameState): GameEvent = {
     val result = for (_ <- 0 until diceNumber) yield dice.roll
-    sink.accept(MovementDiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, result: _*))
+    MovementDiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, result: _*)
   }
 }
 

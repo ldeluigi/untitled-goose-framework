@@ -2,7 +2,6 @@ package main
 
 import java.awt.{Dimension, Toolkit}
 
-import engine.core.EventSink
 import engine.events.GameEvent
 import engine.events.consumable.{DialogLaunchEvent, StepMovementEvent}
 import engine.events.special.NoOpEvent
@@ -11,7 +10,7 @@ import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Piece, Position}
 import model.entities.{DialogContent, Dice}
-import model.game.{Game, MutableGameState}
+import model.game.{Game, GameState}
 import model.rules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
@@ -36,13 +35,13 @@ object TestMain extends JFXApp {
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"
 
-    override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
-      sink.accept(DialogLaunchEvent(state.currentTurn, state.currentCycle, DialogContent(
+    override def trigger(state: GameState): GameEvent = {
+      DialogLaunchEvent(state.currentTurn, state.currentCycle, DialogContent(
         "Movement Bonus",
         "Make 10 step?",
         "Yes" -> StepMovementEvent(10, state.currentPlayer, state.currentTurn, state.currentCycle),
         "No" -> NoOpEvent
-      )))
+      ))
     }
   }
   val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollMovementDice(movementDice), testDialog))

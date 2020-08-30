@@ -1,16 +1,15 @@
 package model.actions
 
-import engine.core.EventSink
 import engine.events.GameEvent
 import engine.events.consumable.StepMovementEvent
-import model.game.MutableGameState
+import model.game.GameState
 
 class StepForwardAction() extends Action {
 
   override def name: String = "Move Forward"
 
-  override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
-    sink.accept(StepMovementEvent(1, state.currentPlayer, state.currentTurn, state.currentCycle))
+  override def trigger(state: GameState): GameEvent = {
+    StepMovementEvent(1, state.currentPlayer, state.currentTurn, state.currentCycle)
   }
 }
 

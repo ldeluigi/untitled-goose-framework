@@ -64,7 +64,7 @@ object ApplicationController {
     stage.setOnCloseRequest(_ => stopEngine())
 
     def resolveAction(action: Action): Unit = {
-      action.execute(engine.eventSink, engine.currentMatch.currentState)
+      engine.eventSink.accept(action.trigger(engine.currentMatch.currentState))
     }
 
     override def update(state: GameState): Unit = {

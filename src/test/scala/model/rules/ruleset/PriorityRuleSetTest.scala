@@ -1,10 +1,7 @@
 package model.rules.ruleset
 
-import engine.core.EventSink
-import engine.events.GameEvent
-import model.actions.Action
+import model.actions.{Action, StepForwardAction}
 import model.entities.board.{Position, TileDefinition}
-import model.game.MutableGameState
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
 import model.{Player, Tile}
 import org.scalatest.BeforeAndAfterEach
@@ -27,11 +24,7 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
     ruleSet = PriorityRuleSet(firstPosition, ordering, playersRange)
   }
 
-  val myAction: Action = new Action {
-    override def name: String = "testAction"
-
-    override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {}
-  }
+  val myAction: Action = StepForwardAction()
 
 
   "A priority based rule set" should "define the starting position from a given set of tiles" in {

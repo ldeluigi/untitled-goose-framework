@@ -1,17 +1,16 @@
 package model.actions
 
-import engine.core.EventSink
 import engine.events.GameEvent
 import engine.events.consumable.DiceRollEvent
 import model.entities.Dice.Dice
-import model.game.MutableGameState
+import model.game.GameState
 
 class RollDice[DiceSide](dice: Dice[DiceSide]) extends Action {
 
   override def name: String = "Roll a " + dice.name + " dice"
 
-  override def execute(sink: EventSink[GameEvent], state: MutableGameState): Unit = {
-    sink.accept(DiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, dice.roll))
+  override def trigger(state: GameState): GameEvent = {
+    DiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, dice.roll)
   }
 }
 
