@@ -54,7 +54,7 @@ object Main extends JFXApp {
   val gameData: GameData = GameData(
     board,
     tiles => Position(tiles.toList.sorted.take(1).head),
-    PlayerOrderingType.GivenOrder,
+    PlayerOrderingType.UserDefinedOrder,
     1 to 10,
     actionRules,
     behaviourRule,

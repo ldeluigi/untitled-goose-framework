@@ -18,6 +18,8 @@ trait RuleSetNode extends RuleBookNode {
 
   def getFirstTileSelector: Set[Tile] => Position
 
+  def setPlayerOrderingType(order: PlayerOrderingType): Unit
+
   def playerOrderingType: PlayerOrderingType
 
   def cleanupRules: Seq[CleanupRule]
@@ -36,6 +38,8 @@ object RuleSetNode {
 
     private val firstTileSelectorNode: FirstTileSelectorNode = new FirstTileSelectorNode(identifiers)
 
+    private val playerOrderingTypeNode: SingleValueNode[PlayerOrderingType] = new SingleValueNode[PlayerOrderingType]("Order of players")
+
     override def setPlayerRange(range: Range): Unit = playerRangeNode.value = range
 
     override def selectFirstTileByName(selector: String): Unit = firstTileSelectorNode.setValue(selector)
@@ -46,7 +50,9 @@ object RuleSetNode {
 
     override def getFirstTileSelector: Set[Tile] => Position = tiles => firstTileSelectorNode.getFirstTile(tiles).map(Position(_)).get
 
-    override def playerOrderingType: PlayerOrderingType = ???
+    override def setPlayerOrderingType(order: PlayerOrderingType): Unit = playerOrderingTypeNode.value = order
+
+    override def playerOrderingType: PlayerOrderingType = playerOrderingTypeNode.value
 
     val cleanupRules: Seq[CleanupRule] = ???
 
@@ -55,10 +61,10 @@ object RuleSetNode {
     val actionRules: Set[ActionRule] = ???
 
 
-    override def check: Seq[String] = {
+    override def check: Seq[String] =
       playerRangeNode.check ++
-        firstTileSelectorNode.check
-    }
+        firstTileSelectorNode.check ++
+        playerOrderingTypeNode.check
   }
 
   def apply(identifiers: DefinedTileIdentifiers): RuleSetNode = new RuleSetNodeImpl(identifiers)

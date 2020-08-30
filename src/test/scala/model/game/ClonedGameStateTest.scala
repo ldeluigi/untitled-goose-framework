@@ -1,7 +1,8 @@
 package model.game
 
-import engine.events.GameEvent
 import engine.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
+import engine.events.persistent.{GainTurnEvent, TileActivatedEvent}
+import engine.events.{GameEvent, PlayerEvent, TileEvent}
 import mock.MatchMock
 import model.entities.board.{Piece, Position}
 import model.game.GameStateExtensions.MutableStateExtensions
@@ -49,6 +50,18 @@ class ClonedGameStateTest extends AnyFlatSpec with Matchers with BeforeAndAfterE
       piece => Piece(piece, state.gameBoard.next(state.gameBoard.first).map(Position(_))))
 
     clonedGameState.playerPieces(state.currentPlayer) should not be state.playerPieces(state.currentPlayer)
+  }
+
+  it should "Not change player history when the original state is updated" in {
+    val event: PlayerEvent = GainTurnEvent(state.currentPlayer, state.currentTurn, state.currentCycle)
+    state.submitEvent(event)
+    clonedGameState.currentPlayer.history should not contain event
+  }
+
+  it should "Not change tile history when the original state is updated" in {
+    val event: TileEvent = TileActivatedEvent(state.gameBoard.first, state.currentTurn, state.currentCycle)
+    state.submitEvent(event)
+    clonedGameState.gameBoard.first.history should not contain event
   }
 
 

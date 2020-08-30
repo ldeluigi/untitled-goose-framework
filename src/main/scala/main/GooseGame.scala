@@ -2,6 +2,7 @@ package main
 
 import dsl.GooseDSL
 import dsl.properties.board.DispositionType.Spiral
+import model.PlayerOrderingType.UserDefinedOrder
 import scalafx.scene.paint.Color._
 
 
@@ -10,7 +11,7 @@ object GooseGame extends GooseDSL {
   Rules of "Goose Game"
   2 to 4 players
 
-  Players start on tile 1
+  Players have order(UserDefinedOrder)
 
   The game board has tiles(63)
   the game board has disposition(Spiral)
@@ -31,5 +32,6 @@ object GooseGame extends GooseDSL {
   The tiles(5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59) have group("Goose")
   All tiles "Goose" have color(LightGreen)
 
+  Players start on tile 1
 
 }

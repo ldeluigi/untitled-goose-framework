@@ -29,7 +29,7 @@ object GameData {
       val playerOrdering: PlayerOrdering = playerOrderingType match {
         case FullRandom => PlayerOrdering.fullRandom
         case RandomOrder => PlayerOrdering.randomOrder
-        case GivenOrder => PlayerOrdering.givenOrder(players)
+        case UserDefinedOrder => PlayerOrdering.givenOrder(players)
       }
       val ruleSet: RuleSet = PriorityRuleSet(
         firstPosition,
