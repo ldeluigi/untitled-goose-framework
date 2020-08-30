@@ -103,7 +103,8 @@ object GooseGameNoDSL extends JFXApp {
         Operation.trigger(TeleportEvent(state.getTile(26).get, state.currentPlayer, state.currentTurn, state.currentCycle))
       )
     },
-    consume = false
+    consume = true,
+    save = true
   )
 
   //If your counter lands on a Goose square you can throw your dice again.

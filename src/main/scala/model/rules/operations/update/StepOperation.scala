@@ -18,10 +18,9 @@ object StepOperation {
   private def stepOperation(state: GameState, player: Player, forward: Boolean, remainingSteps: Int): Seq[Operation] = {
 
     var opSeq: Seq[Operation] = Seq()
-    val tileExited = state.playerPieces(player).position.map(_.tile)
-    if (tileExited.isDefined) {
-      opSeq = opSeq :+ Operation.trigger(TileExitedEvent(player, tileExited.get, state.currentTurn, state.currentCycle))
-    }
+    opSeq = opSeq :+ Operation.triggerWhen(
+      state => state.playerPieces(player).position.isDefined,
+      state => Seq(TileExitedEvent(player, state.playerPieces(player).position.get.tile, state.currentTurn, state.currentCycle)))
 
     opSeq = opSeq ++ checkAndTriggerPassedPlayers(state, player)
 

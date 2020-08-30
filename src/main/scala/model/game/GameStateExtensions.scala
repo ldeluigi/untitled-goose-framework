@@ -30,14 +30,11 @@ object GameStateExtensions {
 
   implicit class MutableStateExtensions(mutable: MutableGameState) extends GameStateExtensions(mutable) {
 
-    def submitEvent(event: GameEvent): Unit = {
-      println(event)
-      event match {
-        case NoOpEvent | ExitEvent => Unit
-        case event: ConsumableGameEvent => mutable.consumableBuffer = event +: mutable.consumableBuffer
-        case event: PersistentGameEvent => caseMatch(event)
-        case event => mutable.gameHistory = event +: mutable.gameHistory
-      }
+    def submitEvent(event: GameEvent): Unit = event match {
+      case NoOpEvent | ExitEvent => Unit
+      case event: ConsumableGameEvent => mutable.consumableBuffer = event +: mutable.consumableBuffer
+      case event: PersistentGameEvent => caseMatch(event)
+      case event => mutable.gameHistory = event +: mutable.gameHistory
     }
 
     def saveEvent(event: ConsumableGameEvent): Unit = {
@@ -45,14 +42,13 @@ object GameStateExtensions {
       caseMatch(event)
     }
 
-    private def caseMatch(event: GameEvent): Unit =
-      event match {
-        case event: PlayerEvent with TileEvent =>
-          event.player.history = event +: event.player.history
-          event.tile.history = event +: event.tile.history
-        case event: PlayerEvent => event.player.history = event +: event.player.history
-        case event: TileEvent => event.tile.history = event +: event.tile.history
-      }
+    private def caseMatch(event: GameEvent): Unit = event match {
+      case event: PlayerEvent with TileEvent =>
+        event.player.history = event +: event.player.history
+        event.tile.history = event +: event.tile.history
+      case event: PlayerEvent => event.player.history = event +: event.player.history
+      case event: TileEvent => event.tile.history = event +: event.tile.history
+    }
 
   }
 
