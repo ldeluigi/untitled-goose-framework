@@ -3,7 +3,9 @@ package view.playerselection
 import model.entities.board.Piece
 import model.game.Game
 import model.{GameData, Player, TileIdentifier}
-import scalafx.beans.property.{ObjectProperty, StringProperty}
+import scalafx.Includes._
+import scalafx.beans.binding.Bindings
+import scalafx.beans.property.{ObjectProperty, ReadOnlyIntegerProperty, StringProperty}
 import scalafx.collections.ObservableBuffer
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
@@ -18,8 +20,6 @@ import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import view.board.GraphicDescriptor
 import view.{ApplicationController, ColorUtils}
-
-import scala.collection.mutable.ListBuffer
 
 class PlayerPiece(n: String, val color: model.Color.Color) {
   val name = new StringProperty(this, "Name", n)
@@ -43,41 +43,64 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
 
   var playerPieces: ObservableBuffer[PlayerPiece] = ObservableBuffer()
 
-  val activePlayersTable: TableView[PlayerPiece] = new TableView(playerPieces) {
-    columns ++= List(
-      new TableColumn[PlayerPiece, String] {
-        text = "Name"
-        cellValueFactory = {
-          _.value.name
-        }
-      },
-      new TableColumn[PlayerPiece, Color] {
-        text = "Piece"
-        cellValueFactory = {
-          _.value.colorProp
-        }
-        cellFactory = { _ =>
-          new TableCell[PlayerPiece, Color] {
-            item.onChange { (_, _, newColor) =>
-              graphic = if (newColor != null)
-                new Circle {
-                  fill = newColor
-                  radius = 8
-                } else null
-            }
-          }
+  val nameCol: TableColumn[PlayerPiece, String] = new TableColumn[PlayerPiece, String] {
+    text = "Name"
+    cellValueFactory = {
+      _.value.name
+    }
+  }
+
+  val colorCol: TableColumn[PlayerPiece, Color] = new TableColumn[PlayerPiece, Color] {
+    text = "Piece"
+    cellValueFactory = {
+      _.value.colorProp
+    }
+    cellFactory = { _ =>
+      new TableCell[PlayerPiece, Color] {
+        item.onChange { (_, _, newColor) =>
+          graphic = if (newColor != null)
+            new Circle {
+              fill = newColor
+              radius = 8
+            } else null
         }
       }
-    )
+    }
+  }
+
+
+  val activePlayersTable: TableView[PlayerPiece] = new TableView(playerPieces) {
+    columns ++= List(nameCol, colorCol)
   }
   activePlayersTable.setMaxSize(widthSize * 0.15, heightSize)
+  activePlayersTable.editable = false
+  colorCol.sortable = false
+  nameCol.sortable = false
 
+  val moveUp = new Button("▲")
+  val moveDown = new Button("▼")
+
+  val selectedIndex: ReadOnlyIntegerProperty = activePlayersTable.selectionModel.value.selectedIndexProperty()
+
+  moveUp.disable <== selectedIndex <= 0
+  moveDown.disable <== Bindings.createBooleanBinding(() => {
+    val index = selectedIndex.value
+    index < 0 || index + 1 >= activePlayersTable.getItems.size
+  }, selectedIndex, activePlayersTable.getItems)
+
+  moveUp.onAction = _ => {
+    val index = activePlayersTable.selectionModel.value.getSelectedIndex
+    playerPieces.add(index - 1, playerPieces.remove(index))
+    activePlayersTable.selectionModel.value.clearAndSelect(index - 1)
+  }
+
+  moveDown.onAction = _ => {
+    val index = activePlayersTable.selectionModel.value.getSelectedIndex
+    playerPieces.add(index + 1, playerPieces.remove(index))
+    activePlayersTable.selectionModel.value.clearAndSelect(index + 1)
+  }
 
   val playerNameFromInput = new TextField
-
-  val graphicList = new ListBuffer[String]
-
-  var playerOrderList: Seq[Player] = Seq()
 
   val colorsChoice = new ComboBox(model.Color.values.toList)
   colorsChoice.getSelectionModel.selectFirst()
@@ -141,7 +164,7 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   val activePlayersPanel: VBox = new VBox {
     spacing = 30
     padding = Insets(30)
-    children = List(playersLabel, activePlayersTable)
+    children = List(playersLabel, activePlayersTable, moveUp, moveDown)
   }
 
   val bottomGameControls: HBox = new HBox {
@@ -162,8 +185,6 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
             contentText = "Remove one and try again."
           }.showAndWait()
         } else {
-          val player = Player(playerNameFromInput.text.value)
-          playerOrderList :+= player
           playerPieces += new PlayerPiece(playerNameFromInput.text.value, colorsChoice.value.get)
           playerNameFromInput.clear()
         }
@@ -187,7 +208,6 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
 
   removePlayer.onAction = _ => {
     if (playerNameFromInput.text.value.nonEmpty) {
-      playerOrderList = playerOrderList.filterNot(_.name == playerNameFromInput.text.value)
       playerPieces.removeIf(_.name.value == playerNameFromInput.text.value)
       playerNameFromInput.clear()
     } else {
@@ -200,14 +220,18 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
     }
   }
 
-  def createPlayerMap(): Map[Player, Piece] =
+  def getPlayersPiecesMap: Map[Player, Piece] =
     playerPieces.map(p => Player(p.name.value) -> Piece(p.color)).toMap
 
+  def getPlayerSeq: Seq[Player] =
+    playerPieces.map(p => Player(p.name.value))
+
   startGame.onAction = _ => {
+    getPlayerSeq.foreach(println)
     val minimumNeededPlayers: Int = gameData.playersRange.start
     if (playerPieces.nonEmpty) {
       if (playerPieces.size >= minimumNeededPlayers) {
-        val currentMatch: Game = gameData.createGame(playerOrderList, createPlayerMap())
+        val currentMatch: Game = gameData.createGame(getPlayerSeq, getPlayersPiecesMap)
         val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
         stage.scene = appView
       } else {
