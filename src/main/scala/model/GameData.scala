@@ -3,9 +3,10 @@ package model
 import model.PlayerOrderingType._
 import model.entities.board.{Board, Piece, Position}
 import model.game.Game
+import model.rules.actionrules.ActionRule
 import model.rules.behaviours.BehaviourRule
+import model.rules.cleanup.CleanupRule
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
-import model.rules.{ActionRule, CleanupRule}
 
 trait GameData {
   def board: Board

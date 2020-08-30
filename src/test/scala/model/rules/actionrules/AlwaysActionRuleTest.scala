@@ -2,7 +2,6 @@ package model.rules.actionrules
 
 import mock.MatchMock
 import model.actions.StepForwardAction
-import model.rules.ActionAvailability
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

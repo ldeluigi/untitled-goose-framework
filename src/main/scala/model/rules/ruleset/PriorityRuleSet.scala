@@ -3,10 +3,10 @@ package model.rules.ruleset
 import model.actions.Action
 import model.entities.board.Position
 import model.game.MutableGameState
+import model.rules.actionrules.ActionRule
 import model.rules.behaviours.{BehaviourRule, DialogLaunchBehaviour, TurnEndEventBehaviour}
-import model.rules.cleanup.TurnEndConsumer
+import model.rules.cleanup.{CleanupRule, TurnEndConsumer}
 import model.rules.operations.Operation
-import model.rules.{ActionRule, CleanupRule}
 import model.{Player, Tile}
 
 class PriorityRuleSet(firstPosition: Set[Tile] => Position,

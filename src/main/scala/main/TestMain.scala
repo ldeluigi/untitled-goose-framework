@@ -11,7 +11,7 @@ import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Piece, Position}
 import model.entities.{DialogContent, Dice}
 import model.game.{Game, GameState}
-import model.rules.ActionRule
+import model.rules.actionrules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
