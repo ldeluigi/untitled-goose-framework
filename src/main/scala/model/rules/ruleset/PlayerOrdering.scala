@@ -22,11 +22,12 @@ object PlayerOrdering {
     override def next(current: Player, players: Set[Player]): Player = PlayerUtils.selectRandom(players)
   }
 
-  def randomOrder: PlayerOrdering = new PlayerOrdering {
+  def randomOrder(seed: Long): PlayerOrdering = new PlayerOrdering {
 
     private var playerList: Seq[Player] = List()
 
     override def first(players: Set[Player]): Player = {
+      Random.setSeed(seed)
       playerList = Random.shuffle(players).toList
       playerList.head
     }
