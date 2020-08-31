@@ -30,7 +30,6 @@ class DialogLaunchBehaviourTest extends AnyFlatSpec with Matchers with BeforeAnd
   }
 
   it should "check that the supposed DialogOperation has been returned" in {
-    println(state.consumableBuffer)
     operationSequence should contain(dialogOperation)
   }
 
