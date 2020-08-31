@@ -20,7 +20,7 @@ object StepOperation {
     var opSeq: Seq[Operation] = Seq()
     opSeq = opSeq :+ Operation.triggerWhen(
       state => state.playerPieces(player).position.isDefined,
-      state => Seq(TileExitedEvent(player, state.playerPieces(player).position.get.tile, state.currentTurn, state.currentCycle)))
+      state => Seq(TileLeftEvent(player, state.playerPieces(player).position.get.tile, state.currentTurn, state.currentCycle)))
 
     opSeq = opSeq ++ checkAndTriggerPassedPlayers(state, player)
 

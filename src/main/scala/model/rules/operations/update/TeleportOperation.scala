@@ -1,6 +1,6 @@
 package model.rules.operations.update
 
-import engine.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
+import engine.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileLeftEvent}
 import model.entities.board.{Piece, Position}
 import model.game.GameState
 import model.rules.operations.Operation
@@ -10,10 +10,10 @@ object TeleportOperation {
   def apply(state: GameState, player: Player, tile: Tile): Seq[Operation] = {
 
     var opSeq: Seq[Operation] = Seq()
-    val tileExited = state.playerPieces(player).position.map(_.tile)
+    val tileLeft = state.playerPieces(player).position.map(_.tile)
 
-    if (tileExited.isDefined) {
-      opSeq = opSeq :+ Operation.trigger(TileExitedEvent(player, tileExited.get, state.currentTurn, state.currentCycle))
+    if (tileLeft.isDefined) {
+      opSeq = opSeq :+ Operation.trigger(TileLeftEvent(player, tileLeft.get, state.currentTurn, state.currentCycle))
     }
 
     opSeq = opSeq :+ Operation.updateState(state => {
