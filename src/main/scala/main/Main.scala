@@ -21,8 +21,6 @@ import view.TileIdentifierImplicit._
 import view.board.GraphicDescriptor
 import view.playerselection.PlayerSelection
 
-import scala.io.{BufferedSource, Source}
-
 /**
  * Main application used to specify all game rules, actions, behaviours and graphical properties
  */
@@ -59,9 +57,6 @@ object Main extends JFXApp {
     behaviourRule,
     Seq(),
   )
-
-  val pathToOca = "oca.jpg"
-  val oca: BufferedSource = Source.fromResource(pathToOca)
 
   // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(

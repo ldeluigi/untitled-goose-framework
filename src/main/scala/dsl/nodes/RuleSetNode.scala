@@ -55,11 +55,11 @@ object RuleSetNode {
 
     override def playerOrderingType: PlayerOrderingType = playerOrderingTypeNode.value
 
-    val cleanupRules: Seq[CleanupRule] = ???
+    val cleanupRules: Seq[CleanupRule] = Seq()
 
-    val behaviourRules: Seq[BehaviourRule] = ???
+    val behaviourRules: Seq[BehaviourRule] = Seq()
 
-    val actionRules: Set[ActionRule] = ???
+    val actionRules: Set[ActionRule] = Set()
 
 
     override def check: Seq[String] =
