@@ -27,7 +27,7 @@ class TeleportBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfte
 
   override protected def beforeEach(): Unit = {
     state.submitEvent(teleportEvent)
-    val operationSequence: Seq[Operation] = MultipleStepBehaviour().applyRule(state)
+    val operationSequence: Seq[Operation] = TeleportBehaviour().applyRule(state)
     operationSequence.foreach(_.execute(state))
   }
 
@@ -37,6 +37,10 @@ class TeleportBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfte
 
   it should "check if a player has stopped on the correct tile after being teleported" in {
     state.consumableBuffer should contain(stopOnTileEvent)
+  }
+
+  it should "not contain the consumed teleport event anymore" in {
+    state.consumableBuffer should not contain teleportEvent
   }
 
 }
