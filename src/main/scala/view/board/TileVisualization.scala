@@ -8,7 +8,6 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Rectangle, StrokeType}
-
 /**
  * An object which models how a single tile is rendered.
  */
@@ -34,9 +33,8 @@ object TileVisualization {
     val strokeColor: Color = Color.Black // default stroke color -> applied if not specified by the user
     val strokeSize = 3
 
-    var image: Image = _
-    var imageContainer: ImageView = _
-    var imageFlag: Boolean = false
+    var graphics: Option[Image] = None
+    var imageView: Option[ImageView] = None
 
     graphicDescriptor.foreach(applyStyle)
 
@@ -57,9 +55,11 @@ object TileVisualization {
     val label = new Label(text)
 
     // to stack things up correctly, add the rectangle itself and the label, then add the image if present
-    this.children.addAll(rectangle, label)
-    if (imageFlag) {
-      this.children.add(imageContainer)
+    this.children.addAll(rectangle)
+    if (imageView.isDefined) {
+      this.children.add(imageView.get)
+    } else {
+      this.children.add(label)
     }
 
     var pieceList: List[PieceVisualization] = Nil
@@ -100,9 +100,13 @@ object TileVisualization {
 
       if (graphicDescriptor.path.isDefined) {
         val backgroundToApply: String = graphicDescriptor.path.get
-        image = new Image(backgroundToApply, parentWidth.getValue / cols, parentHeight.getValue / rows, true, true)
-        imageContainer = new ImageView(backgroundToApply)
-        imageFlag = true
+        graphics = Some(new Image(backgroundToApply))
+        imageView = Some(new ImageView {
+          image = graphics.get
+          preserveRatio = true
+          fitWidth <== parentWidth / cols - strokeSize * 2
+          fitHeight <== parentHeight / rows - strokeSize * 2
+        })
       }
     }
   }

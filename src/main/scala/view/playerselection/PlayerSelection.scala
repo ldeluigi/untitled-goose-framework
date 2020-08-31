@@ -88,6 +88,7 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
     index < 0 || index + 1 >= activePlayersTable.getItems.size
   }, selectedIndex, activePlayersTable.getItems)
 
+
   moveUp.onAction = _ => {
     val index = activePlayersTable.selectionModel.value.getSelectedIndex
     playerPieces.add(index - 1, playerPieces.remove(index))
@@ -111,7 +112,7 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
   }
 
   val removePlayer: Button = new Button {
-    text = "Withdraw"
+    text = "Remove"
     style = "-fx-font-size: 12pt"
   }
 
@@ -206,18 +207,10 @@ class PlayerSelection(stage: Stage, gameData: GameData, widthSize: Int, heightSi
     }
   }
 
+  removePlayer.disable <== selectedIndex < 0
   removePlayer.onAction = _ => {
-    if (playerNameFromInput.text.value.nonEmpty) {
-      playerPieces.removeIf(_.name.value == playerNameFromInput.text.value)
-      playerNameFromInput.clear()
-    } else {
-      new Alert(AlertType.Error) {
-        initOwner(stage)
-        title = "Error!"
-        headerText = "Missing player to remove!"
-        contentText = "Specify player's name to remove him/her from the game."
-      }.showAndWait()
-    }
+    val index = activePlayersTable.selectionModel.value.getSelectedIndex
+    playerPieces.remove(index)
   }
 
   def getPlayersPiecesMap: Map[Player, Piece] =
