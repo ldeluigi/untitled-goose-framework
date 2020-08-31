@@ -35,7 +35,8 @@ class TeleportOperationTest extends AnyFlatSpec with Matchers {
   behavior of "TeleportOperationTest"
 
   it should "return a correct sequence of Operations" in {
-    //TeleportOperation.apply(gameState, player, tile) should contain theSameElementsAs opSeq
+    //TeleportOperation.apply(gameState, player, tile).size should equal(opSeq.size) -> CORRECT
+    //TeleportOperation.apply(gameState, player, tile) should be(opSeq) -> INCORRECT
     pending
   }
 
