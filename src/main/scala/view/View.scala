@@ -6,7 +6,7 @@ import javafx.scene.input.KeyCode
 import model.{GameData, TileIdentifier}
 import scalafx.application.JFXApp
 import view.board.GraphicDescriptor
-import view.playerselection.PlayerSelection
+import view.playerselection.IntroMenu
 
 class View(gameData: GameData, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
@@ -18,7 +18,7 @@ class View(gameData: GameData, graphicMap: Map[TileIdentifier, GraphicDescriptor
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = new PlayerSelection(this, gameData, screenSize.width, screenSize.height, graphicMap)
+    scene = new IntroMenu(this, gameData, screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Press esc to leave full screen mode"
   }
 
