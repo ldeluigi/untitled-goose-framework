@@ -1,6 +1,6 @@
 package model.rules.operations.update
 
-import engine.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
+import engine.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileLeftEvent}
 import mock.MatchMock
 import model.entities.board.{Piece, Position, TileDefinition}
 import model.game.{Game, GameState}
@@ -18,9 +18,9 @@ class TeleportOperationTest extends AnyFlatSpec with Matchers {
   val player: Player = Player("P1")
 
   var opSeq: Seq[Operation] = Seq()
-  val tileExited = gameState.playerPieces(player).position.map(_.tile)
-  if (tileExited.isDefined) {
-    opSeq :+ Operation.trigger(TileExitedEvent(player, tileExited.get, gameState.currentTurn, gameState.currentCycle))
+  val tileLeft = gameState.playerPieces(player).position.map(_.tile)
+  if (tileLeft.isDefined) {
+    opSeq :+ Operation.trigger(TileLeftEvent(player, tileLeft.get, gameState.currentTurn, gameState.currentCycle))
   }
   opSeq = opSeq :+ Operation.updateState(gameState => {
     gameState.updatePlayerPiece(player, piece => {

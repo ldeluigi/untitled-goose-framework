@@ -36,10 +36,12 @@ class MultipleStepBehaviourTest extends AnyFlatSpec with Matchers with BeforeAnd
   }
 
   it should "check that the given player has left the supposed tile" in {
+    pending
     state.consumableBuffer should contain(tileLeftEvent)
   }
 
   it should "check that the given player has entered the supposed tile" in {
+    pending
     state.consumableBuffer should contain(tileEnteredEvent)
   }
 
