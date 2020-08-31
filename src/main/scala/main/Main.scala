@@ -19,7 +19,7 @@ import scalafx.application.JFXApp
 import scalafx.scene.paint.Color
 import view.TileIdentifierImplicit._
 import view.board.GraphicDescriptor
-import view.playerselection.PlayerSelection
+import view.playerselection.IntroMenu
 
 /**
  * Main application used to specify all game rules, actions, behaviours and graphical properties
@@ -70,7 +70,7 @@ object Main extends JFXApp {
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = new PlayerSelection(this, gameData, screenSize.width, screenSize.height, graphicMap)
+    scene = new IntroMenu(this, gameData, screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Press esc to leave full screen mode"
   }
 
