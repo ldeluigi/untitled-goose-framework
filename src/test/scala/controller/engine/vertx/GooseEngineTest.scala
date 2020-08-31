@@ -22,7 +22,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet(
     tiles => Position(tiles.toList.sorted.take(1).head),
-    PlayerOrdering.randomOrder,
+    PlayerOrdering.randomOrder(7),
     1 to 10,
     Set(),
     Seq(),
