@@ -1,9 +1,9 @@
 package model.rules.behaviours
 
-import engine.events.consumable.{ConsumableGameEvent, TeleportEvent, TileEnteredEvent}
 import mock.MatchMock
 import model.Tile
 import model.entities.board.TileDefinition
+import model.events.consumable.{ConsumableGameEvent, TeleportEvent, TileEnteredEvent}
 import model.game.GameStateExtensions.MutableStateExtensions
 import model.game.{Game, MutableGameState}
 import model.rules.operations.Operation

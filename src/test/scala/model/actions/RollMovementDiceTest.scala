@@ -1,8 +1,8 @@
 package model.actions
 
-import engine.events.consumable.MovementDiceRollEvent
 import mock.MatchMock.default
 import model.entities.Dice.MovementDice
+import model.events.consumable.MovementDiceRollEvent
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

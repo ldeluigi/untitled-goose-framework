@@ -1,7 +1,7 @@
 package model.rules.operations
 
-import engine.events.GameEvent
 import model.entities.DialogContent
+import model.events.GameEvent
 import model.game.{GameState, MutableGameState}
 
 sealed trait Operation {

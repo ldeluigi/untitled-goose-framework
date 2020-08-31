@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.consumable.DialogLaunchEvent
+import model.events.consumable.DialogLaunchEvent
 import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.Operation.DialogOperation
 

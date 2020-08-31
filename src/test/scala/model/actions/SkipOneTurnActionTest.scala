@@ -1,7 +1,7 @@
 package model.actions
 
-import engine.events.consumable.SkipTurnEvent
 import mock.MatchMock.default
+import model.events.consumable.SkipTurnEvent
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

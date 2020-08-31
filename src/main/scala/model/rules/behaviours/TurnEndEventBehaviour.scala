@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.consumable.TurnShouldEndEvent
+import model.events.consumable.TurnShouldEndEvent
 import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.Operation
 

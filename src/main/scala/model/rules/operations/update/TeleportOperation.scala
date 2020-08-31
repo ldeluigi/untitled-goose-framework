@@ -1,7 +1,7 @@
 package model.rules.operations.update
 
-import engine.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
 import model.entities.board.{Piece, Position}
+import model.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
 import model.game.GameState
 import model.rules.operations.Operation
 import model.{Player, Tile}

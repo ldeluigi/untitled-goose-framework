@@ -1,6 +1,6 @@
 package model
 
-import engine.events.PlayerEvent
+import model.events.PlayerEvent
 
 trait Player {
 

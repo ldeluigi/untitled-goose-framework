@@ -1,7 +1,7 @@
 package model.rules.operations.update
 
-import engine.events.consumable._
 import model.entities.board.{Piece, Position}
+import model.events.consumable._
 import model.game.GameState
 import model.game.GameStateExtensions._
 import model.rules.operations.Operation

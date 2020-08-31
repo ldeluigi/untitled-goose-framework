@@ -1,8 +1,8 @@
 package view.actionmenu
 
+import controller.CommandSender
 import model.actions.Action
 import scalafx.scene.control.Button
-import view.ApplicationController
 
 /** A custom button to handle custom behaviour for custom actions.
  */
@@ -15,7 +15,7 @@ trait ActionVisualization extends Button {
 
 object ActionVisualization {
 
-  private class ActionVisualizationImpl(action: Action, controller: ApplicationController) extends ActionVisualization {
+  private class ActionVisualizationImpl(action: Action, controller: CommandSender) extends ActionVisualization {
 
     this.text = action.name
 
@@ -25,5 +25,5 @@ object ActionVisualization {
   }
 
   /** A factory which creates a new ActionVisualization button. */
-  def apply(action: Action, controller: ApplicationController): ActionVisualization = new ActionVisualizationImpl(action, controller)
+  def apply(action: Action, controller: CommandSender): ActionVisualization = new ActionVisualizationImpl(action, controller)
 }

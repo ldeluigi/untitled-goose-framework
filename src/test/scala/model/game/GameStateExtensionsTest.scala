@@ -1,9 +1,9 @@
 package model.game
 
-import engine.events.consumable.SkipTurnEvent
-import engine.events.persistent.LoseTurnEvent
-import engine.events.{GameEvent, consumable}
 import model.Player
+import model.events.consumable.SkipTurnEvent
+import model.events.persistent.LoseTurnEvent
+import model.events.{GameEvent, consumable}
 import model.game.GameStateExtensions.PimpedHistory
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec

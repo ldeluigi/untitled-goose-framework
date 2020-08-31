@@ -1,15 +1,16 @@
 package model.game
 
-import engine.events.GameEvent
-import engine.events.consumable.ConsumableGameEvent
 import model.Player
 import model.entities.board.Piece
+import model.events.GameEvent
+import model.events.consumable.ConsumableGameEvent
 
 trait CycleMutableGameState extends MutableGameState {
   def currentCycle_=(cycle: Int): Unit
 }
 
 object CycleMutableGameState {
+
   private class GameStateImpl(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
                               val gameBoard: GameBoard) extends CycleMutableGameState {
 

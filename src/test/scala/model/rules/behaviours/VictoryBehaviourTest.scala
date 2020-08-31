@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
-import engine.events.consumable.VictoryEvent
 import mock.MatchMock
+import model.events.consumable.VictoryEvent
 import model.game.GameStateExtensions.MutableStateExtensions
 import model.game.{Game, MutableGameState}
 import model.rules.operations.Operation

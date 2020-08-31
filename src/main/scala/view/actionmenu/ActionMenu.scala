@@ -1,8 +1,8 @@
 package view.actionmenu
 
+import controller.CommandSender
 import model.actions.Action
 import scalafx.scene.layout.{Pane, VBox}
-import view.ApplicationController
 import view.board.BoardDisplay
 
 
@@ -16,7 +16,7 @@ trait ActionMenu extends Pane {
 
 object ActionMenu {
 
-  private class ActionMenuImpl(boardView: BoardDisplay, controller: ApplicationController) extends ActionMenu {
+  private class ActionMenuImpl(boardView: BoardDisplay, controller: CommandSender) extends ActionMenu {
 
     val actionBox = new VBox(15)
     this.children.add(actionBox)
@@ -34,5 +34,5 @@ object ActionMenu {
   }
 
   /** A factory which creates a new ActionMenu. */
-  def apply(boardView: BoardDisplay, controller: ApplicationController): ActionMenu = new ActionMenuImpl(boardView, controller)
+  def apply(boardView: BoardDisplay, controller: CommandSender): ActionMenu = new ActionMenuImpl(boardView, controller)
 }

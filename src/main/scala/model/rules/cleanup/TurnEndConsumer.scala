@@ -1,7 +1,7 @@
 package model.rules.cleanup
 
-import engine.events.consumable.TurnShouldEndEvent
-import engine.events.persistent.{GainTurnEvent, TurnEndedEvent}
+import model.events.consumable.TurnShouldEndEvent
+import model.events.persistent.{GainTurnEvent, TurnEndedEvent}
 import model.game.GameStateExtensions._
 import model.game.MutableGameState
 

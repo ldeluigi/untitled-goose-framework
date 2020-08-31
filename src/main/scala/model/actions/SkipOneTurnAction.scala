@@ -1,7 +1,7 @@
 package model.actions
 
-import engine.events.GameEvent
-import engine.events.consumable.SkipTurnEvent
+import model.events.GameEvent
+import model.events.consumable.SkipTurnEvent
 import model.game.GameState
 
 class SkipOneTurnAction extends Action {

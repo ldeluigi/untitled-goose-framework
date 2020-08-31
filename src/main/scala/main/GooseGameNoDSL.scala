@@ -2,14 +2,15 @@ package main
 
 import java.awt.{Dimension, Toolkit}
 
-import engine.events.consumable._
-import engine.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
-import engine.events.{GameEvent, consumable}
+import controller.ApplicationController
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board._
 import model.entities.{DialogContent, Dice}
+import model.events.consumable._
+import model.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
+import model.events.{GameEvent, consumable}
 import model.game.Game
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.actionrules.{ActionRule, LoseTurnActionRule}
@@ -19,7 +20,7 @@ import model.rules.operations.Operation.DialogOperation
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RulePriorities, RuleSet}
 import model.{Color, Player, TileIdentifier}
 import scalafx.application.JFXApp
-import view.ApplicationController
+import view.GameScene
 import view.board.GraphicDescriptor
 
 
@@ -324,12 +325,15 @@ object GooseGameNoDSL extends JFXApp {
   //View launch
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
+  val controller: ApplicationController = ApplicationController(currentMatch)
+  val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
+  controller.setScene(gameScene)
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
     //fullScreen = true
     minWidth = 0.75 * screenSize.width
     minHeight = 0.75 * screenSize.height
-    scene = ApplicationController(this, screenSize.width, screenSize.height, currentMatch, graphicMap)
+    scene = gameScene
     fullScreenExitHint = "ESC to exit full screen mode"
   }
 

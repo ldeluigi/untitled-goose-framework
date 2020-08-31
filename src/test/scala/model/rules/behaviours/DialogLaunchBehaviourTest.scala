@@ -1,8 +1,8 @@
 package model.rules.behaviours
 
-import engine.events.consumable.DialogLaunchEvent
 import mock.MatchMock
 import model.entities.DialogContent
+import model.events.consumable.DialogLaunchEvent
 import model.game.GameStateExtensions.MutableStateExtensions
 import model.game.{Game, MutableGameState}
 import model.rules.operations.Operation

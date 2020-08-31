@@ -2,14 +2,14 @@ package main
 
 import java.awt.{Dimension, Toolkit}
 
-import engine.events.GameEvent
-import engine.events.consumable.{DialogLaunchEvent, StepMovementEvent}
-import engine.events.special.NoOpEvent
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.board.{Board, Disposition, Position}
 import model.entities.{DialogContent, Dice}
+import model.events.GameEvent
+import model.events.consumable.{DialogLaunchEvent, StepMovementEvent}
+import model.events.special.NoOpEvent
 import model.game.GameState
 import model.rules.actionrules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule

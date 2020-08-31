@@ -19,7 +19,7 @@ case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
       cell.text <== when(!cell.empty) choose (cell.index + 1).asString() otherwise ""
       cell
     }
-    prefWidth = customWidth / 3
+    prefWidth = customWidth / 3 - 1
   }
 
   private val nameCol: TableColumn[PlayerPiece, String] = new TableColumn[PlayerPiece, String] {
@@ -27,7 +27,7 @@ case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
     cellValueFactory = {
       _.value.name
     }
-    prefWidth = customWidth / 3
+    prefWidth = customWidth / 3 - 1
   }
   private val colorCol: TableColumn[PlayerPiece, Color] = new TableColumn[PlayerPiece, Color] {
     text = "Piece"

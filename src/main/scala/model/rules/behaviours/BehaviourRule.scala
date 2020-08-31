@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.consumable.ConsumableGameEvent
+import model.events.consumable.ConsumableGameEvent
 import model.game.{GameState, MutableGameState}
 import model.rules.operations.Operation
 

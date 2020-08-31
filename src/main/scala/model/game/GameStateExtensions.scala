@@ -1,9 +1,9 @@
 package model.game
 
-import engine.events._
-import engine.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
-import engine.events.persistent.{PersistentGameEvent, TurnEndedEvent}
-import engine.events.special.{ExitEvent, NoOpEvent}
+import model.events._
+import model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
+import model.events.persistent.{PersistentGameEvent, TurnEndedEvent}
+import model.events.special.{ExitEvent, NoOpEvent}
 import model.{Player, Tile}
 
 import scala.reflect.ClassTag

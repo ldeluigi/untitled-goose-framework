@@ -1,10 +1,10 @@
 package model.game
 
-import engine.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
-import engine.events.persistent.{GainTurnEvent, TileActivatedEvent}
-import engine.events.{GameEvent, PlayerEvent, TileEvent}
 import mock.MatchMock
 import model.entities.board.{Piece, Position}
+import model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
+import model.events.persistent.{GainTurnEvent, TileActivatedEvent}
+import model.events.{GameEvent, PlayerEvent, TileEvent}
 import model.game.GameStateExtensions.MutableStateExtensions
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec

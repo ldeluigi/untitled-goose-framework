@@ -3,7 +3,8 @@ package view.logger
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-import engine.events.GameEvent
+import model.events.GameEvent
+import model.game.GameState
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
 
@@ -12,11 +13,15 @@ import scalafx.scene.layout.Pane
  */
 trait EventLogger extends Pane {
   def logEvent(event: GameEvent): Unit
+
+  def logHistoryDiff(state: GameState): Unit
 }
 
 object EventLogger {
 
-  private class EventLoggerImpl(height: Int) extends EventLogger {
+  private class EventLoggerImpl(gameState: GameState, height: Int) extends EventLogger {
+
+    var previousState: GameState = gameState
     val logText: TextArea = new TextArea {
       wrapText = true
       editable = false
@@ -37,9 +42,17 @@ object EventLogger {
       logText.appendText("\n" + timestamp + " - EVENT " + event.toString)
       logText.scrollTop = Double.MaxValue
     }
+
+    def logHistoryDiff(state: GameState): Unit = {
+      (state.consumableBuffer.diff(previousState.consumableBuffer) ++
+        state.players.flatMap(_.history).diff(previousState.players.flatMap(_.history)) ++
+        state.gameBoard.tiles.flatMap(_.history).diff(previousState.gameBoard.tiles.flatMap(_.history)))
+        .foreach(logEvent)
+      previousState = state
+    }
   }
 
   /** A factory that renders a new EventLogger, given a certain height. */
-  def apply(height: Int): EventLogger = new EventLoggerImpl(height)
+  def apply(gameState: GameState, height: Int): EventLogger = new EventLoggerImpl(gameState, height)
 
 }

@@ -1,5 +1,6 @@
 package view.playerselection
 
+import controller.ApplicationController
 import model.game.Game
 import model.{GameData, TileIdentifier}
 import scalafx.geometry.{Insets, Pos}
@@ -10,7 +11,7 @@ import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
-import view.ApplicationController
+import view.GameScene
 import view.board.GraphicDescriptor
 
 
@@ -56,8 +57,10 @@ class IntroMenu(stage: Stage, gameData: GameData, widthSize: Int, heightSize: In
     val minimumNeededPlayers: Int = gameData.playersRange.start
     if (playersPane.checkPlayers) {
       val currentMatch: Game = gameData.createGame(playersPane.getPlayerSeq, playersPane.getPlayersPiecesMap)
-      val appView: ApplicationController = ApplicationController(stage, widthSize, heightSize, currentMatch, graphicMap)
-      stage.scene = appView
+      val controller: ApplicationController = ApplicationController(currentMatch)
+      val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
+      controller.setScene(gameScene)
+      stage.scene = gameScene
     } else {
       new Alert(AlertType.Error) {
         initOwner(stage)

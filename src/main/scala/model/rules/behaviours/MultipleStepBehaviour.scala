@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.consumable._
+import model.events.consumable._
 import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.update.StepOperation
 
