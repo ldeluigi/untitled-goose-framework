@@ -29,7 +29,7 @@ object GameData {
     override def createGame(players: Seq[Player], playerPieces: Map[Player, Piece]): Game = {
       val playerOrdering: PlayerOrdering = playerOrderingType match {
         case FullRandom => PlayerOrdering.fullRandom
-        case RandomOrder => PlayerOrdering.randomOrder
+        case RandomOrder => PlayerOrdering.randomOrder(7)
         case UserDefinedOrder => PlayerOrdering.givenOrder(players)
       }
       val ruleSet: RuleSet = PriorityRuleSet(

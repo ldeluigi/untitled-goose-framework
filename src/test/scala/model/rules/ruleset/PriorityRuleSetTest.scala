@@ -1,13 +1,16 @@
 package model.rules.ruleset
 
+import mock.MatchMock
 import model.actions.{Action, StepForwardAction}
 import model.entities.board.{Position, TileDefinition}
+import model.game.{Game, MutableGameState}
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
 import model.{Player, Tile}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
+class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach with Matchers {
 
   val t1: Tile = Tile(TileDefinition(1))
   val t2: Tile = Tile(TileDefinition(2))
@@ -17,6 +20,9 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
   val p1: Player = Player("P1")
   val p2: Player = Player("P2")
   val ordering: PlayerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2))
+
+  var gameMatch: Game = MatchMock.default
+  val gameMutableState: MutableGameState = gameMatch.currentState
 
   var ruleSet: PriorityRuleSet = PriorityRuleSet(firstPosition, ordering, playersRange)
 
@@ -51,16 +57,5 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach {
     val permission = AlwaysPermittedActionRule(1, myAction)
     val ruleSet = PriorityRuleSet(admissiblePlayers = 1 to 10, actionRules = Set(negation, permission))
     assert(!ruleSet.actions(null).contains(myAction))
-  }
-
-
-  // TODO complete test
-  it should "return the operations to be executed in a state" in {
-    pending
-  }
-
-  // TODO complete test
-  it should "return the operations to be executed in cleanup" in {
-    pending
   }
 }
