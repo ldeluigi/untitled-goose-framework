@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.consumable.TeleportEvent
+import model.events.consumable.TeleportEvent
 import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.update.TeleportOperation
 

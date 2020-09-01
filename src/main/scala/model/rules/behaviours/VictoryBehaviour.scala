@@ -1,8 +1,8 @@
 package model.rules.behaviours
 
-import engine.events.consumable.VictoryEvent
-import engine.events.special.ExitEvent
 import model.entities.DialogContent
+import model.events.consumable.VictoryEvent
+import model.events.special.ExitEvent
 import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.Operation.DialogOperation
 

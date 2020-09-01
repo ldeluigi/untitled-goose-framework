@@ -1,8 +1,8 @@
 package model.rules.operations
 
-import engine.events.GameEvent
-import engine.events.consumable.StopOnTileEvent
 import mock.MatchMock
+import model.events.GameEvent
+import model.events.consumable.StopOnTileEvent
 import model.game.{Game, MutableGameState}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

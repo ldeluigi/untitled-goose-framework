@@ -1,8 +1,7 @@
 package model.rules.behaviours
 
-import engine.events.consumable.{ConsumableGameEvent, SkipTurnEvent}
-import engine.events.persistent.{LoseTurnEvent, PersistentGameEvent}
 import mock.MatchMock
+import model.events.persistent.LoseTurnEvent
 import model.game.GameStateExtensions.MutableStateExtensions
 import model.game.{Game, MutableGameState}
 import model.rules.operations.Operation

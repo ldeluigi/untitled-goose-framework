@@ -1,9 +1,9 @@
 package model.rules.behaviours
 
-import engine.events.consumable._
 import mock.MatchMock
 import model.Tile
 import model.entities.board.TileDefinition
+import model.events.consumable._
 import model.game.GameStateExtensions.MutableStateExtensions
 import model.game.{Game, MutableGameState}
 import model.rules.operations.Operation
@@ -23,7 +23,7 @@ class MultipleStepBehaviourTest extends AnyFlatSpec with Matchers with BeforeAnd
   val movementEvent: ConsumableGameEvent = StepMovementEvent(5, game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
   val stopOnTileEvent: ConsumableGameEvent = StopOnTileEvent(game.currentState.currentPlayer, landingTile, game.currentState.currentTurn, game.currentState.currentTurn)
   val tileEnteredEvent: ConsumableGameEvent = TileEnteredEvent(game.currentState.currentPlayer, landingTile, game.currentState.currentTurn, game.currentState.currentCycle)
-  val tileLeftEvent: ConsumableGameEvent = TileLeftEvent(game.currentState.currentPlayer, Tile(TileDefinition(1)), game.currentState.currentTurn, game.currentState.currentCycle)
+  val tileLeftEvent: ConsumableGameEvent = TileExitedEvent(game.currentState.currentPlayer, Tile(TileDefinition(1)), game.currentState.currentTurn, game.currentState.currentCycle)
 
   override protected def beforeEach(): Unit = {
     state.submitEvent(movementEvent)

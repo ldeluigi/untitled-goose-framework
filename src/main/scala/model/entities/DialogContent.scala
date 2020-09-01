@@ -1,6 +1,6 @@
 package model.entities
 
-import engine.events.GameEvent
+import model.events.GameEvent
 
 trait DialogContent {
 

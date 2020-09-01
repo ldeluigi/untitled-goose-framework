@@ -1,7 +1,7 @@
 package model.rules.actionrules
 
-import engine.events.persistent.LoseTurnEvent
 import model.actions.{Action, SkipOneTurnAction}
+import model.events.persistent.LoseTurnEvent
 import model.game.GameState
 import model.game.GameStateExtensions._
 import model.rules.ruleset.RulePriorities.GooseFrameworkPriorities

@@ -1,8 +1,8 @@
 package model.actions
 
-import engine.events.GameEvent
-import engine.events.consumable.MovementDiceRollEvent
 import model.entities.Dice.MovementDice
+import model.events.GameEvent
+import model.events.consumable.MovementDiceRollEvent
 import model.game.GameState
 
 private class RollMovementDice(dice: MovementDice, diceNumber: Int) extends Action {

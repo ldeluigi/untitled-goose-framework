@@ -1,7 +1,7 @@
 package model
 
-import engine.events.TileEvent
 import model.entities.board.TileDefinition
+import model.events.TileEvent
 
 trait Tile {
   def history: Seq[TileEvent]

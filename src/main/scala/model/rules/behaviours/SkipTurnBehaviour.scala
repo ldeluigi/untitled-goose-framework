@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
-import engine.events.consumable.SkipTurnEvent
-import engine.events.persistent.LoseTurnEvent
+import model.events.consumable.SkipTurnEvent
+import model.events.persistent.LoseTurnEvent
 import model.game.GameStateExtensions.PimpedHistory
 import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.Operation

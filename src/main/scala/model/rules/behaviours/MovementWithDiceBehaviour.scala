@@ -1,6 +1,6 @@
 package model.rules.behaviours
 
-import engine.events.consumable.{MovementDiceRollEvent, StepMovementEvent}
+import model.events.consumable.{MovementDiceRollEvent, StepMovementEvent}
 import model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import model.rules.operations.Operation
 

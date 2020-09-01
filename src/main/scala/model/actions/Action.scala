@@ -1,6 +1,6 @@
 package model.actions
 
-import engine.events.GameEvent
+import model.events.GameEvent
 import model.game.GameState
 
 

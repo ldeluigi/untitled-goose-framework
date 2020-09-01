@@ -1,7 +1,7 @@
 package model.actions
 
-import engine.events.consumable.StepMovementEvent
 import mock.MatchMock.default
+import model.events.consumable.StepMovementEvent
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

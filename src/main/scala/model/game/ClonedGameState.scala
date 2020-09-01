@@ -1,9 +1,9 @@
 package model.game
 
-import engine.events.GameEvent
-import engine.events.consumable.ConsumableGameEvent
 import model.Player
 import model.entities.board.Piece
+import model.events.GameEvent
+import model.events.consumable.ConsumableGameEvent
 
 //TODO review this implementation
 
