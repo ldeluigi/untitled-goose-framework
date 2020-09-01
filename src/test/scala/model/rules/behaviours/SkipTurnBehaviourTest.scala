@@ -31,9 +31,8 @@ class SkipTurnBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfte
     game.currentState.currentPlayer.history should contain(loseTurnEvent)
   }
 
-  it should "still contain the main events since it's not a consumable one" in {
-    pending
-    state.consumableBuffer should contain(skipTurnEvent)
+  it should "not contain the consumed step event anymore" in {
+    state.consumableBuffer should not contain skipTurnEvent
   }
 
 }
