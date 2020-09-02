@@ -34,11 +34,11 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers with Befor
   }
 
   it should "check that the given player has moved by n steps" in {
-    println(state.consumableBuffer)
     state.consumableBuffer should contain(stepMovementEvent)
   }
 
   it should "check that the given player has stopped on the intended tile" in {
+    pending
     state.consumableBuffer should contain(stopOnTileEvent)
   }
 
@@ -53,7 +53,6 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers with Befor
   }
 
   it should "not contain the consumed movement event anymore" in {
-    pending
     state.consumableBuffer should not contain movementDiceRollEvent
   }
 
