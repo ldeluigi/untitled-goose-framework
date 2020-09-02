@@ -3,6 +3,7 @@ package model.rules.behaviours
 import mock.MatchMock
 import model.entities.DialogContent
 import model.events.consumable.{ConsumableGameEvent, DialogLaunchEvent, VictoryEvent}
+import model.events.special.ExitEvent
 import model.game.GameStateExtensions.MutableStateExtensions
 import model.game.{Game, MutableGameState}
 import model.rules.operations.Operation
@@ -18,7 +19,7 @@ class VictoryBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfter
   val game: Game = MatchMock.default
   val state: MutableGameState = game.currentState
 
-  val winningDialogContent: DialogContent = DialogContent("Victory!", "Winning players: " + game.currentState.currentPlayer)
+  val winningDialogContent: DialogContent = DialogContent("Victory!", "Winning players: " + game.currentState.currentPlayer.name, "Quit" -> ExitEvent)
   val dialogOperation: Operation = DialogOperation(winningDialogContent)
   val dialogLaunchEvent: ConsumableGameEvent = DialogLaunchEvent(game.currentState.currentTurn, game.currentState.currentCycle, winningDialogContent)
   val victoryEvent: ConsumableGameEvent = VictoryEvent(game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
@@ -31,8 +32,8 @@ class VictoryBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfter
   }
 
   it should "check that the supposed winning DialogOperation has been returned" in {
-    pending
-    operationSequence should contain(dialogOperation)
+    val content = operationSequence.find(_.isInstanceOf[DialogOperation]).map(_.asInstanceOf[DialogOperation].content)
+    assert(content.isDefined && content.get.equals(winningDialogContent))
   }
 
   it should "check that itself has been consumed" in {

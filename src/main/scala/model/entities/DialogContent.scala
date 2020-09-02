@@ -18,6 +18,12 @@ trait DialogContent {
    * @return a map linking the dialog's user answers to its related event.
    */
   def options: Map[String, GameEvent]
+
+  override def equals(obj: Any): Boolean = obj match {
+    case obj: DialogContent => obj.title == title && obj.text == text && obj.options == options
+    case _ => false
+  }
+
 }
 
 object DialogContent {
@@ -31,6 +37,7 @@ object DialogContent {
 
       override def options: Map[String, GameEvent] = answers.toMap
     }
+
 }
 
 
