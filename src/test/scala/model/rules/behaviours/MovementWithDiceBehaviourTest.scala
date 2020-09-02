@@ -23,9 +23,6 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers with Befor
 
   val movementDiceRollEvent: ConsumableGameEvent = MovementDiceRollEvent(game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle, diceResult)
   val stepMovementEvent: ConsumableGameEvent = StepMovementEvent(diceResult, game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
-  val stopOnTileEvent: ConsumableGameEvent = StopOnTileEvent(game.currentState.currentPlayer, landingTile, game.currentState.currentTurn, game.currentState.currentTurn)
-  val tileEnteredEvent: ConsumableGameEvent = TileEnteredEvent(game.currentState.currentPlayer, landingTile, game.currentState.currentTurn, game.currentState.currentCycle)
-  val tileLeftEvent: ConsumableGameEvent = TileExitedEvent(game.currentState.currentPlayer, Tile(TileDefinition(1)), game.currentState.currentTurn, game.currentState.currentCycle)
 
   override protected def beforeEach(): Unit = {
     state.submitEvent(movementDiceRollEvent)
@@ -33,27 +30,16 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers with Befor
     operationSequence.foreach(_.execute(state))
   }
 
-  it should "check that the given player has moved by n steps" in {
+  it should "check that the right movement event has been submitted" in {
     state.consumableBuffer should contain(stepMovementEvent)
-  }
-
-  it should "check that the given player has stopped on the intended tile" in {
-    pending
-    state.consumableBuffer should contain(stopOnTileEvent)
-  }
-
-  it should "check that the given player has left the supposed tile" in {
-    pending
-    state.consumableBuffer should contain(tileLeftEvent)
-  }
-
-  it should "check that the given player has entered the supposed tile" in {
-    pending
-    state.consumableBuffer should contain(tileEnteredEvent)
   }
 
   it should "not contain the consumed movement event anymore" in {
     state.consumableBuffer should not contain movementDiceRollEvent
+  }
+
+  it should "save the consumed event in the player's history" in {
+    state.currentPlayer.history should contain(movementDiceRollEvent)
   }
 
 }
