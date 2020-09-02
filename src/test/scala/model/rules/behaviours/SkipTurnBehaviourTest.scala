@@ -27,12 +27,10 @@ class SkipTurnBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfte
   }
 
   it should "check that a turn for the given player has been skipped" in {
-    pending
-    game.currentState.currentPlayer.history should contain(loseTurnEvent)
+    game.currentState.currentPlayer.history should not contain loseTurnEvent
   }
 
   it should "not contain the consumed step event anymore" in {
     state.consumableBuffer should not contain skipTurnEvent
   }
-
 }
