@@ -13,18 +13,23 @@ class TurnEndEventBehaviourTest extends AnyFlatSpec with Matchers with BeforeAnd
 
   behavior of "TurnEndEventBehaviourTest"
 
-  val game: Game = MatchMock.default
-  val state: MutableGameState = game.currentState
+  var game: Game = MatchMock.default
+  var state: MutableGameState = game.currentState
 
   val turnShouldEndEvent: ConsumableGameEvent = TurnShouldEndEvent(game.currentState.currentTurn, game.currentState.currentCycle)
 
-  it should "still contains the main event since it's not a consumable one" in {
+  override protected def beforeEach(): Unit = {
+    game = MatchMock.default
+    state = game.currentState
+  }
+
+  it should "still contain the main event since it's not a consumable one" in {
     val operationSequence: Seq[Operation] = TurnEndEventBehaviour().applyRule(state)
     operationSequence.foreach(_.execute(state))
     state.consumableBuffer should contain(turnShouldEndEvent)
   }
 
-  it should "" in {
+  it should "submit the event and check for its existence" in {
     state.submitEvent(turnShouldEndEvent)
     val operationSequence: Seq[Operation] = TurnEndEventBehaviour().applyRule(state)
     operationSequence.foreach(_.execute(state))
