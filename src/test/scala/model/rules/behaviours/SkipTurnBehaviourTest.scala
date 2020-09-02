@@ -21,13 +21,14 @@ class SkipTurnBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfte
   val loseTurnEvent: PersistentGameEvent = LoseTurnEvent(game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
 
   override protected def beforeEach(): Unit = {
+    state.submitEvent(loseTurnEvent)
     state.submitEvent(skipTurnEvent)
     val operationSequence: Seq[Operation] = SkipTurnBehaviour().applyRule(state)
     operationSequence.foreach(_.execute(state))
   }
 
   it should "check that a turn for the given player has been skipped" in {
-    game.currentState.currentPlayer.history should not contain loseTurnEvent
+    state.currentPlayer.history should not contain loseTurnEvent
   }
 
   it should "not contain the consumed step event anymore" in {
