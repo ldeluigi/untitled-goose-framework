@@ -1,6 +1,5 @@
 package model.game
 
-import model.Tile
 import model.entities.board.{Board, Disposition, TileDefinition}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

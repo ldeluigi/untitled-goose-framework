@@ -2,7 +2,6 @@ package model.game
 
 import mock.MatchMock
 import model.Color
-import model.entities.board.{Piece, Position}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}

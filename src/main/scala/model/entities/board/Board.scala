@@ -34,6 +34,9 @@ trait Board {
     case x: Board => x == this
     case _ => false
   }
+
+  override def toString: String = this.getClass.getSimpleName + " " + name +
+    " (first: " + first + ", disposition: " + disposition + ", tiles: " + tiles + ")"
 }
 
 object Board {

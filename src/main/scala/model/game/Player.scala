@@ -1,4 +1,4 @@
-package model
+package model.game
 
 import model.events.PlayerEvent
 
@@ -16,6 +16,10 @@ trait Player {
     case obj: Player => obj == this
     case _ => false
   }
+
+  override def toString: String = this.getClass.getSimpleName + ": " + name
+
+  override def hashCode(): Int = name.hashCode * history.hashCode
 }
 
 object Player {
@@ -26,7 +30,6 @@ object Player {
 
     var history: Seq[PlayerEvent] = List()
 
-    override def toString: String = "Player: " + name
   }
 
   /** Player's factory.

@@ -1,4 +1,4 @@
-package model.entities.board
+package model.game
 
 import model.Color.Color
 

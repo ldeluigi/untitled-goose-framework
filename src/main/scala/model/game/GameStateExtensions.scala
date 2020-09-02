@@ -4,7 +4,6 @@ import model.events._
 import model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
 import model.events.persistent.{PersistentGameEvent, TurnEndedEvent}
 import model.events.special.{ExitEvent, NoOpEvent}
-import model.{Player, Tile}
 
 import scala.reflect.ClassTag
 

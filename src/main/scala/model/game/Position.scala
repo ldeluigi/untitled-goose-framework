@@ -1,9 +1,9 @@
-package model.entities.board
-
-import model.Tile
+package model.game
 
 trait Position {
   def tile: Tile
+
+  override def toString: String = this.getClass.getSimpleName + "(" + tile + ")"
 }
 
 object Position {

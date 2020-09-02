@@ -1,4 +1,4 @@
-package model
+package model.game
 
 import model.entities.board.TileDefinition
 import model.events.TileEvent

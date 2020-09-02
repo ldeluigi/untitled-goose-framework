@@ -5,16 +5,16 @@ import java.awt.{Dimension, Toolkit}
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
-import model.entities.board.{Board, Disposition, Position}
+import model.entities.board.{Board, Disposition}
 import model.entities.{DialogContent, Dice}
 import model.events.GameEvent
 import model.events.consumable.{DialogLaunchEvent, StepMovementEvent}
 import model.events.special.NoOpEvent
-import model.game.GameState
+import model.game.{GameData, GameState, Position}
 import model.rules.actionrules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
-import model.{GameData, PlayerOrderingType, TileIdentifier}
+import model.{PlayerOrderingType, TileIdentifier}
 import scalafx.application.JFXApp
 import scalafx.scene.paint.Color
 import view.TileIdentifierImplicit._

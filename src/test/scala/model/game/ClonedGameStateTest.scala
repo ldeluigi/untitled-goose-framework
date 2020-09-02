@@ -1,7 +1,6 @@
 package model.game
 
 import mock.MatchMock
-import model.entities.board.{Piece, Position}
 import model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
 import model.events.persistent.{GainTurnEvent, TileActivatedEvent}
 import model.events.{GameEvent, PlayerEvent, TileEvent}

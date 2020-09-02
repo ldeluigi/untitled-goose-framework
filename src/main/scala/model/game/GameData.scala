@@ -1,8 +1,7 @@
-package model
+package model.game
 
 import model.PlayerOrderingType._
-import model.entities.board.{Board, Piece, Position}
-import model.game.Game
+import model.entities.board.Board
 import model.rules.actionrules.ActionRule
 import model.rules.behaviours.BehaviourRule
 import model.rules.cleanup.CleanupRule

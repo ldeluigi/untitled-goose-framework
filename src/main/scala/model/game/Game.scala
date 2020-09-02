@@ -1,8 +1,7 @@
 package model.game
 
-import model.Player
 import model.actions.Action
-import model.entities.board.{Board, Piece}
+import model.entities.board.Board
 import model.rules.operations.Operation
 import model.rules.ruleset.RuleSet
 

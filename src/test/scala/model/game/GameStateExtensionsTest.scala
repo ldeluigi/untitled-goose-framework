@@ -1,6 +1,5 @@
 package model.game
 
-import model.Player
 import model.events.consumable.SkipTurnEvent
 import model.events.persistent.LoseTurnEvent
 import model.events.{GameEvent, consumable}

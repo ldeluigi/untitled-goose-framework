@@ -1,6 +1,6 @@
 package model.rules.ruleset
 
-import model.Player
+import model.game.Player
 import model.rules.PlayerUtils
 
 import scala.util.Random

@@ -1,6 +1,6 @@
 package view.board
 
-import model.Tile
+import model.game.Tile
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label

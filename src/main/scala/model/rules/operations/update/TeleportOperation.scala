@@ -1,10 +1,8 @@
 package model.rules.operations.update
 
-import model.entities.board.{Piece, Position}
 import model.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
-import model.game.GameState
+import model.game.{GameState, Piece, Player, Position, Tile}
 import model.rules.operations.Operation
-import model.{Player, Tile}
 
 object TeleportOperation {
   def apply(state: GameState, player: Player, tile: Tile): Seq[Operation] = {

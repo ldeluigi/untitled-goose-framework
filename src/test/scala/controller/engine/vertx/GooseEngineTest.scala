@@ -2,12 +2,12 @@ package controller.engine.vertx
 
 import controller.ViewController
 import model.entities.DialogContent
-import model.entities.board.{Board, Disposition, Piece, Position}
+import model.entities.board.{Board, Disposition}
 import model.events.GameEvent
 import model.events.special.NoOpEvent
-import model.game.{Game, GameState}
+import model.game.{Game, GameState, Piece, Player, Position}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
-import model.{Color, Player}
+import model.Color
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

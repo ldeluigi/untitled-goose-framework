@@ -1,6 +1,5 @@
 package model.game
 
-import model.Tile
 import model.entities.board.{Board, TileDefinition}
 
 trait GameBoard {
@@ -21,6 +20,10 @@ trait GameBoard {
     case b: GameBoard => b == this
     case _ => false
   }
+
+  override def toString: String = this.getClass.getSimpleName +
+    " (board:" + board + ", first: " +
+    first + ", tiles: " + tiles + ")"
 }
 
 object GameBoard {

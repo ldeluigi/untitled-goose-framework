@@ -1,8 +1,7 @@
 package model.game
 
 import mock.MatchMock
-import model.entities.board.Piece
-import model.{Color, Player}
+import model.Color
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

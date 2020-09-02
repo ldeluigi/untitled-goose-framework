@@ -1,6 +1,7 @@
 package model.entities.board
 
-import model.{Color, Tile}
+import model.Color
+import model.game.{Piece, Position, Tile}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

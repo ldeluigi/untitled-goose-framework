@@ -1,8 +1,8 @@
 package view.playerselection
 
 import controller.ApplicationController
-import model.game.Game
-import model.{GameData, TileIdentifier}
+import model.game.{Game, GameData}
+import model.TileIdentifier
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
