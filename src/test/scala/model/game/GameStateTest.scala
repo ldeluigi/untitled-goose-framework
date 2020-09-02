@@ -8,7 +8,7 @@ import org.scalatest.matchers.should.Matchers
 
 class GameStateTest extends AnyFlatSpec with Matchers {
 
-  var gameMatch: Game = MatchMock.default
+  val gameMatch: Game = MatchMock.default
   val gameState: GameState = gameMatch.currentState
 
   val board: Board = Board(10, Disposition.snake(10))

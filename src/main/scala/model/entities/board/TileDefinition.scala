@@ -7,6 +7,21 @@ trait TileDefinition extends Groupable {
   def number: Option[Int]
 
   def name: Option[String]
+
+  def ==(obj: TileDefinition): Boolean =
+    (number.isDefined && obj.number.isDefined && number.get == obj.number.get) ||
+    (name.isDefined && obj.name.isDefined && name.get == obj.name.get)
+
+  override def equals(obj: Any): Boolean = {
+    obj match {
+      case t: TileDefinition => t == this
+      case _ => false
+    }
+  }
+
+  override def hashCode(): Int = number.getOrElse(name.get.hashCode)
+
+  override def toString: String = this.getClass.getSimpleName + "(" + this.name.getOrElse(this.number.get) + ")"
 }
 
 object TileDefinition {
@@ -19,17 +34,7 @@ object TileDefinition {
       case (Some(xNum), Some(yNum)) => xNum compare yNum
     }
 
-  private class TileDefinitionImpl(val number: Option[Int], val name: Option[String], val groups: Set[String]) extends TileDefinition {
-
-    override def equals(obj: Any): Boolean = {
-      obj match {
-        case t: TileDefinition =>
-          (number.isDefined && t.number.isDefined && number.get == t.number.get) ||
-            (name.isDefined && t.name.isDefined && name.get == t.name.get)
-        case _ => false
-      }
-    }
-  }
+  private class TileDefinitionImpl(val number: Option[Int], val name: Option[String], val groups: Set[String]) extends TileDefinition
 
   /** A factory that creates a tile definition based on a number. */
   def apply(number: Int): TileDefinition = new TileDefinitionImpl(Some(number), None, Set())

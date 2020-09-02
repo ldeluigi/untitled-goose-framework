@@ -14,6 +14,13 @@ trait GameBoard {
   def prev(tile: Tile): Option[Tile]
 
   def first: Tile
+
+  def ==(obj: GameBoard): Boolean = tiles == obj.tiles && board == obj.board && first == obj.first
+
+  override def equals(obj: Any): Boolean = obj match {
+    case b: GameBoard => b == this
+    case _ => false
+  }
 }
 
 object GameBoard {
@@ -31,10 +38,6 @@ object GameBoard {
     override def first: Tile = tileMap(board first)
 
     override def prev(tile: Tile): Option[Tile] = board prev tile.definition map (tileMap(_))
-
-    override def equals(obj: Any): Boolean = obj match {
-      case obj: GameBoard => obj.board.equals(board)
-    }
   }
 
 }

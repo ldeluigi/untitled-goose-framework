@@ -1,10 +1,8 @@
 package model.game
 
 import mock.MatchMock
-import mock.MatchMock._
 import model.Color
 import model.entities.board.{Piece, Position}
-import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}
@@ -14,15 +12,15 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   var gameMatch: Game = MatchMock.default
 
   override def beforeEach(): Unit = {
-    gameMatch = Game(board, players, PriorityRuleSet(playerOrdering = PlayerOrdering.givenOrder(Seq(p1, p2)), admissiblePlayers = 1 to 10))
+    gameMatch = MatchMock.default
   }
 
   "A Match" should "have a MatchBoard" in {
-    gameMatch.board should equal(GameBoard(board))
+    gameMatch.board.board.tiles should equal(GameBoard(MatchMock.board).board.tiles)
   }
 
   it should "have a set of players" in {
-    gameMatch.currentState.players should equal(players.keySet)
+    gameMatch.currentState.players should equal(MatchMock.players.keySet)
   }
 
   it should "have a current GameState" in {
@@ -32,22 +30,22 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   "A matchState" should "have a current player" in {
     val state = gameMatch.currentState
 
-    state.currentPlayer should equal(p1)
+    state.currentPlayer should equal(MatchMock.p1)
   }
 
   it should "know who is the next player" in {
     val state = gameMatch.currentState
-    state.nextPlayer should equal(p2)
+    state.nextPlayer should equal(MatchMock.p2)
   }
 
   it should "know where the playerPieces are" in {
-    gameMatch.currentState.playerPieces(p1).position.isEmpty should be(true)
+    gameMatch.currentState.playerPieces(MatchMock.p1).position.isEmpty should be(true)
   }
 
   it should "update player pieces as told" in {
-    gameMatch.currentState.updatePlayerPiece(p1, _ => Piece(Color.Blue, Some(Position(gameMatch.board.first))))
+    gameMatch.currentState.updatePlayerPiece(MatchMock.p1, _ => Piece(Color.Blue, Some(Position(gameMatch.board.first))))
 
-    gameMatch.currentState.playerPieces(p1).position.get should equal(Position(gameMatch.board.first))
+    gameMatch.currentState.playerPieces(MatchMock.p1).position.get should equal(Position(gameMatch.board.first))
   }
 
 }

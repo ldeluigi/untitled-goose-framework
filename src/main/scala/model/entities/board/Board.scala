@@ -28,13 +28,19 @@ trait Board {
    */
   def first: TileDefinition
 
+  def ==(obj: Board): Boolean = tiles == obj.tiles && name == obj.name && disposition == obj.disposition
+
+  override def equals(obj: Any): Boolean = obj match {
+    case x: Board => x == this
+    case _ => false
+  }
 }
 
 object Board {
 
   private class GeneratedBoard(tileNum: Int, val disposition: Disposition) extends Board {
 
-    private val myTiles: List[TileDefinition] = (1 to tileNum).toList.map(i => TileDefinition(i))
+    private val myTiles: Seq[TileDefinition] = (1 to tileNum).map(i => TileDefinition(i))
 
     override def name: String = "GeneratedBoard"
 
@@ -47,7 +53,6 @@ object Board {
     override def tiles: Set[TileDefinition] = myTiles.toSet
 
     override def first: TileDefinition = myTiles.head
-
   }
 
   private class BoardImpl(val name: String, val tiles: Set[TileDefinition], val disposition: Disposition) extends Board {

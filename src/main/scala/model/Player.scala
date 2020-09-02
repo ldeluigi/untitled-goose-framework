@@ -9,6 +9,13 @@ trait Player {
   def history: Seq[PlayerEvent]
 
   def history_=(history: Seq[PlayerEvent]): Unit
+
+  def ==(obj: Player): Boolean = name == obj.name && history == obj.history
+
+  override def equals(obj: Any): Boolean = obj match {
+    case obj: Player => obj == this
+    case _ => false
+  }
 }
 
 object Player {
@@ -18,10 +25,6 @@ object Player {
     override def name: String = playerName
 
     var history: Seq[PlayerEvent] = List()
-
-    override def equals(obj: Any): Boolean = obj match {
-      case obj: Player => this.name == obj.name
-    }
 
     override def toString: String = "Player: " + name
   }

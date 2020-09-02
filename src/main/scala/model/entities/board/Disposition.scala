@@ -17,6 +17,19 @@ trait Disposition {
    * @return the tile's coordinates
    */
   def tilePlacement(tileIndex: Int): (Int, Int)
+
+  def ==(obj: Disposition): Boolean =
+    rows == obj.rows &&
+      columns == obj.columns &&
+      totalTiles == obj.totalTiles &&
+      Range(0, totalTiles)
+        .map(i => tilePlacement(i) == obj.tilePlacement(i))
+        .reduce(_ && _)
+
+  override def equals(obj: Any): Boolean = obj match {
+    case x: Disposition => x == this
+    case _ => false
+  }
 }
 
 object Disposition {

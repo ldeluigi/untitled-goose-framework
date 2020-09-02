@@ -9,6 +9,13 @@ trait Tile {
   def history_=(history: Seq[TileEvent]): Unit
 
   def definition: TileDefinition
+
+  def ==(obj: Tile): Boolean = history == obj.history && definition == obj.definition
+
+  override def equals(obj: Any): Boolean = obj match {
+    case x: Tile => x == this
+    case _ => false
+  }
 }
 
 object Tile {
@@ -16,13 +23,6 @@ object Tile {
   private class TileImpl(val definition: TileDefinition) extends Tile {
 
     var history: Seq[TileEvent] = List()
-
-    override def equals(obj: Any): Boolean = {
-      obj match {
-        case t: Tile => definition == t.definition && history == t.history
-        case _ => false
-      }
-    }
 
     override def toString: String =
       "Tile: " +
