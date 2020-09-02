@@ -21,7 +21,8 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers with Befor
   val diceResult: Int = 6
   val landingTile: Tile = Tile(TileDefinition(diceResult))
 
-  val movementDiceRollEvent: ConsumableGameEvent = MovementDiceRollEvent(game.currentState.currentPlayer, game.currentState.currentTurn, diceResult)
+  val movementDiceRollEvent: ConsumableGameEvent = MovementDiceRollEvent(game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle, diceResult)
+  val stepMovementEvent: ConsumableGameEvent = StepMovementEvent(diceResult, game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
   val stopOnTileEvent: ConsumableGameEvent = StopOnTileEvent(game.currentState.currentPlayer, landingTile, game.currentState.currentTurn, game.currentState.currentTurn)
   val tileEnteredEvent: ConsumableGameEvent = TileEnteredEvent(game.currentState.currentPlayer, landingTile, game.currentState.currentTurn, game.currentState.currentCycle)
   val tileLeftEvent: ConsumableGameEvent = TileExitedEvent(game.currentState.currentPlayer, Tile(TileDefinition(1)), game.currentState.currentTurn, game.currentState.currentCycle)
@@ -32,9 +33,12 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers with Befor
     operationSequence.foreach(_.execute(state))
   }
 
-  it should "check that the given player has stopped on the intended tile" in {
-    pending
+  it should "check that the given player has moved by n steps" in {
     println(state.consumableBuffer)
+    state.consumableBuffer should contain(stepMovementEvent)
+  }
+
+  it should "check that the given player has stopped on the intended tile" in {
     state.consumableBuffer should contain(stopOnTileEvent)
   }
 

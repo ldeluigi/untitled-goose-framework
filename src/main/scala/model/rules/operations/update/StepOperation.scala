@@ -52,7 +52,6 @@ object StepOperation {
       }
     }
 
-
     opSeq = opSeq :+ Operation.updateState(state => {
       state.updatePlayerPiece(player, piece => Piece(piece, stepFunction(state.playerPieces(player).position, state).map(Position(_))))
     })
