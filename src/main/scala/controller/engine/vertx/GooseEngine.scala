@@ -3,7 +3,7 @@ package controller.engine.vertx
 import java.util.concurrent.atomic.AtomicBoolean
 
 import controller.ViewController
-import controller.engine.{DialogDisplay, EventSink}
+import controller.engine.EventSink
 import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
@@ -14,7 +14,7 @@ import model.events.special.{ExitEvent, NoOpEvent}
 import model.rules.operations.Operation
 import model.rules.operations.Operation.{DialogOperation, SpecialOperation}
 
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
@@ -33,6 +33,7 @@ trait GooseEngine {
 object GooseEngine {
 
   private class GooseEngineImpl(private val gameMatch: Game, private val controller: ViewController) extends GooseEngine with EventSink[GameEvent] {
+    private type DialogDisplay = DialogContent => Future[GameEvent]
     private val vertx: Vertx = Vertx.vertx()
     private val gv = new GooseVerticle(onEvent)
     implicit val vertxExecutionContext: VertxExecutionContext = VertxExecutionContext(
@@ -58,7 +59,7 @@ object GooseEngine {
           operation match {
             case o: DialogOperation =>
               stopped.set(true)
-              dialogDisplay.display(o.content).onComplete(res => {
+              dialogDisplay(o.content).onComplete(res => {
                 stopped.set(false)
                 res match {
                   case Failure(_) => executeOperation()

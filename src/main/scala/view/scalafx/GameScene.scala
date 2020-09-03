@@ -1,6 +1,6 @@
 package view.scalafx
 
-import controller.CommandSender
+import controller.GameManager
 import model.TileIdentifier
 import model.actions.Action
 import model.entities.DialogContent
@@ -29,10 +29,10 @@ trait GameScene extends Scene {
 
 object GameScene {
 
-  def apply(stage: Stage, commandSender: CommandSender, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor]): GameScene =
+  def apply(stage: Stage, commandSender: GameManager, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor]): GameScene =
     new GameSceneImpl(stage, commandSender, gameMatch, graphicMap)
 
-  private class GameSceneImpl(stage: Stage, commandSender: CommandSender, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor])
+  private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends GameScene {
 
     val boardProportion = 0.8

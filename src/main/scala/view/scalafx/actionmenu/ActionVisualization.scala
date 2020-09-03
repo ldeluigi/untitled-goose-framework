@@ -1,6 +1,6 @@
 package view.scalafx.actionmenu
 
-import controller.CommandSender
+import controller.GameManager
 import model.actions.Action
 import scalafx.scene.control.Button
 
@@ -15,7 +15,7 @@ trait ActionVisualization extends Button {
 
 object ActionVisualization {
 
-  private class ActionVisualizationImpl(action: Action, controller: CommandSender) extends ActionVisualization {
+  private class ActionVisualizationImpl(action: Action, controller: GameManager) extends ActionVisualization {
 
     this.text = action.name
 
@@ -25,5 +25,5 @@ object ActionVisualization {
   }
 
   /** A factory which creates a new ActionVisualization button. */
-  def apply(action: Action, controller: CommandSender): ActionVisualization = new ActionVisualizationImpl(action, controller)
+  def apply(action: Action, controller: GameManager): ActionVisualization = new ActionVisualizationImpl(action, controller)
 }
