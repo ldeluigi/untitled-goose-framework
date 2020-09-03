@@ -11,14 +11,14 @@ import model.entities.{DialogContent, Dice}
 import model.events.consumable._
 import model.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
 import model.events.{GameEvent, consumable}
-import model.game.Game
+import model.game.{Game, Piece, Player, Position}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.actionrules.{ActionRule, LoseTurnActionRule}
 import model.rules.behaviours._
 import model.rules.operations.Operation
 import model.rules.operations.Operation.DialogOperation
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RulePriorities, RuleSet}
-import model.{Color, Player, TileIdentifier}
+import model.{Color, TileIdentifier}
 import scalafx.application.JFXApp
 import view.GameScene
 import view.board.GraphicDescriptor

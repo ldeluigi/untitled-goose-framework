@@ -3,7 +3,8 @@ package view
 import java.awt.{Dimension, Toolkit}
 
 import javafx.scene.input.KeyCode
-import model.{GameData, TileIdentifier}
+import model.TileIdentifier
+import model.game.GameData
 import scalafx.application.JFXApp
 import view.board.GraphicDescriptor
 import view.playerselection.IntroMenu

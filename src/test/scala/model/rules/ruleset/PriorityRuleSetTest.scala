@@ -2,10 +2,9 @@ package model.rules.ruleset
 
 import mock.MatchMock
 import model.actions.{Action, StepForwardAction}
-import model.entities.board.{Position, TileDefinition}
-import model.game.{Game, MutableGameState}
+import model.entities.board.TileDefinition
+import model.game.{Game, MutableGameState, Player, Position, Tile}
 import model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
-import model.{Player, Tile}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

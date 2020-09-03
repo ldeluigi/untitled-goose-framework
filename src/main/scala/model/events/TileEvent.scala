@@ -1,6 +1,6 @@
 package model.events
 
-import model.Tile
+import model.game.Tile
 
 trait TileEvent extends GameEvent {
 

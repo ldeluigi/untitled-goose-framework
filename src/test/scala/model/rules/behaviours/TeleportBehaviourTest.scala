@@ -1,11 +1,10 @@
 package model.rules.behaviours
 
 import mock.MatchMock
-import model.Tile
 import model.entities.board.TileDefinition
 import model.events.consumable.{ConsumableGameEvent, StopOnTileEvent, TeleportEvent, TileEnteredEvent}
 import model.game.GameStateExtensions.MutableStateExtensions
-import model.game.{Game, MutableGameState}
+import model.game.{Game, MutableGameState, Tile}
 import model.rules.operations.Operation
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec

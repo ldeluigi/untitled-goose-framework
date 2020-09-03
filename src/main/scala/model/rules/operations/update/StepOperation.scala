@@ -1,11 +1,9 @@
 package model.rules.operations.update
 
-import model.entities.board.{Piece, Position}
 import model.events.consumable._
-import model.game.GameState
+import model.game.{GameState, Piece, Player, Position, Tile}
 import model.game.GameStateExtensions._
 import model.rules.operations.Operation
-import model.{Player, Tile}
 
 object StepOperation {
 

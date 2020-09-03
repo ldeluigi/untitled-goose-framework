@@ -1,6 +1,6 @@
 package model.rules.ruleset
 
-import model.Player
+import model.game.Player
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
 

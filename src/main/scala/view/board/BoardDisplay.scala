@@ -1,8 +1,8 @@
 package view.board
 
 import model.TileIdentifier.Group
-import model.game.{GameBoard, GameState}
-import model.{Tile, TileIdentifier}
+import model.game.{GameBoard, GameState, Tile}
+import model.TileIdentifier
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
 

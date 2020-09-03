@@ -1,6 +1,6 @@
 package model.events
 
-import model.Player
+import model.game.Player
 
 trait PlayerEvent extends GameEvent {
 
