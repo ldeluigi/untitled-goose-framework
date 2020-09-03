@@ -40,8 +40,6 @@ trait GooseDSL extends App with Subjects with TilePropertyWords with BoardProper
       ruleBook.ruleSet.actionRules,
       ruleBook.ruleSet.behaviourRules,
       ruleBook.ruleSet.cleanupRules)
-
-
   }
 
   private def start(gameData: GameData, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
