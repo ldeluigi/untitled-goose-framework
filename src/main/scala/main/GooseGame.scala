@@ -36,11 +36,11 @@ object GooseGame extends GooseDSL {
 
   Players start on tile 1
 
-  Each turn players are {
-    always allowed to trigger (state => ???) as "muoviti" priority 5
-    when(state => true) allowed to trigger (???) as "muoviti" priority 8
-    when(state => false) negated to use "Something" priority 6
-    always allowed to use "move" priority 6
-  }
+  Each turn players are(
+    always allowed to trigger ??? as "muoviti" priority 5,
+    always allowed to trigger ??? as "muoviti" priority 8,
+    never negated to use "Something" priority 6,
+    always allowed to use "move" priority 6,
+  )
 
 }

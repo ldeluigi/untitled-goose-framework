@@ -1,7 +1,9 @@
 package dsl.words
 
-class NegateWord {
-  def apply(to: ToWord): NegateWord = new NegateWord()
+import model.entities.runtime.GameState
 
-  def use(name: String): NamedAction = ???
+class NegateWord(when: GameState => Boolean) {
+  def apply(to: ToWord): NegateWord = this
+
+  def use(refName: String): RefAction = RefAction(when, allow = false, refName)
 }

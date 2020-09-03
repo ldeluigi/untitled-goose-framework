@@ -14,9 +14,11 @@ trait RuleSetWords {
 
   def Each: EachWord = EachWord()
 
-  val players: PlayersCanWord = PlayersCanWord()
+  val players: PlayersAreWord = PlayersAreWord()
 
   def always: WhenWord = WhenWord(_ => true)
+
+  def never: WhenWord = WhenWord(_ => false)
 
   def when(condition: GameState => Boolean): WhenWord = WhenWord(condition)
 

@@ -3,10 +3,10 @@ package dsl.words
 import model.entities.runtime.GameState
 import model.events.GameEvent
 
-class AllowWord() {
-  def apply(to: ToWord): AllowWord = new AllowWord()
+class AllowWord(when: GameState => Boolean) {
+  def apply(to: ToWord): AllowWord = this
 
-  def trigger(event: GameState => GameEvent): UnnamedAction = ???
+  def trigger(trigger: GameState => GameEvent): UnnamedAction = UnnamedAction(when, trigger, allow = true)
 
-  def use(name: String): NamedAction = ???
+  def use(refName: String): RefAction = RefAction(when, allow = true, refName)
 }
