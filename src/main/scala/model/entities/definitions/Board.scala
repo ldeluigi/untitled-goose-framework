@@ -73,6 +73,6 @@ object Board {
 
   def apply(name: String, tiles: Set[TileDefinition], disposition: Disposition): Board = new BoardImpl(name, tiles, disposition)
 
-  def create(): BoardBuilderImpl = BoardBuilderImpl()
+  def create(): BoardBuilder = BoardBuilder()
 
 }

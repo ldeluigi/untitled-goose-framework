@@ -17,6 +17,12 @@ private class RollMovementDice(dice: MovementDice, diceNumber: Int) extends Acti
 
 object RollMovementDice {
 
+  /**
+   * This factory creates an Action meant for movement.
+   * @param dice A dice that has integer typed faces.
+   * @param diceNumber The number of dices to roll at the same time.
+   * @return A new action for rolling those dices.
+   */
   def apply(dice: MovementDice, diceNumber: Int = 1): Action = new RollMovementDice(dice, diceNumber)
 }
 

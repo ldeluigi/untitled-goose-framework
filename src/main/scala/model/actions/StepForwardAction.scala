@@ -4,7 +4,8 @@ import model.events.GameEvent
 import model.events.consumable.StepMovementEvent
 import model.entities.runtime.GameState
 
-class StepForwardAction() extends Action {
+/** This very simple action triggers a 1-step [[StepMovementEvent]] for the current player. */
+private class StepForwardAction() extends Action {
 
   override def name: String = "Move Forward"
 
@@ -15,5 +16,6 @@ class StepForwardAction() extends Action {
 
 object StepForwardAction {
 
-  def apply(): StepForwardAction = new StepForwardAction()
+  /** This factory instantiates a StepForwardAction. */
+  def apply(): Action = new StepForwardAction()
 }

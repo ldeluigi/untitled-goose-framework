@@ -18,7 +18,7 @@ class OperationTest extends AnyFlatSpec with Matchers {
 
   it should "return an operation that update the runtime's state" in {
     // TODO remove assert
-    Operation.updateState(_ => assert(condition = true)).execute(gameMutableState)
+    Operation.updateState(_ => assert(true)).execute(gameMutableState)
   }
 
   it should "return a trigger operation when the condition is true" in {
