@@ -12,7 +12,7 @@ trait Player {
 
   def history_=(history: Seq[PlayerEvent]): Unit
 
-  def ==(obj: Player): Boolean = name == obj.name && history == obj.history
+  def ==(obj: Player): Boolean = name == obj.name
 
   override def equals(obj: Any): Boolean = obj match {
     case obj: Player => obj == this
@@ -21,7 +21,7 @@ trait Player {
 
   override def toString: String = this.getClass.getSimpleName + ": " + name
 
-  override def hashCode(): Int = name.hashCode * history.hashCode
+  override def hashCode(): Int = name.hashCode + 1
 }
 
 object Player {

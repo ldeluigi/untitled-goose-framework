@@ -12,14 +12,14 @@ trait Tile {
 
   def definition: TileDefinition
 
-  def ==(obj: Tile): Boolean = history == obj.history && definition == obj.definition
+  def ==(obj: Tile): Boolean = definition == obj.definition
 
   override def equals(obj: Any): Boolean = obj match {
     case x: Tile => x == this
     case _ => false
   }
 
-  override def hashCode(): Int = 7 * history.hashCode + 11 * definition.hashCode
+  override def hashCode(): Int = definition.hashCode + 1
 
   override def toString: String =
     this.getClass.getSimpleName + ":" +
