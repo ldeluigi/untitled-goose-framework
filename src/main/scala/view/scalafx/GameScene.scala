@@ -46,7 +46,7 @@ object GameScene {
     boardView.prefWidth <== this.width * boardProportion
     boardView.prefHeight <== this.height - logHeight
 
-    val actionMenu: ActionMenu = ActionMenu(boardView, commandSender)
+    val actionMenu: ActionMenu = ActionMenu(boardView, gameMatch, commandSender)
     borderPane.right = actionMenu
     actionMenu.prefWidth <== this.width * (1 - boardProportion)
 
