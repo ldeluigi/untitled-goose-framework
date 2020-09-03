@@ -12,7 +12,7 @@ object ActionRuleNode {
     override def check: Seq[String] = ???
   }
 
-  case class ActionRuleWithRefNode(when: GameState => Boolean, priority: Int, allow: Boolean, refName: String) extends ActionRuleNode {
+  case class ActionRuleWithRefNode(when: GameState => Boolean, priority: Int, allow: Boolean, refName: Set[String]) extends ActionRuleNode {
     override def check: Seq[String] = ???
   }
 

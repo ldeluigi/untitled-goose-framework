@@ -40,7 +40,7 @@ object GooseGame extends GooseDSL {
     always allowed to trigger ??? as "muoviti" priority 5,
     always allowed to trigger ??? as "muoviti" priority 8,
     never negated to use "Something" priority 6,
-    always allowed to use "move" priority 6,
+    always allowed to use("move", "ciao") priority 6,
   )
 
 }
