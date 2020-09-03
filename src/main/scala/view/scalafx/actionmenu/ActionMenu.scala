@@ -2,6 +2,10 @@ package view.scalafx.actionmenu
 
 import controller.GameManager
 import model.actions.Action
+import model.entities.runtime.Game
+import scalafx.beans.binding.Bindings
+import scalafx.geometry.Pos
+import scalafx.scene.control.Label
 import scalafx.scene.layout.{Pane, VBox}
 import view.scalafx.board.BoardDisplay
 
@@ -16,10 +20,15 @@ trait ActionMenu extends Pane {
 
 object ActionMenu {
 
-  private class ActionMenuImpl(boardView: BoardDisplay, controller: GameManager) extends ActionMenu {
+  private class ActionMenuImpl(boardView: BoardDisplay, game: Game, controller: GameManager) extends ActionMenu {
 
-    val actionBox = new VBox(15)
+    val actionBox: VBox = new VBox(15)
+    actionBox.setAlignment(Pos.Center)
     this.children.add(actionBox)
+
+    val currentPlayerName: Label = new Label {
+      style = "-fx-font-size: 12pt"
+    }
 
     /** Utility method to add every action into a VBox.
      *
@@ -27,6 +36,8 @@ object ActionMenu {
      */
     override def displayActions(actions: Set[Action]): Unit = {
       actionBox.children.removeAll(actionBox.children)
+      actionBox.children.add(currentPlayerName)
+      currentPlayerName.textProperty().bind(Bindings.createStringBinding(() => "Current player: " + game.currentState.currentPlayer.name))
       for (a <- actions) {
         actionBox.children.add(ActionVisualization(a, controller))
       }
@@ -34,5 +45,5 @@ object ActionMenu {
   }
 
   /** A factory which creates a new ActionMenu. */
-  def apply(boardView: BoardDisplay, controller: GameManager): ActionMenu = new ActionMenuImpl(boardView, controller)
+  def apply(boardView: BoardDisplay, game: Game, controller: GameManager): ActionMenu = new ActionMenuImpl(boardView, game, controller)
 }
