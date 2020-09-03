@@ -1,8 +1,8 @@
-package view
+package view.scalafx
 
 import model.TileIdentifier
 import model.TileIdentifier.Group
-import view.board.GraphicDescriptor
+import view.scalafx.board.GraphicDescriptor
 
 object TileIdentifierImplicit {
 

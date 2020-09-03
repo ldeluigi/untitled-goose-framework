@@ -18,8 +18,12 @@ import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import scala.util.{Failure, Success}
 
+/**
+ * The runtime engine of the game. It can receive events to handle,
+ * and can be polled to get the game, which includes the state.
+ */
 trait GooseEngine {
-  def currentMatch: Game
+  def game: Game
 
   def eventSink: EventSink[GameEvent]
 
@@ -27,9 +31,6 @@ trait GooseEngine {
 }
 
 object GooseEngine {
-
-
-  def apply(status: Game, controller: ViewController): GooseEngine = new GooseEngineImpl(status, controller)
 
   private class GooseEngineImpl(private val gameMatch: Game, private val controller: ViewController) extends GooseEngine with EventSink[GameEvent] {
     private val vertx: Vertx = Vertx.vertx()
@@ -75,7 +76,7 @@ object GooseEngine {
       }
     }
 
-    override def currentMatch: Game = gameMatch
+    override def game: Game = gameMatch
 
     override def eventSink: EventSink[GameEvent] = this
 
@@ -96,4 +97,13 @@ object GooseEngine {
     }
   }
 
+  /**
+   * This factory creates a GooseEngine actor that encapsulates a Vert.x verticle,
+   * that is an autonomous control flow, to work asynchronously as a game controller.
+   * @param status The Game, which is modified in-place.
+   * @param controller The ViewController. Its interactions with the engine are managed
+   *                   with concurrency in mind.
+   * @return The GooseEngine implemented using the Vert.x library.
+   */
+  def apply(status: Game, controller: ViewController): GooseEngine = new GooseEngineImpl(status, controller)
 }

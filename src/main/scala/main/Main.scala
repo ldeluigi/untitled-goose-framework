@@ -17,9 +17,9 @@ import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, Multipl
 import model.{PlayerOrderingType, TileIdentifier}
 import scalafx.application.JFXApp
 import scalafx.scene.paint.Color
-import view.TileIdentifierImplicit._
-import view.board.GraphicDescriptor
-import view.playerselection.IntroMenu
+import view.scalafx.TileIdentifierImplicit._
+import view.scalafx.board.GraphicDescriptor
+import view.scalafx.playerselection.IntroMenu
 
 /**
  * Main application used to specify all runtime rules, actions, behaviours and graphical properties

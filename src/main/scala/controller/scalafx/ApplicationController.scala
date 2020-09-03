@@ -1,29 +1,33 @@
-package controller
+package controller.scalafx
 
 import controller.engine.vertx.GooseEngine
 import model.actions.Action
 import model.entities.DialogContent
 import model.entities.runtime.{Game, GameState}
 import model.events.GameEvent
-import view.GameScene
+import view.scalafx.GameScene
 
 import scala.concurrent.{Future, Promise}
 
-case class ApplicationController(gameMatch: Game) extends ViewController with CommandSender {
+/**
+ * Implementation for a controller for the Goose Engine Frameworks that uses a ScalaFx View.
+ * @param game The game that encapsulates the mutable state and the rules.
+ */
+case class ApplicationController(game: Game) extends ScalaFxController {
 
-  val engine: GooseEngine = GooseEngine(gameMatch, this)
-  var gameScene: Option[GameScene] = None
+  private val engine: GooseEngine = GooseEngine(game, this)
+  private var gameScene: Option[GameScene] = None
 
-  def setScene(gameScene: GameScene): Unit = {
+  override def setScene(gameScene: GameScene): Unit = {
     this.gameScene = Some(gameScene)
   }
 
   override def resolveAction(action: Action): Unit =
-    engine.eventSink.accept(action.trigger(engine.currentMatch.currentState))
+    engine.eventSink.accept(action.trigger(engine.game.currentState))
 
   override def update(state: GameState): Unit = {
     val clonedState: GameState = state.clone()
-    gameScene.get.updateScene(clonedState, engine.currentMatch.availableActions)
+    gameScene.get.updateScene(clonedState, engine.game.availableActions)
   }
 
   override def close(): Unit = {

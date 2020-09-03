@@ -3,7 +3,7 @@ package dsl.properties.tile
 import dsl.nodes.{BoardBuilderNode, GraphicMapNode}
 import dsl.properties.tile.TileProperty._
 import model.TileIdentifier
-import view.board.GraphicDescriptor
+import view.scalafx.board.GraphicDescriptor
 
 trait TileHasBuilder {
   def has(name: NameProperty): Unit

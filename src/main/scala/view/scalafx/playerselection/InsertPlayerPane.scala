@@ -1,4 +1,4 @@
-package view.playerselection
+package view.scalafx.playerselection
 
 import model.entities.runtime.{Piece, Player}
 import scalafx.Includes._
@@ -9,7 +9,7 @@ import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
-import view.ColorUtils
+import view.scalafx.ColorUtils
 
 trait InsertPlayerPane extends BorderPane {
   def checkPlayers: Boolean

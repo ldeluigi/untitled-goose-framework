@@ -1,4 +1,4 @@
-package view.playerselection
+package view.scalafx.playerselection
 
 import scalafx.Includes._
 import scalafx.beans.property.ReadOnlyIntegerProperty
@@ -6,7 +6,7 @@ import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.{TableCell, TableColumn, TableView}
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.Circle
-import view.playerselection.InsertPlayerPane.PlayerPiece
+import view.scalafx.playerselection.InsertPlayerPane.PlayerPiece
 
 case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
 

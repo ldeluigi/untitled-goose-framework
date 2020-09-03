@@ -1,4 +1,4 @@
-package view.logger
+package view.scalafx.logger
 
 import java.text.SimpleDateFormat
 import java.util.Calendar

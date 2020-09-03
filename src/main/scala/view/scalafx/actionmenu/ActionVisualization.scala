@@ -1,4 +1,4 @@
-package view.actionmenu
+package view.scalafx.actionmenu
 
 import controller.CommandSender
 import model.actions.Action

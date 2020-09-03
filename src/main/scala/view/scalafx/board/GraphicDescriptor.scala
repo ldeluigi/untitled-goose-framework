@@ -1,4 +1,4 @@
-package view.board
+package view.scalafx.board
 
 import scalafx.scene.paint.Color
 

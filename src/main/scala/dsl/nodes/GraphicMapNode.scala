@@ -1,7 +1,7 @@
 package dsl.nodes
 
 import model.TileIdentifier
-import view.board.GraphicDescriptor
+import view.scalafx.board.GraphicDescriptor
 
 class GraphicMapNode(identifiers: DefinedTileIdentifiers) extends RuleBookNode {
 

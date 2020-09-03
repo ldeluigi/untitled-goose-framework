@@ -1,4 +1,4 @@
-package view
+package view.scalafx
 
 import controller.CommandSender
 import model.TileIdentifier
@@ -10,9 +10,9 @@ import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane
 import scalafx.stage.Stage
-import view.actionmenu.ActionMenu
-import view.board.{BoardDisplay, GraphicDescriptor}
-import view.logger.EventLogger
+import view.scalafx.actionmenu.ActionMenu
+import view.scalafx.board.{BoardDisplay, GraphicDescriptor}
+import view.scalafx.logger.EventLogger
 
 import scala.concurrent.Promise
 

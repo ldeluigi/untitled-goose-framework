@@ -1,9 +1,9 @@
-package view.actionmenu
+package view.scalafx.actionmenu
 
 import controller.CommandSender
 import model.actions.Action
 import scalafx.scene.layout.{Pane, VBox}
-import view.board.BoardDisplay
+import view.scalafx.board.BoardDisplay
 
 
 /** An object that organizes a set of actions into a graphical menu.

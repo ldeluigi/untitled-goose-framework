@@ -68,7 +68,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   it should "check whether the engine matches a certain custom runtime" in {
     val ge = GooseEngine(m, cGenerator(_ => {}))
-    ge.currentMatch should equal(m)
+    ge.game should equal(m)
     ge.stop()
   }
 

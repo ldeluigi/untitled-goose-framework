@@ -1,10 +1,10 @@
-package view
+package view.scalafx
 
 import model.entities.DialogContent
 import model.events.GameEvent
 import model.events.special.NoOpEvent
-import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control.{Alert, ButtonType}
+import scalafx.scene.control.Alert.AlertType
 
 import scala.concurrent.Promise
 

@@ -1,4 +1,4 @@
-package view
+package view.scalafx
 
 import java.awt.{Dimension, Toolkit}
 
@@ -6,8 +6,8 @@ import javafx.scene.input.KeyCode
 import model.TileIdentifier
 import model.entities.runtime.GameTemplate
 import scalafx.application.JFXApp
-import view.board.GraphicDescriptor
-import view.playerselection.IntroMenu
+import view.scalafx.board.GraphicDescriptor
+import view.scalafx.playerselection.IntroMenu
 
 class View(gameData: GameTemplate, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize

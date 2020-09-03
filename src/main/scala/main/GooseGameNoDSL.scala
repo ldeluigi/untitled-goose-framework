@@ -2,7 +2,8 @@ package main
 
 import java.awt.{Dimension, Toolkit}
 
-import controller.ApplicationController
+import controller.ViewController
+import controller.scalafx.{ApplicationController, ScalaFxController}
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
@@ -20,8 +21,8 @@ import model.rules.operations.Operation.DialogOperation
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RulePriorities, RuleSet}
 import model.{Color, TileIdentifier}
 import scalafx.application.JFXApp
-import view.GameScene
-import view.board.GraphicDescriptor
+import view.scalafx.GameScene
+import view.scalafx.board.GraphicDescriptor
 
 
 object GooseGameNoDSL extends JFXApp {
@@ -325,7 +326,7 @@ object GooseGameNoDSL extends JFXApp {
   //View launch
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val controller: ApplicationController = ApplicationController(currentMatch)
+  val controller: ScalaFxController = ApplicationController(currentMatch)
   val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
   controller.setScene(gameScene)
   stage = new JFXApp.PrimaryStage {

@@ -1,4 +1,4 @@
-package view.board
+package view.scalafx.board
 
 import model.TileIdentifier
 import model.TileIdentifier.Group

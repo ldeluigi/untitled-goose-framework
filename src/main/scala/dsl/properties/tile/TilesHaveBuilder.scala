@@ -4,7 +4,7 @@ import dsl.nodes.{BoardBuilderNode, GraphicMapNode}
 import dsl.properties.tile.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty}
 import model.TileIdentifier
 import model.TileIdentifier.Group
-import view.board.GraphicDescriptor
+import view.scalafx.board.GraphicDescriptor
 
 trait TilesHaveBuilder {
 

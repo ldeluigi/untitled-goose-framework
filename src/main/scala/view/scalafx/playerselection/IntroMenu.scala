@@ -1,6 +1,6 @@
-package view.playerselection
+package view.scalafx.playerselection
 
-import controller.ApplicationController
+import controller.scalafx.{ApplicationController, ScalaFxController}
 import model.TileIdentifier
 import model.entities.runtime.{Game, GameTemplate}
 import scalafx.geometry.{Insets, Pos}
@@ -11,8 +11,9 @@ import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
-import view.GameScene
-import view.board.GraphicDescriptor
+import controller.scalafx
+import view.scalafx.GameScene
+import view.scalafx.board.GraphicDescriptor
 
 
 /** A scene used to be able to add new players to the runtime.
@@ -57,7 +58,7 @@ class IntroMenu(stage: Stage, gameData: GameTemplate, widthSize: Int, heightSize
     val minimumNeededPlayers: Int = gameData.playersRange.start
     if (playersPane.checkPlayers) {
       val currentMatch: Game = gameData.createGame(playersPane.getPlayerSeq, playersPane.getPlayersPiecesMap)
-      val controller: ApplicationController = ApplicationController(currentMatch)
+      val controller: ScalaFxController = ApplicationController(currentMatch)
       val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
       controller.setScene(gameScene)
       stage.scene = gameScene

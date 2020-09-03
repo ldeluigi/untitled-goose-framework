@@ -4,8 +4,8 @@ import dsl.nodes.RuleBook
 import dsl.words.{BoardPropertyWords, RuleSetWords, RulesWord, TilePropertyWords}
 import model.TileIdentifier
 import model.entities.runtime.{GameTemplate, GameTemplateBuilder}
-import view.View
-import view.board.GraphicDescriptor
+import view.scalafx.View
+import view.scalafx.board.GraphicDescriptor
 
 
 trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords with RuleSetWords with Implicits {

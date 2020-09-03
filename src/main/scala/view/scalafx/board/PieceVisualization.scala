@@ -1,10 +1,10 @@
-package view.board
+package view.scalafx.board
 
 import model.entities.runtime.Piece
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.scene.layout.StackPane
 import scalafx.scene.shape.{Circle, Shape}
-import view.ColorUtils
+import view.scalafx.ColorUtils
 
 /**
  * An object which models how a single piece is rendered.

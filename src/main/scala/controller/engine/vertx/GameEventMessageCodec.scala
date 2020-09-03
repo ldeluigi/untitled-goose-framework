@@ -6,6 +6,7 @@ import io.vertx.core.buffer.Buffer
 import io.vertx.core.eventbus.MessageCodec
 import model.events.GameEvent
 
+/** Serialization and deserialization utilities for [[GameEvent]], used by Vert.x. */
 private[vertx] class GameEventMessageCodec extends MessageCodec[GameEvent, GameEvent] {
   override def encodeToWire(buffer: Buffer, s: GameEvent): Unit = {
     val stream: ByteArrayOutputStream = new ByteArrayOutputStream()

@@ -3,6 +3,7 @@ package controller
 import model.entities.DialogContent
 import model.entities.runtime.GameState
 import model.events.GameEvent
+import view.scalafx.GameScene
 
 import scala.concurrent.Future
 
