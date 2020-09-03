@@ -1,12 +1,12 @@
 package view.board
 
 import model.TileIdentifier.Group
-import model.game.{GameBoard, GameState, Tile}
+import model.entities.runtime.{GameBoard, GameState, Tile}
 import model.TileIdentifier
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
 
-/** A custom pane that contains the game board.
+/** A custom pane that contains the runtime board.
  *
  */
 trait BoardDisplay extends ScrollPane {

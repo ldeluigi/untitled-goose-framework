@@ -1,9 +1,9 @@
 package mock
 
-import model.entities.board.{Board, Disposition}
-import model.game.{Game, Piece, Player}
+import model.entities.runtime.{Game, Piece, Player}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import model.Color
+import model.entities.definitions.{Board, Disposition}
 
 object MatchMock {
   def board: Board = Board(10, Disposition.snake(10))

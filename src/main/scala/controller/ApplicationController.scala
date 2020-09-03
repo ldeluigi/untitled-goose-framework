@@ -4,7 +4,7 @@ import controller.engine.vertx.GooseEngine
 import model.actions.Action
 import model.entities.DialogContent
 import model.events.GameEvent
-import model.game.{Game, GameState}
+import model.entities.runtime.{Game, GameState}
 import view.GameScene
 
 import scala.concurrent.{Future, Promise}

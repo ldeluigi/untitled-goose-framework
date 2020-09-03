@@ -2,12 +2,12 @@ package controller.engine.vertx
 
 import controller.ViewController
 import model.entities.DialogContent
-import model.entities.board.{Board, Disposition}
 import model.events.GameEvent
 import model.events.special.NoOpEvent
-import model.game.{Game, GameState, Piece, Player, Position}
+import model.entities.runtime.{Game, GameState, Piece, Player, Position}
 import model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import model.Color
+import model.entities.definitions.{Board, Disposition}
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -66,7 +66,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     }
   }
 
-  it should "check whether the engine matches a certain custom game" in {
+  it should "check whether the engine matches a certain custom runtime" in {
     val ge = GooseEngine(m, cGenerator(_ => {}))
     ge.currentMatch should equal(m)
     ge.stop()

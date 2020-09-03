@@ -3,8 +3,8 @@ package model.rules.behaviours
 import mock.MatchMock
 import model.events.consumable.{ConsumableGameEvent, SkipTurnEvent}
 import model.events.persistent.{LoseTurnEvent, PersistentGameEvent}
-import model.game.GameStateExtensions.MutableStateExtensions
-import model.game.{Game, MutableGameState}
+import model.entities.runtime.GameStateExtensions.MutableStateExtensions
+import model.entities.runtime.{Game, MutableGameState}
 import model.rules.operations.Operation
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec

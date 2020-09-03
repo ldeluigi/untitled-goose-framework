@@ -1,6 +1,6 @@
 package model.events
 
-import model.game.Tile
+import model.entities.runtime.Tile
 
 trait TileEvent extends GameEvent {
 

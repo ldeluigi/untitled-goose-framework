@@ -1,6 +1,7 @@
 package dsl.words
 
-import model.game.GameState
+import model.entities.runtime.GameState
+
 
 case class WhenWord(condition: GameState => Boolean) {
 

@@ -1,6 +1,6 @@
 package model.rules.actionrules
 
-import model.game.GameState
+import model.entities.runtime.GameState
 
 trait ActionRule {
 

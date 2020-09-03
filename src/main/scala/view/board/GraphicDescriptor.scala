@@ -3,7 +3,7 @@ package view.board
 import scalafx.scene.paint.Color
 
 /**
- * An object which describes the graphical properties that the user wants the game to gave.
+ * An object which describes the graphical properties that the user wants the runtime to gave.
  */
 trait GraphicDescriptor {
 

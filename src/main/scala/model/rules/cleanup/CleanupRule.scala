@@ -1,6 +1,6 @@
 package model.rules.cleanup
 
-import model.game.MutableGameState
+import model.entities.runtime.MutableGameState
 
 trait CleanupRule {
 

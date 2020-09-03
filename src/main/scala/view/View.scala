@@ -4,7 +4,7 @@ import java.awt.{Dimension, Toolkit}
 
 import javafx.scene.input.KeyCode
 import model.TileIdentifier
-import model.game.GameData
+import model.entities.runtime.GameData
 import scalafx.application.JFXApp
 import view.board.GraphicDescriptor
 import view.playerselection.IntroMenu

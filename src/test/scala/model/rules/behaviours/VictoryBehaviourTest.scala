@@ -4,8 +4,8 @@ import mock.MatchMock
 import model.entities.DialogContent
 import model.events.consumable.{ConsumableGameEvent, DialogLaunchEvent, VictoryEvent}
 import model.events.special.ExitEvent
-import model.game.GameStateExtensions.MutableStateExtensions
-import model.game.{Game, MutableGameState}
+import model.entities.runtime.GameStateExtensions.MutableStateExtensions
+import model.entities.runtime.{Game, MutableGameState}
 import model.rules.operations.Operation
 import model.rules.operations.Operation.DialogOperation
 import org.scalatest.BeforeAndAfterEach

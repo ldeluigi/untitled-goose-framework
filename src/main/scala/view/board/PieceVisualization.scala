@@ -1,6 +1,6 @@
 package view.board
 
-import model.game.Piece
+import model.entities.runtime.Piece
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.scene.layout.StackPane
 import scalafx.scene.shape.{Circle, Shape}

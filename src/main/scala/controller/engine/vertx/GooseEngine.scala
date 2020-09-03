@@ -10,7 +10,7 @@ import io.vertx.scala.core.eventbus.DeliveryOptions
 import model.entities.DialogContent
 import model.events.GameEvent
 import model.events.special.{ExitEvent, NoOpEvent}
-import model.game.Game
+import model.entities.runtime.Game
 import model.rules.operations.Operation
 import model.rules.operations.Operation.{DialogOperation, SpecialOperation}
 

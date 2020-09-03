@@ -6,12 +6,12 @@ import controller.ApplicationController
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
-import model.entities.board._
+import model.entities.definitions.{Board, Disposition}
 import model.entities.{DialogContent, Dice}
 import model.events.consumable._
 import model.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
 import model.events.{GameEvent, consumable}
-import model.game.{Game, Piece, Player, Position}
+import model.entities.runtime.{Game, Piece, Player, Position}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.actionrules.{ActionRule, LoseTurnActionRule}
 import model.rules.behaviours._
@@ -27,7 +27,7 @@ import view.board.GraphicDescriptor
 object GooseGameNoDSL extends JFXApp {
 
   import RulePriorities.DefaultPriorities
-  import model.game.GameStateExtensions._
+  import model.entities.runtime.GameStateExtensions._
 
   //You will need:
   val totalTiles = 63
@@ -315,7 +315,7 @@ object GooseGameNoDSL extends JFXApp {
     Seq(),
   )
 
-  //From a menu GUI that select and creates player and pieces on the press of a "Start game" button
+  //From a menu GUI that select and creates player and pieces on the press of a "Start runtime" button
 
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap

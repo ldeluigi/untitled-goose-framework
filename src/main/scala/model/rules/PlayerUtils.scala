@@ -1,6 +1,6 @@
 package model.rules
 
-import model.game.Player
+import model.entities.runtime.Player
 
 import scala.util.Random
 

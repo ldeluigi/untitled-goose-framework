@@ -1,6 +1,6 @@
 package model
 
-import model.game.Player
+import model.entities.runtime.Player
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

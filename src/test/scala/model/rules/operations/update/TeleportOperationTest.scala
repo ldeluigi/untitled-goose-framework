@@ -1,9 +1,9 @@
 package model.rules.operations.update
 
 import mock.MatchMock
-import model.entities.board.TileDefinition
+import model.entities.definitions.TileDefinition
 import model.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
-import model.game.{Game, GameState, Piece, Player, Position, Tile}
+import model.entities.runtime.{Game, GameState, Piece, Player, Position, Tile}
 import model.rules.operations.Operation
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

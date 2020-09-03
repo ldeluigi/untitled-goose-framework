@@ -1,7 +1,7 @@
 package model.actions
 
 import model.events.GameEvent
-import model.game.GameState
+import model.entities.runtime.GameState
 
 
 trait Action {
@@ -16,6 +16,8 @@ trait Action {
   }
 
   override def toString: String = this.getClass.getName + "(" + name + ")"
+
+  override def hashCode(): Int = name.hashCode
 }
 
 object Action {

@@ -5,7 +5,7 @@ import model.TileIdentifier
 import model.actions.Action
 import model.entities.DialogContent
 import model.events.GameEvent
-import model.game.{Game, GameState}
+import model.entities.runtime.{Game, GameState}
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane

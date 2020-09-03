@@ -1,7 +1,7 @@
 package model
 
-import model.entities.board.TileDefinition
-import model.game.Tile
+import model.entities.definitions.TileDefinition
+import model.entities.runtime.Tile
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

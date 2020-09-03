@@ -3,7 +3,7 @@ package dsl
 import dsl.nodes.RuleBook
 import dsl.words.{BoardPropertyWords, RuleSetWords, RulesWord, TilePropertyWords}
 import model.TileIdentifier
-import model.game.GameData
+import model.entities.runtime.GameData
 import view.View
 import view.board.GraphicDescriptor
 

@@ -1,6 +1,6 @@
 package dsl.nodes
 
-import model.game.Tile
+import model.entities.runtime.Tile
 
 class FirstTileSelectorNode(identifiers: DefinedTileIdentifiers) extends RuleBookNode {
 

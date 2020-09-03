@@ -1,7 +1,7 @@
 package model.rules.ruleset
 
 import model.actions.Action
-import model.game.{MutableGameState, Player, Position, Tile}
+import model.entities.runtime.{MutableGameState, Player, Position, Tile}
 import model.rules.operations.Operation
 
 trait RuleSet {

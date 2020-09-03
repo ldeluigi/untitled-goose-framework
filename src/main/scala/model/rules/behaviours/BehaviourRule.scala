@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
 import model.events.consumable.ConsumableGameEvent
-import model.game.{GameState, MutableGameState}
+import model.entities.runtime.{GameState, MutableGameState}
 import model.rules.operations.Operation
 
 import scala.reflect.ClassTag
@@ -13,7 +13,7 @@ sealed trait BehaviourRule {
 
 object BehaviourRule {
 
-  import model.game.GameStateExtensions._
+  import model.entities.runtime.GameStateExtensions._
 
   private[behaviours] class BehaviourRuleImpl[T <: ConsumableGameEvent]
   (

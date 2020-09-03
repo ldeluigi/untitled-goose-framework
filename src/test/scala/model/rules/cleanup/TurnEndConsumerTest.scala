@@ -1,7 +1,7 @@
 package model.rules.cleanup
 
 import mock.MatchMock
-import model.game.{Game, MutableGameState}
+import model.entities.runtime.{Game, MutableGameState}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -12,7 +12,7 @@ class TurnEndConsumerTest extends AnyFlatSpec with Matchers {
 
   behavior of "TurnEndConsumerTest"
 
-  it should "check if the current turn of the game state is correct and equal to zero" in {
+  it should "check if the current turn of the runtime state is correct and equal to zero" in {
     gameMutableState.currentTurn should equal(0)
   }
 

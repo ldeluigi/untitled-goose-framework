@@ -2,7 +2,7 @@ package model.actions
 
 import model.events.GameEvent
 import model.events.consumable.StepMovementEvent
-import model.game.GameState
+import model.entities.runtime.GameState
 
 class StepForwardAction() extends Action {
 

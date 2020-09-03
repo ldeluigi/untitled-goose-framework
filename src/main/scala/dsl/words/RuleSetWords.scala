@@ -2,7 +2,7 @@ package dsl.words
 
 import dsl.properties.PlayerOrderProperty
 import model.PlayerOrderingType.PlayerOrderingType
-import model.game.GameState
+import model.entities.runtime.GameState
 
 trait RuleSetWords {
 

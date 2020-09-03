@@ -1,7 +1,7 @@
 package view.playerselection
 
 import controller.ApplicationController
-import model.game.{Game, GameData}
+import model.entities.runtime.{Game, GameData}
 import model.TileIdentifier
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
@@ -15,10 +15,10 @@ import view.GameScene
 import view.board.GraphicDescriptor
 
 
-/** A scene used to be able to add new players to the game.
+/** A scene used to be able to add new players to the runtime.
  *
  * @param stage      the stage on which to render the selection
- * @param gameData   a container of the board definition and ruleSet of the current game
+ * @param gameData   a container of the board definition and ruleSet of the current runtime
  * @param widthSize  width of the scene
  * @param heightSize height of the scene
  * @param graphicMap the graphic properties container
@@ -32,7 +32,7 @@ class IntroMenu(stage: Stage, gameData: GameData, widthSize: Int, heightSize: In
 
 
   val startGame: Button = new Button {
-    text = "Start game!"
+    text = "Start runtime!"
     textFill = DarkGreen
     style = "-fx-font-size: 15pt"
   }
@@ -65,7 +65,7 @@ class IntroMenu(stage: Stage, gameData: GameData, widthSize: Int, heightSize: In
       new Alert(AlertType.Error) {
         initOwner(stage)
         title = "Error!"
-        headerText = "You need at least " + minimumNeededPlayers + " players to start this game!"
+        headerText = "You need at least " + minimumNeededPlayers + " players to start this runtime!"
         contentText = "Add " + (minimumNeededPlayers - playersPane.getPlayerSeq.size) + " more players."
       }.showAndWait()
     }

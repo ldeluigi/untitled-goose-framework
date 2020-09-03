@@ -2,7 +2,7 @@ package model.rules.operations
 
 import model.entities.DialogContent
 import model.events.GameEvent
-import model.game.{GameState, MutableGameState}
+import model.entities.runtime.{GameState, MutableGameState}
 
 sealed trait Operation {
   def name: String
@@ -12,7 +12,7 @@ sealed trait Operation {
 
 object Operation {
 
-  import model.game.GameStateExtensions.MutableStateExtensions
+  import model.entities.runtime.GameStateExtensions.MutableStateExtensions
 
   def trigger(event: GameEvent*): Operation = new Operation {
     override def execute(state: MutableGameState): Unit = event.foreach(state.submitEvent)

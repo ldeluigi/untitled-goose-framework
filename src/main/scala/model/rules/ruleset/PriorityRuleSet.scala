@@ -1,11 +1,13 @@
 package model.rules.ruleset
 
 import model.actions.Action
-import model.game.{MutableGameState, Player, Position, Tile}
+import model.entities.runtime.{MutableGameState, Player, Position, Tile}
 import model.rules.actionrules.ActionRule
 import model.rules.behaviours.{BehaviourRule, DialogLaunchBehaviour, TurnEndEventBehaviour}
 import model.rules.cleanup.{CleanupRule, TurnEndConsumer}
 import model.rules.operations.Operation
+
+// TODO consider making a builder of this
 
 class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                       playerOrdering: PlayerOrdering,

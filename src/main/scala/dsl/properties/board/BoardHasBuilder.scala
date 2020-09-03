@@ -2,7 +2,7 @@ package dsl.properties.board
 
 import dsl.nodes.BoardBuilderNode
 import dsl.properties.board.BoardProperty._
-import model.entities.board.Disposition
+import model.entities.definitions.Disposition
 
 trait BoardHasBuilder {
 

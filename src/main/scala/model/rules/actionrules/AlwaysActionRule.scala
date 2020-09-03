@@ -1,7 +1,7 @@
 package model.rules.actionrules
 
 import model.actions.Action
-import model.game.GameState
+import model.entities.runtime.GameState
 
 object AlwaysActionRule {
 

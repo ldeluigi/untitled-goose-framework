@@ -4,12 +4,12 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 import model.events.GameEvent
-import model.game.GameState
+import model.entities.runtime.GameState
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
 
 /**
- * A custom pane used to log game events.
+ * A custom pane used to log runtime events.
  */
 trait EventLogger extends Pane {
   def logEvent(event: GameEvent): Unit

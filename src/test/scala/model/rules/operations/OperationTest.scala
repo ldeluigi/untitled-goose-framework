@@ -3,7 +3,7 @@ package model.rules.operations
 import mock.MatchMock
 import model.events.GameEvent
 import model.events.consumable.StopOnTileEvent
-import model.game.{Game, MutableGameState}
+import model.entities.runtime.{Game, MutableGameState}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -16,8 +16,9 @@ class OperationTest extends AnyFlatSpec with Matchers {
 
   behavior of "OperationTest"
 
-  it should "return an operation that update the game's state" in {
-    Operation.updateState(_ => assert(true)).execute(gameMutableState)
+  it should "return an operation that update the runtime's state" in {
+    // TODO remove assert
+    Operation.updateState(_ => assert(condition = true)).execute(gameMutableState)
   }
 
   it should "return a trigger operation when the condition is true" in {
@@ -29,7 +30,7 @@ class OperationTest extends AnyFlatSpec with Matchers {
     Operation.triggerWhen(_ => false, _ => Seq(gameEvent)).execute(gameMutableState)
   }
 
-  it should "return an operation that trigger an event of the game's state" in {
+  it should "return an operation that trigger an event of the runtime's state" in {
     Operation.trigger(gameEvent).execute(gameMutableState)
     gameMutableState.consumableBuffer should contain(gameEvent)
   }

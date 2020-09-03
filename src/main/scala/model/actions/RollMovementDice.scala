@@ -3,7 +3,7 @@ package model.actions
 import model.entities.Dice.MovementDice
 import model.events.GameEvent
 import model.events.consumable.MovementDiceRollEvent
-import model.game.GameState
+import model.entities.runtime.GameState
 
 private class RollMovementDice(dice: MovementDice, diceNumber: Int) extends Action {
 

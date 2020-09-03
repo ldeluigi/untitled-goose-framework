@@ -1,6 +1,6 @@
 package view.playerselection
 
-import model.game.{Piece, Player}
+import model.entities.runtime.{Piece, Player}
 import scalafx.Includes._
 import scalafx.beans.binding.Bindings
 import scalafx.beans.property.{ObjectProperty, StringProperty}

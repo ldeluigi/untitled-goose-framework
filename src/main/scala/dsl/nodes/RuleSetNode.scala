@@ -1,7 +1,7 @@
 package dsl.nodes
 
 import model.PlayerOrderingType.PlayerOrderingType
-import model.game.{Position, Tile}
+import model.entities.runtime.{Position, Tile}
 import model.rules.actionrules.ActionRule
 import model.rules.behaviours.BehaviourRule
 import model.rules.cleanup.CleanupRule

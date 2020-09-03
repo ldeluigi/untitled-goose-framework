@@ -1,6 +1,6 @@
 package dsl.nodes
 
-import model.entities.board.{Board, BoardBuilder, BoardBuilderImpl, Disposition}
+import model.entities.definitions.{Board, BoardBuilder, BoardBuilderImpl, Disposition}
 
 case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with DefinedTileIdentifiers {
 
