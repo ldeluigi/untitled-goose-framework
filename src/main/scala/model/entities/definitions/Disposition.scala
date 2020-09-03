@@ -119,4 +119,7 @@ object Disposition {
   /** A factory that creates a new loop type tiles disposition. */
   def loop(total: Int, ratio: Int = 1): Disposition = new LoopDisposition(total, ratio)
 
+  /** Implicit conversion to a function. */
+  implicit def toFunction(disposition: Disposition): Int => (Int, Int) = disposition.tilePlacement
+
 }
