@@ -3,8 +3,8 @@ package controller
 import controller.engine.vertx.GooseEngine
 import model.actions.Action
 import model.entities.DialogContent
-import model.events.GameEvent
 import model.entities.runtime.{Game, GameState}
+import model.events.GameEvent
 import view.GameScene
 
 import scala.concurrent.{Future, Promise}

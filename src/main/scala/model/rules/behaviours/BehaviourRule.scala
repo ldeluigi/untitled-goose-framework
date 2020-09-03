@@ -1,7 +1,7 @@
 package model.rules.behaviours
 
-import model.events.consumable.ConsumableGameEvent
 import model.entities.runtime.{GameState, MutableGameState}
+import model.events.consumable.ConsumableGameEvent
 import model.rules.operations.Operation
 
 import scala.reflect.ClassTag

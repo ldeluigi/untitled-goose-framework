@@ -1,9 +1,9 @@
 package model.actions
 
 import model.entities.Dice.MovementDice
+import model.entities.runtime.GameState
 import model.events.GameEvent
 import model.events.consumable.MovementDiceRollEvent
-import model.entities.runtime.GameState
 
 private class RollMovementDice(dice: MovementDice, diceNumber: Int) extends Action {
 
@@ -19,7 +19,8 @@ object RollMovementDice {
 
   /**
    * This factory creates an Action meant for movement.
-   * @param dice A dice that has integer typed faces.
+   *
+   * @param dice       A dice that has integer typed faces.
    * @param diceNumber The number of dices to roll at the same time.
    * @return A new action for rolling those dices.
    */

@@ -4,8 +4,8 @@ import controller.CommandSender
 import model.TileIdentifier
 import model.actions.Action
 import model.entities.DialogContent
-import model.events.GameEvent
 import model.entities.runtime.{Game, GameState}
+import model.events.GameEvent
 import scalafx.application.Platform
 import scalafx.scene.Scene
 import scalafx.scene.layout.BorderPane

@@ -1,9 +1,9 @@
 package model.rules.cleanup
 
-import model.events.consumable.TurnShouldEndEvent
-import model.events.persistent.{GainTurnEvent, TurnEndedEvent}
 import model.entities.runtime.GameStateExtensions._
 import model.entities.runtime.MutableGameState
+import model.events.consumable.TurnShouldEndEvent
+import model.events.persistent.{GainTurnEvent, TurnEndedEvent}
 
 object TurnEndConsumer extends CleanupRule {
 

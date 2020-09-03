@@ -1,9 +1,9 @@
 package model.rules.actionrules
 
 import model.actions.{Action, SkipOneTurnAction}
-import model.events.persistent.LoseTurnEvent
 import model.entities.runtime.GameState
 import model.entities.runtime.GameStateExtensions._
+import model.events.persistent.LoseTurnEvent
 import model.rules.ruleset.RulePriorities.GooseFrameworkPriorities
 
 case class LoseTurnActionRule(private val allOtherActions: Set[Action])

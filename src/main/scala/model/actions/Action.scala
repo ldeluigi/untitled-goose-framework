@@ -1,7 +1,7 @@
 package model.actions
 
-import model.events.GameEvent
 import model.entities.runtime.GameState
+import model.events.GameEvent
 
 /**
  * An action is something a player can do during its turn.
@@ -13,6 +13,7 @@ trait Action {
   /**
    * The action name is what identifies this action,
    * and will be displayed to the player.
+   *
    * @return The name, as string.
    */
   def name: String
@@ -21,6 +22,7 @@ trait Action {
    * The action trigger is the method that creates the event
    * that should be triggered if this action is chosen, based on
    * the current state at that time.
+   *
    * @param state The state, as given by the engine.
    * @return The game event.
    */
@@ -45,7 +47,8 @@ object Action {
   /**
    * This factory creates a simple Action that uses the given strategy
    * for the event creation.
-   * @param name The name of the action, as string.
+   *
+   * @param name            The name of the action, as string.
    * @param triggerStrategy The strategy for the event creation.
    * @return A new Action.
    */

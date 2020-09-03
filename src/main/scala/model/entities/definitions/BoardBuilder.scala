@@ -45,6 +45,7 @@ trait BoardBuilder {
 }
 
 object BoardBuilder {
+
   private class BoardBuilderImpl() extends BoardBuilder {
 
     private var name: Option[String] = None

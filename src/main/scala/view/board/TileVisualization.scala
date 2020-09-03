@@ -8,6 +8,7 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Rectangle, StrokeType}
+
 /**
  * An object which models how a single tile is rendered.
  */

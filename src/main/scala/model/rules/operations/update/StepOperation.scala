@@ -1,8 +1,8 @@
 package model.rules.operations.update
 
-import model.events.consumable._
-import model.entities.runtime.{GameState, Piece, Player, Position, Tile}
 import model.entities.runtime.GameStateExtensions._
+import model.entities.runtime.{GameStateExtensions => _, _}
+import model.events.consumable._
 import model.rules.operations.Operation
 
 object StepOperation {

@@ -1,8 +1,8 @@
 package model.actions
 
+import model.entities.runtime.GameState
 import model.events.GameEvent
 import model.events.consumable.StepMovementEvent
-import model.entities.runtime.GameState
 
 /** This very simple action triggers a 1-step [[StepMovementEvent]] for the current player. */
 private class StepForwardAction() extends Action {

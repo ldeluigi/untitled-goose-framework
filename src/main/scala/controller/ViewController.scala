@@ -1,8 +1,8 @@
 package controller
 
 import model.entities.DialogContent
-import model.events.GameEvent
 import model.entities.runtime.GameState
+import model.events.GameEvent
 
 import scala.concurrent.Future
 

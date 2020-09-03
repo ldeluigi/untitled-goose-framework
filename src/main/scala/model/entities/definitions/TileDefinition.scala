@@ -10,7 +10,7 @@ trait TileDefinition extends Groupable {
 
   def ==(obj: TileDefinition): Boolean =
     (number.isDefined && obj.number.isDefined && number.get == obj.number.get) ||
-    (name.isDefined && obj.name.isDefined && name.get == obj.name.get)
+      (name.isDefined && obj.name.isDefined && name.get == obj.name.get)
 
   override def equals(obj: Any): Boolean = {
     obj match {

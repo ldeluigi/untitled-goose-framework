@@ -6,11 +6,11 @@ import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.definitions.{Board, Disposition}
+import model.entities.runtime.{GameState, GameTemplate, GameTemplateBuilder, Position}
 import model.entities.{DialogContent, Dice}
 import model.events.GameEvent
 import model.events.consumable.{DialogLaunchEvent, StepMovementEvent}
 import model.events.special.NoOpEvent
-import model.entities.runtime.{GameData, GameState, Position}
 import model.rules.actionrules.ActionRule
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
@@ -48,15 +48,15 @@ object Main extends JFXApp {
   val actionRules: Set[ActionRule] = Set(AlwaysPermittedActionRule(1, RollMovementDice(movementDice), testDialog))
   val behaviourRule: Seq[BehaviourRule] = Seq(MultipleStepBehaviour(), MovementWithDiceBehaviour())
 
-  val gameData: GameData = GameData(
-    board,
-    tiles => Position(tiles.toList.sorted.take(1).head),
-    PlayerOrderingType.UserDefinedOrder,
-    1 to 10,
-    actionRules,
-    behaviourRule,
-    Seq(),
-  )
+  val gameData: GameTemplate = GameTemplateBuilder()
+    .board(board)
+    .startPositionStrategy(tiles => Position(tiles.toList.sorted.take(1).head))
+    .playerOrderingType(PlayerOrderingType.UserDefinedOrder)
+    .playersRange(1 to 10)
+    .actionRules(actionRules)
+    .behaviourRules(behaviourRule)
+    .cleanupRules(Seq())
+    .build
 
   // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(

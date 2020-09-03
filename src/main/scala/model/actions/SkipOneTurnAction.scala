@@ -1,8 +1,8 @@
 package model.actions
 
+import model.entities.runtime.GameState
 import model.events.GameEvent
 import model.events.consumable.SkipTurnEvent
-import model.entities.runtime.GameState
 
 /**
  * This action is a simple way to force a player to

@@ -9,4 +9,5 @@ object RulePriorities {
   implicit object DefaultPriorities extends GooseFrameworkPriorities {
     override val loseTurnPriority: Int = 10
   }
+
 }

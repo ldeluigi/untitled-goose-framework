@@ -1,8 +1,8 @@
 package view.playerselection
 
 import controller.ApplicationController
-import model.entities.runtime.{Game, GameData}
 import model.TileIdentifier
+import model.entities.runtime.{Game, GameTemplate}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
@@ -23,7 +23,7 @@ import view.board.GraphicDescriptor
  * @param heightSize height of the scene
  * @param graphicMap the graphic properties container
  */
-class IntroMenu(stage: Stage, gameData: GameData, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
+class IntroMenu(stage: Stage, gameData: GameTemplate, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
   val borderPane = new BorderPane
 
   root = borderPane

@@ -1,7 +1,7 @@
 package model.events.consumable
 
-import model.events.PlayerEvent
 import model.entities.runtime.Player
+import model.events.PlayerEvent
 
 class DiceRollEvent[DiceSide](val player: Player, val turn: Int, val cycle: Int, val result: DiceSide*)
   extends ConsumableGameEvent with PlayerEvent {

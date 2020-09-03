@@ -7,11 +7,11 @@ import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
 import model.entities.Dice.MovementDice
 import model.entities.definitions.{Board, Disposition}
+import model.entities.runtime.{Game, Piece, Player, Position}
 import model.entities.{DialogContent, Dice}
 import model.events.consumable._
 import model.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
 import model.events.{GameEvent, consumable}
-import model.entities.runtime.{Game, Piece, Player, Position}
 import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.actionrules.{ActionRule, LoseTurnActionRule}
 import model.rules.behaviours._

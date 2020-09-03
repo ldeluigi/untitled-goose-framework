@@ -1,8 +1,8 @@
 package model.rules.operations
 
 import model.entities.DialogContent
-import model.events.GameEvent
 import model.entities.runtime.{GameState, MutableGameState}
+import model.events.GameEvent
 
 sealed trait Operation {
   def name: String

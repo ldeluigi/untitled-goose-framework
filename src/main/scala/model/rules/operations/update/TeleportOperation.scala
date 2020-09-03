@@ -1,7 +1,7 @@
 package model.rules.operations.update
 
+import model.entities.runtime._
 import model.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
-import model.entities.runtime.{GameState, Piece, Player, Position, Tile}
 import model.rules.operations.Operation
 
 object TeleportOperation {

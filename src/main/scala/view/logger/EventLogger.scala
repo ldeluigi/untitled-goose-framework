@@ -3,8 +3,8 @@ package view.logger
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-import model.events.GameEvent
 import model.entities.runtime.GameState
+import model.events.GameEvent
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
 
