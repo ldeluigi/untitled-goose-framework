@@ -11,15 +11,16 @@ import view.scalafx.playerselection.IntroMenu
 
 class View(gameData: GameTemplate, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
+  val appTitle = "Untitled Goose Framework"
   stage = new JFXApp.PrimaryStage {
-    title.value = "Untitled Goose Framework"
+    title.value = appTitle
     width = 0.5 * screenSize.width
     height = 0.5 * screenSize.height
     resizable = true
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = new IntroMenu(this, gameData, screenSize.width, screenSize.height, graphicMap)
+    scene = new IntroMenu(this, gameData, appTitle, screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Press esc to leave full screen mode"
   }
 

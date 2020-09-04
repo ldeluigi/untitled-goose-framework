@@ -70,7 +70,7 @@ object Main extends JFXApp {
     //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
-    scene = new IntroMenu(this, gameData, screenSize.width, screenSize.height, graphicMap)
+    scene = new IntroMenu(this, gameData, board.name, screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Press esc to leave full screen mode"
   }
 

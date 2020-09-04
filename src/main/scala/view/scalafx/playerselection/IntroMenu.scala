@@ -11,7 +11,6 @@ import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
-import controller.scalafx
 import view.scalafx.GameScene
 import view.scalafx.board.GraphicDescriptor
 
@@ -20,11 +19,12 @@ import view.scalafx.board.GraphicDescriptor
  *
  * @param stage      the stage on which to render the selection
  * @param gameData   a container of the board definition and ruleSet of the current runtime
+ * @param boardName  the name of the board to be displayed in the menu
  * @param widthSize  width of the scene
  * @param heightSize height of the scene
  * @param graphicMap the graphic properties container
  */
-class IntroMenu(stage: Stage, gameData: GameTemplate, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
+class IntroMenu(stage: Stage, gameData: GameTemplate, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
   val borderPane = new BorderPane
 
   root = borderPane
@@ -42,7 +42,7 @@ class IntroMenu(stage: Stage, gameData: GameTemplate, widthSize: Int, heightSize
     alignment = Pos.Center
     padding = Insets(30)
     children = new Text {
-      text = "Untitled Goose Framework"
+      text = boardName
       style = "-fx-font-size: 28pt"
     }
   }
