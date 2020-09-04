@@ -1,5 +1,6 @@
 package dsl.words
 
+import dsl.nodes.RuleBook
 import dsl.properties.PlayerOrderProperty
 import model.PlayerOrderingType.PlayerOrderingType
 import model.entities.runtime.GameState
@@ -16,11 +17,11 @@ trait RuleSetWords {
 
   val players: PlayersAreWord = PlayersAreWord()
 
-  def always: WhenWord = WhenWord(_ => true)
+  def always(implicit ruleBook: RuleBook): WhenWord = WhenWord(_ => true)
 
-  def never: WhenWord = WhenWord(_ => false)
+  def never(implicit ruleBook: RuleBook): WhenWord = WhenWord(_ => false)
 
-  def when(condition: GameState => Boolean): WhenWord = WhenWord(condition)
+  def when(condition: GameState => Boolean)(implicit ruleBook: RuleBook): WhenWord = WhenWord(condition)
 
   def to: ToWord = ToWord()
 }

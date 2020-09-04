@@ -1,9 +1,10 @@
 package dsl.words
 
+import dsl.nodes.RuleBook
 import model.entities.runtime.GameState
 
 
-case class WhenWord(condition: GameState => Boolean) {
+case class WhenWord(condition: GameState => Boolean)(implicit ruleBook: RuleBook) {
 
   val allowed: AllowWord = new AllowWord(condition)
 
