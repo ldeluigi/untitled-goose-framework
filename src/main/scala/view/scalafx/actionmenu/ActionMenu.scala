@@ -4,7 +4,7 @@ import controller.GameManager
 import model.actions.Action
 import model.entities.runtime.Game
 import scalafx.beans.binding.Bindings
-import scalafx.geometry.Pos
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Label
 import scalafx.scene.layout.{Pane, VBox}
 import view.scalafx.board.BoardDisplay
@@ -22,7 +22,10 @@ object ActionMenu {
 
   private class ActionMenuImpl(boardView: BoardDisplay, game: Game, controller: GameManager) extends ActionMenu {
 
-    val actionBox: VBox = new VBox(15)
+    val actionBox: VBox = new VBox {
+      spacing = 15
+      padding = Insets(15)
+    }
     actionBox.setAlignment(Pos.Center)
     this.children.add(actionBox)
 

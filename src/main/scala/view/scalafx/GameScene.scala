@@ -8,7 +8,7 @@ import model.entities.runtime.{Game, GameState}
 import model.events.GameEvent
 import scalafx.application.Platform
 import scalafx.scene.Scene
-import scalafx.scene.layout.BorderPane
+import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.stage.Stage
 import view.scalafx.actionmenu.ActionMenu
 import view.scalafx.board.{BoardDisplay, GraphicDescriptor}
@@ -47,12 +47,16 @@ object GameScene {
     boardView.prefHeight <== this.height - logHeight
 
     val actionMenu: ActionMenu = ActionMenu(boardView, gameMatch, commandSender)
-    borderPane.right = actionMenu
     actionMenu.prefWidth <== this.width * (1 - boardProportion)
 
     val logger: EventLogger = EventLogger(gameMatch.currentState, logHeight)
-    borderPane.bottom = logger
     logger.prefWidth <== this.width
+
+    val controlPanel: HBox = new HBox {
+      children = List(actionMenu, logger)
+    }
+
+    borderPane.bottom = controlPanel
 
     //Init the view
     updateScene(gameMatch.currentState, gameMatch.availableActions)
