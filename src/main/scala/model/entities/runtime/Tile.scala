@@ -36,5 +36,5 @@ object Tile {
 
   def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)
 
-  implicit def compare[A <: Tile]: Ordering[A] = (x: A, y: A) => TileDefinition.compare.compare(x.definition, y.definition)
+  implicit def compare[A <: Tile]: Ordering[A] = Ordering.by(_.definition)
 }

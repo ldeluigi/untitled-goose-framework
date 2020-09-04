@@ -34,8 +34,8 @@ object BoardDisplay {
     }
 
     private def renderTile(currentTile: TileVisualization): Unit = {
-      currentTile.layoutX <== this.width / cols * matchBoard.board.disposition.tilePlacement(i)._1
-      currentTile.layoutY <== this.height / rows * matchBoard.board.disposition.tilePlacement(i)._2
+      currentTile.layoutX <== this.width / cols * matchBoard.board.disposition(i)._1
+      currentTile.layoutY <== this.height / rows * matchBoard.board.disposition(i)._2
       boardPane.children.add(currentTile)
       i = i + 1
       tiles = currentTile :: tiles

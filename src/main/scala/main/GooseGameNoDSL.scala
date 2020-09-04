@@ -2,7 +2,6 @@ package main
 
 import java.awt.{Dimension, Toolkit}
 
-import controller.ViewController
 import controller.scalafx.{ApplicationController, ScalaFxController}
 import javafx.scene.input.KeyCode
 import model.actions.{Action, RollMovementDice}
