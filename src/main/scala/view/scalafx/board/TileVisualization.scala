@@ -45,7 +45,7 @@ object TileVisualization {
       strokeType = StrokeType.Inside
       strokeWidth = strokeSize
       width <== parentWidth / cols
-      height <== parentHeight / rows
+      height <== width
     }
 
     val text: String = tile.definition.name match {

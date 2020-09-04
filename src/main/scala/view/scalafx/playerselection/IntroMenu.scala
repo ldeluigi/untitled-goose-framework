@@ -31,7 +31,6 @@ class IntroMenu(stage: Stage, gameData: GameTemplate, boardName: String, widthSi
 
   val playersPane: InsertPlayerPane = InsertPlayerPane(gameData.playersRange)
 
-
   val startGame: Button = new Button {
     text = "Start runtime!"
     textFill = DarkGreen

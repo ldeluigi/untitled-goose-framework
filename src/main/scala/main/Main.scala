@@ -16,6 +16,7 @@ import model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
 import model.{PlayerOrderingType, TileIdentifier}
 import scalafx.application.JFXApp
+import scalafx.scene.image.Image
 import scalafx.scene.paint.Color
 import view.scalafx.TileIdentifierImplicit._
 import view.scalafx.board.GraphicDescriptor
@@ -73,6 +74,8 @@ object Main extends JFXApp {
     scene = new IntroMenu(this, gameData, board.name, screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Press esc to leave full screen mode"
   }
+
+  stage.getIcons.add(new Image("GooseLogo.png"))
 
   stage.getScene.setOnKeyPressed(
     key => if (key.getCode == KeyCode.F11) {
