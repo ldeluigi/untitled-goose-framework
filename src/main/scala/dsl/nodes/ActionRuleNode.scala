@@ -11,8 +11,10 @@ sealed trait ActionRuleNode extends RuleBookNode {
 
 object ActionRuleNode {
 
-  case class ActionRuleWithActionNode(name: String, when: GameState => Boolean, trigger: GameState => GameEvent, priority: Int, allow: Boolean)
+  case class ActionRuleWithActionNode
+  (name: String, when: GameState => Boolean, trigger: GameState => GameEvent, priority: Int, allow: Boolean)
     extends ActionRuleNode {
+
     override def check: Seq[String] = Seq()
 
     override def generateActionRule(): ActionRule = {
@@ -20,16 +22,13 @@ object ActionRuleNode {
       ActionRule(availabilities, when)
     }
 
-    def generateAction(): Action = {
-      val action = Action(name, trigger)
-      registerAction(action)
-      action
-    }
-
-    private def registerAction(action: Action): Unit = ???
+    def generateAction(): Action = Action(name, trigger)
   }
 
-  case class ActionRuleWithRefNode(when: GameState => Boolean, priority: Int, allow: Boolean, refName: Set[String]) extends ActionRuleNode {
+  case class ActionRuleWithRefNode
+  (when: GameState => Boolean, priority: Int, allow: Boolean, refName: Set[String], definedActions: DefinedActions)
+    extends ActionRuleNode {
+
     override def check: Seq[String] =
       refName.filter(!isActionDefined(_)).map("Action with name: " + _ + " was never defined").toSeq
 
@@ -38,9 +37,9 @@ object ActionRuleNode {
       ActionRule(availabilities, when)
     }
 
-    private def isActionDefined(name: String): Boolean = ???
+    private def isActionDefined(name: String): Boolean = definedActions.isActionDefined(name)
 
-    private def getAction(name: String): Action = ???
+    private def getAction(name: String): Action = definedActions.getAction(name)
   }
 
 }

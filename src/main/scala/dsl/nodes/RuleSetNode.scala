@@ -24,11 +24,12 @@ trait RuleSetNode extends RuleBookNode {
 
   def cleanupRules: Seq[CleanupRule]
 
-  def behaviourRules: Seq[BehaviourRule]
-
   def actionRules: Set[ActionRule]
 
-  def addActionRuleNode(actionRuleNode: ActionRuleNode): Unit
+  def behaviourRules: Seq[BehaviourRule]
+
+  def actionRuleSetNode: ActionRuleSetNode
+
 
 }
 
@@ -38,7 +39,7 @@ object RuleSetNode {
 
     private val playerRangeNode: SingleValueNode[Range] = new SingleValueNode("Number of players")
 
-    private val actionRuleNodes: Seq[ActionRuleNode] = Seq()
+    val actionRuleSetNode: ActionRuleSetNode = ActionRuleSetNode()
 
     private val firstTileSelectorNode: FirstTileSelectorNode = new FirstTileSelectorNode(identifiers)
 
@@ -58,8 +59,6 @@ object RuleSetNode {
 
     override def playerOrderingType: PlayerOrderingType = playerOrderingTypeNode.value
 
-    override def addActionRuleNode(actionRuleNode: ActionRuleNode): Unit = actionRuleNodes :+ actionRuleNode
-
     val cleanupRules: Seq[CleanupRule] = Seq()
 
     val behaviourRules: Seq[BehaviourRule] = Seq()
@@ -71,9 +70,7 @@ object RuleSetNode {
       playerRangeNode.check ++
         firstTileSelectorNode.check ++
         playerOrderingTypeNode.check ++
-        actionRuleNodes.flatMap(_.check)
-
-
+        actionRuleSetNode.check
   }
 
   def apply(identifiers: DefinedTileIdentifiers): RuleSetNode = new RuleSetNodeImpl(identifiers)

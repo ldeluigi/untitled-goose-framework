@@ -3,6 +3,7 @@ package main
 import dsl.GooseDSL
 import dsl.properties.board.DispositionType.Spiral
 import model.PlayerOrderingType.UserDefinedOrder
+import model.events.consumable.StepMovementEvent
 import scalafx.scene.paint.Color._
 
 
@@ -37,10 +38,7 @@ object GooseGame extends GooseDSL {
   Players start on tile 1
 
   Each turn players are(
-    always allowed to trigger ??? as "muoviti" priority 5,
-    always allowed to trigger ??? as "muoviti" priority 8,
-    never negated to use "Something" priority 6,
-    always allowed to use("move", "ciao") priority 6,
+    always allowed to trigger (s => StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Fai 10 passi" priority 5
   )
 
 }

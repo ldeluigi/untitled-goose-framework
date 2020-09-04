@@ -326,16 +326,16 @@ object GooseGameNoDSL extends JFXApp {
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
   val controller: ScalaFxController = ApplicationController(currentMatch)
-  val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
-  controller.setScene(gameScene)
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
     //fullScreen = true
     minWidth = 0.75 * screenSize.width
     minHeight = 0.75 * screenSize.height
-    scene = gameScene
     fullScreenExitHint = "ESC to exit full screen mode"
   }
+  val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
+  controller.setScene(gameScene)
+  stage.scene = gameScene
 
   stage.getScene.setOnKeyPressed(
     key => if (key.getCode.equals(KeyCode.F11)) {
