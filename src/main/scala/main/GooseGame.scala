@@ -41,6 +41,8 @@ object GooseGame extends GooseDSL {
     always allowed to trigger (s => StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Fai 10 passi" priority 5
     )
 
-  Define event "custom" properties[Int] "val" properties[String]("val", "ciao")
-
+  Define event "custom" having (
+    "val" as [Int] value,
+    "pippo" as [String] value,
+  )
 }

@@ -7,4 +7,5 @@ case class DefineWord() {
   def playerEvent(name: String): EventPropertiesWord = ???
 
   def tileEvent(name: String): EventPropertiesWord = ???
+
 }

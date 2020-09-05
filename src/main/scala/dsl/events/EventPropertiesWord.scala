@@ -1,7 +1,8 @@
 package dsl.events
 
-import scala.reflect.ClassTag
+import model.events.Key
 
 case class EventPropertiesWord(eventName: String) {
-  def properties[T: ClassTag](props: String*): EventPropertiesWord = ???
+  def having(properties: Key[_]*): Unit = ???
 }
+
