@@ -1,7 +1,7 @@
 package dsl
 
-import dsl.events.KeyValueSetter
-import dsl.words.ruleset.PlayerRangeWord
+import dsl.events.words.KeyValueSetter
+import dsl.rules.players.PlayerRangeWord
 
 trait Implicits {
 

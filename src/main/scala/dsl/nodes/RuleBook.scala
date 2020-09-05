@@ -1,5 +1,7 @@
 package dsl.nodes
 
+import dsl.board.nodes.{BoardBuilderNode, GraphicMapNode}
+
 trait RuleBook extends RuleBookNode {
   def boardBuilder: BoardBuilderNode
 

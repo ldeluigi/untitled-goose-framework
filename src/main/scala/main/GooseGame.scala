@@ -1,7 +1,7 @@
 package main
 
 import dsl.GooseDSL
-import dsl.properties.board.DispositionType.Spiral
+import dsl.board.words.DispositionType.Spiral
 import model.PlayerOrderingType.UserDefinedOrder
 import model.events.consumable.StepMovementEvent
 import scalafx.scene.paint.Color._
@@ -14,7 +14,7 @@ object GooseGame extends GooseDSL {
 
   Players have order(UserDefinedOrder)
 
-  The game board has tiles(63)
+  The game board has size(63)
   the game board has disposition(Spiral)
 
   the tile 6 has name("The bridge")
@@ -41,8 +41,8 @@ object GooseGame extends GooseDSL {
     always allowed to trigger (s => StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Fai 10 passi" priority 5
     )
 
-  Define event "custom" having (
-    "val" as [Int] value,
-    "pippo" as [String] value,
+  Define event "custom" having(
+    "val" as[Int] value,
+    "pippo" as[String] value,
   )
 }

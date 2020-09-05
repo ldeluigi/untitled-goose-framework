@@ -1,28 +1,26 @@
 package dsl
 
-import dsl.initializers._
+import dsl.board.words.BoardWords
 import dsl.nodes.RuleBook
-import dsl.words.ruleset.action.RulesWord
+import dsl.rules.RuleSetWords
+import dsl.rules.actions.words.RulesWord
 import model.TileIdentifier
 import model.entities.runtime.{GameTemplate, GameTemplateBuilder}
 import view.scalafx.View
 import view.scalafx.board.GraphicDescriptor
 
 
-trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords with RuleSetWords with EventDefinitionWords with Implicits {
+trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords {
 
   protected implicit val ruleBook: RuleBook = RuleBook()
 
   val Rules: RulesWord = new RulesWord()
 
-  def All: CumulativeSubjects = CumulativeSubjects()
+  def The: BoardWords = this
 
-  def The: Subjects = this
+  def the: BoardWords = this
 
-  def the: Subjects = this
-
-  override def main(args: Array[String]): Unit = {
-    super.main(args)
+  def main(args: Array[String]): Unit = {
     if (checkModel) {
       start(gameGeneration(), ruleBook.graphicMap.map)
     }

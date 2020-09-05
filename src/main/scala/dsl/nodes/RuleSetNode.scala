@@ -1,5 +1,7 @@
 package dsl.nodes
 
+import dsl.board.nodes.{FirstTileSelectorNode, TileIdentifiersCollection}
+import dsl.rules.actions.nodes.ActionRuleSetNode
 import model.PlayerOrderingType.PlayerOrderingType
 import model.entities.runtime.{Position, Tile}
 import model.rules.actionrules.ActionRule
@@ -35,7 +37,7 @@ trait RuleSetNode extends RuleBookNode {
 
 object RuleSetNode {
 
-  class RuleSetNodeImpl(identifiers: DefinedTileIdentifiers) extends RuleSetNode {
+  class RuleSetNodeImpl(identifiers: TileIdentifiersCollection) extends RuleSetNode {
 
     private val playerRangeNode: SingleValueNode[Range] = new SingleValueNode("Number of players")
 
@@ -73,5 +75,5 @@ object RuleSetNode {
         actionRuleSetNode.check
   }
 
-  def apply(identifiers: DefinedTileIdentifiers): RuleSetNode = new RuleSetNodeImpl(identifiers)
+  def apply(identifiers: TileIdentifiersCollection): RuleSetNode = new RuleSetNodeImpl(identifiers)
 }
