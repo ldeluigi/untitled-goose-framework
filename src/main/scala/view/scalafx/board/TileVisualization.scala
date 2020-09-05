@@ -44,7 +44,7 @@ object TileVisualization {
       stroke = strokeColor
       strokeType = StrokeType.Inside
       strokeWidth = strokeSize
-      width <== parentWidth / cols
+      width <== parentWidth / (cols * 1.25)
       height <== width
     }
 
