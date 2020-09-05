@@ -1,14 +1,15 @@
 package dsl
 
+import dsl.initializers._
 import dsl.nodes.RuleBook
-import dsl.words.{BoardPropertyWords, RuleSetWords, RulesWord, TilePropertyWords}
+import dsl.words.ruleset.action.RulesWord
 import model.TileIdentifier
 import model.entities.runtime.{GameTemplate, GameTemplateBuilder}
 import view.scalafx.View
 import view.scalafx.board.GraphicDescriptor
 
 
-trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords with RuleSetWords with Implicits {
+trait GooseDSL extends App with Subjects with TilePropertyWords with BoardPropertyWords with RuleSetWords with EventDefinitionWords with Implicits {
 
   protected implicit val ruleBook: RuleBook = RuleBook()
 

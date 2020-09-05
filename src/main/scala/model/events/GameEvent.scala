@@ -13,4 +13,5 @@ trait GameEvent extends Serializable with Groupable {
   def cycle: Int
 
   override def toString: String = this.name + " turn: " + turn + " cycle: " + cycle
+
 }
