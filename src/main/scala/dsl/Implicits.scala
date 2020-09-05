@@ -1,6 +1,6 @@
 package dsl
 
-import dsl.words.PlayerRangeWord
+import dsl.words.ruleset.PlayerRangeWord
 
 trait Implicits {
 

@@ -37,8 +37,10 @@ object GooseGame extends GooseDSL {
 
   Players start on tile 1
 
-  Each turn players are(
+  Each turn players are (
     always allowed to trigger (s => StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Fai 10 passi" priority 5
-  )
+    )
+
+  Define event "custom" properties[Int] "val" properties[String]("val", "ciao")
 
 }
