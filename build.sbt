@@ -16,7 +16,8 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
 libraryDependencies += "io.vertx" %% "vertx-lang-scala" % "3.9.1"
 
 scalacOptions ++= Seq(
-  "-language:postfixOps"
+  "-language:postfixOps",
+  "-language:implicitConversions"
 )
 
 
