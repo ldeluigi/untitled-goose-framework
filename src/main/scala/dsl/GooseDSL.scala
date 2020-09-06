@@ -1,6 +1,7 @@
 package dsl
 
 import dsl.board.words.BoardWords
+import dsl.dice.words.DiceWords
 import dsl.nodes.RuleBook
 import dsl.rules.RuleSetWords
 import dsl.rules.actions.words.RulesWord
@@ -10,7 +11,7 @@ import view.scalafx.View
 import view.scalafx.board.GraphicDescriptor
 
 
-trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords {
+trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords with DiceWords {
 
   protected implicit val ruleBook: RuleBook = RuleBook()
 

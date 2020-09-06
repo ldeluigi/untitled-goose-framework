@@ -32,7 +32,7 @@ object Main extends JFXApp {
   //From DSL generation
   val totalTiles = 50
   val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
-  val movementDice: MovementDice = Dice.Factory.randomMovement((1 to 6).toSet, "six face")
+  val movementDice: MovementDice = Dice.Factory.randomMovement(1 to 6, "six face")
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"
 

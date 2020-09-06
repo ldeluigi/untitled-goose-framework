@@ -1,8 +1,7 @@
 package dsl.rules.actions.words
 
 import dsl.nodes.RuleBook
-import dsl.rules.actions.nodes.ActionRuleNode
-import dsl.rules.actions.nodes.ActionRuleNode.ActionRuleWithRefNode
+import dsl.rules.actions.nodes.ActionRuleNode.{ActionRuleNode, ActionRuleWithRefNode}
 import model.entities.runtime.GameState
 
 case class RefAction(when: GameState => Boolean, allow: Boolean, refName: Set[String])(implicit ruleBook: RuleBook) {

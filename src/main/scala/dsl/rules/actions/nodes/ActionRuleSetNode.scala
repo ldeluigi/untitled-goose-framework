@@ -1,7 +1,7 @@
 package dsl.rules.actions.nodes
 
 import dsl.nodes.RuleBookNode
-import dsl.rules.actions.nodes.ActionRuleNode.{ActionRuleWithActionNode, ActionRuleWithRefNode}
+import dsl.rules.actions.nodes.ActionRuleNode.{ActionGeneration, ActionRuleNode}
 import model.actions.Action
 import model.rules.actionrules.ActionRule
 
@@ -22,16 +22,12 @@ object ActionRuleSetNode {
     override def addActionRuleNode(actionRuleNode: ActionRuleNode): Unit = {
       nodes += actionRuleNode
       actionRuleNode match {
-        case a: ActionRuleWithActionNode => registerAction(a.generateAction())
+        case a: ActionRuleNode with ActionGeneration => registerAction(a.generateAction())
         case _ => Unit
       }
     }
 
-    override def actionRules: Set[ActionRule] =
-      nodes.map {
-        case a: ActionRuleWithActionNode => a.generateActionRule()
-        case a: ActionRuleWithRefNode => a.generateActionRule()
-      }
+    override def actionRules: Set[ActionRule] = nodes.map(_.generateActionRule())
 
     override def check: Seq[String] = nodes.toSeq.flatMap(_.check)
 

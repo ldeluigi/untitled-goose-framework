@@ -14,12 +14,13 @@ import model.events.consumable.DiceRollEvent
  *             and any number of faces, that should be rolled.
  * @tparam DiceSide The generic type of a face of the dice.
  */
-class RollDice[DiceSide](dice: Dice[DiceSide]) extends Action {
+class RollDice[DiceSide](actionName: String, dice: Dice[DiceSide], diceNumber: Int) extends Action {
 
-  override def name: String = "Roll a " + dice.name + " dice"
+  override def name: String = actionName
 
   override def trigger(state: GameState): GameEvent = {
-    DiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, dice.roll)
+    val result = for (_ <- 0 until diceNumber) yield dice.roll
+    DiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, result)
   }
 }
 
@@ -32,5 +33,5 @@ object RollDice {
    * @tparam DiceSide The generic type of one face of the dice.
    * @return A new RollDice action.
    */
-  def apply[DiceSide](dice: Dice[DiceSide]) = new RollDice(dice)
+  def apply[DiceSide](actionName: String, dice: Dice[DiceSide], diceNumber: Int) = new RollDice(actionName, dice, diceNumber)
 }

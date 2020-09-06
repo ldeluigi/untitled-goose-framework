@@ -57,7 +57,7 @@ object GooseGameNoDSL extends JFXApp {
     .complete()
 
   //2 dices
-  val movementDice: MovementDice = Dice.Factory.randomMovement((1 to 6).toSet, "six sided dice")
+  val movementDice: MovementDice = Dice.Factory.randomMovement(1 to 6, "six sided dice")
 
 
   //Each turn one player can:

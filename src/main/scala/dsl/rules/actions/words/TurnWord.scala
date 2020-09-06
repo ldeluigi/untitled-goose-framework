@@ -1,7 +1,7 @@
 package dsl.rules.actions.words
 
 import dsl.nodes.RuleBook
-import dsl.rules.actions.nodes.ActionRuleNode
+import dsl.rules.actions.nodes.ActionRuleNode.ActionRuleNode
 
 class TurnWord() {
   def apply(playersWord: PlayersAreWord) = new TurnWord

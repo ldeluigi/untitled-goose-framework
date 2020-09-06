@@ -1,20 +1,26 @@
 package dsl.rules.actions.nodes
 
+import dsl.dice.nodes.DiceCollection
 import dsl.nodes.RuleBookNode
-import model.actions.Action
+import model.actions.{Action, RollDice, RollMovementDice}
 import model.entities.runtime.GameState
 import model.events.GameEvent
 import model.rules.actionrules.{ActionAvailability, ActionRule}
 
-sealed trait ActionRuleNode extends RuleBookNode {
-  def generateActionRule(): ActionRule
-}
-
 object ActionRuleNode {
 
-  case class ActionRuleWithActionNode
+  sealed trait ActionRuleNode extends RuleBookNode {
+    def generateActionRule(): ActionRule
+  }
+
+  sealed trait ActionGeneration {
+    def generateAction(): Action
+  }
+
+
+  case class ActionRuleNodeImpl
   (name: String, when: GameState => Boolean, trigger: GameState => GameEvent, priority: Int, allow: Boolean)
-    extends ActionRuleNode {
+    extends ActionRuleNode with ActionGeneration {
 
     override def check: Seq[String] = Seq()
 
@@ -23,7 +29,7 @@ object ActionRuleNode {
       ActionRule(availabilities, when)
     }
 
-    def generateAction(): Action = Action(name, trigger)
+    override def generateAction(): Action = Action(name, trigger)
   }
 
   case class ActionRuleWithRefNode
@@ -41,6 +47,39 @@ object ActionRuleNode {
     private def isActionDefined(name: String): Boolean = definedActions.isActionDefined(name)
 
     private def getAction(name: String): Action = definedActions.getAction(name)
+  }
+
+  case class DiceActionNode(actionName: String,
+                            when: GameState => Boolean,
+                            priority: Int,
+                            allow: Boolean,
+                            diceNumber: Int,
+                            diceName: String,
+                            isMovement: Boolean,
+                            definedDice: DiceCollection)
+    extends ActionRuleNode with ActionGeneration {
+
+    override def check: Seq[String] = if (definedDice.isDiceDefined(diceName)) {
+      if (isMovement) {
+        if (!definedDice.isMovementDice(diceName)) {
+          Seq("Dice " + diceName + " is not defined as a MovementDice")
+        }
+      } else {
+        if (definedDice.isMovementDice(diceName))
+          Seq("Warning: using " + diceName + " as a non-movement dice may cause an unexpected behaviour")
+      }
+      Seq()
+    } else Seq("Dice " + diceName + " was never defined")
+
+    override def generateActionRule(): ActionRule = {
+      val availabilities: Set[ActionAvailability] = Set((allow, priority, generateAction()))
+      ActionRule(availabilities, when)
+    }
+
+    override def generateAction(): Action = if (isMovement)
+      RollMovementDice(actionName, definedDice.getMovementDice(diceName), diceNumber)
+    else
+      RollDice(actionName, definedDice.getDice(diceName), diceNumber)
   }
 
 }

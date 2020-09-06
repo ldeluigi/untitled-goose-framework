@@ -37,12 +37,17 @@ object GooseGame extends GooseDSL {
 
   Players start on tile 1
 
-  Each turn players are (
-    always allowed to trigger (s => StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Fai 10 passi" priority 5
-    )
-
   Define event "custom" having(
     "val" as[Int] value,
     "pippo" as[String] value,
   )
+
+  Create movementDice "six-faced" having totalSides(6)
+
+  Each turn players are(
+    always allowed to roll 3 dice "six-faced" as "roll 3 dice" priority 5,
+    always allowed to trigger (s => StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Fai 10 passi" priority 5
+  )
+
+
 }

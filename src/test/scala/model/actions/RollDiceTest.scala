@@ -11,11 +11,11 @@ class RollDiceTest extends AnyFlatSpec with Matchers {
   behavior of "RollDiceTest"
 
   it should "fire proper event in execute" in {
-    val event = RollDice(new Dice[Int] {
+    val event = RollDice("roll Dice", new Dice[Int] {
       override def name: String = "Mock dice"
 
       override def roll: Int = 5
-    }).trigger(default.currentState)
+    }, 1).trigger(default.currentState)
 
     (event.isInstanceOf[DiceRollEvent[_]] && event.asInstanceOf[DiceRollEvent[_]].result == Seq(5)) should be(true)
   }
