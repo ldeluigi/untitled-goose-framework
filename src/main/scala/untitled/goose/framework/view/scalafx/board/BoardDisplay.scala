@@ -2,11 +2,11 @@ package untitled.goose.framework.view.scalafx.board
 
 import untitled.goose.framework.model.TileIdentifier
 import untitled.goose.framework.model.TileIdentifier.Group
-import untitled.goose.framework.model.entities.runtime.{GameBoard, GameState, Tile}
+import untitled.goose.framework.model.entities.runtime.{Board, GameState, Tile}
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.layout.Pane
 
-/** A custom pane that contains the runtime board.
+/** A custom pane that contains the runtime definition.
  *
  */
 trait BoardDisplay extends ScrollPane {
@@ -15,7 +15,7 @@ trait BoardDisplay extends ScrollPane {
 
 object BoardDisplay {
 
-  private class BoardDisplayImpl(matchBoard: GameBoard, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends BoardDisplay {
+  private class BoardDisplayImpl(matchBoard: Board, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends BoardDisplay {
     val boardPane = new Pane()
 
     var tiles: List[TileVisualization] = Nil
@@ -26,16 +26,16 @@ object BoardDisplay {
     this.vbarPolicy = ScrollPane.ScrollBarPolicy.Always
 
     var i = 0
-    val rows: Int = matchBoard.board.disposition.rows
-    val cols: Int = matchBoard.board.disposition.columns
+    val rows: Int = matchBoard.definition.disposition.rows
+    val cols: Int = matchBoard.definition.disposition.columns
 
     for (tile <- matchBoard.tiles.toList.sorted) {
       renderTile(TileVisualization(tile, width, height, rows, cols, getGraphicDescriptor(tile)))
     }
 
     private def renderTile(currentTile: TileVisualization): Unit = {
-      currentTile.layoutX <== currentTile.width * matchBoard.board.disposition(i)._1
-      currentTile.layoutY <== currentTile.height * matchBoard.board.disposition(i)._2
+      currentTile.layoutX <== currentTile.width * matchBoard.definition.disposition(i)._1
+      currentTile.layoutY <== currentTile.height * matchBoard.definition.disposition(i)._2
       boardPane.children.add(currentTile)
       i = i + 1
       tiles = currentTile :: tiles
@@ -84,6 +84,6 @@ object BoardDisplay {
   }
 
   /** A factory which creates a new BoardDisplay. */
-  def apply(board: GameBoard, graphicMap: Map[TileIdentifier, GraphicDescriptor]): BoardDisplay = new BoardDisplayImpl(board, graphicMap)
+  def apply(board: Board, graphicMap: Map[TileIdentifier, GraphicDescriptor]): BoardDisplay = new BoardDisplayImpl(board, graphicMap)
 }
 

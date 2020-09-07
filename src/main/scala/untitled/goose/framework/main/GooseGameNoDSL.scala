@@ -6,7 +6,7 @@ import untitled.goose.framework.controller.scalafx.{ApplicationController, Scala
 import javafx.scene.input.KeyCode
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
-import untitled.goose.framework.model.entities.definitions.{Board, Disposition}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
 import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player, Position}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.consumable._
@@ -42,7 +42,7 @@ object GooseGameNoDSL extends JFXApp {
   val theDeath = "The Death"
   val theEnd = "The End"
 
-  val board: Board = Board.create()
+  val board: BoardDefinition = BoardDefinition.create()
     .withNumberedTiles(totalTiles)
     .withName("Original Goose Game")
     .withDisposition(Disposition.spiral(_))

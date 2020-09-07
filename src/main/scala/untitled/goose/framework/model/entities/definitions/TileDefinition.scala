@@ -2,10 +2,13 @@ package untitled.goose.framework.model.entities.definitions
 
 import untitled.goose.framework.model.Groupable
 
+/** Defines a tile on the definition, statically. */
 trait TileDefinition extends Groupable {
 
+  /** A tile can be numbered. */
   def number: Option[Int]
 
+  /** A tile can have a name. */
   def name: Option[String]
 
   def ==(obj: TileDefinition): Boolean =
@@ -26,6 +29,7 @@ trait TileDefinition extends Groupable {
 
 object TileDefinition {
 
+  /** Tile order is based on reciprocal number order. */
   implicit def compare[A <: TileDefinition]: Ordering[A] = (x: A, y: A) =>
     (x.number, y.number) match {
       case (None, None) => 0

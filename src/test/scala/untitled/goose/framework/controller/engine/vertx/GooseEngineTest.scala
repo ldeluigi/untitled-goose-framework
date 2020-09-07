@@ -7,7 +7,7 @@ import untitled.goose.framework.model.events.special.NoOpEvent
 import untitled.goose.framework.model.entities.runtime.{Game, GameState, Piece, Player, Position}
 import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
 import untitled.goose.framework.model.Color
-import untitled.goose.framework.model.entities.definitions.{Board, Disposition}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -20,7 +20,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   behavior of "GooseEngineTest"
 
-  val m: Game = Game(Board(5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet(
+  val m: Game = Game(BoardDefinition("test", 5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet(
     tiles => Position(tiles.toList.sorted.take(1).head),
     PlayerOrdering.randomOrder(7),
     1 to 10,

@@ -15,7 +15,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   "A Match" should "have a MatchBoard" in {
-    gameMatch.board.board.tiles should equal(GameBoard(MatchMock.board).board.tiles)
+    gameMatch.board.definition.tiles should equal(Board(MatchMock.board).definition.tiles)
   }
 
   it should "have a set of players" in {

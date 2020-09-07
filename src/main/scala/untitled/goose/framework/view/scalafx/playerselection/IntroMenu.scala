@@ -18,8 +18,8 @@ import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 /** A scene used to be able to add new players to the runtime.
  *
  * @param stage      the stage on which to render the selection
- * @param gameData   a container of the board definition and ruleSet of the current runtime
- * @param boardName  the name of the board to be displayed in the menu
+ * @param gameData   a container of the definition definition and ruleSet of the current runtime
+ * @param boardName  the name of the definition to be displayed in the menu
  * @param widthSize  width of the scene
  * @param heightSize height of the scene
  * @param graphicMap the graphic properties container

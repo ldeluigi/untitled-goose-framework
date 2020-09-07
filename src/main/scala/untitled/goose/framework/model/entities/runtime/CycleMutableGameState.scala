@@ -3,6 +3,10 @@ package untitled.goose.framework.model.entities.runtime
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
+/** A mutable game state that can set its cycle value.
+ *  A cycle is an iteration of a rule-solving process based on a stack of triggers.
+ *  It's useful to avoid re-evaluation of rules after the same trigger.
+ */
 trait CycleMutableGameState extends MutableGameState {
   def currentCycle_=(cycle: Int): Unit
 }
@@ -10,7 +14,7 @@ trait CycleMutableGameState extends MutableGameState {
 object CycleMutableGameState {
 
   private class GameStateImpl(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
-                              val gameBoard: GameBoard) extends CycleMutableGameState {
+                              val gameBoard: Board) extends CycleMutableGameState {
 
     var consumableBuffer: Seq[ConsumableGameEvent] = Seq()
 
@@ -41,6 +45,14 @@ object CycleMutableGameState {
     override def nextPlayer: Player = nextPlayerStrategy()
   }
 
-  def apply(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: GameBoard): CycleMutableGameState =
+  /**
+   * Creates a mutable game state that can change cycle.
+   * @param startPlayer the starting player.
+   * @param nextPlayerStrategy the strategy to select the next player, each turn.
+   * @param pieces the pieces used by the players.
+   * @param board the game definition, a stateful object.
+   * @return a new CycleMutableGameState.
+   */
+  def apply(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: Board): CycleMutableGameState =
     new GameStateImpl(startPlayer, nextPlayerStrategy, pieces, board)
 }

@@ -28,10 +28,10 @@ class FirstTileSelectorNode(identifiers: TileIdentifiersCollection) extends Rule
       messageSeq :+= "Conflicting first tile selector choose only one"
     }
     if (name.isDefined && !identifiers.containsName(name.get)) {
-      messageSeq :+= ("\"" + name.get + "\" selected as first tile is not defined in this board")
+      messageSeq :+= ("\"" + name.get + "\" selected as first tile is not defined in this definition")
     }
     if (num.isDefined && !identifiers.containsNumber(num.get)) {
-      messageSeq :+= ("Tile " + num.get + " selected as first tile is not defined in this board")
+      messageSeq :+= ("Tile " + num.get + " selected as first tile is not defined in this definition")
     }
     messageSeq
   }

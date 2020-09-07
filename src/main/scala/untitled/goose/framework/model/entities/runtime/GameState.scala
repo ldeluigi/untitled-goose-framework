@@ -16,9 +16,9 @@ trait GameState {
   def playerPieces: Map[Player, Piece]
 
   /**
-   * @return the runtime board
+   * @return the runtime definition
    */
-  def gameBoard: GameBoard
+  def gameBoard: Board
 
   def consumableBuffer: Seq[ConsumableGameEvent]
 
