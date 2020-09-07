@@ -4,8 +4,10 @@ import scala.reflect.ClassTag
 
 case class Key[T: ClassTag](keyName: String) {
 
-  override def equals(obj: Any): Boolean = obj match {
-    case k: Key[T] => k.keyName == keyName
+  val classTag: ClassTag[T] = implicitly
+
+  def equals[O: ClassTag](other: Key[O]): Boolean = other match {
+    case k: Key[O] => k.keyName == keyName && k.classTag == classTag
     case _ => false
   }
 
