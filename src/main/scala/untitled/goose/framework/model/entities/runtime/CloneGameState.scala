@@ -3,7 +3,7 @@ package untitled.goose.framework.model.entities.runtime
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
-object ClonedGameState {
+object CloneGameState {
 
   private class ClonedGameState(state: GameState) extends GameState {
 

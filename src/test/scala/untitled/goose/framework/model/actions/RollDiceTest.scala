@@ -1,10 +1,10 @@
 package untitled.goose.framework.model.actions
 
-import untitled.goose.framework.mock.MatchMock._
-import untitled.goose.framework.model.entities.Dice.Dice
-import untitled.goose.framework.model.events.consumable.DiceRollEvent
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock._
+import untitled.goose.framework.model.entities.Dice
+import untitled.goose.framework.model.events.consumable.DiceRollEvent
 
 class RollDiceTest extends AnyFlatSpec with Matchers {
 

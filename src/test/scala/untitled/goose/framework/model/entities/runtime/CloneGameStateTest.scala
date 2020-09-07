@@ -1,15 +1,15 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
-import untitled.goose.framework.model.events.persistent.{GainTurnEvent, TileActivatedEvent}
-import untitled.goose.framework.model.events.{GameEvent, PlayerEvent, TileEvent}
-import untitled.goose.framework.model.entities.runtime.GameStateExtensions.MutableStateExtensions
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock
+import untitled.goose.framework.model.entities.runtime.GameStateExtensions.MutableStateExtensions
+import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
+import untitled.goose.framework.model.events.persistent.{GainTurnEvent, TileActivatedEvent}
+import untitled.goose.framework.model.events.{GameEvent, PlayerEvent, TileEvent}
 
-class ClonedGameStateTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
+class CloneGameStateTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
 
   var state: MutableGameState = MatchMock.default.currentState
   var clonedGameState: GameState = state.clone()
@@ -19,7 +19,7 @@ class ClonedGameStateTest extends AnyFlatSpec with Matchers with BeforeAndAfterE
     clonedGameState = state.clone()
   }
 
-  behavior of "ClonedGameState"
+  behavior of "CloneGameState"
 
   it should "Not change turn when the original state is updated" in {
     state.currentTurn = 10

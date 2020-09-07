@@ -2,6 +2,7 @@ package untitled.goose.framework.model.entities
 
 import untitled.goose.framework.model.events.GameEvent
 
+/** The contents of a dialog shown to the player. */
 trait DialogContent {
 
   /**
@@ -27,7 +28,6 @@ trait DialogContent {
 }
 
 object DialogContent {
-
   /** A factory creating a new user dialog based on a title, a text, and possible user answers. */
   def apply(dialogTitle: String, dialogText: String, answers: (String, GameEvent)*): DialogContent =
     new DialogContent {
@@ -37,7 +37,6 @@ object DialogContent {
 
       override def options: Map[String, GameEvent] = answers.toMap
     }
-
 }
 
 

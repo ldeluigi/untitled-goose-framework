@@ -1,6 +1,7 @@
 package untitled.goose.framework.dsl.dice.nodes
 
-import untitled.goose.framework.model.entities.Dice.{Dice, MovementDice}
+import untitled.goose.framework.model.entities.Dice
+import untitled.goose.framework.model.entities.Dice.MovementDice
 
 trait DiceCollection {
 

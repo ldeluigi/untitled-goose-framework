@@ -1,6 +1,6 @@
 package untitled.goose.framework.model.actions
 
-import untitled.goose.framework.model.entities.Dice.Dice
+import untitled.goose.framework.model.entities.Dice
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.DiceRollEvent

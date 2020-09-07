@@ -1,11 +1,15 @@
 package untitled.goose.framework.model.entities.definitions
 
+/** This entity identifies one or more tiles. */
 trait TileIdentifier {
 
+  /** If present, this identifies tiles with that name. */
   def name: Option[String]
 
+  /** If present, this identifies tiles with that number. */
   def number: Option[Int]
 
+  /** If present, this identifies tiles with that group. */
   def group: Option[String]
 
 }
@@ -57,8 +61,10 @@ object TileIdentifier {
    */
   def apply(group: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(group.name))
 
+  /** Utility class used to distinguish names and groups in apply factory. */
   case class Group(name: String)
 
+  /** Implements the check method to check if a tile is identified. */
   implicit class IdentifierCheck(id: TileIdentifier) {
     def check(tile: TileDefinition): Boolean =
       tile.number == id.number || tile.name == id.name || id.group.exists(tile.groups.contains(_))

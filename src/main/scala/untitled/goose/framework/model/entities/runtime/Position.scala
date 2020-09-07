@@ -1,6 +1,9 @@
 package untitled.goose.framework.model.entities.runtime
 
+/** A position on the board. */
 trait Position {
+
+  /** The tile to which this position points. */
   def tile: Tile
 
   override def toString: String = this.getClass.getSimpleName + "(" + tile + ")"
@@ -18,5 +21,6 @@ object Position {
     }
   }
 
+  /** Factory method to create a new position. */
   def apply(tile: Tile): Position = new PositionImpl(tile)
 }

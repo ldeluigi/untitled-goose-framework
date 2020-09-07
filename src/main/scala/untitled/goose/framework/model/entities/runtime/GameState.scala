@@ -34,6 +34,6 @@ trait GameState {
   def players: Set[Player] = playerPieces.keySet
 
   /** Makes an immutable copy of this game state. */
-  override def clone(): GameState = ClonedGameState(this)
+  override def clone(): GameState = CloneGameState(this)
 }
 

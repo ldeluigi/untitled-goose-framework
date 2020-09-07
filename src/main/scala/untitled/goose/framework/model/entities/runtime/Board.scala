@@ -36,9 +36,6 @@ trait Board extends Defined[BoardDefinition] {
 
 object Board {
 
-  /** Factory method that takes the definition as input. */
-  def apply(board: BoardDefinition): Board = new BoardImpl(board)
-
   private class BoardImpl(val definition: BoardDefinition) extends Board {
 
     private val tileMap: Map[TileDefinition, Tile] = definition.tiles map (t => t -> Tile(t)) toMap
@@ -52,4 +49,6 @@ object Board {
     override def prev(tile: Tile): Option[Tile] = definition prev tile.definition map (tileMap(_))
   }
 
+  /** Factory method that takes the definition as input. */
+  def apply(board: BoardDefinition): Board = new BoardImpl(board)
 }

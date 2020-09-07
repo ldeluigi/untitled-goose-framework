@@ -2,10 +2,13 @@ package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.Color.Color
 
+/** A player's piece on the board. Can be removed from the board if position is None. */
 trait Piece {
 
+  /** The current piece position on the board. */
   def position: Option[Position]
 
+  /** This piece's color. */
   def color: Color
 }
 
