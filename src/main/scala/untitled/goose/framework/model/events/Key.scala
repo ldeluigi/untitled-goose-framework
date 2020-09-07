@@ -2,6 +2,7 @@ package untitled.goose.framework.model.events
 
 import scala.reflect.ClassTag
 
+// TODO scaladoc
 case class Key[T: ClassTag](keyName: String) {
 
   val classTag: ClassTag[T] = implicitly

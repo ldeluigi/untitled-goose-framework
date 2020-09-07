@@ -2,6 +2,7 @@ package untitled.goose.framework.model.events
 
 import scala.reflect.ClassTag
 
+// TODO scaladoc
 class CustomGameEvent(val turn: Int, val cycle: Int, override val name: String) extends GameEvent {
   private var propertyMap: List[(Key[_], Option[_])] = List()
 
