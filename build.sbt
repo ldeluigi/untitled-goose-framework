@@ -9,11 +9,17 @@ resolvers += "Local Ivy Repository" at "file:///" + Path.userHome.absolutePath +
 // Add dependency on ScalaFX library
 libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
 
+// Add dependency on Vert.x library
+libraryDependencies += "io.vertx" %% "vertx-lang-scala" % "3.9.1"
+
+// Add dependency on tuProlog library
+libraryDependencies += "it.unibo.tuprolog" % "solve-jvm" % "0.11.2"
+
 // Test dependencies
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
 
-libraryDependencies += "io.vertx" %% "vertx-lang-scala" % "3.9.1"
+
 
 scalacOptions ++= Seq(
   "-language:postfixOps",
