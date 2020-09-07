@@ -6,13 +6,14 @@ import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.special.NoOpEvent
 import untitled.goose.framework.model.entities.runtime.{Game, GameState, Piece, Player, Position}
 import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
-import untitled.goose.framework.model.Color
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
+import untitled.goose.framework.model.{Color, PlayerOrderingType}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder}
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
 
+import scala.collection.immutable.ListMap
 import scala.concurrent.Future
 import scala.math.abs
 
@@ -20,14 +21,15 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
 
   behavior of "GooseEngineTest"
 
-  val m: Game = Game(BoardDefinition("test", 5, Disposition.snake(5)), Map(Player("") -> Piece(Color.Blue)), PriorityRuleSet(
-    tiles => Position(tiles.toList.sorted.take(1).head),
-    PlayerOrdering.randomOrder(7),
-    1 to 10,
-    Set(),
-    Seq(),
-    Seq())
-  )
+  val m: Game = Game(GameDefinitionBuilder()
+    .board(BoardDefinition("test", 5, Disposition.snake(5)))
+    .actionRules(Set())
+    .behaviourRules(Seq())
+    .cleanupRules(Seq())
+    .playerOrderingType(PlayerOrderingType.RandomOrder)
+    .startPositionStrategy(tiles => Position(tiles.toList.sorted.take(1).head))
+    .playersRange(1 to 10)
+    .build, ListMap(Player("") -> Piece(Color.Blue)))
 
   def cGenerator(handler: GameEvent => Unit): ViewController = new ViewController {
     override def update(state: GameState): Unit = {}

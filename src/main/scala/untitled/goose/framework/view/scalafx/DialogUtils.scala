@@ -1,10 +1,10 @@
 package untitled.goose.framework.view.scalafx
 
+import scalafx.scene.control.Alert.AlertType
+import scalafx.scene.control.{Alert, ButtonType}
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.special.NoOpEvent
-import scalafx.scene.control.{Alert, ButtonType}
-import scalafx.scene.control.Alert.AlertType
 
 import scala.concurrent.Promise
 

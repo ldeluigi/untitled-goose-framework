@@ -15,6 +15,7 @@ object GameStateExtensions {
 
     /**
      * Returns a tile with specified number from the board.
+     *
      * @param number the tile number.
      * @return the tile, if found, as an option.
      */
@@ -23,6 +24,7 @@ object GameStateExtensions {
 
     /**
      * Returns a tile with specified name from the board.
+     *
      * @param name the tile name.
      * @return the tile, if found, as an option.
      */
@@ -32,7 +34,8 @@ object GameStateExtensions {
     /**
      * Returns a sequence of values that represent the turns at which a player stopped its
      * movement on the given tile.
-     * @param tile the tile to query.
+     *
+     * @param tile   the tile to query.
      * @param player the player that could have stopped on the tile.
      * @return the turns at which the player stopped on the tile.
      */
@@ -52,6 +55,7 @@ object GameStateExtensions {
 
     /**
      * Adds a given event to proper histories, based on the event type.
+     *
      * @param event the event to add to the state.
      */
     def submitEvent(event: GameEvent): Unit = event match {
@@ -63,6 +67,7 @@ object GameStateExtensions {
 
     /**
      * Forces a permanent save of a consumable game event in proper histories, based on event type.
+     *
      * @param event the consumable event to save.
      */
     def saveEvent(event: ConsumableGameEvent): Unit = {

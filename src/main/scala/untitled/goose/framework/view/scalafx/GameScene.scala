@@ -1,15 +1,15 @@
 package untitled.goose.framework.view.scalafx
 
+import scalafx.application.Platform
+import scalafx.scene.Scene
+import scalafx.scene.layout.{BorderPane, HBox}
+import scalafx.stage.Stage
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.TileIdentifier
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.{Game, GameState}
 import untitled.goose.framework.model.events.GameEvent
-import scalafx.application.Platform
-import scalafx.scene.Scene
-import scalafx.scene.layout.{BorderPane, HBox}
-import scalafx.stage.Stage
 import untitled.goose.framework.view.scalafx.actionmenu.ActionMenu
 import untitled.goose.framework.view.scalafx.board.{BoardDisplay, GraphicDescriptor}
 import untitled.goose.framework.view.scalafx.logger.EventLogger

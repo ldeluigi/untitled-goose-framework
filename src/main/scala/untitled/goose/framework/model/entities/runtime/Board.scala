@@ -2,11 +2,9 @@ package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, TileDefinition}
 
-trait Board {
+trait Board extends Defined[BoardDefinition] {
 
   def tiles: Set[Tile]
-
-  def definition: BoardDefinition
 
   def next(tile: Tile): Option[Tile]
 

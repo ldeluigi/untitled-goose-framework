@@ -6,7 +6,7 @@ import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.RuleSetWords
 import untitled.goose.framework.dsl.rules.actions.words.RulesWord
 import untitled.goose.framework.model.TileIdentifier
-import untitled.goose.framework.model.entities.runtime.{GameTemplate, GameTemplateBuilder}
+import untitled.goose.framework.model.entities.definitions.{GameDefinition, GameDefinitionBuilder}
 import untitled.goose.framework.view.scalafx.View
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
@@ -33,8 +33,8 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
     checkMessage.isEmpty
   }
 
-  private def gameGeneration(): GameTemplate = {
-    GameTemplateBuilder()
+  private def gameGeneration(): GameDefinition = {
+    GameDefinitionBuilder()
       .board(ruleBook.boardBuilder.complete())
       .startPositionStrategy(ruleBook.ruleSet.getFirstTileSelector)
       .playerOrderingType(ruleBook.ruleSet.playerOrderingType)
@@ -45,7 +45,7 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
       .build
   }
 
-  private def start(gameData: GameTemplate, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
+  private def start(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
     new View(gameData, graphicMap).main(Array())
 
 

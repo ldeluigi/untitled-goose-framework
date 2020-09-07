@@ -1,10 +1,10 @@
 package untitled.goose.framework.view.scalafx.board
 
+import scalafx.scene.control.ScrollPane
+import scalafx.scene.layout.Pane
 import untitled.goose.framework.model.TileIdentifier
 import untitled.goose.framework.model.TileIdentifier.Group
 import untitled.goose.framework.model.entities.runtime.{Board, GameState, Tile}
-import scalafx.scene.control.ScrollPane
-import scalafx.scene.layout.Pane
 
 /** A custom pane that contains the runtime definition.
  *

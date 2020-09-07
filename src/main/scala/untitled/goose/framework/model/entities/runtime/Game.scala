@@ -1,14 +1,17 @@
 package untitled.goose.framework.model.entities.runtime
 
+import untitled.goose.framework.model.PlayerOrderingType.{FullRandom, RandomOrder, UserDefinedOrder}
 import untitled.goose.framework.model.actions.Action
-import untitled.goose.framework.model.entities.definitions.BoardDefinition
+import untitled.goose.framework.model.entities.definitions.GameDefinition
 import untitled.goose.framework.model.rules.operations.Operation
-import untitled.goose.framework.model.rules.ruleset.RuleSet
+import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
+
+import scala.collection.immutable.ListMap
 
 /** A game encapsulates runtime dynamic information
- *  together with static definitions of a goose-game.
+ * together with static definitions of a goose-game.
  */
-trait Game {
+trait Game extends Defined[GameDefinition] {
 
   /** Based on current state, the available actions for the current player. */
   def availableActions: Set[Action]
@@ -27,13 +30,26 @@ trait Game {
 
 object Game {
 
-  private class GameImpl(gameBoard: BoardDefinition, playerPieces: Map[Player, Piece], rules: RuleSet) extends Game {
+  private class GameImpl(playerPieces: ListMap[Player, Piece], val definition: GameDefinition) extends Game {
+    val playerOrdering: PlayerOrdering = definition.playerOrderingType match {
+      case FullRandom => PlayerOrdering.fullRandom
+      case RandomOrder => PlayerOrdering.randomOrder(7)
+      case UserDefinedOrder => PlayerOrdering.givenOrder(playerPieces.keys.toList)
+    }
+    val rules: RuleSet = PriorityRuleSet(
+      definition.startPositionStrategy,
+      playerOrdering,
+      definition.playersRange,
+      definition.actionRules,
+      definition.behaviourRules,
+      definition.cleanupRules
+    )
 
     override val currentState: CycleMutableGameState = CycleMutableGameState(
       rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
       playerPieces,
-      Board(gameBoard)
+      Board(definition.board)
     )
 
     override def availableActions: Set[Action] =
@@ -53,6 +69,5 @@ object Game {
   }
 
   /** A factory that creates a game with a given board definition, players, pieces and rules. */
-  def apply(board: BoardDefinition, players: Map[Player, Piece], rules: RuleSet): Game = new GameImpl(board, players, rules)
-
+  def apply(definition: GameDefinition, players: ListMap[Player, Piece]): Game = new GameImpl(players, definition)
 }

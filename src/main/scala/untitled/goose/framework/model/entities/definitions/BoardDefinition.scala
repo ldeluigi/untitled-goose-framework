@@ -74,8 +74,9 @@ object BoardDefinition {
 
   /**
    * Factory method that generates a definition of given tiles, from 1 to N.
-   * @param name The name of the definition game.
-   * @param tileNum The number of tiles to generate.
+   *
+   * @param name        The name of the definition game.
+   * @param tileNum     The number of tiles to generate.
    * @param disposition The disposition of the tiles.
    * @return A new definition.
    */
@@ -83,8 +84,9 @@ object BoardDefinition {
 
   /**
    * Factory method that creates a definition with given parameters.
-   * @param name The name of the definition game.
-   * @param tiles The tile definitions of the definition.
+   *
+   * @param name        The name of the definition game.
+   * @param tiles       The tile definitions of the definition.
    * @param disposition The disposition of the tiles.
    * @return A new definition.
    */
@@ -92,6 +94,7 @@ object BoardDefinition {
 
   /**
    * Creates a definition builder for a fluent syntax.
+   *
    * @return A new definition builder.
    */
   def create(): BoardBuilder = BoardBuilder()

@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.board.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, BoardBuilder, Disposition}
+import untitled.goose.framework.model.entities.definitions.{BoardBuilder, BoardDefinition, Disposition}
 
 case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileIdentifiersCollection {
 

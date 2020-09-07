@@ -8,14 +8,16 @@ trait BoardBuilder {
 
   /**
    * Adds numbered tiles to the definition tile set.
+   *
    * @param total how many tiles should be added.
-   * @param from the number of the first tile.
+   * @param from  the number of the first tile.
    * @return this builder.
    */
   def withNumberedTiles(total: Int, from: Int = 1): BoardBuilder
 
   /**
    * Adds a name to a numbered tile.
+   *
    * @param number the tile's number.
    * @param name   the name given to the numbered tile.
    * @return this builder.
@@ -24,7 +26,8 @@ trait BoardBuilder {
 
   /**
    * Adds a group to some numbered tiles specified.
-   * @param group The group to add to those tiles.
+   *
+   * @param group  The group to add to those tiles.
    * @param number The numbers of the tiles to group.
    * @return this builder.
    */
@@ -32,7 +35,8 @@ trait BoardBuilder {
 
   /**
    * Adds a group to the tiles that belong to another group.
-   * @param group The group of the tiles to select.
+   *
+   * @param group    The group of the tiles to select.
    * @param newGroup The group to add to selected tiles.
    * @return this builder.
    */

@@ -1,12 +1,12 @@
 package untitled.goose.framework.view.scalafx.actionmenu
 
-import untitled.goose.framework.controller.GameManager
-import untitled.goose.framework.model.actions.Action
-import untitled.goose.framework.model.entities.runtime.Game
 import scalafx.beans.binding.Bindings
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Label
 import scalafx.scene.layout.{Pane, VBox}
+import untitled.goose.framework.controller.GameManager
+import untitled.goose.framework.model.actions.Action
+import untitled.goose.framework.model.entities.runtime.Game
 import untitled.goose.framework.view.scalafx.board.BoardDisplay
 
 

@@ -1,6 +1,5 @@
 package untitled.goose.framework.view.scalafx.playerselection
 
-import untitled.goose.framework.model.entities.runtime.{Piece, Player}
 import scalafx.Includes._
 import scalafx.beans.binding.Bindings
 import scalafx.beans.property.{ObjectProperty, StringProperty}
@@ -9,8 +8,9 @@ import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
-import untitled.goose.framework.view.scalafx.ColorUtils
 import untitled.goose.framework.model
+import untitled.goose.framework.model.entities.runtime.{Piece, Player}
+import untitled.goose.framework.view.scalafx.ColorUtils
 
 trait InsertPlayerPane extends BorderPane {
   def checkPlayers: Boolean

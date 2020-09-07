@@ -14,6 +14,7 @@ trait Disposition {
 
   /**
    * Defines where a tile should be placed on the table to compose the definition.
+   *
    * @param tileIndex the index of the tile.
    * @return the tile's coordinates.
    */

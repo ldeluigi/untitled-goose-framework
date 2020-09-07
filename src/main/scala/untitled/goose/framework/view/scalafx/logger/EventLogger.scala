@@ -3,10 +3,10 @@ package untitled.goose.framework.view.scalafx.logger
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-import untitled.goose.framework.model.entities.runtime.GameState
-import untitled.goose.framework.model.events.GameEvent
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
+import untitled.goose.framework.model.entities.runtime.GameState
+import untitled.goose.framework.model.events.GameEvent
 
 /**
  * A custom pane used to log runtime events.

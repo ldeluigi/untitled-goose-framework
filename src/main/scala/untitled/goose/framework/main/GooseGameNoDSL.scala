@@ -1,13 +1,11 @@
 package untitled.goose.framework.main
 
-import java.awt.{Dimension, Toolkit}
-
-import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
-import javafx.scene.input.KeyCode
+import scalafx.application.JFXApp
+import untitled.goose.framework.model.Color
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
-import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player, Position}
+import untitled.goose.framework.model.entities.runtime.{Piece, Player, Position}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
@@ -18,10 +16,6 @@ import untitled.goose.framework.model.rules.behaviours._
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
 import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RulePriorities, RuleSet}
-import untitled.goose.framework.model.{Color, TileIdentifier}
-import scalafx.application.JFXApp
-import untitled.goose.framework.view.scalafx.GameScene
-import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
 
 object GooseGameNoDSL extends JFXApp {
@@ -320,7 +314,8 @@ object GooseGameNoDSL extends JFXApp {
   val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
-  val currentMatch: Game = Game(board, players, ruleSet)
+  // TODO make it legal
+  /*val currentMatch: Game = Game(board, players, ruleSet)
 
   //View launch
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
@@ -342,5 +337,5 @@ object GooseGameNoDSL extends JFXApp {
       stage.setFullScreen(true)
     }
   )
-
+*/
 }

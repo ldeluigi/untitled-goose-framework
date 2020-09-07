@@ -1,8 +1,8 @@
 package untitled.goose.framework.view.scalafx.actionmenu
 
+import scalafx.scene.control.Button
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
-import scalafx.scene.control.Button
 
 /** A custom button to handle custom behaviour for custom actions.
  */

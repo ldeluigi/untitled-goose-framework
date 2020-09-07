@@ -1,10 +1,10 @@
 package untitled.goose.framework.view.scalafx.board
 
-import untitled.goose.framework.model.entities.runtime.Piece
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Circle, Shape}
+import untitled.goose.framework.model.entities.runtime.Piece
 import untitled.goose.framework.view.scalafx.ColorUtils
 
 /**

@@ -1,8 +1,5 @@
 package untitled.goose.framework.view.scalafx.playerselection
 
-import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
-import untitled.goose.framework.model.TileIdentifier
-import untitled.goose.framework.model.entities.runtime.{Game, GameTemplate}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
@@ -11,8 +8,14 @@ import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
+import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
+import untitled.goose.framework.model.TileIdentifier
+import untitled.goose.framework.model.entities.definitions.GameDefinition
+import untitled.goose.framework.model.entities.runtime.Game
 import untitled.goose.framework.view.scalafx.GameScene
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+
+import scala.collection.immutable.ListMap
 
 
 /** A scene used to be able to add new players to the runtime.
@@ -24,7 +27,7 @@ import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
  * @param heightSize height of the scene
  * @param graphicMap the graphic properties container
  */
-class IntroMenu(stage: Stage, gameData: GameTemplate, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
+class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
   val borderPane = new BorderPane
 
   root = borderPane
@@ -56,7 +59,7 @@ class IntroMenu(stage: Stage, gameData: GameTemplate, boardName: String, widthSi
   startGame.onAction = _ => {
     val minimumNeededPlayers: Int = gameData.playersRange.start
     if (playersPane.checkPlayers) {
-      val currentMatch: Game = gameData.createGame(playersPane.getPlayerSeq, playersPane.getPlayersPiecesMap)
+      val currentMatch: Game = Game(gameData, ListMap(playersPane.getPlayerSeq.map(p => (p, playersPane.getPlayersPiecesMap(p))): _*))
       val controller: ScalaFxController = ApplicationController(currentMatch)
       val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
       controller.setScene(gameScene)

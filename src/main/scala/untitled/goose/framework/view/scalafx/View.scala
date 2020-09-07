@@ -3,14 +3,14 @@ package untitled.goose.framework.view.scalafx
 import java.awt.{Dimension, Toolkit}
 
 import javafx.scene.input.KeyCode
-import untitled.goose.framework.model.TileIdentifier
-import untitled.goose.framework.model.entities.runtime.GameTemplate
 import scalafx.application.JFXApp
 import scalafx.scene.image.Image
+import untitled.goose.framework.model.TileIdentifier
+import untitled.goose.framework.model.entities.definitions.GameDefinition
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.playerselection.IntroMenu
 
-class View(gameData: GameTemplate, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends JFXApp {
+class View(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
   val appTitle = "Untitled Goose Framework"
 

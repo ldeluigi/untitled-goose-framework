@@ -1,8 +1,8 @@
 package untitled.goose.framework.view.scalafx
 
 import scalafx.scene.paint.Color
-import untitled.goose.framework.model.Color.{Color => ModelColor}
 import untitled.goose.framework.model
+import untitled.goose.framework.model.Color.{Color => ModelColor}
 
 /** Matches the untitled.goose.framework.model's color to their ScalaFX actual counterparts. */
 object ColorUtils {

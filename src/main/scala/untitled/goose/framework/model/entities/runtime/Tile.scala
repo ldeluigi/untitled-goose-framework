@@ -3,14 +3,10 @@ package untitled.goose.framework.model.entities.runtime
 import untitled.goose.framework.model.entities.definitions.TileDefinition
 import untitled.goose.framework.model.events.TileEvent
 
-// TODO create immutable wrapper
-
-trait Tile {
+trait Tile extends Defined[TileDefinition] {
   def history: Seq[TileEvent]
 
   def history_=(history: Seq[TileEvent]): Unit
-
-  def definition: TileDefinition
 
   def ==(obj: Tile): Boolean = definition == obj.definition
 

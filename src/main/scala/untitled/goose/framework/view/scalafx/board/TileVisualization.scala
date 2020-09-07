@@ -1,6 +1,5 @@
 package untitled.goose.framework.view.scalafx.board
 
-import untitled.goose.framework.model.entities.runtime.Tile
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label
@@ -8,6 +7,7 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Rectangle, StrokeType}
+import untitled.goose.framework.model.entities.runtime.Tile
 
 /**
  * An object which models how a single tile is rendered.

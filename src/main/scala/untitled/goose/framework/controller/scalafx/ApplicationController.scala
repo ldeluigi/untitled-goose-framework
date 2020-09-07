@@ -11,6 +11,7 @@ import scala.concurrent.{Future, Promise}
 
 /**
  * Implementation for a untitled.goose.framework.controller for the Goose Engine Frameworks that uses a ScalaFx View.
+ *
  * @param game The game that encapsulates the mutable state and the rules.
  */
 case class ApplicationController(game: Game) extends ScalaFxController {
