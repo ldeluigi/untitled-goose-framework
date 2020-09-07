@@ -18,8 +18,7 @@ object MatchMock {
     .actionRules(Set())
     .behaviourRules(Seq())
     .cleanupRules(Seq())
-    .playerOrderingType(PlayerOrderingType.UserDefinedOrder)
-    .startPositionStrategy(tiles => Position(tiles.toList.sorted.take(1).head))
+    .playerOrderingType(PlayerOrderingType.Fixed)
     .playersRange(1 to 10)
     .build, players)
 }

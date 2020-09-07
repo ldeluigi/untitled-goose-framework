@@ -45,6 +45,9 @@ trait BoardBuilder {
   /** Specifies the definition's disposition. */
   def withDisposition(disposition: Int => Disposition): BoardBuilder
 
+  /** Defines the starting tile. */
+  def withFirstTile(tile: TileIdentifier): BoardBuilder
+
   /** Completes the definition's building process. */
   def complete(): BoardDefinition
 
@@ -62,6 +65,7 @@ object BoardBuilder {
     private var nameMap: Map[Int, String] = Map()
     private var groupMap: Map[Int, Set[String]] = Map()
     private var disposition: Option[Int => Disposition] = None
+    private var first: Option[TileIdentifier] = None
 
     private var consumed = false
 
@@ -106,9 +110,14 @@ object BoardBuilder {
       this
     }
 
+    override def withFirstTile(tile: TileIdentifier): BoardBuilder = {
+      this.first = Some(tile)
+      this
+    }
+
     override def complete(): BoardDefinition = {
       if (consumed) throw new IllegalStateException("This builder has already built a definition")
-      val tileSet = (from.get to totalTiles.get).toList
+      val tileSet = (from.get to totalTiles.get)
         .map({
           case num if nameMap.contains(num) && groupMap.contains(num) => TileDefinition(num, nameMap(num), groupMap(num))
           case num if nameMap.contains(num) => TileDefinition(num, nameMap(num))
@@ -116,10 +125,13 @@ object BoardBuilder {
           case num => TileDefinition(num)
         }).toSet
       consumed = true
-      BoardDefinition(name.get, tileSet, disposition.get(totalTiles.get))
+      BoardDefinition(name.get, tileSet, disposition.get(totalTiles.get), tileSet.find(first.get.check(_)).get)
     }
 
-    override def isCompletable: Boolean = !consumed && from.isDefined && totalTiles.isDefined && name.isDefined && disposition.isDefined
+    override def isCompletable: Boolean =
+      !consumed && from.isDefined && totalTiles.isDefined &&
+      name.isDefined && disposition.isDefined && first.isDefined
+
   }
 
   /** Instantiates a definition builder. */

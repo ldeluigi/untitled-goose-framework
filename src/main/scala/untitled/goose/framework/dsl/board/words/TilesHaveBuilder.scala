@@ -2,8 +2,8 @@ package untitled.goose.framework.dsl.board.words
 
 import untitled.goose.framework.dsl.board.nodes.{BoardBuilderNode, GraphicMapNode}
 import untitled.goose.framework.dsl.board.words.properties.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty}
-import untitled.goose.framework.model.TileIdentifier
-import untitled.goose.framework.model.TileIdentifier.Group
+import untitled.goose.framework.model.entities.definitions.TileIdentifier
+import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
 trait TilesHaveBuilder {
@@ -34,7 +34,7 @@ object TilesHaveBuilder {
 
   private class GroupHaveBuilder(tileIdentifier: TileIdentifier, builder: BoardBuilderNode, graphicMap: GraphicMapNode) extends TilesHaveBuilder {
     override def have(group: GroupProperty): Unit =
-      builder.withGroupedTiles(tileIdentifier.group.get.groupName, group.value)
+      builder.withGroupedTiles(tileIdentifier.group.get, group.value)
 
     override def have(color: ColorProperty): Unit =
       graphicMap.addGraphicDescription(tileIdentifier, GraphicDescriptor(color.value))

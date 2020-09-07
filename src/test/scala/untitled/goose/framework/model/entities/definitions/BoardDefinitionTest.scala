@@ -13,7 +13,7 @@ class BoardDefinitionTest extends AnyFlatSpec with Matchers {
   val tiles: Set[TileDefinition] = Set(tile1, tile2, tile3)
   val name: String = "BoardDefinition"
   val disposition: Disposition = Disposition.snake(tiles.size)
-  val board: BoardDefinition = BoardDefinition(name, tiles, disposition)
+  val board: BoardDefinition = BoardDefinition(name, tiles, disposition, tile1)
 
   it should "have a name" in {
     board.name should equal(name)

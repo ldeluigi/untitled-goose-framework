@@ -3,7 +3,7 @@ package untitled.goose.framework.main
 import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
-import untitled.goose.framework.model.PlayerOrderingType.UserDefinedOrder
+import untitled.goose.framework.model.PlayerOrderingType.Fixed
 import untitled.goose.framework.model.events.consumable.StepMovementEvent
 
 
@@ -12,7 +12,7 @@ object GooseGame extends GooseDSL {
   Rules of "Goose Game"
   2 to 4 players
 
-  Players have order(UserDefinedOrder)
+  Players have order(Fixed)
 
   The game board has size(63)
   the game board has disposition(Spiral)

@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.board.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
-import untitled.goose.framework.model.TileIdentifier
+import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
 class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNode {
@@ -28,7 +28,7 @@ class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNod
       .toSeq
     seq ++= graphicMap.keys
       .filter(_.group.isDefined)
-      .map(_.group.get.groupName)
+      .map(_.group.get)
       .filter(!identifiers.containsGroup(_))
       .map(_ + " group define style but is not assigned to any tile").toSeq
     seq

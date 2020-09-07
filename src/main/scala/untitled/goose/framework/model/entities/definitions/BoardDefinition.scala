@@ -61,15 +61,13 @@ object BoardDefinition {
     override def first: TileDefinition = myTiles.head
   }
 
-  private class BoardDefinitionImpl(val name: String, val tiles: Set[TileDefinition], val disposition: Disposition) extends BoardDefinition {
+  private class BoardDefinitionImpl(val name: String, val tiles: Set[TileDefinition], val disposition: Disposition, val first: TileDefinition) extends BoardDefinition {
 
     override def next(tile: TileDefinition): Option[TileDefinition] =
       tile.number flatMap (i => tiles.toSeq.sorted lift i)
 
     override def prev(tile: TileDefinition): Option[TileDefinition] =
       tile.number flatMap (i => tiles.toSeq.sorted lift i - 2)
-
-    override def first: TileDefinition = tiles.toSeq.min
   }
 
   /**
@@ -88,9 +86,10 @@ object BoardDefinition {
    * @param name        The name of the definition game.
    * @param tiles       The tile definitions of the definition.
    * @param disposition The disposition of the tiles.
+   * @param start       The starting tile.
    * @return A new definition.
    */
-  def apply(name: String, tiles: Set[TileDefinition], disposition: Disposition): BoardDefinition = new BoardDefinitionImpl(name, tiles, disposition)
+  def apply(name: String, tiles: Set[TileDefinition], disposition: Disposition, start: TileDefinition): BoardDefinition = new BoardDefinitionImpl(name, tiles, disposition, start)
 
   /**
    * Creates a definition builder for a fluent syntax.

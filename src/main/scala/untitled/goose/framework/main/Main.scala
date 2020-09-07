@@ -8,7 +8,7 @@ import scalafx.scene.image.Image
 import scalafx.scene.paint.Color
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinition, GameDefinitionBuilder}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinition, GameDefinitionBuilder, TileIdentifier}
 import untitled.goose.framework.model.entities.runtime.{GameState, Position}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.GameEvent
@@ -17,7 +17,7 @@ import untitled.goose.framework.model.events.special.NoOpEvent
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import untitled.goose.framework.model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
-import untitled.goose.framework.model.{PlayerOrderingType, TileIdentifier}
+import untitled.goose.framework.model.PlayerOrderingType
 import untitled.goose.framework.view.scalafx.TileIdentifierImplicit._
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.playerselection.IntroMenu
@@ -51,8 +51,7 @@ object Main extends JFXApp {
 
   val gameData: GameDefinition = GameDefinitionBuilder()
     .board(board)
-    .startPositionStrategy(tiles => Position(tiles.toList.sorted.take(1).head))
-    .playerOrderingType(PlayerOrderingType.UserDefinedOrder)
+    .playerOrderingType(PlayerOrderingType.Fixed)
     .playersRange(1 to 10)
     .actionRules(actionRules)
     .behaviourRules(behaviourRule)

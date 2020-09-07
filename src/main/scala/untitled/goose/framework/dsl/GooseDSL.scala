@@ -5,8 +5,7 @@ import untitled.goose.framework.dsl.dice.words.DiceWords
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.RuleSetWords
 import untitled.goose.framework.dsl.rules.actions.words.RulesWord
-import untitled.goose.framework.model.TileIdentifier
-import untitled.goose.framework.model.entities.definitions.{GameDefinition, GameDefinitionBuilder}
+import untitled.goose.framework.model.entities.definitions.{GameDefinition, GameDefinitionBuilder, TileIdentifier}
 import untitled.goose.framework.view.scalafx.View
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
@@ -36,7 +35,6 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
   private def gameGeneration(): GameDefinition = {
     GameDefinitionBuilder()
       .board(ruleBook.boardBuilder.complete())
-      .startPositionStrategy(ruleBook.ruleSet.getFirstTileSelector)
       .playerOrderingType(ruleBook.ruleSet.playerOrderingType)
       .playersRange(ruleBook.ruleSet.playerRange)
       .actionRules(ruleBook.ruleSet.actionRules)

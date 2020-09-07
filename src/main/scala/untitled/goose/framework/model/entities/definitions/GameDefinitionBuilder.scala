@@ -2,26 +2,32 @@ package untitled.goose.framework.model.entities.definitions
 
 import untitled.goose.framework.model.PlayerOrderingType.PlayerOrderingType
 import untitled.goose.framework.model.entities.definitions.GameDefinition.GameDefinitionImpl
-import untitled.goose.framework.model.entities.runtime.{Position, Tile}
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule
 
+/** Builder pattern implemented for a [[GameDefinition]]. */
 trait GameDefinitionBuilder {
+
+  /** Sets the board definition. */
   def board(board: BoardDefinition): GameDefinitionBuilder
 
-  def startPositionStrategy(strategy: Set[Tile] => Position): GameDefinitionBuilder
-
+  /** Sets the player ordering type. */
   def playerOrderingType(ordering: PlayerOrderingType): GameDefinitionBuilder
 
+  /** Sets the minimum and maximum number of player allowed. */
   def playersRange(range: Range): GameDefinitionBuilder
 
+  /** Sets the action rules set. */
   def actionRules(rules: Set[ActionRule]): GameDefinitionBuilder
 
+  /** Sets the behaviour rules list, sorted by priority. */
   def behaviourRules(orderedRules: Seq[BehaviourRule]): GameDefinitionBuilder
 
+  /** Sets the cleanup rules list, sorted by execution order. */
   def cleanupRules(orderedRules: Seq[CleanupRule]): GameDefinitionBuilder
 
+  /** Completes the GameDefinition build process. */
   def build: GameDefinition
 }
 
@@ -32,13 +38,6 @@ object GameDefinitionBuilder {
 
     override def board(board: BoardDefinition): GameDefinitionBuilder = {
       _board = Some(board)
-      this
-    }
-
-    private var _startPositionStrategy: Option[Set[Tile] => Position] = None
-
-    override def startPositionStrategy(strategy: Set[Tile] => Position): GameDefinitionBuilder = {
-      _startPositionStrategy = Some(strategy)
       this
     }
 
@@ -79,7 +78,6 @@ object GameDefinitionBuilder {
 
     override def build: GameDefinition =
       GameDefinitionImpl(_board.get,
-        _startPositionStrategy.get,
         _orderingType.get,
         _playersRange.get,
         _actionRules.get,
@@ -87,5 +85,6 @@ object GameDefinitionBuilder {
         _cleanupRules.get)
   }
 
+  /** Factory method for an empty builder. */
   def apply(): GameDefinitionBuilder = new GameDefinitionBuilderImpl()
 }

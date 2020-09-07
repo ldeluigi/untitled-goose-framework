@@ -1,6 +1,6 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.model.PlayerOrderingType.{FullRandom, RandomOrder, UserDefinedOrder}
+import untitled.goose.framework.model.PlayerOrderingType.{RandomEachTurn, FirstTurnRandomThenFixed, Fixed}
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.definitions.GameDefinition
 import untitled.goose.framework.model.rules.operations.Operation
@@ -32,12 +32,15 @@ object Game {
 
   private class GameImpl(playerPieces: ListMap[Player, Piece], val definition: GameDefinition) extends Game {
     val playerOrdering: PlayerOrdering = definition.playerOrderingType match {
-      case FullRandom => PlayerOrdering.fullRandom
-      case RandomOrder => PlayerOrdering.randomOrder(7)
-      case UserDefinedOrder => PlayerOrdering.givenOrder(playerPieces.keys.toList)
+      case RandomEachTurn => PlayerOrdering.fullRandom
+      case FirstTurnRandomThenFixed => PlayerOrdering.randomOrder(7)
+      case Fixed => PlayerOrdering.givenOrder(playerPieces.keys.toList)
     }
+
+    val board: Board = Board(definition.board)
+
     val rules: RuleSet = PriorityRuleSet(
-      definition.startPositionStrategy,
+      _ => Position(board.first),
       playerOrdering,
       definition.playersRange,
       definition.actionRules,
@@ -49,7 +52,7 @@ object Game {
       rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
       playerPieces,
-      Board(definition.board)
+      board
     )
 
     override def availableActions: Set[Action] =

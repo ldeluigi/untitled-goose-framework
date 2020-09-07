@@ -9,8 +9,7 @@ import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
-import untitled.goose.framework.model.TileIdentifier
-import untitled.goose.framework.model.entities.definitions.GameDefinition
+import untitled.goose.framework.model.entities.definitions.{GameDefinition, TileIdentifier}
 import untitled.goose.framework.model.entities.runtime.Game
 import untitled.goose.framework.view.scalafx.GameScene
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor

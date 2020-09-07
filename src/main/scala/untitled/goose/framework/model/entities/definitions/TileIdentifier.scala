@@ -1,6 +1,4 @@
-package untitled.goose.framework.model
-
-import untitled.goose.framework.model.TileIdentifier.Group
+package untitled.goose.framework.model.entities.definitions
 
 trait TileIdentifier {
 
@@ -8,21 +6,19 @@ trait TileIdentifier {
 
   def number: Option[Int]
 
-  def group: Option[Group]
+  def group: Option[String]
 
 }
 
 object TileIdentifier {
 
-  case class Group(groupName: String)
-
-  private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Option[Group]) extends TileIdentifier {
+  private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Option[String]) extends TileIdentifier {
 
     override def number: Option[Int] = tileNum
 
     override def name: Option[String] = tileName
 
-    override def group: Option[Group] = tileGroups
+    override def group: Option[String] = tileGroups
 
     override def equals(obj: Any): Boolean = {
       obj match {
@@ -59,6 +55,12 @@ object TileIdentifier {
    * @param group the identifying group
    * @return the newly created TileIdentifier object
    */
-  def apply(group: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(group))
+  def apply(group: Group): TileIdentifier = new TileIdentifierImpl(None, None, Some(group.name))
 
+  case class Group(name: String)
+
+  implicit class IdentifierCheck(id: TileIdentifier) {
+    def check(tile: TileDefinition): Boolean =
+      tile.number == id.number || tile.name == id.name || id.group.exists(tile.groups.contains(_))
+  }
 }

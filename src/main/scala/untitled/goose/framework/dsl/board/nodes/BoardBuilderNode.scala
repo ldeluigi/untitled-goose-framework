@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.board.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
-import untitled.goose.framework.model.entities.definitions.{BoardBuilder, BoardDefinition, Disposition}
+import untitled.goose.framework.model.entities.definitions.{BoardBuilder, BoardDefinition, Disposition, TileDefinition, TileIdentifier}
 
 case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileIdentifiersCollection {
 
@@ -9,6 +9,7 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
   private var nameDefined = false
   private var numberDefined = false
   private var dispositionDefined = false
+  private var firstDefined = false
 
 
   private var definedTileNames: Set[String] = Set()
@@ -37,6 +38,9 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
     }
     if (!numberDefined) {
       errorMessages :+= "\tNumber of tiles not defined"
+    }
+    if (!firstDefined) {
+      errorMessages :+= "\tFirst tile not defined"
     }
     errorMessages ++ definedNumbers.filter(!tileRange.contains(_)).map("Tile " + _ + " define properties but is not valid in this definition")
   }
@@ -74,6 +78,12 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
     this
   }
 
+  override def withFirstTile(tile: TileIdentifier): BoardBuilder = {
+    builder.withFirstTile(tile)
+    firstDefined = true
+    this
+  }
+
   override def withGroupedTiles(group: String, newGroup: String): BoardBuilder = {
     builder.withGroupedTiles(group, newGroup)
     definedGroups += newGroup
@@ -86,4 +96,5 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
 
   override def isCompletable: Boolean =
     builder.isCompletable
+
 }

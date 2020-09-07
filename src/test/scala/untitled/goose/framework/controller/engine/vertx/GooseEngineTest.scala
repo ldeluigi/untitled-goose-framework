@@ -26,8 +26,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     .actionRules(Set())
     .behaviourRules(Seq())
     .cleanupRules(Seq())
-    .playerOrderingType(PlayerOrderingType.RandomOrder)
-    .startPositionStrategy(tiles => Position(tiles.toList.sorted.take(1).head))
+    .playerOrderingType(PlayerOrderingType.FirstTurnRandomThenFixed)
     .playersRange(1 to 10)
     .build, ListMap(Player("") -> Piece(Color.Blue)))
 

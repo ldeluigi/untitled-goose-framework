@@ -14,7 +14,7 @@ class BoardDefinitionTest() extends AnyFlatSpec with Matchers {
   val tiles: Set[TileDefinition] = Set(tile1, tile2, tile3)
 
   val name: String = "BoardDefinition"
-  val board: BoardDefinition = BoardDefinition(name, tiles, Disposition.loop(tiles.size))
+  val board: BoardDefinition = BoardDefinition(name, tiles, Disposition.loop(tiles.size), tile1)
   val matchBoard: Board = Board(board)
 
   it should "have a definition" in {
