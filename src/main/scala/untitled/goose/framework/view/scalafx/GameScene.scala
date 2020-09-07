@@ -41,7 +41,7 @@ object GameScene {
     val borderPane = new BorderPane()
     this.content = borderPane
 
-    val boardView: BoardDisplay = BoardDisplay(gameMatch.board, graphicMap)
+    val boardView: BoardDisplay = BoardDisplay(gameMatch.currentState.gameBoard, graphicMap)
     borderPane.center = boardView
     boardView.prefWidth <== this.width * boardProportion
     boardView.prefHeight <== this.height - logHeight

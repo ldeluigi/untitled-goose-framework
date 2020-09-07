@@ -32,7 +32,7 @@ object BehaviourRule {
         .only[T]
         .filter(filterStrategy)
       if (countStrategy(events.size) && when(state)) {
-        if (consume) state.consumableBuffer = state.consumableBuffer.removeAll[T]()
+        if (consume) state.consumableBuffer = state.consumableBuffer.excludeEventType[T]()
         (if (save) Seq(Operation.updateState(s => events.foreach(s.saveEvent))) else Seq()) ++
           operationsStrategy(events, state)
       }

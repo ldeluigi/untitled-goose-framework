@@ -71,7 +71,7 @@ object StepOperation {
     var opSeq: Seq[Operation] = Seq()
     if (tile.isDefined) {
       for (other <- state.players.toSeq if !other.equals(player)) {
-        if (state.playerLastTurn(other).exists(l => state.playerStopsTurns(tile.get, other).contains(l))) {
+        if (state.playerLastTurn(other).exists(l => state.playerStopOnTileTurns(tile.get, other).contains(l))) {
           opSeq = opSeq :+ Operation.trigger(PlayerPassedEvent(other, player, tile.get, state.currentTurn, state.currentCycle))
         }
       }

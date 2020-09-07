@@ -25,7 +25,7 @@ object TurnEndConsumer extends CleanupRule {
         state.currentTurn = state.currentTurn + 1
         state.currentPlayer = state.nextPlayer
       } else {
-        state.currentPlayer.history = state.currentPlayer.history.remove[GainTurnEvent]()
+        state.currentPlayer.history = state.currentPlayer.history.skipOfType[GainTurnEvent]()
       }
     }
   }

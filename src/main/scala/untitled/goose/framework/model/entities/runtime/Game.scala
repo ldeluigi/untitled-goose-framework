@@ -13,9 +13,6 @@ trait Game {
   /** Based on current state, the available actions for the current player. */
   def availableActions: Set[Action]
 
-  /** The definition current state, with definitions. */
-  def board: Board
-
   /** The game current state. */
   def currentState: MutableGameState
 
@@ -32,12 +29,11 @@ object Game {
 
   private class GameImpl(gameBoard: BoardDefinition, playerPieces: Map[Player, Piece], rules: RuleSet) extends Game {
 
-    override val board: Board = Board(gameBoard)
     override val currentState: CycleMutableGameState = CycleMutableGameState(
       rules.first(playerPieces.keySet),
       () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
       playerPieces,
-      board
+      Board(gameBoard)
     )
 
     override def availableActions: Set[Action] =

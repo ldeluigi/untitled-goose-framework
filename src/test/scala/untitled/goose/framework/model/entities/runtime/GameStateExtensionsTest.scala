@@ -40,16 +40,16 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
     pimpedHistory.only[SkipTurnEvent].foreach(_.player.name should equal("a"))
   }
 
-  "PimpedHistory.removeEvent" should "remove a specific event" in {
-    //pimpedHistory.removeEvent(skipTurnSequence.head)
+  "PimpedHistory.excludeEvent" should "skipOfType a specific event" in {
+    //pimpedHistory.excludeEvent(skipTurnSequence.head)
     pending
   }
 
-  "PimpedHistory.remove[T]" should "remove N events of type T event" in {
+  "PimpedHistory.skipOfType[T]" should "skipOfType N events of type T event" in {
     pending
   }
 
-  "PimpedHistory.removeAll[T]" should "remove all the events of type T event" in {
+  "PimpedHistory.excludeEventType[T]" should "skipOfType all the events of type T event" in {
     pending
   }
 
