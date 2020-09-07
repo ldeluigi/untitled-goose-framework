@@ -18,7 +18,7 @@ class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNod
       .filter(_.number.isDefined)
       .map(_.number.get)
       .filter(!identifiers.containsNumber(_))
-      .map("Tile " + _ + " define style but is not valid in this board")
+      .map("Tile " + _ + " define style but is not valid in this definition")
       .toSeq
     seq ++= graphicMap.keys
       .filter(_.name.isDefined)

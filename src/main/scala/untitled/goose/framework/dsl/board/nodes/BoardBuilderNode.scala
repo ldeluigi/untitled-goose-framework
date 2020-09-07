@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.board.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
-import untitled.goose.framework.model.entities.definitions.{Board, BoardBuilder, Disposition}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, BoardBuilder, Disposition}
 
 case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileIdentifiersCollection {
 
@@ -27,7 +27,7 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
 
 
   override def check: Seq[String] = {
-    errorMessages ++= (if (isCompletable) Seq() else Seq("Board definition not complete: "))
+    errorMessages ++= (if (isCompletable) Seq() else Seq("BoardDefinition definition not complete: "))
 
     if (!nameDefined) {
       errorMessages :+= "\tName not defined"
@@ -38,7 +38,7 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
     if (!numberDefined) {
       errorMessages :+= "\tNumber of tiles not defined"
     }
-    errorMessages ++ definedNumbers.filter(!tileRange.contains(_)).map("Tile " + _ + " define properties but is not valid in this board")
+    errorMessages ++ definedNumbers.filter(!tileRange.contains(_)).map("Tile " + _ + " define properties but is not valid in this definition")
   }
 
   override def withName(name: String): BoardBuilder = {
@@ -74,13 +74,13 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
     this
   }
 
-  override def withGroupedTiles(originGroup: String, newGroup: String): BoardBuilder = {
-    builder.withGroupedTiles(originGroup, newGroup)
+  override def withGroupedTiles(group: String, newGroup: String): BoardBuilder = {
+    builder.withGroupedTiles(group, newGroup)
     definedGroups += newGroup
     this
   }
 
-  override def complete(): Board = {
+  override def complete(): BoardDefinition = {
     builder.complete()
   }
 

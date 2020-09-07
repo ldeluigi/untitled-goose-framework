@@ -8,7 +8,7 @@ import untitled.goose.framework.model.rules.operations.Operation
 
 case class SkipTurnBehaviour() extends BehaviourRuleImpl[SkipTurnEvent](
   operationsStrategy = (events, _) => {
-    events.map(e => Operation.updateState(_ => e.player.history = e.player.history.remove[LoseTurnEvent]()))
+    events.map(e => Operation.updateState(_ => e.player.history = e.player.history.skipOfType[LoseTurnEvent]()))
   },
   consume = true, save = false
 )

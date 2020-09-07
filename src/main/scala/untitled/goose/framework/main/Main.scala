@@ -5,7 +5,7 @@ import java.awt.{Dimension, Toolkit}
 import javafx.scene.input.KeyCode
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
-import untitled.goose.framework.model.entities.definitions.{Board, Disposition}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
 import untitled.goose.framework.model.entities.runtime.{GameState, GameTemplate, GameTemplateBuilder, Position}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.GameEvent
@@ -31,7 +31,7 @@ object Main extends JFXApp {
 
   //From DSL generation
   val totalTiles = 50
-  val board: Board = Board(totalTiles, Disposition.snake(totalTiles))
+  val board: BoardDefinition = BoardDefinition("Test Main", totalTiles, Disposition.snake(totalTiles))
   val movementDice: MovementDice = Dice.Factory.randomMovement(1 to 6, "six face")
   val testDialog: Action = new Action {
     override def name: String = "Launch Dialog!"

@@ -3,13 +3,11 @@ package untitled.goose.framework.model.entities.runtime
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
-//TODO review this implementation
-
 object ClonedGameState {
 
   private class ClonedGameState(state: GameState) extends GameState {
 
-    private val clonedBoard = GameBoard(state.gameBoard.board)
+    private val clonedBoard = Board(state.gameBoard.definition)
     clonedBoard.tiles.foreach(t => t.history = state.gameBoard.tiles.find(_.definition == t.definition).get.history)
 
     private val clonedCurrentPlayer = clonePlayer(state.currentPlayer)
@@ -26,8 +24,7 @@ object ClonedGameState {
 
     override val playerPieces: Map[Player, Piece] = state.playerPieces
 
-    override val gameBoard: GameBoard = clonedBoard
-
+    override val gameBoard: Board = clonedBoard
 
     override val consumableBuffer: Seq[ConsumableGameEvent] = state.consumableBuffer
 
@@ -40,6 +37,7 @@ object ClonedGameState {
     }
   }
 
+  /** Creates an immutable clone of a game state. Useful for asynchronous display. */
   def apply(gameState: GameState): GameState = new ClonedGameState(gameState)
 }
 

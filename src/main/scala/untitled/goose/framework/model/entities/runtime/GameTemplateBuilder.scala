@@ -1,14 +1,14 @@
 package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.PlayerOrderingType.{FullRandom, PlayerOrderingType, RandomOrder, UserDefinedOrder}
-import untitled.goose.framework.model.entities.definitions.Board
+import untitled.goose.framework.model.entities.definitions.BoardDefinition
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule
 import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 
 trait GameTemplateBuilder {
-  def board(board: Board): GameTemplateBuilder
+  def board(board: BoardDefinition): GameTemplateBuilder
 
   def startPositionStrategy(strategy: Set[Tile] => Position): GameTemplateBuilder
 
@@ -28,9 +28,9 @@ trait GameTemplateBuilder {
 object GameTemplateBuilder {
 
   private class GameTemplateBuilderImpl() extends GameTemplateBuilder {
-    private var _board: Option[Board] = None
+    private var _board: Option[BoardDefinition] = None
 
-    override def board(board: Board): GameTemplateBuilder = {
+    override def board(board: BoardDefinition): GameTemplateBuilder = {
       _board = Some(board)
       this
     }
@@ -87,7 +87,7 @@ object GameTemplateBuilder {
         _cleanupRules.get)
   }
 
-  private class GameTemplateImpl(board: Board,
+  private class GameTemplateImpl(board: BoardDefinition,
                                  startPositionStrategy: Set[Tile] => Position,
                                  playerOrderingType: PlayerOrderingType,
                                  val playersRange: Range,

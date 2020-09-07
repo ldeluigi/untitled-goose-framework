@@ -1,46 +1,50 @@
 package untitled.goose.framework.model.entities.definitions
 
+/** Fluent syntax for a definition step-by-step creation. */
 trait BoardBuilder {
-  /** Specifies a board's name.
-   *
-   * @param name the name of the board
-   * @return the partial board builder object
-   */
+
+  /** Defines the name of the game. */
   def withName(name: String): BoardBuilder
 
-  /** Specifies the board's tile numeration.
-   *
-   * @param total the global number of tiles in the runtime
-   * @param from  the initial tile index
-   * @return the partial board builder object
+  /**
+   * Adds numbered tiles to the definition tile set.
+   * @param total how many tiles should be added.
+   * @param from the number of the first tile.
+   * @return this builder.
    */
   def withNumberedTiles(total: Int, from: Int = 1): BoardBuilder
 
-  /** Specifies the tile's name
-   *
-   * @param number the tile's index to name
-   * @param name   the name to set to the specified tile
-   * @return the partial board builder object
+  /**
+   * Adds a name to a numbered tile.
+   * @param number the tile's number.
+   * @param name   the name given to the numbered tile.
+   * @return this builder.
    */
   def withNamedTile(number: Int, name: String): BoardBuilder
 
+  /**
+   * Adds a group to some numbered tiles specified.
+   * @param group The group to add to those tiles.
+   * @param number The numbers of the tiles to group.
+   * @return this builder.
+   */
   def withGroupedTiles(group: String, number: Int*): BoardBuilder
 
-  def withGroupedTiles(originGroup: String, newGroup: String): BoardBuilder
-
-  /** Specifies the board's disposition.
-   *
-   * @param disposition a certain disposition type
-   * @return the partial board builder object
+  /**
+   * Adds a group to the tiles that belong to another group.
+   * @param group The group of the tiles to select.
+   * @param newGroup The group to add to selected tiles.
+   * @return this builder.
    */
+  def withGroupedTiles(group: String, newGroup: String): BoardBuilder
+
+  /** Specifies the definition's disposition. */
   def withDisposition(disposition: Int => Disposition): BoardBuilder
 
-  /** Completes the board's building process.
-   *
-   * @return the parameter-complete board
-   */
-  def complete(): Board
+  /** Completes the definition's building process. */
+  def complete(): BoardDefinition
 
+  /** Checks if the builder can complete the definition. */
   def isCompletable: Boolean
 }
 
@@ -54,6 +58,8 @@ object BoardBuilder {
     private var nameMap: Map[Int, String] = Map()
     private var groupMap: Map[Int, Set[String]] = Map()
     private var disposition: Option[Int => Disposition] = None
+
+    private var consumed = false
 
     override def withName(name: String): BoardBuilder = {
       this.name = Some(name)
@@ -77,8 +83,8 @@ object BoardBuilder {
       this
     }
 
-    override def withGroupedTiles(originGroup: String, newGroup: String): BoardBuilder = {
-      this.assignGroup(newGroup, groupMap.filter(_._2.contains(originGroup)).keys.toSeq)
+    override def withGroupedTiles(group: String, newGroup: String): BoardBuilder = {
+      this.assignGroup(newGroup, groupMap.filter(_._2.contains(group)).keys.toSeq)
       this
     }
 
@@ -96,7 +102,8 @@ object BoardBuilder {
       this
     }
 
-    override def complete(): Board = {
+    override def complete(): BoardDefinition = {
+      if (consumed) throw new IllegalStateException("This builder has already built a definition")
       val tileSet = (from.get to totalTiles.get).toList
         .map({
           case num if nameMap.contains(num) && groupMap.contains(num) => TileDefinition(num, nameMap(num), groupMap(num))
@@ -104,11 +111,13 @@ object BoardBuilder {
           case num if groupMap.contains(num) => TileDefinition(num, groupMap(num))
           case num => TileDefinition(num)
         }).toSet
-      Board(name.get, tileSet, disposition.get(totalTiles.get))
+      consumed = true
+      BoardDefinition(name.get, tileSet, disposition.get(totalTiles.get))
     }
 
-    override def isCompletable: Boolean = from.isDefined && totalTiles.isDefined && name.isDefined && disposition.isDefined
+    override def isCompletable: Boolean = !consumed && from.isDefined && totalTiles.isDefined && name.isDefined && disposition.isDefined
   }
 
+  /** Instantiates a definition builder. */
   def apply(): BoardBuilder = new BoardBuilderImpl()
 }

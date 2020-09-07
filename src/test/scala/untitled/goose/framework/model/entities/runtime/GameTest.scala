@@ -15,7 +15,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   "A Match" should "have a MatchBoard" in {
-    gameMatch.board.board.tiles should equal(GameBoard(MatchMock.board).board.tiles)
+    gameMatch.currentState.gameBoard.definition.tiles should equal(Board(MatchMock.board).definition.tiles)
   }
 
   it should "have a set of players" in {
@@ -42,9 +42,9 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   it should "update player pieces as told" in {
-    gameMatch.currentState.updatePlayerPiece(MatchMock.p1, _ => Piece(Color.Blue, Some(Position(gameMatch.board.first))))
+    gameMatch.currentState.updatePlayerPiece(MatchMock.p1, _ => Piece(Color.Blue, Some(Position(gameMatch.currentState.gameBoard.first))))
 
-    gameMatch.currentState.playerPieces(MatchMock.p1).position.get should equal(Position(gameMatch.board.first))
+    gameMatch.currentState.playerPieces(MatchMock.p1).position.get should equal(Position(gameMatch.currentState.gameBoard.first))
   }
 
 }
