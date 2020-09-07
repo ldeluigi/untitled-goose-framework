@@ -8,7 +8,7 @@ import untitled.goose.framework.model.rules.cleanup.{CleanupRule, TurnEndConsume
 import untitled.goose.framework.model.rules.operations.Operation
 
 // TODO consider making a builder of this
-
+// TODO scaladoc afterwards
 class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                       playerOrdering: PlayerOrdering,
                       playersRange: Range,
@@ -66,7 +66,7 @@ object PriorityRuleSet {
    * @param cleanupRules   cleanup rule
    */
   def apply(startTile: Set[Tile] => Position = tiles => Position(tiles.toList.sorted.take(1).head),
-            playerOrdering: PlayerOrdering = PlayerOrdering.randomOrder(7),
+            playerOrdering: PlayerOrdering = PlayerOrdering.randomOrder,
             admissiblePlayers: Range,
             actionRules: Set[ActionRule] = Set(),
             behaviourRule: Seq[BehaviourRule] = Seq(TurnEndEventBehaviour()),

@@ -1,8 +1,10 @@
 package untitled.goose.framework.model.rules.ruleset
 
-import untitled.goose.framework.model.entities.runtime.Player
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers
+import untitled.goose.framework.model.entities.runtime.Player
+
+import scala.util.Random
 
 class PlayerOrderingTest extends AnyFlatSpec with Matchers {
 
@@ -15,7 +17,8 @@ class PlayerOrderingTest extends AnyFlatSpec with Matchers {
   it should "shuffle the given players into a randomized order" in {
     val p3: Player = Player("P3")
     val p4: Player = Player("P4")
-    val ordering: PlayerOrdering = PlayerOrdering.randomOrder(4)
+    Random.setSeed(4)
+    val ordering: PlayerOrdering = PlayerOrdering.randomOrder
     val playerList: Seq[Player] = List(p1, p2, p3, p4)
     ordering.first(playerList.toSet).equals(p1)
     ordering.next(p3, playerList.toSet).equals(p4)

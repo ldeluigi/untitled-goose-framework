@@ -7,6 +7,15 @@ import untitled.goose.framework.model.rules.operations.Operation
 
 object StepOperation {
 
+  /**
+   * Creates a sequence of Operations that move a player step-by-step.
+   *
+   * @param state   the current state of the game.
+   * @param steps   how many steps should the player do.
+   * @param player  the player that should walk.
+   * @param forward if the player should walk forward or backward.
+   * @return a sequence of operations, each doing one step or an event trigger.
+   */
   def apply(state: GameState, steps: Int, player: Player, forward: Boolean): Seq[Operation] = {
     (1 to steps).toList.flatMap(i => {
       stepOperation(state, player, forward, steps - i)

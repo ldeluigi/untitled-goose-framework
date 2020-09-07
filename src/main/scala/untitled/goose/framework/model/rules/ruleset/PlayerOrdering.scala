@@ -1,33 +1,42 @@
 package untitled.goose.framework.model.rules.ruleset
 
 import untitled.goose.framework.model.entities.runtime.Player
-import untitled.goose.framework.model.rules.PlayerUtils
 
 import scala.util.Random
 
+/** Defines the order of players during a game. */
 trait PlayerOrdering {
 
+  /** Who goes first. */
   def first(players: Set[Player]): Player
 
+  /** Who is next, based on the current player. */
   def next(current: Player, players: Set[Player]): Player
 
 }
 
 object PlayerOrdering {
 
+  /** Every turn, a random player is chosen. */
   def fullRandom: PlayerOrdering = new PlayerOrdering {
+    private def random[T](s: Set[T]): T = {
+      val n = Random.nextInt(s.size)
+      s.iterator.drop(n).next
+    }
 
-    override def first(players: Set[Player]): Player = PlayerUtils.selectRandom(players)
+    private def selectRandom(players: Set[Player]): Player = random(players)
 
-    override def next(current: Player, players: Set[Player]): Player = PlayerUtils.selectRandom(players)
+    override def first(players: Set[Player]): Player = selectRandom(players)
+
+    override def next(current: Player, players: Set[Player]): Player = selectRandom(players)
   }
 
-  def randomOrder(seed: Long): PlayerOrdering = new PlayerOrdering {
+  /** List of players is shuffled, then is kept fixed for the entire game. */
+  def randomOrder: PlayerOrdering = new PlayerOrdering {
 
     private var playerList: Seq[Player] = List()
 
     override def first(players: Set[Player]): Player = {
-      Random.setSeed(seed)
       playerList = Random.shuffle(players).toList
       playerList.head
     }
@@ -40,7 +49,7 @@ object PlayerOrdering {
 
   /** A factory to create a custom players ordering.
    *
-   * @param players the whole players set
+   * @param players the whole players sequence
    * @return a new custom player ordering
    */
   def givenOrder(players: Seq[Player]): PlayerOrdering = new PlayerOrdering {

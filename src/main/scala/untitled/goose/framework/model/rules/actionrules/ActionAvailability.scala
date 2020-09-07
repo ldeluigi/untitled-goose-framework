@@ -2,12 +2,18 @@ package untitled.goose.framework.model.rules.actionrules
 
 import untitled.goose.framework.model.actions.Action
 
+/** Represents the availability of an action to a player. */
 trait ActionAvailability {
 
+  /** The action. */
   def action: Action
 
+  /** True if the action should be available to the player, false if
+   * it should be negated.
+   */
   def allowed: Boolean
 
+  /** The priority of this action availability. */
   def priority: Int
 
   override def equals(obj: Any): Boolean =
@@ -22,7 +28,7 @@ trait ActionAvailability {
 
 object ActionAvailability {
 
-  /** Implicit conversion for a ActionAvailability object-
+  /** Implicit conversion for an ActionAvailability object.
    *
    * @param tuple a tuple containing permission and priority of a certain action
    * @return the ActionAvailability from the tuple
@@ -36,8 +42,10 @@ object ActionAvailability {
       override def priority: Int = tuple._2
     }
 
+  /** Factory method to build an action availability. */
   def apply(action: Action, priority: Int = 0, allowed: Boolean = true): ActionAvailability =
     (allowed, priority, action)
 
+  /** Unapply method to extract the tuple from an action availability. */
   def unapply(arg: ActionAvailability): Option[(Boolean, Int, Action)] = Some(arg.allowed, arg.priority, arg.action)
 }

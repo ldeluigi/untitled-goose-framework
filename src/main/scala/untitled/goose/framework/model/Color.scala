@@ -6,7 +6,7 @@ object Color extends Enumeration {
 
   /** Selects a random domain-defined color.
    *
-   * @return a randomized domain-defined color
+   * @return a randomized domain-defined color.
    */
   def random: Color = {
     val n = Random.nextInt(Color.values.size)

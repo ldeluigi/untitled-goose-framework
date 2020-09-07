@@ -1,6 +1,6 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.model.PlayerOrderingType.{RandomEachTurn, FirstTurnRandomThenFixed, Fixed}
+import untitled.goose.framework.model.PlayerOrderingType.{FirstTurnRandomThenFixed, Fixed, RandomEachTurn}
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.definitions.GameDefinition
 import untitled.goose.framework.model.rules.operations.Operation
@@ -33,7 +33,7 @@ object Game {
   private class GameImpl(playerPieces: ListMap[Player, Piece], val definition: GameDefinition) extends Game {
     val playerOrdering: PlayerOrdering = definition.playerOrderingType match {
       case RandomEachTurn => PlayerOrdering.fullRandom
-      case FirstTurnRandomThenFixed => PlayerOrdering.randomOrder(7)
+      case FirstTurnRandomThenFixed => PlayerOrdering.randomOrder
       case Fixed => PlayerOrdering.givenOrder(playerPieces.keys.toList)
     }
 

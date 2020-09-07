@@ -302,7 +302,7 @@ object GooseGameNoDSL extends JFXApp {
 
   val ruleSet: RuleSet = PriorityRuleSet(
     tiles => Position(tiles.toList.sorted.take(1).head),
-    PlayerOrdering.randomOrder(7),
+    PlayerOrdering.randomOrder,
     1 to 10,
     actionRules,
     behaviourRule,

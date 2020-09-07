@@ -4,6 +4,7 @@ import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.runtime.{MutableGameState, Player, Position, Tile}
 import untitled.goose.framework.model.rules.operations.Operation
 
+/** The rule set collects all rules for a game. */
 trait RuleSet {
 
   def stateBasedOperations(state: MutableGameState): Seq[Operation]

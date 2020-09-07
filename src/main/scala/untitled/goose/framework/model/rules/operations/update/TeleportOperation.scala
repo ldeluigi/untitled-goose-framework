@@ -5,6 +5,15 @@ import untitled.goose.framework.model.events.consumable.{StopOnTileEvent, TileEn
 import untitled.goose.framework.model.rules.operations.Operation
 
 object TeleportOperation {
+
+  /**
+   * Creates a teleport operation sequence with given parameters.
+   *
+   * @param state  the current game state.
+   * @param player the player that should teleport.
+   * @param tile   the tile to which the player should teleport.
+   * @return a sequence of operations to do.
+   */
   def apply(state: GameState, player: Player, tile: Tile): Seq[Operation] = {
 
     var opSeq: Seq[Operation] = Seq()

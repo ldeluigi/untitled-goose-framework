@@ -6,6 +6,7 @@ import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
 import untitled.goose.framework.model.events.persistent.LoseTurnEvent
 import untitled.goose.framework.model.rules.ruleset.RulePriorities.GooseFrameworkPriorities
 
+/** This action rule negates given actions if a [[LoseTurnEvent]] occurs for a player. */
 case class LoseTurnActionRule(private val allOtherActions: Set[Action])
                              (implicit val rulePriorities: GooseFrameworkPriorities)
   extends ActionRule {

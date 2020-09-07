@@ -5,6 +5,7 @@ import untitled.goose.framework.model.entities.runtime.MutableGameState
 import untitled.goose.framework.model.events.consumable.TurnShouldEndEvent
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, TurnEndedEvent}
 
+// TODO scaladoc
 object TurnEndConsumer extends CleanupRule {
 
   override def applyRule(state: MutableGameState): Unit =
