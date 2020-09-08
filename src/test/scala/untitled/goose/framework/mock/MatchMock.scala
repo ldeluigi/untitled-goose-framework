@@ -1,16 +1,23 @@
 package untitled.goose.framework.mock
 
-import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player, Position}
-import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PlayerOrderingType, PriorityRuleSet}
 import untitled.goose.framework.model.Colour
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder, TileDefinition}
+import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player, Tile}
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
 
 import scala.collection.immutable.ListMap
 
 object MatchMock {
+  val tile: Tile = Tile(TileDefinition("Prison"))
+  val tile2: Tile = Tile(TileDefinition("Well"))
+
   def board: BoardDefinition = BoardDefinition("mock", 10, Disposition.snake(10))
+
+  //def board2: BoardDefinition = BoardDefinition("mock2", Set(tile, tile2), Disposition.snake(10,1), tile)
   def p1: Player = Player("P1")
+
   def p2: Player = Player("P2")
+
   def players: ListMap[Player, Piece] = ListMap(p1 -> Piece(Colour.Red), p2 -> Piece(Colour.Blue))
 
   def default: Game = Game(GameDefinitionBuilder()
