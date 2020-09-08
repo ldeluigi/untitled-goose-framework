@@ -2,7 +2,7 @@ package untitled.goose.framework.dsl.nodes
 
 import untitled.goose.framework.dsl.board.nodes.TileIdentifiersCollection
 import untitled.goose.framework.dsl.rules.actions.nodes.ActionRuleSetNode
-import untitled.goose.framework.model.PlayerOrderingType.PlayerOrderingType
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule

@@ -1,8 +1,8 @@
 package untitled.goose.framework.mock
 
 import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player, Position}
-import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet}
-import untitled.goose.framework.model.{Color, PlayerOrderingType}
+import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PlayerOrderingType, PriorityRuleSet}
+import untitled.goose.framework.model.Color
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder}
 
 import scala.collection.immutable.ListMap
