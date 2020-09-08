@@ -20,11 +20,9 @@ class PlayerOrderingTest extends AnyFlatSpec with Matchers {
     Random.setSeed(4)
     val ordering: PlayerOrdering = PlayerOrdering.randomOrder
     val playerList: Seq[Player] = List(p1, p2, p3, p4)
-    //ordering.first(playerList).equals(p1)
-    //ordering.next(p3, playerList).equals(p4)
 
     ordering.first(playerList) should be(p1)
-    // ordering.next(p3, playerList) should be (p4) //TODO ritorna p1 invece di p4
+    ordering.next(p2, playerList) should be(p3)
   }
 
   it should "return a new custom player ordering" in {
