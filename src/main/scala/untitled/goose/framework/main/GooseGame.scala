@@ -3,7 +3,7 @@ package untitled.goose.framework.main
 import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
-import untitled.goose.framework.model.PlayerOrderingType.Fixed
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
 import untitled.goose.framework.model.events.consumable.StepMovementEvent
 
 

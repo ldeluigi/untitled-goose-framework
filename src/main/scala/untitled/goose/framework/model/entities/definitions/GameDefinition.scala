@@ -1,6 +1,6 @@
 package untitled.goose.framework.model.entities.definitions
 
-import untitled.goose.framework.model.PlayerOrderingType.PlayerOrderingType
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule

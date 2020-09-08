@@ -17,7 +17,7 @@ import untitled.goose.framework.model.events.special.NoOpEvent
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import untitled.goose.framework.model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
-import untitled.goose.framework.model.PlayerOrderingType
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
 import untitled.goose.framework.view.scalafx.TileIdentifierImplicit._
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.playerselection.IntroMenu

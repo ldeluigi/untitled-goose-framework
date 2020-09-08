@@ -7,6 +7,11 @@ import untitled.goose.framework.model.rules.operations.Operation
 /** The rule set collects all rules for a game. */
 trait RuleSet {
 
+  /**
+   *
+   * @param state
+   * @return
+   */
   def stateBasedOperations(state: MutableGameState): Seq[Operation]
 
   def cleanupOperations(state: MutableGameState): Unit

@@ -1,6 +1,6 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.model.PlayerOrderingType.{FirstTurnRandomThenFixed, Fixed, RandomEachTurn}
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.{FirstTurnRandomThenFixed, Fixed, RandomEachTurn}
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.definitions.GameDefinition
 import untitled.goose.framework.model.rules.operations.Operation

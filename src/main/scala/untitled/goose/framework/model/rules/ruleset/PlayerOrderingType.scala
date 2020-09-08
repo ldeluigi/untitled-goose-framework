@@ -1,4 +1,4 @@
-package untitled.goose.framework.model
+package untitled.goose.framework.model.rules.ruleset
 
 object PlayerOrderingType extends Enumeration {
 
