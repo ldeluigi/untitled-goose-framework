@@ -79,19 +79,17 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   }
 
   "GameStateExtensions.getTile(num)" should "return the tile with that number if it exists" in {
-    pending
-    var gameMatch: Game = MatchMock.default
+    var gameMatch: Game = MatchMock.alternative
     val gameState: GameState = gameMatch.currentState
-    val tile: Tile = Tile(TileDefinition(1))
-    gameState.getTile(1).get should be(tile)
+    val tile: Tile = Tile(TileDefinition(11))
+    gameState.getTile(11).get should be(tile)
   }
 
   "GameStateExtensions.getTile(name)" should "return the tile with that name if it exists" in {
-    pending
-    var gameMatch: Game = MatchMock.default
+    var gameMatch: Game = MatchMock.alternative
     val gameState: GameState = gameMatch.currentState
     val tile: Tile = Tile(TileDefinition("Prison"))
-    gameState.getTile("Prison") should be(tile)
+    gameState.getTile("Prison").get should be(tile)
   }
 
   "GameStateExtensions.playerStopsTurn" should "return the turns on which a player has stopped on a tile" in {
