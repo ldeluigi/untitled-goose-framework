@@ -101,7 +101,7 @@ object ActionRuleNode {
 
     override def generateActionRule(): ActionRule = ???
 
-    override def generateAction(): Action = ???
+    override def generateAction(): Action = Action(actionName, state => ???) //TODO trigger customEvent
 
     override def check: Seq[String] = ???
   }
