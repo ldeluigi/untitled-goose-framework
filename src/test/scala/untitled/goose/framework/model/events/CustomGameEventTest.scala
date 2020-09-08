@@ -39,5 +39,15 @@ class CustomGameEventTest extends AnyFlatSpec with BeforeAndAfterEach {
     an[IllegalArgumentException] should be thrownBy customEvent.setProperty("intVal", "ciao")
   }
 
+  it should "work even if there are keys with same name but different values" in {
+    customEvent.defineKey[Int]("value")
+    customEvent.defineKey[String]("value")
+    customEvent.setProperty("value", 1)
+    customEvent.setProperty("value", "ciao")
+
+    customEvent.getProperty[Int]("value").get should be(1)
+    customEvent.getProperty[String]("value").get should be("ciao")
+  }
+
 
 }

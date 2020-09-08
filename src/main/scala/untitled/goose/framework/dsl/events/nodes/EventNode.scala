@@ -8,7 +8,7 @@ case class EventNode(name: String, eventType: EventType) extends RuleBookNode {
 
   override def check: Seq[String] = ???
 
-  def addPropertyNode(propertyNode: EventPropertyNode): Unit = ???
+  def addPropertyNode(propertyNode: EventPropertyNode): Unit = ??? //TODO choose if use node or not
 
   def isPropertyDefined[T](key: Key[T]): Boolean = ???
 

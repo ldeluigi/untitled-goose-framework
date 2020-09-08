@@ -2,7 +2,7 @@ package untitled.goose.framework.dsl.dice.words
 
 class CreateWord {
 
-  def movementDice(name: String): DiceHavingWord[Int] = ???
+  def movementDice(name: String): DiceHavingWord[Int] = DiceHavingWord(name)
 
-  def dice(name: String): DiceHavingWord[Any] = ???
+  def dice(name: String): DiceHavingWord[Any] = DiceHavingWord(name)
 }
