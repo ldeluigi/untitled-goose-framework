@@ -1,9 +1,9 @@
 package untitled.goose.framework.model.actions
 
-import untitled.goose.framework.mock.MatchMock.default
-import untitled.goose.framework.model.events.consumable.StepMovementEvent
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock.default
+import untitled.goose.framework.model.events.consumable.StepMovementEvent
 
 class StepForwardActionTest extends AnyFlatSpec with Matchers {
 
@@ -12,7 +12,9 @@ class StepForwardActionTest extends AnyFlatSpec with Matchers {
   it should "execute a one step ahead action of exactly 1 step" in {
     val event = StepForwardAction().trigger(default.currentState)
 
-    event.isInstanceOf[StepMovementEvent] && event.asInstanceOf[StepMovementEvent].movement == 1 should equal(true)
+    event.isInstanceOf[StepMovementEvent] should be(true)
+    event.asInstanceOf[StepMovementEvent].movement should be
+    1
   }
 
 }

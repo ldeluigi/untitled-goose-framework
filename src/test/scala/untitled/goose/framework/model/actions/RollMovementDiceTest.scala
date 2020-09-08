@@ -1,10 +1,10 @@
 package untitled.goose.framework.model.actions
 
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock.default
 import untitled.goose.framework.model.entities.Dice.MovementDice
 import untitled.goose.framework.model.events.consumable.MovementDiceRollEvent
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
 
 class RollMovementDiceTest extends AnyFlatSpec with Matchers {
 
@@ -17,7 +17,8 @@ class RollMovementDiceTest extends AnyFlatSpec with Matchers {
       override def roll: Int = 5
     }).trigger(default.currentState)
 
-    event.isInstanceOf[MovementDiceRollEvent] && event.asInstanceOf[MovementDiceRollEvent].result == Seq(5) should be(true)
+    event.isInstanceOf[MovementDiceRollEvent] should be(true)
+    event.asInstanceOf[MovementDiceRollEvent].result should contain theSameElementsAs Seq(5)
   }
 
 

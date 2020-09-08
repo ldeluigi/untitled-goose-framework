@@ -1,19 +1,19 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, TileDefinition}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, TileDefinition}
 
-class BoardDefinitionTest() extends AnyFlatSpec with Matchers {
+class BoardTest() extends AnyFlatSpec with Matchers {
 
-  behavior of "BoardDefinitionTest"
+  behavior of "Board"
 
   val tile1: TileDefinition = TileDefinition(1)
   val tile2: TileDefinition = TileDefinition(2)
   val tile3: TileDefinition = TileDefinition(3)
   val tiles: Set[TileDefinition] = Set(tile1, tile2, tile3)
 
-  val name: String = "BoardDefinition"
+  val name: String = "Board"
   val board: BoardDefinition = BoardDefinition(name, tiles, Disposition.loop(tiles.size), tile1)
   val matchBoard: Board = Board(board)
 

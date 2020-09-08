@@ -17,7 +17,7 @@ class RollDiceTest extends AnyFlatSpec with Matchers {
       override def roll: Int = 5
     }, 1).trigger(default.currentState)
 
-    event.isInstanceOf[DiceRollEvent[_]] should be
+    event.isInstanceOf[DiceRollEvent[_]] should be(true)
     event.asInstanceOf[DiceRollEvent[_]].result should contain theSameElementsAs Seq(5)
   }
 
