@@ -1,11 +1,15 @@
 package untitled.goose.framework.main
 
+import java.awt.{Dimension, Toolkit}
+
+import javafx.scene.input.KeyCode
 import scalafx.application.JFXApp
+import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
 import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
-import untitled.goose.framework.model.entities.runtime.{Piece, Player}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder, TileIdentifier}
+import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
@@ -15,7 +19,11 @@ import untitled.goose.framework.model.rules.actionrules.{ActionRule, LoseTurnAct
 import untitled.goose.framework.model.rules.behaviours._
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
-import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RulePriorities, RuleSet}
+import untitled.goose.framework.model.rules.ruleset.{PlayerOrderingType, RulePriorities}
+import untitled.goose.framework.view.scalafx.GameScene
+import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+
+import scala.collection.immutable.ListMap
 
 
 object GooseGameNoDSL extends JFXApp {
@@ -48,6 +56,7 @@ object GooseGameNoDSL extends JFXApp {
     .withNamedTile(58, theDeath)
     .withNamedTile(63, theEnd)
     .withGroupedTiles(gooseTileGroup, 5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59)
+    .withFirstTile(TileIdentifier(1))
     .complete()
 
   //2 dices
@@ -300,21 +309,21 @@ object GooseGameNoDSL extends JFXApp {
 
   val actionRules: Set[ActionRule] = Set(rollDiceActionRule, LoseTurnActionRule(Set(rollAction)))
 
-  val ruleSet: RuleSet = PriorityRuleSet(
-    PlayerOrdering.randomOrder,
-    1 to 10,
-    actionRules,
-    behaviourRule,
-    Seq(),
-  )
-
   //From a menu GUI that select and creates player and pieces on the press of a "Start runtime" button
 
-  val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Colour.Red), Player("P2") -> Piece(Colour.Blue))
+  val players: ListMap[Player, Piece] = ListMap(Player("P1") -> Piece(Colour.Red), Player("P2") -> Piece(Colour.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
-  // TODO make it legal
-  /*val currentMatch: Game = Game(board, players, ruleSet)
+
+  val currentMatch: Game = Game(GameDefinitionBuilder()
+  .board(board)
+  .actionRules(actionRules)
+  .behaviourRules(behaviourRule)
+  .cleanupRules(Seq())
+  .playerOrderingType(PlayerOrderingType.FirstTurnRandomThenFixed)
+  .playersRange(1 to 10)
+  .build,
+  players)
 
   //View launch
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
@@ -336,5 +345,5 @@ object GooseGameNoDSL extends JFXApp {
       stage.setFullScreen(true)
     }
   )
-*/
+
 }
