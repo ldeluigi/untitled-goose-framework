@@ -11,7 +11,7 @@ case class EventDefinitionsNode() extends RuleBookNode with EventCollection {
 
   override def check: Seq[String] = {
     (definitions groupBy (_.name) collect { case (x, List(_, _, _*)) => x } map
-      ("Duplicate node definition: " + _) toSeq) ++ definitions.flatMap(_.check)
+      ("Duplicate node definition: \"" + _ + "\"") toSeq) ++ definitions.flatMap(_.check)
   }
 
   override def getEvent(name: String): EventNode = definitions.find(_.name == name).get

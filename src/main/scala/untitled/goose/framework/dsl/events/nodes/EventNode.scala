@@ -10,7 +10,7 @@ case class EventNode(name: String) extends RuleBookNode {
 
   override def check: Seq[String] = {
     props.groupBy(identity).collect { case (x, List(_, _, _*)) => x }
-      .map("Multiple definitions of event property: " + _).toSeq
+      .map("Multiple definitions of event property: \"" + _ + "\"").toSeq
   }
 
   def addProperty[T](key: Key[T]): Unit = {

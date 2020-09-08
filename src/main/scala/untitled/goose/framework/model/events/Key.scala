@@ -13,5 +13,7 @@ case class Key[T: ClassTag](keyName: String) {
   }
 
   override def hashCode(): Int = keyName.hashCode
+
+  override def toString: String = "Key: " + keyName + " Type: " + classTag.toString
 }
 
