@@ -6,4 +6,5 @@ import untitled.goose.framework.model.entities.runtime.GameState
 
 case class DiceAction(actionName: String, when: GameState => Boolean, allow: Boolean, diceNumber: Int, diceName: String, isMovement: Boolean)(implicit ruleBook: RuleBook) {
   def priority(priority: Int): ActionRuleNode = DiceActionNode(actionName, when, priority, allow, diceNumber, diceName, isMovement, ???)
+  //TODO missing diceCollection to be retrieved from implicit rulebook
 }
