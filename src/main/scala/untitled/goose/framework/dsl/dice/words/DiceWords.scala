@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.dice.words
 
-trait DiceWords {
 
+trait DiceWords {
   val Create: CreateWord = new CreateWord
 
   def totalSides(total: Int): Seq[Int] = 1 to total

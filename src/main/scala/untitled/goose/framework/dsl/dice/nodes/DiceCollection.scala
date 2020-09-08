@@ -12,5 +12,4 @@ trait DiceCollection {
   def getDice(name: String): Dice[Any]
 
   def getMovementDice(name: String): MovementDice
-
 }

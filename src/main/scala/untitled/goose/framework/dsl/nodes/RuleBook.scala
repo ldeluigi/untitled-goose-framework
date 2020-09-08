@@ -1,6 +1,7 @@
 package untitled.goose.framework.dsl.nodes
 
 import untitled.goose.framework.dsl.board.nodes.{BoardBuilderNode, GraphicMapNode}
+import untitled.goose.framework.dsl.dice.nodes.{DiceCollection, DiceManagerNode, DiceNode}
 import untitled.goose.framework.dsl.events.nodes.EventDefinitionsNode
 
 trait RuleBook extends RuleBookNode {
@@ -13,11 +14,17 @@ trait RuleBook extends RuleBookNode {
   def nodeDefinitions: EventDefinitionsNode
 
   def setGameName(name: String): Unit
+
+  def diceCollection: DiceCollection
+
+  def addDice(diceNode: DiceNode[_]): Unit
 }
 
 object RuleBook {
 
   private class RuleBookImpl() extends RuleBook {
+
+    val diceCollection: DiceManagerNode = DiceManagerNode()
 
     private val gameName: SingleValueNode[String] = new SingleValueNode("Game Name")
 
@@ -39,8 +46,11 @@ object RuleBook {
         nodeDefinitions.check ++
         boardBuilder.check ++
         graphicMap.check ++
+        diceCollection.check ++
         ruleSet.check
     }
+
+    override def addDice(diceNode: DiceNode[_]): Unit = diceCollection.add(diceNode)
   }
 
   def apply(): RuleBook = new RuleBookImpl()
