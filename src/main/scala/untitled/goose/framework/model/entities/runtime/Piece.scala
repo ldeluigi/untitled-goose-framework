@@ -1,6 +1,7 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.model.Color.Color
+import untitled.goose.framework.model.Colour.Colour
+
 
 /** A player's piece on the board. Can be removed from the board if position is None. */
 trait Piece {
@@ -9,18 +10,18 @@ trait Piece {
   def position: Option[Position]
 
   /** This piece's color. */
-  def color: Color
+  def color: Colour
 }
 
 object Piece {
 
-  private case class PieceImpl(position: Option[Position], color: Color) extends Piece
+  private case class PieceImpl(position: Option[Position], color: Colour) extends Piece
 
   /** A factory that creates a new piece, based on a color and an optional position. */
-  def apply(color: Color, position: Option[Position] = None): Piece = PieceImpl(position, color)
+  def apply(color: Colour, position: Option[Position] = None): Piece = PieceImpl(position, color)
 
   /** A factory that creates a new piece, based on a color and a piece. */
-  def apply(piece: Piece, color: Color): Piece = PieceImpl(piece.position, color)
+  def apply(piece: Piece, color: Colour): Piece = PieceImpl(piece.position, color)
 
   /** A factory that creates a new piece, based on a piece and an optional position. */
   def apply(piece: Piece, position: Option[Position]): Piece = PieceImpl(position, piece.color)

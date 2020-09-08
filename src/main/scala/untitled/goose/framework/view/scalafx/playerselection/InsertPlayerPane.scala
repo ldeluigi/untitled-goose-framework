@@ -9,6 +9,7 @@ import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
 import untitled.goose.framework.model
+import untitled.goose.framework.model.Colour.Colour
 import untitled.goose.framework.model.entities.runtime.{Piece, Player}
 import untitled.goose.framework.view.scalafx.ColorUtils
 
@@ -24,7 +25,7 @@ object InsertPlayerPane {
 
   def apply(playersRange: Range): InsertPlayerPane = new InsertPlayerPaneImpl(playersRange)
 
-  class PlayerPiece(n: String, val color: untitled.goose.framework.model.Color.Color) {
+  class PlayerPiece(n: String, val color: Colour) {
     val name = new StringProperty(this, "Name", n)
     val colorProp = new ObjectProperty(this, "Piece", ColorUtils.getColor(color))
   }
@@ -39,7 +40,7 @@ object InsertPlayerPane {
     val addPlayer: Button = new Button("Add")
     val playerName: Label = new Label("Insert player data:")
     val playerNameFromInput = new TextField
-    val colorsChoice = new ComboBox(model.Color.values.toList)
+    val colorsChoice = new ComboBox(model.Colour.values.toList)
     colorsChoice.getSelectionModel.selectFirst()
     val removePlayer: Button = new Button("Remove")
 

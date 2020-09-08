@@ -1,7 +1,7 @@
 package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.Color
+import untitled.goose.framework.model.Colour
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}
@@ -19,7 +19,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   it should "have a set of players" in {
-    gameMatch.currentState.players should equal(MatchMock.players.keySet)
+    gameMatch.currentState.players should equal(MatchMock.players.keys.toSeq)
   }
 
   it should "have a current GameState" in {
@@ -42,7 +42,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   it should "update player pieces as told" in {
-    gameMatch.currentState.updatePlayerPiece(MatchMock.p1, _ => Piece(Color.Blue, Some(Position(gameMatch.currentState.gameBoard.first))))
+    gameMatch.currentState.updatePlayerPiece(MatchMock.p1, _ => Piece(Colour.Blue, Some(Position(gameMatch.currentState.gameBoard.first))))
 
     gameMatch.currentState.playerPieces(MatchMock.p1).position.get should equal(Position(gameMatch.currentState.gameBoard.first))
   }

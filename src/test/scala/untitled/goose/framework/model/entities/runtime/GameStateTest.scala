@@ -1,7 +1,7 @@
 package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.Color
+import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -14,7 +14,7 @@ class GameStateTest extends AnyFlatSpec with Matchers {
   val board: BoardDefinition = BoardDefinition("test", 10, Disposition.snake(10))
   val p1: Player = Player("P1")
   val p2: Player = Player("P2")
-  val players: Map[Player, Piece] = Map(p1 -> Piece(Color.Red), p2 -> Piece(Color.Blue))
+  val players: Map[Player, Piece] = Map(p1 -> Piece(Colour.Red), p2 -> Piece(Colour.Blue))
 
   val gameBoard: Board = gameState.gameBoard
 
@@ -37,7 +37,7 @@ class GameStateTest extends AnyFlatSpec with Matchers {
   }
 
   it should "return a seq of players" in {
-    gameState.players should equal(players.keys.toSet)
+    gameState.players should equal(players.keys.toSeq)
   }
 
   it should "return a seq of runtime events" in {

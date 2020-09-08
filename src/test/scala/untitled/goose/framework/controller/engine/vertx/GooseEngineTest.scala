@@ -6,7 +6,7 @@ import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.special.NoOpEvent
 import untitled.goose.framework.model.entities.runtime.{Game, GameState, Piece, Player, Position}
 import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PlayerOrderingType, PriorityRuleSet}
-import untitled.goose.framework.model.Color
+import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder}
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
@@ -28,7 +28,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     .cleanupRules(Seq())
     .playerOrderingType(PlayerOrderingType.FirstTurnRandomThenFixed)
     .playersRange(1 to 10)
-    .build, ListMap(Player("") -> Piece(Color.Blue)))
+    .build, ListMap(Player("") -> Piece(Colour.Blue)))
 
   def cGenerator(handler: GameEvent => Unit): ViewController = new ViewController {
     override def update(state: GameState): Unit = {}

@@ -8,10 +8,10 @@ import scala.util.Random
 trait PlayerOrdering {
 
   /** Who goes first. */
-  def first(players: Set[Player]): Player
+  def first(players: Seq[Player]): Player
 
   /** Who is next, based on the current player. */
-  def next(current: Player, players: Set[Player]): Player
+  def next(currentPlayer: Player, players: Seq[Player]): Player
 
 }
 
@@ -26,9 +26,9 @@ object PlayerOrdering {
 
     private def selectRandom(players: Set[Player]): Player = random(players)
 
-    override def first(players: Set[Player]): Player = selectRandom(players)
+    override def first(players: Seq[Player]): Player = selectRandom(players.toSet)
 
-    override def next(current: Player, players: Set[Player]): Player = selectRandom(players)
+    override def next(currentPlayer: Player, players: Seq[Player]): Player = selectRandom(players.toSet)
   }
 
   /** List of players is shuffled, then is kept fixed for the entire game. */
@@ -36,38 +36,34 @@ object PlayerOrdering {
 
     private var playerList: Seq[Player] = List()
 
-    override def first(players: Set[Player]): Player = {
+    override def first(players: Seq[Player]): Player = {
       playerList = Random.shuffle(players).toList
       playerList.head
     }
 
-    override def next(current: Player, players: Set[Player]): Player = {
+    override def next(currentPlayer: Player, players: Seq[Player]): Player = {
       playerList = updateLocalSeq(playerList, players)
-      playerList.lift((playerList.indexOf(current) + 1) % playerList.size).get
+      playerList.lift((playerList.indexOf(currentPlayer) + 1) % playerList.size).get
     }
   }
 
-  /** A factory to create a custom players ordering.
-   *
-   * @param players the whole players sequence
-   * @return a new custom player ordering
-   */
-  def givenOrder(players: Seq[Player]): PlayerOrdering = new PlayerOrdering {
-    private var playerList: Seq[Player] = players
+  /** Keeps the order fixed. */
+  def fixed: PlayerOrdering = new PlayerOrdering {
+    private var playerList: Seq[Player] = List()
 
 
-    override def first(players: Set[Player]): Player = {
-      playerList = updateLocalSeq(playerList, players)
+    override def first(players: Seq[Player]): Player = {
+      playerList = players
       playerList.head
     }
 
-    override def next(current: Player, players: Set[Player]): Player = {
+    override def next(currentPlayer: Player, players: Seq[Player]): Player = {
       playerList = updateLocalSeq(playerList, players)
-      playerList.lift((playerList.indexOf(current) + 1) % playerList.size).get
+      playerList.lift((playerList.indexOf(currentPlayer) + 1) % playerList.size).get
     }
   }
 
-  private def updateLocalSeq(localSeq: Seq[Player], players: Set[Player]): Seq[Player] = {
+  private def updateLocalSeq(localSeq: Seq[Player], players: Seq[Player]): Seq[Player] = {
     var playerList = localSeq
     val removed = playerList diff players.toList
     val added = players.toList diff playerList

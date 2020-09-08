@@ -1,11 +1,11 @@
 package untitled.goose.framework.main
 
 import scalafx.application.JFXApp
-import untitled.goose.framework.model.Color
+import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
-import untitled.goose.framework.model.entities.runtime.{Piece, Player, Position}
+import untitled.goose.framework.model.entities.runtime.{Piece, Player}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
@@ -301,7 +301,6 @@ object GooseGameNoDSL extends JFXApp {
   val actionRules: Set[ActionRule] = Set(rollDiceActionRule, LoseTurnActionRule(Set(rollAction)))
 
   val ruleSet: RuleSet = PriorityRuleSet(
-    tiles => Position(tiles.toList.sorted.take(1).head),
     PlayerOrdering.randomOrder,
     1 to 10,
     actionRules,
@@ -311,7 +310,7 @@ object GooseGameNoDSL extends JFXApp {
 
   //From a menu GUI that select and creates player and pieces on the press of a "Start runtime" button
 
-  val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Color.Red), Player("P2") -> Piece(Color.Blue))
+  val players: Map[Player, Piece] = Map(Player("P1") -> Piece(Colour.Red), Player("P2") -> Piece(Colour.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
   // TODO make it legal

@@ -34,13 +34,12 @@ object Game {
     val playerOrdering: PlayerOrdering = definition.playerOrderingType match {
       case RandomEachTurn => PlayerOrdering.fullRandom
       case FirstTurnRandomThenFixed => PlayerOrdering.randomOrder
-      case Fixed => PlayerOrdering.givenOrder(playerPieces.keys.toList)
+      case Fixed => PlayerOrdering.fixed
     }
 
     val board: Board = Board(definition.board)
 
     val rules: RuleSet = PriorityRuleSet(
-      _ => Position(board.first),
       playerOrdering,
       definition.playersRange,
       definition.actionRules,
@@ -48,9 +47,12 @@ object Game {
       definition.cleanupRules
     )
 
+    private val players = playerPieces.keys.toSeq
+
     override val currentState: CycleMutableGameState = CycleMutableGameState(
-      rules.first(playerPieces.keySet),
-      () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
+      rules.first,
+      rules.nextPlayer,
+      players,
       playerPieces,
       board
     )

@@ -31,7 +31,7 @@ trait GameState {
   def gameHistory: Seq[GameEvent]
 
   /** Returns the set of players. */
-  def players: Set[Player] = playerPieces.keySet
+  def players: Seq[Player]
 
   /** Makes an immutable copy of this game state. */
   override def clone(): GameState = CloneGameState(this)

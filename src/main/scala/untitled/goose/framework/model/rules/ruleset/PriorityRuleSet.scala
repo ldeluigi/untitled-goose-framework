@@ -1,7 +1,7 @@
 package untitled.goose.framework.model.rules.ruleset
 
 import untitled.goose.framework.model.actions.Action
-import untitled.goose.framework.model.entities.runtime.{MutableGameState, Player, Position, Tile}
+import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState, Player}
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.{BehaviourRule, DialogLaunchBehaviour, TurnEndEventBehaviour}
 import untitled.goose.framework.model.rules.cleanup.{CleanupRule, TurnEndConsumer}
@@ -9,8 +9,7 @@ import untitled.goose.framework.model.rules.operations.Operation
 
 // TODO consider making a builder of this
 // TODO scaladoc afterwards
-class PriorityRuleSet(firstPosition: Set[Tile] => Position,
-                      playerOrdering: PlayerOrdering,
+class PriorityRuleSet(playerOrdering: PlayerOrdering,
                       playersRange: Range,
                       actionRules: Set[ActionRule],
                       behaviourRules: Seq[BehaviourRule],
@@ -18,10 +17,7 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
                      ) extends RuleSet {
 
 
-  override def startPosition(tiles: Set[Tile]): Position = firstPosition(tiles)
-
-
-  override def actions(state: MutableGameState): Set[Action] =
+  override def actions(state: GameState): Set[Action] =
     actionRules
       .flatMap(_.allowedActions(state))
       .groupBy(_.action)
@@ -36,7 +32,7 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
       .map(_.action)
       .toSet
 
-  override def first(players: Set[Player]): Player =
+  override def first(players: Seq[Player]): Player =
     playerOrdering.first(players)
 
   override def stateBasedOperations(state: MutableGameState): Seq[Operation] =
@@ -44,8 +40,8 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
       behaviourRules.flatMap(_.applyRule(state)) ++
       DialogLaunchBehaviour().applyRule(state)
 
-  override def nextPlayer(currentPlayer: Player, players: Set[Player]): Player =
-    playerOrdering.next(currentPlayer, players)
+  override def nextPlayer(state: MutableGameState): Player =
+    playerOrdering.next(state.currentPlayer, state.players)
 
   override def cleanupOperations(state: MutableGameState): Unit = {
     cleanupRules.foreach(_.applyRule(state))
@@ -57,21 +53,12 @@ class PriorityRuleSet(firstPosition: Set[Tile] => Position,
 
 object PriorityRuleSet {
 
-  /** A factory that produces a new priority rule set.
-   *
-   * @param startTile      the starting tile
-   * @param playerOrdering a random player ordering
-   * @param actionRules    a set of action rules
-   * @param behaviourRule  behaviour rule
-   * @param cleanupRules   cleanup rule
-   */
-  def apply(startTile: Set[Tile] => Position = tiles => Position(tiles.toList.sorted.take(1).head),
-            playerOrdering: PlayerOrdering = PlayerOrdering.randomOrder,
+  def apply(playerOrdering: PlayerOrdering = PlayerOrdering.randomOrder,
             admissiblePlayers: Range,
             actionRules: Set[ActionRule] = Set(),
             behaviourRule: Seq[BehaviourRule] = Seq(TurnEndEventBehaviour()),
             cleanupRules: Seq[CleanupRule] = Seq(),
            ): PriorityRuleSet =
-    new PriorityRuleSet(startTile, playerOrdering, admissiblePlayers, actionRules, behaviourRule, cleanupRules)
+    new PriorityRuleSet(playerOrdering, admissiblePlayers, actionRules, behaviourRule, cleanupRules)
 
 }

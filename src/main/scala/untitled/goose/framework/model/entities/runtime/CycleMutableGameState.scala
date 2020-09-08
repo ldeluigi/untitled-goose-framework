@@ -13,7 +13,9 @@ private[framework] trait CycleMutableGameState extends MutableGameState {
 
 private[framework] object CycleMutableGameState {
 
-  private class GameStateImpl(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
+  private class GameStateImpl(firstPlayerStrategy: Seq[Player] => Player,
+                              nextPlayerStrategy: MutableGameState => Player,
+                              val players: Seq[Player], pieces: Map[Player, Piece],
                               val gameBoard: Board) extends CycleMutableGameState {
 
     var consumableBuffer: Seq[ConsumableGameEvent] = Seq()
@@ -24,7 +26,7 @@ private[framework] object CycleMutableGameState {
 
     var currentCycle: Int = 0
 
-    private var currentTurnPlayer: Player = startPlayer
+    private var currentTurnPlayer: Player = firstPlayerStrategy(players)
 
     private var playerPiecesMap: Map[Player, Piece] = pieces
 
@@ -42,18 +44,12 @@ private[framework] object CycleMutableGameState {
 
     override def playerPieces: Map[Player, Piece] = playerPiecesMap
 
-    override def nextPlayer: Player = nextPlayerStrategy()
+    /** Returns the player that is supposed to go next. */
+    override def nextPlayer: Player = nextPlayerStrategy(this)
   }
 
-  /**
-   * Creates a mutable game state that can change cycle.
-   *
-   * @param startPlayer        the starting player.
-   * @param nextPlayerStrategy the strategy to select the next player, each turn.
-   * @param pieces             the pieces used by the players.
-   * @param board              the game definition, a stateful object.
-   * @return a new CycleMutableGameState.
-   */
-  def apply(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: Board): CycleMutableGameState =
-    new GameStateImpl(startPlayer, nextPlayerStrategy, pieces, board)
+  def apply(firstPlayerStrategy: Seq[Player] => Player,
+            nextPlayerStrategy: MutableGameState => Player,
+            players: Seq[Player], pieces: Map[Player, Piece], board: Board): CycleMutableGameState =
+    new GameStateImpl(firstPlayerStrategy, nextPlayerStrategy, players, pieces, board)
 }

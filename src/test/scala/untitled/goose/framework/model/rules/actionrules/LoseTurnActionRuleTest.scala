@@ -15,7 +15,6 @@ class LoseTurnActionRuleTest extends AnyFlatSpec with Matchers {
 
   it should "do nothing without event" in {
     loseTurnActionRule.allowedActions(MatchMock.default.currentState).isEmpty should be(true)
-
   }
 
 }
