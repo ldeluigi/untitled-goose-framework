@@ -6,5 +6,5 @@ import untitled.goose.framework.dsl.rules.actions.nodes.ActionRuleNode.{ActionRu
 import untitled.goose.framework.model.entities.runtime.GameState
 
 case class NamedCustomAction(name: String, when: GameState => Boolean, customEvent: CustomEventInstance, allow: Boolean)(implicit ruleBook: RuleBook) {
-  def priority(priority: Int): ActionRuleNode = CustomEventActionNode(name, when, customEvent, priority, allow, ???)
+  def priority(priority: Int): ActionRuleNode = CustomEventActionNode(name, when, customEvent, priority, allow, ruleBook.nodeDefinitions)
 }

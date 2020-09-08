@@ -1,6 +1,7 @@
 package untitled.goose.framework.dsl.nodes
 
 import untitled.goose.framework.dsl.board.nodes.{BoardBuilderNode, GraphicMapNode}
+import untitled.goose.framework.dsl.events.nodes.EventDefinitionsNode
 
 trait RuleBook extends RuleBookNode {
   def boardBuilder: BoardBuilderNode
@@ -8,6 +9,8 @@ trait RuleBook extends RuleBookNode {
   def graphicMap: GraphicMapNode
 
   def ruleSet: RuleSetNode
+
+  def nodeDefinitions: EventDefinitionsNode
 
   def setGameName(name: String): Unit
 }
@@ -24,6 +27,8 @@ object RuleBook {
 
     val ruleSet: RuleSetNode = RuleSetNode(boardBuilder)
 
+    val nodeDefinitions: EventDefinitionsNode = EventDefinitionsNode()
+
     def setGameName(name: String): Unit = {
       gameName value = name
       boardBuilder.withName(name)
@@ -31,6 +36,7 @@ object RuleBook {
 
     override def check: Seq[String] = {
       gameName.check ++
+        nodeDefinitions.check ++
         boardBuilder.check ++
         graphicMap.check ++
         ruleSet.check

@@ -1,17 +1,31 @@
 package untitled.goose.framework.dsl.events.nodes
 
-import untitled.goose.framework.dsl.events.words.EventType.EventType
 import untitled.goose.framework.dsl.nodes.RuleBookNode
-import untitled.goose.framework.model.events.{GameEvent, Key}
+import untitled.goose.framework.model.entities.runtime.GameState
+import untitled.goose.framework.model.events.{CustomGameEvent, GameEvent, Key}
 
-case class EventNode(name: String, eventType: EventType) extends RuleBookNode {
+case class EventNode(name: String) extends RuleBookNode {
 
-  override def check: Seq[String] = ???
+  private var props: List[Key[_]] = List()
 
-  def addPropertyNode(propertyNode: EventPropertyNode): Unit = ??? //TODO choose if use node or not
+  override def check: Seq[String] = {
+    props.groupBy(identity).collect { case (x, List(_, _, _*)) => x }
+      .map("Multiple definitions of event property: " + _).toSeq
+  }
 
-  def isPropertyDefined[T](key: Key[T]): Boolean = ???
+  def addProperty[T](key: Key[T]): Unit = {
+    props :+= key
+  }
 
-  def generateEvent: GameEvent = ???
+  def isPropertyDefined[T](key: Key[T]): Boolean = props contains key
+
+  def generateEvent(properties: Map[Key[_], Any]): GameState => GameEvent = { state => {
+      val c = CustomGameEvent(state.currentTurn, state.currentCycle, name)
+      properties foreach { p =>
+        c.setProperty(p._1.keyName, p._1.classTag.unapply(p._2))
+      }
+      c
+    }
+  }
 
 }

@@ -90,7 +90,6 @@ object ActionRuleNode {
       RollDice(actionName, definedDice.getDice(diceName), diceNumber)
   }
 
-  //TODO Implement this
   case class CustomEventActionNode(actionName: String,
                                    when: GameState => Boolean,
                                    customEvent: CustomEventInstance,
@@ -101,9 +100,15 @@ object ActionRuleNode {
 
     override def generateActionRule(): ActionRule = ???
 
-    override def generateAction(): Action = Action(actionName, state => ???) //TODO trigger customEvent
+    override def generateAction(): Action = {
+      val event: GameState => GameEvent = definedEvents.getEvent(customEvent.name).generateEvent(customEvent.properties)
+      Action(actionName, event(_))
+    }
 
-    override def check: Seq[String] = ???
+    override def check: Seq[String] = {
+      if (definedEvents.isEventDefined(customEvent.name)) Seq()
+      else Seq(customEvent.name + " is not defined.")
+    }
   }
 
 }
