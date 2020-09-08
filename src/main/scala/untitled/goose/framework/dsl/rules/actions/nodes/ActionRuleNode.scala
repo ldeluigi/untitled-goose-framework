@@ -1,6 +1,8 @@
 package untitled.goose.framework.dsl.rules.actions.nodes
 
 import untitled.goose.framework.dsl.dice.nodes.DiceCollection
+import untitled.goose.framework.dsl.events.nodes.EventCollection
+import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.actions.{Action, RollDice, RollMovementDice}
 import untitled.goose.framework.model.entities.runtime.GameState
@@ -18,8 +20,11 @@ object ActionRuleNode {
   }
 
 
-  case class ActionRuleNodeImpl
-  (name: String, when: GameState => Boolean, trigger: GameState => GameEvent, priority: Int, allow: Boolean)
+  case class ActionRuleNodeImpl(name: String,
+                                when: GameState => Boolean,
+                                trigger: GameState => GameEvent,
+                                priority: Int,
+                                allow: Boolean)
     extends ActionRuleNode with ActionGeneration {
 
     override def check: Seq[String] = Seq()
@@ -32,8 +37,11 @@ object ActionRuleNode {
     override def generateAction(): Action = Action(name, trigger)
   }
 
-  case class ActionRuleWithRefNode
-  (when: GameState => Boolean, priority: Int, allow: Boolean, refName: Set[String], definedActions: ActionCollection)
+  case class ActionRuleWithRefNode(when: GameState => Boolean,
+                                   priority: Int,
+                                   allow: Boolean,
+                                   refName: Set[String],
+                                   definedActions: ActionCollection)
     extends ActionRuleNode {
 
     override def check: Seq[String] =
@@ -80,6 +88,22 @@ object ActionRuleNode {
       RollMovementDice(actionName, definedDice.getMovementDice(diceName), diceNumber)
     else
       RollDice(actionName, definedDice.getDice(diceName), diceNumber)
+  }
+
+  //TODO Implement this
+  case class CustomEventActionNode(actionName: String,
+                                   when: GameState => Boolean,
+                                   customEvent: CustomEventInstance,
+                                   priority: Int,
+                                   allow: Boolean,
+                                   definedEvents: EventCollection)
+    extends ActionRuleNode with ActionGeneration {
+
+    override def generateActionRule(): ActionRule = ???
+
+    override def generateAction(): Action = ???
+
+    override def check: Seq[String] = ???
   }
 
 }
