@@ -16,6 +16,11 @@ class OperationTest extends AnyFlatSpec with Matchers {
 
   behavior of "OperationTest"
 
+  it should "not return a trigger operation when the condition is false" in {
+    Operation.triggerWhen(_ => false, _ => Seq(gameEvent)).execute(gameMutableState)
+    gameMutableState.consumableBuffer should not contain gameEvent
+  }
+
   it should "return an operation that update the runtime's state" in {
     var condition: Boolean = false
     Operation.updateState(_ => condition = true).execute(gameMutableState)
@@ -26,13 +31,6 @@ class OperationTest extends AnyFlatSpec with Matchers {
     Operation.triggerWhen(_ => true, _ => Seq(gameEvent)).execute(gameMutableState)
     Operation.trigger(gameEvent)
     gameMutableState.consumableBuffer should contain(gameEvent)
-  }
-
-  it should "not return a trigger operation when the condition is false" in {
-    Operation.triggerWhen(_ => false, _ => Seq(gameEvent)).execute(gameMutableState)
-    pending
-    //TODO it contains an element it shouldn't contain, skips the flag check in triggerWhen
-    gameMutableState.consumableBuffer should not contain gameEvent
   }
 
   it should "return an operation that trigger an event of the runtime's state" in {
