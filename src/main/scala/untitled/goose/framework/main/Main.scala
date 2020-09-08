@@ -5,11 +5,10 @@ import java.awt.{Dimension, Toolkit}
 import javafx.scene.input.KeyCode
 import scalafx.application.JFXApp
 import scalafx.scene.image.Image
-import scalafx.scene.paint.Color
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinition, GameDefinitionBuilder, TileIdentifier}
-import untitled.goose.framework.model.entities.runtime.{GameState, Position}
+import untitled.goose.framework.model.entities.definitions._
+import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.{DialogLaunchEvent, StepMovementEvent}
@@ -60,7 +59,7 @@ object Main extends JFXApp {
 
   // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
-    1 -> GraphicDescriptor(Color.Red)
+    1 -> GraphicDescriptor("pozzo.jpg")
   )
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"

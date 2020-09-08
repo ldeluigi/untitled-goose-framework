@@ -45,7 +45,7 @@ object GooseGame extends GooseDSL {
   Create movementDice "six-faced" having totalSides(6)
 
   Each turn players are(
-    always allowed to trigger (customEvent("Name") | "value" -> 5 | "ciao" -> "ciao") as "Something" priority 2,
+    always allowed to trigger (customEvent("Name") := "value" -> 5 + "ciao" -> "ciao") as "Something" priority 2,
     always allowed to roll 3 dice "six-faced" as "roll 3 dice" priority 5,
     always allowed to trigger (s => StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Fai 10 passi" priority 5
   )
