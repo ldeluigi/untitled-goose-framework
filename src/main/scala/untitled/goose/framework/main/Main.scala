@@ -39,8 +39,7 @@ object Main extends JFXApp {
       DialogLaunchEvent(state.currentTurn, state.currentCycle, DialogContent(
         "Movement Bonus",
         "Make 10 step?",
-        answers =
-          "Yes" -> StepMovementEvent(10, state.currentPlayer, state.currentTurn, state.currentCycle),
+        Options = "Yes" -> StepMovementEvent(10, state.currentPlayer, state.currentTurn, state.currentCycle),
         "No" -> NoOpEvent
       ))
     }

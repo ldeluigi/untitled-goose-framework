@@ -46,6 +46,7 @@ object GooseGame extends GooseDSL {
 
   Each turn players are(
     always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
+    always allowed to displayQuestion("Title", "Text", s => "Si" -> StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Show dialog" priority 3,
     /*always allowed to trigger (customEvent("Name") := "value" -> 5 + "ciao" -> "ciao") as "Something" priority 2,*/
     always allowed to trigger (s => StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle)) as "Fai 10 passi" priority 5
   )

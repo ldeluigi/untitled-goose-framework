@@ -7,6 +7,7 @@ import untitled.goose.framework.dsl.rules.players.{PlayerOrderProperty, PlayersW
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
 
+//TODO Perchè sta cosa??? Non ne capisco il senso @Deloo
 trait RuleSetWords extends EventDefinitionWords {
 
   val Players: PlayersWord = PlayersWord()
@@ -24,4 +25,5 @@ trait RuleSetWords extends EventDefinitionWords {
   def when(condition: GameState => Boolean)(implicit ruleBook: RuleBook): WhenWord = WhenWord(condition)
 
   def to: ToWord = ToWord()
+
 }
