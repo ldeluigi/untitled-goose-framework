@@ -11,16 +11,16 @@ case class DefineWord() {
     EventPropertiesWord(eventNode)
   }
 
-//  def playerEvent(name: String)(implicit ruleBook: RuleBook): EventPropertiesWord = {
-//    val eventNode = EventNode(name, EventType.playerEvent)
-//    ruleBook.nodeDefinitions.defineEvent(eventNode)
-//    EventPropertiesWord(eventNode)
-//  }
-//
-//  def tileEvent(name: String)(implicit ruleBook: RuleBook): EventPropertiesWord = {
-//    val eventNode = EventNode(name, EventType.tileEvent)
-//    ruleBook.nodeDefinitions.defineEvent(eventNode)
-//    EventPropertiesWord(eventNode)
-//  }
+  //  def playerEvent(name: String)(implicit ruleBook: RuleBook): EventPropertiesWord = {
+  //    val eventNode = EventNode(name, EventType.playerEvent)
+  //    ruleBook.nodeDefinitions.defineEvent(eventNode)
+  //    EventPropertiesWord(eventNode)
+  //  }
+  //
+  //  def tileEvent(name: String)(implicit ruleBook: RuleBook): EventPropertiesWord = {
+  //    val eventNode = EventNode(name, EventType.tileEvent)
+  //    ruleBook.nodeDefinitions.defineEvent(eventNode)
+  //    EventPropertiesWord(eventNode)
+  //  }
 
 }

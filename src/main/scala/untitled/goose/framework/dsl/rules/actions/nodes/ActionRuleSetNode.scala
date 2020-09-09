@@ -22,7 +22,7 @@ object ActionRuleSetNode {
     override def addActionRuleNode(actionRuleNode: ActionRuleNode): Unit = {
       nodes += actionRuleNode
       actionRuleNode match {
-        case a: ActionRuleNode with ActionGeneration => registerAction(a.generateAction())
+        case a: ActionRuleNode with ActionGeneration if a.check.isEmpty => registerAction(a.generateAction())
         case _ => Unit
       }
     }

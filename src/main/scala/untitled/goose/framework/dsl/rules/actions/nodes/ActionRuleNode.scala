@@ -64,20 +64,20 @@ object ActionRuleNode {
                             diceNumber: Int,
                             diceName: String,
                             isMovement: Boolean,
-                            definedDice: DiceCollection)
+                            diceCollection: DiceCollection)
     extends ActionRuleNode with ActionGeneration {
 
-    override def check: Seq[String] = if (definedDice.isDiceDefined(diceName)) {
+    override def check: Seq[String] = if (diceCollection.isDiceDefined(diceName)) {
       if (isMovement) {
-        if (!definedDice.isMovementDice(diceName)) {
-          Seq("Dice " + diceName + " is not defined as a MovementDice")
-        }
+        if (!diceCollection.isMovementDice(diceName)) {
+          Seq("Dice \"" + diceName + "\" declared as a non-movement dice but used for movement")
+        } else Seq()
       } else {
-        if (definedDice.isMovementDice(diceName))
-          Seq("Warning: using " + diceName + " as a non-movement dice may cause an unexpected behaviour")
+        if (diceCollection.isMovementDice(diceName)) {
+          Seq("Dice \"" + diceName + "\" declared as a movement dice but not used for movement")
+        } else Seq()
       }
-      Seq()
-    } else Seq("Dice " + diceName + " was never defined")
+    } else Seq("Dice \"" + diceName + "\" was never defined")
 
     override def generateActionRule(): ActionRule = {
       val availabilities: Set[ActionAvailability] = Set((allow, priority, generateAction()))
@@ -85,9 +85,9 @@ object ActionRuleNode {
     }
 
     override def generateAction(): Action = if (isMovement)
-      RollMovementDice(actionName, definedDice.getMovementDice(diceName), diceNumber)
+      RollMovementDice(actionName, diceCollection.getMovementDice(diceName), diceNumber)
     else
-      RollDice(actionName, definedDice.getDice(diceName), diceNumber)
+      RollDice(actionName, diceCollection.getDice(diceName), diceNumber)
   }
 
   case class CustomEventActionNode(actionName: String,

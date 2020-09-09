@@ -4,8 +4,8 @@ import untitled.goose.framework.dsl.events.words.EventDefinitionWords
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.actions.words.{EachWord, PlayersAreWord, ToWord, WhenWord}
 import untitled.goose.framework.dsl.rules.players.{PlayerOrderProperty, PlayersWord}
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
 import untitled.goose.framework.model.entities.runtime.GameState
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
 
 trait RuleSetWords extends EventDefinitionWords {
 

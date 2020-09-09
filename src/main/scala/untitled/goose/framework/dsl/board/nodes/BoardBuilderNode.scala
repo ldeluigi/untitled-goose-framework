@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.board.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
-import untitled.goose.framework.model.entities.definitions.{BoardBuilder, BoardDefinition, Disposition, TileDefinition, TileIdentifier}
+import untitled.goose.framework.model.entities.definitions.{BoardBuilder, BoardDefinition, Disposition, TileIdentifier}
 
 case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileIdentifiersCollection {
 
@@ -28,6 +28,7 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
 
 
   override def check: Seq[String] = {
+    //TODO add double name for different tiles check? redefinition of tiles names?
     errorMessages ++= (if (isCompletable) Seq() else Seq("BoardDefinition definition not complete: "))
 
     if (!nameDefined) {
