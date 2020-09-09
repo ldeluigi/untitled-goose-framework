@@ -36,9 +36,6 @@ case class ApplicationController(game: Game) extends ScalaFxController {
     gameScene.get.close()
   }
 
-  override def logAsyncEvent(event: GameEvent): Unit = gameScene.get.logEvent(event)
-
-
   override def showDialog(content: DialogContent): Future[GameEvent] = {
     val promise: Promise[GameEvent] = Promise()
     gameScene.get.showDialog(content, promise)

@@ -88,7 +88,6 @@ object GooseEngine {
         case ExitEvent => controller.close()
         case NoOpEvent => executeOperation()
         case _ =>
-          controller.logAsyncEvent(event)
           if (stack.isEmpty) {
             stack = stack :+ gameMatch.cleanup
           }

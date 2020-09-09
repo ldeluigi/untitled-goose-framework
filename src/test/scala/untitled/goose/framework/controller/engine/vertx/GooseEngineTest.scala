@@ -1,17 +1,17 @@
 package untitled.goose.framework.controller.engine.vertx
 
-import untitled.goose.framework.controller.ViewController
-import untitled.goose.framework.model.entities.DialogContent
-import untitled.goose.framework.model.events.GameEvent
-import untitled.goose.framework.model.events.special.NoOpEvent
-import untitled.goose.framework.model.entities.runtime.{Game, GameState, Piece, Player, Position}
-import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PlayerOrderingType, PriorityRuleSet}
-import untitled.goose.framework.model.Colour
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder}
 import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
+import untitled.goose.framework.controller.ViewController
+import untitled.goose.framework.model.Colour
+import untitled.goose.framework.model.entities.DialogContent
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder}
+import untitled.goose.framework.model.entities.runtime.{Game, GameState, Piece, Player}
+import untitled.goose.framework.model.events.GameEvent
+import untitled.goose.framework.model.events.special.NoOpEvent
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
 
 import scala.collection.immutable.ListMap
 import scala.concurrent.Future
@@ -34,8 +34,6 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     override def update(state: GameState): Unit = {}
 
     override def showDialog(content: DialogContent): Future[GameEvent] = Future.successful(NoOpEvent)
-
-    override def logAsyncEvent(event: GameEvent): Unit = handler(event)
 
     override def close(): Unit = {}
   }

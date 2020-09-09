@@ -26,9 +26,6 @@ trait ViewController {
    */
   def showDialog(content: DialogContent): Future[GameEvent]
 
-  /** Displays the occurrence of an event on the view. */
-  def logAsyncEvent(event: GameEvent)
-
   /** Closes the view. */
   def close(): Unit
 }
