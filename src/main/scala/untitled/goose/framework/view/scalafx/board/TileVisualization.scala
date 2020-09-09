@@ -37,8 +37,6 @@ object TileVisualization {
     var graphics: Option[Image] = None
     var imageView: Option[ImageView] = None
 
-    graphicDescriptor.foreach(applyStyle)
-
     val rectangle: Rectangle = new Rectangle {
       fill = colorToApply
       stroke = strokeColor
@@ -54,6 +52,8 @@ object TileVisualization {
     }
 
     val label = new Label(text)
+
+    graphicDescriptor.foreach(applyStyle)
 
     // to stack things up correctly, add the rectangle itself and the label, then add the image if present
     this.children.addAll(rectangle)
@@ -105,8 +105,8 @@ object TileVisualization {
         imageView = Some(new ImageView {
           image = graphics.get
           preserveRatio = true
-          fitWidth <== parentWidth / cols - strokeSize * 2
-          fitHeight <== parentHeight / rows - strokeSize * 2
+          fitWidth <== rectangle.width - strokeSize * 2
+          fitHeight <== rectangle.height - strokeSize * 2
         })
       }
     }

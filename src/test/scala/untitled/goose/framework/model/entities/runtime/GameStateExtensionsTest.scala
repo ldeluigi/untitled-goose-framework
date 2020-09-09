@@ -104,5 +104,4 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
     pending
   }
 
-
 }
