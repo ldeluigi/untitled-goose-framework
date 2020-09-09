@@ -50,7 +50,7 @@ object RuleSetNode {
 
     val behaviourRules: Seq[BehaviourRule] = Seq()
 
-    val actionRules: Set[ActionRule] = Set()
+    def actionRules: Set[ActionRule] = actionRuleSetNode.actionRules
 
 
     override def check: Seq[String] =
