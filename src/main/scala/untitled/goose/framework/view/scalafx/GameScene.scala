@@ -54,13 +54,13 @@ object GameScene {
     logger.prefWidth <== this.width
 
     val tabPane = new TabPane
-    val tab1 = new Tab
-    val tab2 = new Tab
-    tab1.text = "Action Menu"
-    tab2.text = "Logger"
-    tab1.content = actionMenu
-    tab2.content = logger
-    tabPane.tabs = List(tab1, tab2)
+    val actionsTab = new Tab
+    val loggerTab = new Tab
+    actionsTab.text = "Action Menu"
+    loggerTab.text = "Logger"
+    actionsTab.content = actionMenu
+    loggerTab.content = logger
+    tabPane.tabs = List(actionsTab, loggerTab)
 
     borderPane.bottom = tabPane
 
