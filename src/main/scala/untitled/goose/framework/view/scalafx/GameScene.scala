@@ -1,9 +1,9 @@
 package untitled.goose.framework.view.scalafx
 
 import scalafx.application.Platform
-import scalafx.geometry.Pos
 import scalafx.scene.Scene
-import scalafx.scene.layout.{BorderPane, HBox}
+import scalafx.scene.control.{Tab, TabPane}
+import scalafx.scene.layout.BorderPane
 import scalafx.stage.Stage
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
@@ -37,7 +37,7 @@ object GameScene {
     extends GameScene {
 
     val boardProportion = 0.8
-    val logHeight = 200
+    val logHeight = 160
 
     val borderPane = new BorderPane()
     this.content = borderPane
@@ -53,12 +53,16 @@ object GameScene {
     val logger: EventLogger = EventLogger(gameMatch.currentState, logHeight)
     logger.prefWidth <== this.width
 
-    val controlPanel: HBox = new HBox {
-      alignment = Pos.Center
-      children = List(actionMenu, logger)
-    }
+    val tabPane = new TabPane
+    val actionsTab = new Tab
+    val loggerTab = new Tab
+    actionsTab.text = "Action Menu"
+    loggerTab.text = "Logger"
+    actionsTab.content = actionMenu
+    loggerTab.content = logger
+    tabPane.tabs = List(actionsTab, loggerTab)
 
-    borderPane.bottom = controlPanel
+    borderPane.bottom = tabPane
 
     //Init the view
     updateScene(gameMatch.currentState, gameMatch.availableActions)

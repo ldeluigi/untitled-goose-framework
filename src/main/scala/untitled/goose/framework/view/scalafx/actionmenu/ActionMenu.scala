@@ -3,7 +3,7 @@ package untitled.goose.framework.view.scalafx.actionmenu
 import scalafx.beans.binding.Bindings
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Label
-import scalafx.scene.layout.{StackPane, VBox}
+import scalafx.scene.layout.{HBox, StackPane}
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.runtime.Game
@@ -22,10 +22,10 @@ object ActionMenu {
 
   private class ActionMenuImpl(boardView: BoardDisplay, game: Game, controller: GameManager) extends ActionMenu {
 
-    val actionBox: VBox = new VBox {
-      alignment = Pos.Center
+    val actionBox: HBox = new HBox {
+      alignment = Pos.TopCenter
       spacing = 20
-      padding = Insets(30)
+      padding = Insets(15)
     }
 
     this.children.add(actionBox)
