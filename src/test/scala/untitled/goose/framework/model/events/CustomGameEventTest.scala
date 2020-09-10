@@ -15,33 +15,20 @@ class CustomGameEventTest extends AnyFlatSpec with BeforeAndAfterEach {
   }
 
   it should "set a custom property of the given type after defining the key" in {
-    customEvent.defineKey[Int]("intVal")
     customEvent.setProperty("intVal", 1)
     customEvent.getProperty[Int]("intVal").get should be(1)
   }
 
-  it should "break when asking for a property that was not defined" in {
+  it should "break when asking for a property that was not set" in {
     a[NoSuchElementException] should be thrownBy customEvent.getProperty[Int]("intVal")
   }
 
-  it should "break when setting a property that was not defined" in {
-    an[IllegalArgumentException] should be thrownBy customEvent.setProperty("intVal", 1)
-  }
-
   it should "break when asking for a defined property with the wrong type" in {
-    customEvent.defineKey[Int]("intVal")
     customEvent.setProperty("intVal", 1)
     a[NoSuchElementException] should be thrownBy customEvent.getProperty[String]("intVal")
   }
 
-  it should "break when setting a defined property with the wrong type" in {
-    customEvent.defineKey[Int]("intVal")
-    an[IllegalArgumentException] should be thrownBy customEvent.setProperty("intVal", "ciao")
-  }
-
   it should "work even if there are keys with same name but different values" in {
-    customEvent.defineKey[Int]("value")
-    customEvent.defineKey[String]("value")
     customEvent.setProperty("value", 1)
     customEvent.setProperty("value", "ciao")
 

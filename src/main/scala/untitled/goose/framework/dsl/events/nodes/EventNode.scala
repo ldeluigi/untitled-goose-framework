@@ -13,19 +13,18 @@ case class EventNode(name: String) extends RuleBookNode {
       .map("Multiple definitions of event property: \"" + _ + "\"").toSeq
   }
 
-  def addProperty[T](key: Key[T]): Unit = {
+  def defineProperty[T](key: Key[T]): Unit = {
     props :+= key
   }
 
   def isPropertyDefined[T](key: Key[T]): Boolean = props contains key
 
-  def generateEvent(properties: Map[Key[_], Any]): GameState => GameEvent = { state => {
+  def generateEvent(properties: Map[Key[_], Any]): GameState => GameEvent = state => {
     val c = CustomGameEvent(state.currentTurn, state.currentCycle, name)
     properties foreach { p =>
       c.setProperty(p._1.keyName, p._1.classTag.unapply(p._2))
     }
     c
-  }
   }
 
 }

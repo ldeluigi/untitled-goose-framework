@@ -37,16 +37,15 @@ object GooseGame extends GooseDSL {
   Players start on tile 1
 
   Define event "custom" having(
-    "val" as[Int] value,
-    "pippo" as[String] value,
-  )
+    "value" as[Int] value,
+    )
 
   Create movementDice "six-faced" having totalSides(6)
 
   Each turn players are(
-    always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
-    always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
-    always allowed to trigger (customEvent("custom") := "value" -> 5 + "ciao" -> "ciao") as "Something" priority 2,
+    ///always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
+    //always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
+    always allowed to trigger (customEvent("custom") := "value" -> 5) as "Something" priority 2,
     always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5
   )
 
