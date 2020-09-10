@@ -336,7 +336,7 @@ object GooseGameNoDSL extends JFXApp {
     minHeight = 0.75 * screenSize.height
     fullScreenExitHint = "ESC to exit full screen mode"
   }
-  val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
+  val gameScene: GameScene = GameScene(stage, controller, currentMatch.currentState, graphicMap)
   controller.setScene(gameScene)
   stage.scene = gameScene
 

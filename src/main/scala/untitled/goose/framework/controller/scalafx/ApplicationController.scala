@@ -21,6 +21,7 @@ case class ApplicationController(game: Game) extends ScalaFxController {
 
   override def setScene(gameScene: GameScene): Unit = {
     this.gameScene = Some(gameScene)
+    update(engine.game.currentState)
   }
 
   override def resolveAction(action: Action): Unit =

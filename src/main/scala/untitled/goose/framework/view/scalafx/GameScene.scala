@@ -9,7 +9,7 @@ import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
-import untitled.goose.framework.model.entities.runtime.{Game, GameState}
+import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.view.scalafx.actionmenu.ActionMenu
 import untitled.goose.framework.view.scalafx.board.{BoardDisplay, GraphicDescriptor}
@@ -30,10 +30,10 @@ trait GameScene extends Scene {
 
 object GameScene {
 
-  def apply(stage: Stage, commandSender: GameManager, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor]): GameScene =
+  def apply(stage: Stage, commandSender: GameManager, gameMatch: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor]): GameScene =
     new GameSceneImpl(stage, commandSender, gameMatch, graphicMap)
 
-  private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameMatch: Game, graphicMap: Map[TileIdentifier, GraphicDescriptor])
+  private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameMatch: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends GameScene {
 
     val boardProportion = 0.8
@@ -42,7 +42,7 @@ object GameScene {
     val borderPane = new BorderPane()
     this.content = borderPane
 
-    val boardView: BoardDisplay = BoardDisplay(gameMatch.currentState.gameBoard, graphicMap)
+    val boardView: BoardDisplay = BoardDisplay(gameMatch.gameBoard, graphicMap)
     borderPane.center = boardView
     boardView.prefWidth <== this.width * boardProportion
     boardView.prefHeight <== this.height - logHeight
@@ -50,7 +50,7 @@ object GameScene {
     val actionMenu: ActionMenu = ActionMenu(boardView, gameMatch, commandSender)
     actionMenu.prefWidth <== this.width * (1 - boardProportion)
 
-    val logger: EventLogger = EventLogger(gameMatch.currentState, logHeight)
+    val logger: EventLogger = EventLogger(gameMatch, logHeight)
     logger.prefWidth <== this.width
 
     val tabPane = new TabPane
@@ -63,9 +63,6 @@ object GameScene {
     tabPane.tabs = List(actionsTab, loggerTab)
 
     borderPane.bottom = tabPane
-
-    //Init the view
-    updateScene(gameMatch.currentState, gameMatch.availableActions)
 
     stage.setOnCloseRequest(_ => commandSender.stopGame())
 
@@ -82,6 +79,8 @@ object GameScene {
       Platform.runLater(DialogUtils.launchDialog(dialogContent, promise))
 
     override def logEvent(event: GameEvent): Unit = Platform.runLater(logger.logEvent(event))
+
+    this.stylesheets.add("css/styleGameScene.css")
   }
 
 }
