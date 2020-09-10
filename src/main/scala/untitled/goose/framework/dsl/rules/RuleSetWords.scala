@@ -3,12 +3,13 @@ package untitled.goose.framework.dsl.rules
 import untitled.goose.framework.dsl.events.words.EventDefinitionWords
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.actions.words.{EachWord, PlayersAreWord, ToWord, WhenWord}
+import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourWords
 import untitled.goose.framework.dsl.rules.players.{PlayerOrderProperty, PlayersWord}
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
+import untitled.goose.framework.shortcuts.EventsShortcut
 
-//TODO Perchè sta cosa??? Non ne capisco il senso @Deloo
-trait RuleSetWords extends EventDefinitionWords {
+trait RuleSetWords extends EventDefinitionWords with EventsShortcut with BehaviourWords {
 
   val Players: PlayersWord = PlayersWord()
 

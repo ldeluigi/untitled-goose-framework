@@ -6,14 +6,13 @@ import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.RuleSetWords
 import untitled.goose.framework.dsl.rules.actions.words.RulesWord
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, GameDefinitionBuilder, TileIdentifier}
-import untitled.goose.framework.shortcuts.EventsShortcut
 import untitled.goose.framework.view.scalafx.View
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
 import scala.util.Random
 
 
-trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords with DiceWords with EventsShortcut {
+trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords with DiceWords {
 
   protected implicit val ruleBook: RuleBook = RuleBook()
 

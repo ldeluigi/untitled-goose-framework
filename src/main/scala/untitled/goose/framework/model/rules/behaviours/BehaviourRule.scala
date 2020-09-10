@@ -17,7 +17,7 @@ object BehaviourRule {
   import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
 
   /** The mandatory implementation of a behaviour rule ensures constraints are honored. */
-  private[behaviours] class BehaviourRuleImpl[T <: ConsumableGameEvent]
+  private[behaviours] class BehaviourRuleImpl[T <: ConsumableGameEvent : ClassTag]
   (
     filterStrategy: T => Boolean = (_: T) => true,
     countStrategy: Int => Boolean = _ > 0,
@@ -25,7 +25,7 @@ object BehaviourRule {
     when: GameState => Boolean = _ => true,
     consume: Boolean,
     save: Boolean
-  )(implicit t: ClassTag[T])
+  )
     extends BehaviourRule {
 
     final override def applyRule(state: MutableGameState): Seq[Operation] = {

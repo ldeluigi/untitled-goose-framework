@@ -7,6 +7,7 @@ trait UtilityWords {
   val on: OnWord = OnWord()
   val board: BoardWord = BoardWord()
   val value: ValueWord = ValueWord()
+
 }
 
 object UtilityWords {
