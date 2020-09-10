@@ -1,8 +1,5 @@
 package untitled.goose.framework.view.scalafx.logger
 
-import java.text.SimpleDateFormat
-import java.util.Calendar
-
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
 import untitled.goose.framework.model.entities.runtime.GameState
@@ -36,14 +33,12 @@ object EventLogger {
      * @param event the event to be logged
      */
     def logEvent(event: GameEvent): Unit = {
-      val now = Calendar.getInstance().getTime
-      val minuteFormat = new SimpleDateFormat("[HH:mm:ss]")
-      val timestamp = minuteFormat.format(now)
-      logText.appendText("\n" + timestamp + " - EVENT " + event.toString)
+      logText.appendText("\nEVENT " + event.toString)
       logText.scrollTop = Double.MaxValue
     }
 
     def logHistoryDiff(state: GameState): Unit = {
+      println(state)
       (state.consumableBuffer.diff(previousState.consumableBuffer) ++
         state.players.flatMap(_.history).diff(previousState.players.flatMap(_.history)) ++
         state.gameBoard.tiles.flatMap(_.history).diff(previousState.gameBoard.tiles.flatMap(_.history)))
