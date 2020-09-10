@@ -64,7 +64,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       controller.setScene(gameScene)
       stage.scene = gameScene
       stage.setMaximized(true)
-      stage.setResizable(false)
+      stage.setResizable(true)
     } else {
       new Alert(AlertType.Error) {
         initOwner(stage)

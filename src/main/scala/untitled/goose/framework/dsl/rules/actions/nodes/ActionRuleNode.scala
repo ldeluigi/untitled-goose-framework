@@ -98,7 +98,8 @@ object ActionRuleNode {
                                    definedEvents: EventCollection)
     extends ActionRuleNode with ActionGeneration {
 
-    override def generateActionRule(): ActionRule = ActionRule(Set(ActionAvailability(generateAction(), priority, allow)), when)
+    override def generateActionRule(): ActionRule =
+      ActionRule(Set(ActionAvailability(generateAction(), priority, allow)), when)
 
     override def generateAction(): Action = {
       val event: GameState => GameEvent = definedEvents.getEvent(customEvent.name).generateEvent(customEvent.properties)
