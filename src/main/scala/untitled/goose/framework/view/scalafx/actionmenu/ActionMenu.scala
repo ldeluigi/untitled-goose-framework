@@ -3,7 +3,7 @@ package untitled.goose.framework.view.scalafx.actionmenu
 import scalafx.beans.binding.Bindings
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Label
-import scalafx.scene.layout.{Pane, VBox}
+import scalafx.scene.layout.{StackPane, VBox}
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.runtime.Game
@@ -12,7 +12,7 @@ import untitled.goose.framework.view.scalafx.board.BoardDisplay
 
 /** An object that organizes a set of actions into a graphical menu.
  */
-trait ActionMenu extends Pane {
+trait ActionMenu extends StackPane {
 
   def displayActions(actions: Set[Action])
 
@@ -23,14 +23,15 @@ object ActionMenu {
   private class ActionMenuImpl(boardView: BoardDisplay, game: Game, controller: GameManager) extends ActionMenu {
 
     val actionBox: VBox = new VBox {
-      spacing = 15
-      padding = Insets(15)
+      alignment = Pos.Center
+      spacing = 20
+      padding = Insets(30)
     }
-    actionBox.setAlignment(Pos.Center)
+
     this.children.add(actionBox)
 
     val currentPlayerName: Label = new Label {
-      style = "-fx-font-size: 12pt"
+      style = "-fx-font-size: 13pt"
     }
 
     /** Utility method to add every action into a VBox.

@@ -1,6 +1,7 @@
 package untitled.goose.framework.view.scalafx
 
 import scalafx.application.Platform
+import scalafx.geometry.Pos
 import scalafx.scene.Scene
 import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.stage.Stage
@@ -53,6 +54,7 @@ object GameScene {
     logger.prefWidth <== this.width
 
     val controlPanel: HBox = new HBox {
+      alignment = Pos.Center
       children = List(actionMenu, logger)
     }
 
