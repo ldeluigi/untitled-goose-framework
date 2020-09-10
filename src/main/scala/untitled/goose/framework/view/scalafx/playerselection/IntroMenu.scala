@@ -34,7 +34,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
   val playersPane: InsertPlayerPane = InsertPlayerPane(gameData.playersRange)
 
   val startGame: Button = new Button {
-    text = "Start runtime!"
+    text = "Start game!"
     textFill = DarkGreen
     style = "-fx-font-size: 15pt"
   }
@@ -67,7 +67,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       new Alert(AlertType.Error) {
         initOwner(stage)
         title = "Error!"
-        headerText = "You need at least " + minimumNeededPlayers + " players to start this runtime!"
+        headerText = "You need at least " + minimumNeededPlayers + " players to start this game!"
         contentText = "Add " + (minimumNeededPlayers - playersPane.getPlayerSeq.size) + " more players."
       }.showAndWait()
     }
