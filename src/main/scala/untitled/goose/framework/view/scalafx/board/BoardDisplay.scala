@@ -78,8 +78,9 @@ object BoardDisplay {
     }
 
     private def setFocus(positionTile: TileVisualization): Unit = {
-      this.setHvalue(positionTile.getLayoutX / boardPane.getWidth)
-      this.setVvalue(positionTile.getLayoutY / boardPane.getHeight)
+      val tileOffset = 1.5
+      this.setHvalue((positionTile.getLayoutX * tileOffset) / boardPane.getWidth)
+      this.setVvalue((positionTile.getLayoutY * tileOffset) / boardPane.getHeight)
     }
   }
 

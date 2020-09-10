@@ -45,7 +45,7 @@ object ActionRuleNode {
     extends ActionRuleNode {
 
     override def check: Seq[String] =
-      refName.filter(!isActionDefined(_)).map("Action with name: " + _ + " was never defined").toSeq
+      refName.filter(!isActionDefined(_)).map("Action with name: \"" + _ + "\" was never defined").toSeq
 
     override def generateActionRule(): ActionRule = {
       val availabilities: Set[ActionAvailability] = refName.map(getAction).map(a => ActionAvailability(a, priority, allow))
@@ -108,11 +108,11 @@ object ActionRuleNode {
 
     override def check: Seq[String] = {
       (if (definedEvents.isEventDefined(customEvent.name)) Seq()
-      else Seq(customEvent.name + " is not defined.")) ++ {
+      else Seq("\"" + customEvent.name + "\" is not defined")) ++ {
         val e: EventNode = definedEvents.getEvent(customEvent.name)
         customEvent.properties.keys.flatMap(p =>
           if (e.isPropertyDefined(p)) Seq()
-          else Seq("Property " + p.keyName + " was not defined for event " + customEvent.name)
+          else Seq("Trying to set property \"" + p.keyName + "\" for customEvent named \"" + customEvent.name + "\" but it was never defined")
         )
       }
     }
