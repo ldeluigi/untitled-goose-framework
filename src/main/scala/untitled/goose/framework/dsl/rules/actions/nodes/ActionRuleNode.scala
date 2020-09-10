@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.rules.actions.nodes
 
 import untitled.goose.framework.dsl.dice.nodes.DiceCollection
-import untitled.goose.framework.dsl.events.nodes.EventCollection
+import untitled.goose.framework.dsl.events.nodes.{EventCollection, EventNode}
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.actions.{Action, RollDice, RollMovementDice}
@@ -45,7 +45,7 @@ object ActionRuleNode {
     extends ActionRuleNode {
 
     override def check: Seq[String] =
-      refName.filter(!isActionDefined(_)).map("Action with name: " + _ + " was never defined").toSeq
+      refName.filter(!isActionDefined(_)).map("Action with name: \"" + _ + "\" was never defined").toSeq
 
     override def generateActionRule(): ActionRule = {
       val availabilities: Set[ActionAvailability] = refName.map(getAction).map(a => ActionAvailability(a, priority, allow))
@@ -107,8 +107,14 @@ object ActionRuleNode {
     }
 
     override def check: Seq[String] = {
-      if (definedEvents.isEventDefined(customEvent.name)) Seq()
-      else Seq(customEvent.name + " is not defined.")
+      (if (definedEvents.isEventDefined(customEvent.name)) Seq()
+      else Seq("\"" + customEvent.name + "\" is not defined")) ++ {
+        val e: EventNode = definedEvents.getEvent(customEvent.name)
+        customEvent.properties.keys.flatMap(p =>
+          if (e.isPropertyDefined(p)) Seq()
+          else Seq("Trying to set property \"" + p.keyName + "\" for customEvent named \"" + customEvent.name + "\" but it was never defined")
+        )
+      }
     }
   }
 
