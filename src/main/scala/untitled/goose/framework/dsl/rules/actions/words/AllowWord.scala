@@ -14,8 +14,8 @@ import scala.reflect.ClassTag
 class AllowWord(when: GameState => Boolean)(implicit ruleBook: RuleBook) {
   def apply(to: ToWord): AllowWord = this
 
-  def displayQuestion(title: String, text: String, options: GameState => Seq[(String, GameEvent)]): UnnamedAction =
-    trigger(s => DialogLaunchEvent(s.currentTurn, s.currentCycle, DialogContent(title, text, options(s): _*)))
+  def displayQuestion(title: String, text: String, options: (String, GameState => GameEvent)*): UnnamedAction =
+    trigger(s => DialogLaunchEvent(s.currentTurn, s.currentCycle, DialogContent(title, text, options.map(o => (o._1, o._2(s))): _*)))
 
   def trigger[T: ClassTag](customEventInstance: CustomEventInstance): UnnamedCustomAction = custom.UnnamedCustomAction(when, customEventInstance, allow = true)
 
