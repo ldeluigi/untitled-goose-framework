@@ -11,7 +11,7 @@ import untitled.goose.framework.view.scalafx.playerselection.IntroMenu
 
 class View(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val appTitle = "Untitled Goose Framework"
+  val appTitle: String = gameData.board.name
 
   stage = new JFXApp.PrimaryStage {
     title.value = appTitle
