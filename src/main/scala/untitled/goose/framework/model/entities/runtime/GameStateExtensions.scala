@@ -1,5 +1,6 @@
 package untitled.goose.framework.model.entities.runtime
 
+import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
 import untitled.goose.framework.model.events._
 import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
 import untitled.goose.framework.model.events.persistent.{PersistentGameEvent, TurnEndedEvent}
@@ -30,6 +31,10 @@ object GameStateExtensions {
      */
     def getTile(name: String): Option[Tile] =
       state.gameBoard.tiles.find(t => t.definition.name.isDefined && t.definition.name.get == name)
+
+
+    def getFirstTileOf(group: Group): Option[Tile] =
+      state.gameBoard.tiles.toList.sorted.find(t => t.definition.belongsTo(group.name))
 
     /**
      * Returns a sequence of values that represent the turns at which a player stopped its
