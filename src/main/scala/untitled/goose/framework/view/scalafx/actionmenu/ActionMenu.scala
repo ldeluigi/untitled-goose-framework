@@ -1,7 +1,7 @@
 package untitled.goose.framework.view.scalafx.actionmenu
 
 import scalafx.beans.binding.Bindings
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.control.Label
 import scalafx.scene.layout.{HBox, StackPane}
 import untitled.goose.framework.controller.GameManager
@@ -25,14 +25,13 @@ object ActionMenu {
     val actionBox: HBox = new HBox {
       alignment = Pos.TopCenter
       spacing = 20
-      padding = Insets(15)
     }
+    actionBox.styleClass.add("actionBox")
 
     this.children.add(actionBox)
 
-    val currentPlayerName: Label = new Label {
-      style = "-fx-font-size: 13pt"
-    }
+    val currentPlayerName: Label = new Label {}
+    currentPlayerName.styleClass.add("currentPlayerName")
 
     /** Utility method to add every action into a VBox.
      *

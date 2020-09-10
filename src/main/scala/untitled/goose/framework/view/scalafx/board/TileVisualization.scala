@@ -45,6 +45,7 @@ object TileVisualization {
       width <== parentWidth / (cols * 1.25)
       height <== width
     }
+    rectangle.styleClass.add("rectangle")
 
     val text: String = tile.definition.name match {
       case Some(value) => value

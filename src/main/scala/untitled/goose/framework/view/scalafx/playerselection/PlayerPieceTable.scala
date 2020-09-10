@@ -55,6 +55,8 @@ case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
   nameCol.sortable = false
   tableView.maxWidth = customWidth
 
+  tableView.styleClass.add("tableView")
+
   val selectedIndex: ReadOnlyIntegerProperty = tableView.selectionModel.value.selectedIndexProperty()
 
 }

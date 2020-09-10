@@ -35,6 +35,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
   val startGame: Button = new Button {
     text = "Start game!"
   }
+  startGame.styleClass.add("startGame")
 
   val upperGameNameHeader: HBox = new HBox {
     alignment = Pos.Center
@@ -42,12 +43,14 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       text = boardName
     }
   }
+  upperGameNameHeader.styleClass.add("upperGameNameHeader")
+
   val bottomGameControls: HBox = new HBox {
     alignment = Pos.BottomCenter
     spacing = 15
     children = List(startGame)
   }
-
+  bottomGameControls.styleClass.add("bottomGameControls")
 
   startGame.onAction = _ => {
     val minimumNeededPlayers: Int = gameData.playersRange.start
@@ -58,7 +61,6 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       val gameScene: GameScene = GameScene(stage, controller, clonedState, graphicMap)
       controller.setScene(gameScene)
       stage.scene = gameScene
-      //stage.setMaximized(true)
       stage.setResizable(true)
     } else {
       new Alert(AlertType.Error) {

@@ -2,19 +2,49 @@
     -fx-background: #BABB;
 }
 
-.root > HBox{
+.button{
+
+}
+
+.upperGameNameHeader{
     -fx-font: bold italic 40pt "Arial";
     -fx-padding: 20pt;
 }
 
-.button{
-    -fx-font-size: 15pt;
+.bottomGameControls{
+    -fx-padding: 10pt;
+}
+
+.inputPlayers{
+    -fx-padding: 5pt;
+}
+
+.tableControls{
+    -fx-padding: 5pt;
+}
+
+.startGame{
+    -fx-font-size: 12pt;
     -fx-text-fill: DarkBlue;
     -fx-border-color: #BABB;
     -fx-border-radius: 5;
     -fx-background-color: White;
+    -fx-padding: 5pt;
 }
 
-.button:hover{
+.startGame:hover{
+    -fx-border-color: DarkBlue;
+}
+
+.table-view {
+    -fx-font: bold italic 11pt "Arial";
+    -fx-background-color: white;
+}
+
+.table-view .column-header {
     -fx-background-color: #BABB;
+}
+
+.table-view .column-header-background .label{
+    -fx-text-fill: DarkBlue;
 }
