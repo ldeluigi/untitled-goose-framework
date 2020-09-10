@@ -79,6 +79,8 @@ object GameScene {
       Platform.runLater(DialogUtils.launchDialog(dialogContent, promise))
 
     override def logEvent(event: GameEvent): Unit = Platform.runLater(logger.logEvent(event))
+
+    this.stylesheets.add("css/styleGameScene.css")
   }
 
 }

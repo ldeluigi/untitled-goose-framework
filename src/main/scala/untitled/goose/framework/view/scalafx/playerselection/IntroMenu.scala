@@ -1,11 +1,10 @@
 package untitled.goose.framework.view.scalafx.playerselection
 
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
-import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
@@ -35,22 +34,17 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
 
   val startGame: Button = new Button {
     text = "Start game!"
-    textFill = DarkGreen
-    style = "-fx-font-size: 15pt"
   }
 
   val upperGameNameHeader: HBox = new HBox {
     alignment = Pos.Center
-    padding = Insets(30)
     children = new Text {
       text = boardName
-      style = "-fx-font-size: 28pt"
     }
   }
   val bottomGameControls: HBox = new HBox {
     alignment = Pos.BottomCenter
     spacing = 15
-    padding = Insets(15)
     children = List(startGame)
   }
 
@@ -78,5 +72,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
   borderPane.top = upperGameNameHeader
   borderPane.center = playersPane
   borderPane.bottom = bottomGameControls
+
+  this.stylesheets.add("css/styleIntroMenu.css")
 
 }

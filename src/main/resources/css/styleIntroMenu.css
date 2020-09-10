@@ -1,0 +1,20 @@
+.root{
+    -fx-background: #BABB;
+}
+
+.root > HBox{
+    -fx-font: bold italic 40pt "Arial";
+    -fx-padding: 20pt;
+}
+
+.button{
+    -fx-font-size: 15pt;
+    -fx-text-fill: DarkBlue;
+    -fx-border-color: #BABB;
+    -fx-border-radius: 5;
+    -fx-background-color: White;
+}
+
+.button:hover{
+    -fx-background-color: #BABB;
+}

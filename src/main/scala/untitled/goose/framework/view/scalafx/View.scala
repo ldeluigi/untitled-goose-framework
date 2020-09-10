@@ -32,5 +32,4 @@ class View(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDesc
       stage.setFullScreen(true)
     }
   )
-
 }

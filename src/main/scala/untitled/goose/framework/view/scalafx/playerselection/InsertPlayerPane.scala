@@ -113,6 +113,7 @@ object InsertPlayerPane {
       playerBuffer.map(p => Player(p.name.value))
 
     override def checkPlayers: Boolean = playersRange.contains(playerBuffer.size)
+
   }
 
 }
