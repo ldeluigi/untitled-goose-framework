@@ -63,6 +63,8 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
       controller.setScene(gameScene)
       stage.scene = gameScene
+      stage.setMaximized(true)
+      stage.setResizable(false)
     } else {
       new Alert(AlertType.Error) {
         initOwner(stage)
