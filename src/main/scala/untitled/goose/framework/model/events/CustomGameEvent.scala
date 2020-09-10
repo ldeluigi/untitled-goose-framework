@@ -6,7 +6,7 @@ import scala.reflect.ClassTag
 class CustomGameEvent(val turn: Int, val cycle: Int, override val name: String) extends GameEvent {
   private var propertyList: List[(Key[_], Option[_])] = List()
 
-  override def toString: String = super.toString + "Properties: " + propertyList
+  override def toString: String = super.toString + " Properties: " + propertyList
 
   def getProperty[T: ClassTag](key: String): Option[T] = {
     propertyList.find(_._1.equals(Key[T](key))).get._2.get match {
