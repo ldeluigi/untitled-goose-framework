@@ -13,5 +13,5 @@ case class FilteredCountBehaviour[T <: ConsumableGameEvent : ClassTag]
   countStrategy: Int => Boolean,
 ) {
 
-  def ==>(operations: (Seq[T], GameState) => Operation*): Unit = ???
+  def resolve(operations: (Seq[T], GameState) => Operation*): Unit = ???
 }

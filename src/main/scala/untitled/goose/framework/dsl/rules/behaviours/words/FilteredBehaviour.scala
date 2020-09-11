@@ -7,5 +7,5 @@ import scala.reflect.ClassTag
 
 case class FilteredBehaviour[T <: ConsumableGameEvent : ClassTag](condition: GameState => Boolean, filterStrategy: T => Boolean) {
 
-  def count(countStrategy: Int => Boolean): FilteredCountBehaviour[T] = FilteredCountBehaviour(condition, filterStrategy, countStrategy)
+  def is(countStrategy: Int => Boolean): FilteredCountBehaviour[T] = FilteredCountBehaviour(condition, filterStrategy, countStrategy)
 }
