@@ -78,7 +78,7 @@ object GameScene {
     override def close(): Unit = Platform.runLater(stage.close())
 
     override def showDialog(dialogContent: DialogContent, promise: Promise[GameEvent]): Unit =
-      Platform.runLater(DialogUtils.launchDialog(dialogContent, promise))
+      Platform.runLater(DialogUtils.launchDialog(stage, dialogContent, promise))
 
     override def logEvent(event: GameEvent): Unit = Platform.runLater(logger.logEvent(event))
 
