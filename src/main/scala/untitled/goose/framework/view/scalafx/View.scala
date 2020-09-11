@@ -29,7 +29,7 @@ class View(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDesc
 
   stage.getScene.setOnKeyPressed(
     key => if (key.getCode == KeyCode.F11) {
-      stage.setFullScreen(true)
+      stage setFullScreen true
     }
   )
 

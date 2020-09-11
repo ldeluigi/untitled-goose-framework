@@ -76,7 +76,7 @@ object Main extends JFXApp {
 
   stage.getScene.setOnKeyPressed(
     key => if (key.getCode == KeyCode.F11) {
-      stage.setFullScreen(true)
+      stage setFullScreen true
     }
   )
 }

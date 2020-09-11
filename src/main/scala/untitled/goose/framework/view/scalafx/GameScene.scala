@@ -67,7 +67,7 @@ object GameScene {
     //Init the view
     updateScene(gameMatch.currentState, gameMatch.availableActions)
 
-    stage.setOnCloseRequest(_ => commandSender.stopGame())
+    stage setOnCloseRequest (_ => commandSender.stopGame())
 
     override def updateScene(state: GameState, availableActions: Set[Action]): Unit =
       Platform.runLater(() => {

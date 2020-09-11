@@ -338,11 +338,11 @@ object GooseGameNoDSL extends JFXApp {
   }
   val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
   controller.setScene(gameScene)
-  stage.scene = gameScene
+  stage scene = gameScene
 
   stage.getScene.setOnKeyPressed(
     key => if (key.getCode.equals(KeyCode.F11)) {
-      stage.setFullScreen(true)
+      stage setFullScreen true
     }
   )
 
