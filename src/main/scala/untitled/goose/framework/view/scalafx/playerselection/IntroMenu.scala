@@ -34,17 +34,13 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
 
   val startGame: Button = new Button {
     text = "Start game!"
-    textFill = DarkGreen
-    style = "-fx-font-size: 15pt"
   }
   startGame.styleClass.add("startGame")
 
   val upperGameNameHeader: HBox = new HBox {
     alignment = Pos.Center
-    padding = Insets(30)
     children = new Text {
       text = boardName
-      style = "-fx-font-size: 28pt"
     }
   }
   upperGameNameHeader.styleClass.add("upperGameNameHeader")
@@ -52,7 +48,6 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
   val bottomGameControls: HBox = new HBox {
     alignment = Pos.BottomCenter
     spacing = 15
-    padding = Insets(15)
     children = List(startGame)
   }
   bottomGameControls.styleClass.add("bottomGameControls")
@@ -63,7 +58,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       val currentMatch: Game = Game(gameData, ListMap(playersPane.getPlayerSeq.map(p => (p, playersPane.getPlayersPiecesMap(p))): _*))
       val clonedState: GameState = currentMatch.currentState.clone()
       val controller: ScalaFxController = ApplicationController(currentMatch)
-      val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
+      val gameScene: GameScene = GameScene(stage, controller, clonedState, graphicMap)
       controller setScene gameScene
       stage scene = gameScene
       stage width = widthSize
