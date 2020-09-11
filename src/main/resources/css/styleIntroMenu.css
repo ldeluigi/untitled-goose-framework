@@ -1,5 +1,9 @@
 .root{
-    -fx-background: #BABB;
+    -fx-background: #829b45;
+}
+
+.borderPane{
+-fx-background-image: url("resources/oca.jpg");
 }
 
 .button{
@@ -26,14 +30,10 @@
 
 .startGame{
     -fx-font-size: 12pt;
-    -fx-text-fill: DarkBlue;
-    -fx-border-color: #BABB;
+    -fx-text-fill: #206020;
     -fx-background-color: White;
     -fx-padding: 5pt;
-}
-
-.button:hover{
-    -fx-border-color: DarkBlue;
+    -fx-font: bold italic 15pt "Arial";
 }
 
 .table-view {
@@ -42,9 +42,9 @@
 }
 
 .table-view .column-header {
-    -fx-background-color: #BABB;
+    -fx-background-color: #e4a411;
 }
 
 .table-view .column-header-background .label{
-    -fx-text-fill: DarkBlue;
+    -fx-text-fill: White;
 }
