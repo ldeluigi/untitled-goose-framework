@@ -1,8 +1,10 @@
 package untitled.goose.framework.dsl.rules.behaviours.words
 
+import untitled.goose.framework.dsl.rules.behaviours.nodes.BehaviourNode
+import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourNodeState.BaseState
+import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
-import untitled.goose.framework.model.rules.operations.Operation
 
 import scala.reflect.ClassTag
 
@@ -13,5 +15,5 @@ case class FilteredCountBehaviour[T <: ConsumableGameEvent : ClassTag]
   countStrategy: Int => Boolean,
 ) {
 
-  def resolve(operations: (Seq[T], GameState) => Operation*): Unit = ???
+  def resolve(operations: OperationNode[T]*): BehaviourNode[BaseState] = ???
 }

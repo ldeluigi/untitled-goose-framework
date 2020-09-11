@@ -8,6 +8,7 @@ trait UtilityWords {
   val board: BoardWord = BoardWord()
   val value: ValueWord = ValueWord()
   val to: ToWord = ToWord()
+
 }
 
 object UtilityWords {

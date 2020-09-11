@@ -196,7 +196,7 @@ object GooseGameNoDSL extends JFXApp {
     filterStrategy = _.tile.definition.name.contains(theWell),
     operations = (events, _) => {
       events.map(e => Operation.updateState(_ => {
-        e.player.history.excludeEventType[LoseTurnEvent]()
+        e.player.history = e.player.history.excludeEventType[LoseTurnEvent]()
       }))
     }
   )
@@ -230,7 +230,7 @@ object GooseGameNoDSL extends JFXApp {
     filterStrategy = _.tile.definition.name.contains(thePrison),
     operations = (events, _) => {
       events.map(e => Operation.updateState(_ => {
-        e.player.history.excludeEventType[LoseTurnEvent]()
+        e.player.history = e.player.history.excludeEventType[LoseTurnEvent]()
       }))
     }
   )
