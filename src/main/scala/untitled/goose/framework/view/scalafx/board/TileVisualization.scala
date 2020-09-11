@@ -39,7 +39,7 @@ object TileVisualization {
 
     val rectangle: Rectangle = new Rectangle {
       strokeType = StrokeType.Inside
-      width <== parentWidth / (cols * 1.25)
+      width <== parentWidth / cols
       height <== width
     }
     rectangle.styleClass.add("rectangle")

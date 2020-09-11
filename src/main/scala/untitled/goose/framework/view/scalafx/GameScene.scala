@@ -9,7 +9,7 @@ import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
-import untitled.goose.framework.model.entities.runtime.{Game, GameState}
+import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.view.scalafx.actionmenu.ActionMenu
 import untitled.goose.framework.view.scalafx.board.{BoardDisplay, GraphicDescriptor}
@@ -39,7 +39,7 @@ object GameScene {
     val boardProportion = 0.8
     val logHeight = 160
 
-    val borderPane = new BorderPane()
+    val borderPane = new BorderPane
     this.content = borderPane
 
     val boardView: BoardDisplay = BoardDisplay(gameMatch.gameBoard, graphicMap)
@@ -51,7 +51,6 @@ object GameScene {
     actionMenu.prefWidth <== this.width * (1 - boardProportion)
 
     val logger: EventLogger = EventLogger(gameMatch, logHeight)
-    logger.prefWidth <== this.width
 
     val tabPane = new TabPane
     val actionsTab = new Tab
@@ -61,6 +60,9 @@ object GameScene {
     actionsTab.content = actionMenu
     loggerTab.content = logger
     tabPane.tabs = List(actionsTab, loggerTab)
+
+    logger.prefWidth <== tabPane.width
+    tabPane.prefWidth <== this.width
 
     borderPane.bottom = tabPane
 

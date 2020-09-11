@@ -63,8 +63,8 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       stage scene = gameScene
       stage width = widthSize
       stage height = heightSize
-      stage minWidth = widthSize * 0.8
-      stage minHeight = heightSize * 0.8
+      stage minWidth = widthSize * 0.5
+      stage minHeight = heightSize * 0.5
       stage setResizable true
       stage centerOnScreen
     } else {
