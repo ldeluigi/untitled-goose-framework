@@ -25,4 +25,6 @@ trait RuleSetWords extends EventDefinitionWords with EventsShortcut with Behavio
 
   def when(condition: GameState => Boolean)(implicit ruleBook: RuleBook): WhenWord = WhenWord(condition)
 
+  def When(condition: GameState => Boolean)(implicit ruleBook: RuleBook): WhenWord = WhenWord(condition)
+
 }

@@ -3,6 +3,8 @@ package untitled.goose.framework.main
 import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
+import untitled.goose.framework.model.events.consumable.StepMovementEvent
+import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
 
 
@@ -48,9 +50,9 @@ object GooseGame extends GooseDSL {
     always allowed to trigger (customEvent("custom") := "value" -> 5) as "Something" priority 2,
     always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5
   )
-/*
-  when(s => true).filter[StepMovementEvent](e => true).count(_ < 0) ==> (
+
+  When(s => true) and numberOf(events[StepMovementEvent] matching (_.steps > 0)) is (_ >= 0) resolve (
     (e, s) => Operation.trigger(StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle))
     )
- */
+
 }
