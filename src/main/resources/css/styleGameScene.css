@@ -1,12 +1,13 @@
 .root{
-    -fx-background: #BABB;
+    -fx-background: #e4a411;
 }
 
 .button{
-    -fx-border-color: DarkBlue;
     -fx-border-radius: 2;
     -fx-padding: 5pt;
     -fx-background-color: White;
+    -fx-text-fill: #206020;
+    -fx-border-color: #206020;
 }
 
 .actionBox{
@@ -15,20 +16,21 @@
 }
 
 .currentPlayerName{
-        -fx-font: bold 14pt "Arial";
+    -fx-font: bold 14pt "Arial";
 }
 
 .rectangle{
     -fx-fill: White;
-    -fx-stroke: DarkBlue;
+    -fx-stroke: #206020;
     -fx-stroke-width: 2;
 }
 
 .label{
     -fx-font: bold 15pt "Arial";
-    -fx-text-fill: DarkBlue;
+    -fx-text-fill: #206020;
 }
 
 .pieceShape{
-    -fx-stroke: Black;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 1;
 }

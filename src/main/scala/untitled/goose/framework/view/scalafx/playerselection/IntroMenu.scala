@@ -27,8 +27,8 @@ import scala.collection.immutable.ListMap
  */
 class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
   val borderPane = new BorderPane
-
   root = borderPane
+  borderPane.styleClass.add("borderPane")
 
   val playersPane: InsertPlayerPane = InsertPlayerPane(gameData.playersRange)
 
@@ -63,8 +63,9 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       stage scene = gameScene
       stage width = widthSize
       stage height = heightSize
-      stage minWidth = widthSize * 0.8
-      stage minHeight = heightSize * 0.8
+      stage minWidth = widthSize * 0.5
+      stage minHeight = heightSize * 0.5
+      stage.setMaximized(true)
       stage setResizable true
       stage centerOnScreen
     } else {

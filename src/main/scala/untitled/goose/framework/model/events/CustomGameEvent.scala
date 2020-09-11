@@ -1,24 +1,23 @@
 package untitled.goose.framework.model.events
 
+import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
+
+import scala.language.dynamics
 import scala.reflect.ClassTag
 
-// TODO scaladoc
-class CustomGameEvent(val turn: Int, val cycle: Int, override val name: String) extends GameEvent {
-  private var propertyList: List[(Key[_], Option[_])] = List()
+// TODO scaladoc & reimplement with dynamic features
+class CustomGameEvent(val turn: Int, val cycle: Int, override val name: String) extends ConsumableGameEvent with Dynamic {
+  private var propertyList: Map[String, Any] = Map()
 
   override def toString: String = super.toString + " Properties: " + propertyList
 
-  def getProperty[T: ClassTag](key: String): Option[T] = {
-    propertyList.find(_._1.equals(Key[T](key))).get._2.get match {
-      case t: T => Some(t)
-      case _ => throw new IllegalStateException(key + "this should never happen")
-    }
-  }
+  def getProperty[T: ClassTag](key: String): Option[T] =
+    propertyList.get(key).flatMap({
+      case x: T => Some(x)
+      case _ => None
+    })
 
-  def setProperty[T: ClassTag](key: String, value: T): Unit = {
-    propertyList = propertyList.filterNot(_._1.equals(Key[T](key)))
-    propertyList ::= (Key[T](key) -> Some(value))
-  }
+  def setProperty(key: String, value: Any): Unit = propertyList += key -> value
 
 }
 

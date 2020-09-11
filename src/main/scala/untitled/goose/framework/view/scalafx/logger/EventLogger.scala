@@ -33,13 +33,13 @@ object EventLogger {
      * @param event the event to be logged
      */
     def logEvent(event: GameEvent): Unit = {
-      logText.appendText("\nEVENT " + event.toString)
+      logText.appendText("\nEVENT: " + event.toString)
       logText.scrollTop = Double.MaxValue
     }
 
     def logHistoryDiff(state: GameState): Unit = {
-      println(state)
       (state.consumableBuffer.diff(previousState.consumableBuffer) ++
+        state.gameHistory.diff(previousState.gameHistory) ++
         state.players.flatMap(_.history).diff(previousState.players.flatMap(_.history)) ++
         state.gameBoard.tiles.flatMap(_.history).diff(previousState.gameBoard.tiles.flatMap(_.history)))
         .foreach(logEvent)
