@@ -33,7 +33,7 @@ object EventLogger {
      * @param event the event to be logged
      */
     def logEvent(event: GameEvent): Unit = {
-      logText.appendText("\nEVENT " + event.toString)
+      logText.appendText("\nEVENT: " + event.toString)
       logText.scrollTop = Double.MaxValue
     }
 
