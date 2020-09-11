@@ -3,7 +3,8 @@
 }
 
 .button{
-
+    -fx-background-color: White;
+    -fx-border-radius: 2;
 }
 
 .upperGameNameHeader{
@@ -27,12 +28,11 @@
     -fx-font-size: 12pt;
     -fx-text-fill: DarkBlue;
     -fx-border-color: #BABB;
-    -fx-border-radius: 5;
     -fx-background-color: White;
     -fx-padding: 5pt;
 }
 
-.startGame:hover{
+.button:hover{
     -fx-border-color: DarkBlue;
 }
 

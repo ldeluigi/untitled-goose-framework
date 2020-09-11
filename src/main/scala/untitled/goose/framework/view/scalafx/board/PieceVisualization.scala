@@ -2,7 +2,6 @@ package untitled.goose.framework.view.scalafx.board
 
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.scene.layout.StackPane
-import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Circle, Shape}
 import untitled.goose.framework.model.entities.runtime.Piece
 import untitled.goose.framework.view.scalafx.ColorUtils
@@ -25,8 +24,8 @@ object PieceVisualization {
     override def pieceShape: Shape = new Circle {
       fill = ColorUtils.getColor(piece.color)
       radius <== parentWidth * 0.012
-      stroke = Color.Black
     }
+    pieceShape.styleClass.add("pieceShape")
 
     this.children.addAll(pieceShape)
   }

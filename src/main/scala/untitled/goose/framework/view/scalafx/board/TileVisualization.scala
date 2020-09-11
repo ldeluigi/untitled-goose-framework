@@ -31,17 +31,13 @@ object TileVisualization {
                                       parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
 
     var colorToApply: Color = Color.White // default tile background -> applied if not specified by the user
-    val strokeColor: Color = Color.Black // default stroke color -> applied if not specified by the user
     val strokeSize = 3
 
     var graphics: Option[Image] = None
     var imageView: Option[ImageView] = None
 
     val rectangle: Rectangle = new Rectangle {
-      fill = colorToApply
-      stroke = strokeColor
       strokeType = StrokeType.Inside
-      strokeWidth = strokeSize
       width <== parentWidth / (cols * 1.25)
       height <== width
     }
@@ -53,6 +49,7 @@ object TileVisualization {
     }
 
     val label = new Label(text)
+    label.styleClass.add("label")
 
     graphicDescriptor.foreach(applyStyle)
 
