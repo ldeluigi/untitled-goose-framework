@@ -61,10 +61,14 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       val currentMatch: Game = Game(gameData, ListMap(playersPane.getPlayerSeq.map(p => (p, playersPane.getPlayersPiecesMap(p))): _*))
       val controller: ScalaFxController = ApplicationController(currentMatch)
       val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
-      controller.setScene(gameScene)
-      stage.scene = gameScene
-      //stage.setMaximized(true)
-      stage.setResizable(true)
+      controller setScene gameScene
+      stage scene = gameScene
+      stage width = widthSize
+      stage height = heightSize
+      stage minWidth = widthSize * 0.8
+      stage minHeight = heightSize * 0.8
+      stage setResizable true
+      stage centerOnScreen
     } else {
       new Alert(AlertType.Error) {
         initOwner(stage)

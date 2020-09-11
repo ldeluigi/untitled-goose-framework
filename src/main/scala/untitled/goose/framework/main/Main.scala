@@ -58,7 +58,7 @@ object Main extends JFXApp {
 
   // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(
-    1 -> GraphicDescriptor("pozzo.jpg")
+    1 -> GraphicDescriptor("pozzo.png")
   )
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"

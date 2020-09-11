@@ -23,7 +23,7 @@ object GooseGame extends GooseDSL {
   the tile 52 has name("The prison")
   the tile 58 has name("The death")
 
-  the tile "The well" has background("pozzo.jpg")
+  the tile "The well" has background("pozzo.png")
 
   The tiles(6, 19, 31, 42, 52, 58) have group("Special")
   All tiles "Special" have color(LightBlue)
@@ -31,12 +31,12 @@ object GooseGame extends GooseDSL {
   the tile 63 has name("The end")
   The tile 63 has color(Yellow)
 
-  The tiles(5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59) have group("Goose")
-  All tiles "Goose" have background("oca.jpg")
+  The tiles(1, 5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59) have group("Goose")
+  All tiles "Goose" have background("oca.png")
 
   Players start on tile 1
 
-  Define event "custom" having(
+  Define event "custom" having (
     "value" as[Int] value,
     )
 
