@@ -38,11 +38,8 @@ object TileVisualization {
     var imageView: Option[ImageView] = None
 
     val rectangle: Rectangle = new Rectangle {
-      fill = colorToApply
-      stroke = strokeColor
       strokeType = StrokeType.Inside
-      strokeWidth = strokeSize
-      width <== parentWidth / (cols * 1.15)
+      width <== parentWidth / (cols * 1.25)
       height <== width
     }
     rectangle.styleClass.add("rectangle")

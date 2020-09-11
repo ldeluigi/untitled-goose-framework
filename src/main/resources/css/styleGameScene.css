@@ -2,15 +2,33 @@
     -fx-background: #BABB;
 }
 
+.button{
+    -fx-border-color: DarkBlue;
+    -fx-border-radius: 2;
+    -fx-padding: 5pt;
+    -fx-background-color: White;
+}
+
 .actionBox{
    -fx-background-color: white;
    -fx-padding: 15pt;
 }
 
 .currentPlayerName{
-        -fx-font: bold italic 14pt "Arial";
+        -fx-font: bold 14pt "Arial";
 }
 
 .rectangle{
+    -fx-fill: White;
+    -fx-stroke: DarkBlue;
+    -fx-stroke-width: 2;
+}
 
+.label{
+    -fx-font: bold 15pt "Arial";
+    -fx-text-fill: DarkBlue;
+}
+
+.pieceShape{
+    -fx-stroke: Black;
 }
