@@ -1,6 +1,7 @@
 package untitled.goose.framework.view.scalafx.board
 
 import scalafx.beans.property.ReadOnlyDoubleProperty
+import scalafx.collections.ObservableBuffer
 import scalafx.scene.layout.StackPane
 import scalafx.scene.shape.{Circle, Shape}
 import untitled.goose.framework.model.entities.runtime.Piece
@@ -21,11 +22,11 @@ object PieceVisualization {
      *
      * @return a new Shape object representing the Piece itself.
      */
-    override def pieceShape: Shape = new Circle {
+    val pieceShape: Shape = new Circle {
       fill = ColorUtils.getColor(piece.color)
       radius <== parentWidth * 0.012
+      styleClass = ObservableBuffer("pieceShape")
     }
-    pieceShape.styleClass.add("pieceShape")
 
     this.children.addAll(pieceShape)
   }
