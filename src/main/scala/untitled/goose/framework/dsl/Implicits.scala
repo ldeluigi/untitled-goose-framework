@@ -8,4 +8,5 @@ trait Implicits {
   implicit def rangeToPlayerNumber(range: Range): PlayerRangeWord = PlayerRangeWord(range)
 
   implicit def stringToKeyValue(string: String): KeyValueSetter = KeyValueSetter(string)
+
 }

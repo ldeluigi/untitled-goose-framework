@@ -1,0 +1,16 @@
+.root{
+    -fx-background: #BABB;
+}
+
+.actionBox{
+   -fx-background-color: white;
+   -fx-padding: 15pt;
+}
+
+.currentPlayerName{
+        -fx-font: bold italic 14pt "Arial";
+}
+
+.rectangle{
+
+}

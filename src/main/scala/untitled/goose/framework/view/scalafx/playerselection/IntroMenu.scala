@@ -1,16 +1,15 @@
 package untitled.goose.framework.view.scalafx.playerselection
 
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
-import scalafx.scene.paint.Color.DarkGreen
 import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, TileIdentifier}
-import untitled.goose.framework.model.entities.runtime.Game
+import untitled.goose.framework.model.entities.runtime.{Game, GameState}
 import untitled.goose.framework.view.scalafx.GameScene
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
@@ -38,6 +37,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
     textFill = DarkGreen
     style = "-fx-font-size: 15pt"
   }
+  startGame.styleClass.add("startGame")
 
   val upperGameNameHeader: HBox = new HBox {
     alignment = Pos.Center
@@ -47,18 +47,21 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       style = "-fx-font-size: 28pt"
     }
   }
+  upperGameNameHeader.styleClass.add("upperGameNameHeader")
+
   val bottomGameControls: HBox = new HBox {
     alignment = Pos.BottomCenter
     spacing = 15
     padding = Insets(15)
     children = List(startGame)
   }
-
+  bottomGameControls.styleClass.add("bottomGameControls")
 
   startGame.onAction = _ => {
     val minimumNeededPlayers: Int = gameData.playersRange.start
     if (playersPane.checkPlayers) {
       val currentMatch: Game = Game(gameData, ListMap(playersPane.getPlayerSeq.map(p => (p, playersPane.getPlayersPiecesMap(p))): _*))
+      val clonedState: GameState = currentMatch.currentState.clone()
       val controller: ScalaFxController = ApplicationController(currentMatch)
       val gameScene: GameScene = GameScene(stage, controller, currentMatch, graphicMap)
       controller setScene gameScene
@@ -81,5 +84,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
   borderPane.top = upperGameNameHeader
   borderPane.center = playersPane
   borderPane.bottom = bottomGameControls
+
+  this.stylesheets.add("css/styleIntroMenu.css")
 
 }

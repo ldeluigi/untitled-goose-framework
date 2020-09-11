@@ -4,7 +4,7 @@ import scalafx.Includes._
 import scalafx.beans.binding.Bindings
 import scalafx.beans.property.{ObjectProperty, StringProperty}
 import scalafx.collections.ObservableBuffer
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
@@ -47,16 +47,16 @@ object InsertPlayerPane {
     val inputPlayers: HBox = new HBox {
       alignment = Pos.Center
       spacing = 15
-      padding = Insets(5)
       children = List(playerName, playerNameFromInput, colorsChoice, addPlayer)
     }
+    inputPlayers.styleClass.add("inputPlayers")
 
     val tableControls: HBox = new HBox {
       alignment = Pos.Center
       spacing = 15
-      padding = Insets(5)
       children = List(moveUp, moveDown, removePlayer)
     }
+    tableControls.styleClass.add("tableControls")
 
     this.setTop(inputPlayers)
     this.setCenter(playerPieces.tableView)
@@ -113,6 +113,7 @@ object InsertPlayerPane {
       playerBuffer.map(p => Player(p.name.value))
 
     override def checkPlayers: Boolean = playersRange.contains(playerBuffer.size)
+
   }
 
 }

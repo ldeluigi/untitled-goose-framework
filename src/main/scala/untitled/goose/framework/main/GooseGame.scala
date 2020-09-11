@@ -48,6 +48,9 @@ object GooseGame extends GooseDSL {
     always allowed to trigger (customEvent("custom") := "value" -> 5) as "Something" priority 2,
     always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5
   )
-
-
+/*
+  when(s => true).filter[StepMovementEvent](e => true).count(_ < 0) ==> (
+    (e, s) => Operation.trigger(StepMovementEvent(10, s.currentPlayer, s.currentTurn, s.currentCycle))
+    )
+ */
 }

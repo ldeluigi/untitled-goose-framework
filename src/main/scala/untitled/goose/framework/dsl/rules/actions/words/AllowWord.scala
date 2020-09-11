@@ -1,5 +1,6 @@
 package untitled.goose.framework.dsl.rules.actions.words
 
+import untitled.goose.framework.dsl.UtilityWords.ToWord
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.actions.words.custom.UnnamedCustomAction
