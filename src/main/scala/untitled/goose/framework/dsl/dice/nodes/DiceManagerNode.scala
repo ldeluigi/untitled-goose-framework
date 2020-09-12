@@ -7,7 +7,7 @@ import untitled.goose.framework.model.entities.Dice.MovementDice
 case class DiceManagerNode() extends RuleBookNode with DiceCollection {
   var diceNodes: Seq[DiceNode[_]] = Seq()
 
-  def add(diceNode: DiceNode[_]): Unit = diceNodes :+= diceNode
+  override def add(diceNode: DiceNode[_]): Unit = diceNodes :+= diceNode
 
   override def check: Seq[String] =
     diceNodes.flatMap(_.check) ++

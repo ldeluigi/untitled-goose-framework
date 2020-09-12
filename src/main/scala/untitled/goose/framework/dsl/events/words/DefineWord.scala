@@ -7,7 +7,7 @@ case class DefineWord() {
 
   def event(name: String)(implicit ruleBook: RuleBook): EventPropertiesWord = {
     val eventNode = EventNode(name)
-    ruleBook.nodeDefinitions.defineEvent(eventNode)
+    ruleBook.eventDefinitions.defineEvent(eventNode)
     EventPropertiesWord(eventNode)
   }
 

@@ -51,9 +51,9 @@ object GooseGame extends GooseDSL {
   )
 
   When(s => true) and numberOf(events[StepMovementEvent] matching (_.steps > 0)) is (_ >= 0) resolve(
-    //trigger((e, s) => customEvent("custom"):= "value" -> 5),
-    //forEach trigger ((e, s) => StepMovementEvent(e.steps, s.currentPlayer, s.currentTurn, s.currentCycle))
-  ) andThen consume allEvents
+    triggerCustom((e, s) => customEvent("custom") := "value" -> 5),
+    forEach trigger ((e, s) => StepMovementEvent(e.steps, s.currentPlayer, s.currentTurn, s.currentCycle))
+  ) andThen consume && save
 
 }
 
