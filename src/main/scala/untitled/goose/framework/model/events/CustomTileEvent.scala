@@ -3,4 +3,8 @@ package untitled.goose.framework.model.events
 import untitled.goose.framework.model.entities.runtime.Tile
 
 // TODO scaladoc
-case class CustomTileEvent(t: Int, c: Int, n: String, tile: Tile) extends CustomGameEvent(t, c, n) with TileEvent
+class CustomTileEvent(turn: Int, cycle: Int, name: String, val tile: Tile) extends CustomGameEvent(turn, cycle, name) with TileEvent
+
+object CustomTileEvent {
+  def apply(turn: Int, cycle: Int, name: String, tile: Tile): CustomTileEvent = new CustomTileEvent(turn, cycle, name, tile)
+}

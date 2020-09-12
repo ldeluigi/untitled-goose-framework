@@ -36,6 +36,4 @@ trait EventsShortcut {
 
   def LoseTurn: GameState => LoseTurnEvent = s => LoseTurnEvent(s.currentPlayer, s.currentTurn, s.currentCycle)
 
-  //TODO Tile events?? Maybe not
-
 }

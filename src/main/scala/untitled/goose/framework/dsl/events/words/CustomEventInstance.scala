@@ -1,19 +1,74 @@
 package untitled.goose.framework.dsl.events.words
 
-import untitled.goose.framework.model.events.Key
+import untitled.goose.framework.dsl.events.nodes.{EventCollection, EventNode}
+import untitled.goose.framework.dsl.nodes.{RuleBook, RuleBookNode}
+import untitled.goose.framework.model.entities.runtime.{GameState, Player, Tile}
+import untitled.goose.framework.model.events._
 
 import scala.reflect.ClassTag
 
-case class CustomEventInstance(name: String) {
+trait CustomEventInstance extends RuleBookNode {
+  def properties: Map[Key[_], Any]
 
-  private var m: Map[Key[_], Any] = Map()
+  def generateEvent(state: GameState): GameEvent
 
-  def properties: Map[Key[_], Any] = m
+  def +[T: ClassTag](prop: (String, T)): CustomEventInstance
 
-  def +[T: ClassTag](prop: (String, T)): CustomEventInstance = {
-    m += Key[T](prop._1) -> prop._2
-    this
+  def :=[T: ClassTag](prop: (String, T)): CustomEventInstance
+
+  def name: String
+}
+
+object CustomEventInstance {
+
+  private abstract class CustomEventInstanceImpl(override val name: String, definedEvents: EventCollection) extends CustomEventInstance {
+
+    var properties: Map[Key[_], Any] = Map()
+
+    override def +[T: ClassTag](prop: (String, T)): CustomEventInstance = {
+      properties += Key[T](prop._1) -> prop._2
+      this
+    }
+
+    override def :=[T: ClassTag](prop: (String, T)): CustomEventInstance = this + prop
+
+    override def generateEvent(state: GameState): GameEvent = {
+      val e: CustomGameEvent = initEvent(state)
+      properties foreach { prop =>
+        e.setProperty(prop._1.keyName, prop._2)
+      }
+      e
+    }
+
+    def initEvent(state: GameState): CustomGameEvent
+
+    override def check: Seq[String] = if (definedEvents.isEventDefined(name)) {
+      val e: EventNode = definedEvents.getEvent(name)
+      properties.keys.toSeq.diff(e.properties).map(p =>
+        "Trying to set property \"" + p.keyName + "\" for customGameEvent named \"" + name + "\" but it was never defined"
+      ) ++
+        e.properties.diff(properties.keys.toSeq).map(p =>
+          "Property \"" + p.keyName + "\" for customGameEvent named \"" + name + "\" was not set but was defined"
+        )
+    }
+    else Seq("\"" + name + "\" is not defined in " + definedEvents.name)
   }
 
-  def :=[T: ClassTag](prop: (String, T)): CustomEventInstance = this + prop
+  def gameEvent(name: String, ruleBook: RuleBook): CustomEventInstance =
+    new CustomEventInstanceImpl(name, ruleBook.nodeDefinitions.gameEventCollection) {
+      override def initEvent(state: GameState): CustomGameEvent =
+        CustomGameEvent(state.currentTurn, state.currentCycle, name)
+    }
+
+  def playerEvent(name: String, player: GameState => Player, ruleBook: RuleBook): CustomEventInstance =
+    new CustomEventInstanceImpl(name, ruleBook.nodeDefinitions.playerEventCollection) {
+      override def initEvent(state: GameState): CustomGameEvent =
+        CustomPlayerEvent(state.currentTurn, state.currentCycle, name, player(state))
+    }
+
+  def tileEvent(name: String, tile: GameState => Tile, ruleBook: RuleBook): CustomEventInstance =
+    new CustomEventInstanceImpl(name, ruleBook.nodeDefinitions.tileEventCollection) {
+      override def initEvent(state: GameState): CustomGameEvent =
+        CustomTileEvent(state.currentTurn, state.currentCycle, name, tile(state))
+    }
 }

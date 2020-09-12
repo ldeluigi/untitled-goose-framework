@@ -6,4 +6,6 @@ trait EventCollection {
   def defineEvent(event: EventNode): Unit
 
   def getEvent(name: String): EventNode
+
+  def name: String
 }

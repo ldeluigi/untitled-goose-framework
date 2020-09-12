@@ -2,11 +2,13 @@ package untitled.goose.framework.model.events
 
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
-import scala.language.dynamics
 import scala.reflect.ClassTag
 
-// TODO scaladoc & reimplement with dynamic features
-class CustomGameEvent(val turn: Int, val cycle: Int, override val name: String) extends ConsumableGameEvent with Dynamic {
+// TODO scaladoc
+class CustomGameEvent(val turn: Int,
+                      val cycle: Int,
+                      override val name: String)
+  extends ConsumableGameEvent {
   private var propertyList: Map[String, Any] = Map()
 
   override def toString: String = super.toString + " Properties: " + propertyList
