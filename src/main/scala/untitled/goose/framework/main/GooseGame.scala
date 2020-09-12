@@ -3,7 +3,7 @@ package untitled.goose.framework.main
 import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
-import untitled.goose.framework.model.events.consumable.StepMovementEvent
+import untitled.goose.framework.model.events.consumable.{MovementDiceRollEvent, StepMovementEvent}
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
 
 
@@ -32,7 +32,7 @@ object GooseGame extends GooseDSL {
   the tile 63 has name("The end")
   The tile 63 has color(Yellow)
 
-  The tiles(1, 5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59) have group("Goose")
+  The tiles(5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59) have group("Goose")
   All tiles "Goose" have background("oca.png")
 
   Players start on tile 1
@@ -47,18 +47,19 @@ object GooseGame extends GooseDSL {
 
   Create movementDice "six-faced" having totalSides(6)
 
-  Each turn players are(
-    ///always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
+  Each turn players are (
+    always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
     //always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
-    always allowed to trigger (customGameEvent("custom") := "value" -> 5) as "Something" priority 2,
-    always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
-    always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3
-  )
+    //always allowed to trigger (customGameEvent("custom") := "value" -> 5) as "Something" priority 2,
+    //always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
+    //always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3
+    )
 
-  When(s => true) and numberOf(events[StepMovementEvent] matching (_.steps > 0)) is (_ >= 0) resolve(
-    triggerCustom((e, s) => customGameEvent("custom") := "value" -> 5),
-    forEach trigger ((e, s) => StepMovementEvent(e.steps, s.currentPlayer, s.currentTurn, s.currentCycle))
-  ) andThen consume && save
+  When(s => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ >= 0) resolve (
+    //triggerCustom((e, s) => customGameEvent("custom") := "value" -> 5),
+    //forEach displayMessage("Event", "Working"),
+    forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
+    ) andThen consume
 
 }
 

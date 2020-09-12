@@ -16,4 +16,6 @@ case class WhenWord(condition: GameState => Boolean)(implicit ruleBook: RuleBook
   def and[T <: ConsumableGameEvent : ClassTag](filterStrategy: FilterStrategy[T]): FilteredBehaviour[T] =
     FilteredBehaviour(condition, filterStrategy.strategy)
 
+  def when[T <: ConsumableGameEvent : ClassTag](filterStrategy: FilterStrategy[T]): FilteredBehaviour[T] = and(filterStrategy)
+
 }
