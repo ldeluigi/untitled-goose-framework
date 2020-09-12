@@ -5,7 +5,7 @@ import scalafx.geometry.Pos._
 import scalafx.scene.control.Label
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.StackPane
-import scalafx.scene.paint.Color
+import scalafx.scene.paint.Color.White
 import scalafx.scene.shape.{Rectangle, StrokeType}
 import untitled.goose.framework.model.entities.runtime.Tile
 
@@ -30,13 +30,11 @@ object TileVisualization {
   private class TileVisualizationImpl(val tile: Tile, parentWidth: ReadOnlyDoubleProperty,
                                       parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
 
-    var colorToApply: Color = Color.White // default tile background -> applied if not specified by the user
-
     var graphics: Option[Image] = None
     var imageView: Option[ImageView] = None
 
     val rectangle: Rectangle = new Rectangle {
-      fill = colorToApply
+      fill = White
       strokeType = StrokeType.Inside
       width <== parentWidth / cols
       height <== width
@@ -94,7 +92,7 @@ object TileVisualization {
 
     private def applyStyle(graphicDescriptor: GraphicDescriptor): Unit = {
       if (graphicDescriptor.color.isDefined) {
-        colorToApply = graphicDescriptor.color.get
+        rectangle.fill = graphicDescriptor.color.get
       }
 
       if (graphicDescriptor.path.isDefined) {
