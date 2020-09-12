@@ -22,7 +22,7 @@ object BehaviourCollectionNode {
     override def behaviours: Seq[BehaviourRule] =
       nodes.map(_.generateBehaviour)
 
-    override def check: Seq[String] = ??? //TODO implement check
+    override def check: Seq[String] = nodes.flatMap(_.check)
   }
 
   def apply(): BehaviourCollectionNode = new BehaviourCollectionNodeImpl()
