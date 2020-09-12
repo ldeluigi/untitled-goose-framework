@@ -15,13 +15,12 @@ sealed trait OperationNode[T <: ConsumableGameEvent] extends RuleBookNode {
 
   def isForEach: Boolean
 }
-
-//TODO IMPLEMENTATIONS OF OPERATION NODES
+//TODO implement checks
 object OperationNode {
 
   case class CustomEventOperationNode[T <: ConsumableGameEvent](event: (T, GameState) => CustomEventInstance, definedEvents: EventCollection, isForEach: Boolean) extends OperationNode[T] {
 
-    override def getOperations: (Seq[T], GameState) => Seq[Operation] = ???
+    override def getOperations: (Seq[T], GameState) => Seq[Operation] = ??? //TODO Delu pensaci tu
 
     override def check: Seq[String] = ???
 
@@ -34,7 +33,7 @@ object OperationNode {
       else
         (e, s) => Seq(Operation.trigger(event(e.head, s)))
 
-    override def check: Seq[String] = ???
+    override def check: Seq[String] = Seq()
   }
 
   case class DisplayDialogOperationNode[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String, Seq[(String, GameEvent)]), isForEach: Boolean) extends OperationNode[T] {
@@ -47,7 +46,7 @@ object OperationNode {
           Seq(DialogOperation(DialogContent(c._1, c._2, c._3: _*)))
         }
 
-    override def check: Seq[String] = ???
+    override def check: Seq[String] = Seq()
   }
 
   case class UpdateOperationNode[T <: ConsumableGameEvent](f: (T, GameState) => MutableGameState => Unit, isForEach: Boolean) extends OperationNode[T] {
@@ -58,7 +57,7 @@ object OperationNode {
         (e, s) => Seq(Operation.updateState(f(e.head, s)))
 
 
-    override def check: Seq[String] = ???
+    override def check: Seq[String] = Seq()
   }
 
 }

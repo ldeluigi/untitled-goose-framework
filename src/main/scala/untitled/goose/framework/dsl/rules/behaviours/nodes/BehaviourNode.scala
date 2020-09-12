@@ -24,7 +24,7 @@ case class BehaviourNode[EventType <: ConsumableGameEvent : ClassTag]
 
 
   def generateBehaviour: BehaviourRule = {
-    val operations: (Seq[EventType], GameState) => Seq[Operation] = ??? //TODO Implement operationStrategy from nodes
+    val operations: (Seq[EventType], GameState) => Seq[Operation] = (e, s) => operationNodes.flatMap(_.getOperations(e, s))
     BehaviourRule(filterStrategy, countStrategy, condition, operations, consume, save)
   }
 
@@ -36,6 +36,6 @@ case class BehaviourNode[EventType <: ConsumableGameEvent : ClassTag]
       consume = true
   }
 
-  override def check: Seq[String] = ??? //TODO implement check
+  override def check: Seq[String] = operationNodes.flatMap(_.check)
 }
 
