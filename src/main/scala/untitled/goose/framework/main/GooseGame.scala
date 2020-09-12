@@ -52,7 +52,7 @@ object GooseGame extends GooseDSL {
     //always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
     always allowed to trigger (customGameEvent("custom") := "value" -> 5) as "Something" priority 2,
     always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
-    always allowed to trigger (customPlayerEvent("custom2", _.players.head) := "asd" -> "ok") as "SomethingP" priority 3
+    always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3
   )
 
   When(s => true) and numberOf(events[StepMovementEvent] matching (_.steps > 0)) is (_ >= 0) resolve(
