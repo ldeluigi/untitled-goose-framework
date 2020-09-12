@@ -1,11 +1,14 @@
 package untitled.goose.framework.dsl.rules.operations.words
 
+import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode
 import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState}
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 trait OperationWords {
+
+  def triggerCustom[T <: ConsumableGameEvent](customEvent: (T, GameState) => CustomEventInstance): OperationNode[T] = ???
 
   def trigger[T <: ConsumableGameEvent](event: (T, GameState) => GameEvent): OperationNode[T] = ???
 

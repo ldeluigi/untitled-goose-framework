@@ -6,8 +6,11 @@ object BehaviourNodeState {
 
   sealed trait BaseState extends BehaviourNodeState
 
-  sealed trait ConsumeSet extends BehaviourNodeState
+  sealed trait NotBaseState extends BehaviourNodeState
 
-  sealed trait SaveSet extends BehaviourNodeState
+  sealed trait SaveOrConsumeSet extends NotBaseState
+
+  sealed trait BothSet extends NotBaseState
+
 
 }

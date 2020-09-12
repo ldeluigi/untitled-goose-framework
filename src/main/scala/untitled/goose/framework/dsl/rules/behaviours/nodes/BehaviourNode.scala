@@ -1,17 +1,16 @@
 package untitled.goose.framework.dsl.rules.behaviours.nodes
 
-import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourNodeState.{BaseState, ConsumeSet, SaveSet}
-import untitled.goose.framework.dsl.rules.behaviours.words.{AndWord, BehaviourNodeState, EventsWord}
+import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourNodeState.{BaseState, BothSet, NotBaseState, SaveOrConsumeSet}
+import untitled.goose.framework.dsl.rules.behaviours.words.{BehaviourNodeState, SaveOrConsumeWord}
 
 case class BehaviourNode[State <: BehaviourNodeState]() {
 
-  def consume(and: AndWord)(implicit ev: State =:= BaseState): BehaviourNode[ConsumeSet] = ???
+  def andThen(saveOrConsume: SaveOrConsumeWord)(implicit ev: State =:= BaseState): BehaviourNode[SaveOrConsumeSet] = ???
 
-  def save(events: EventsWord)(implicit ev: State =:= ConsumeSet): Unit = ???
+  def and(saveOrConsume: SaveOrConsumeWord)(implicit ev: State =:= SaveOrConsumeSet): BehaviourNode[BothSet] = ???
+
+  def allEvents[T >: State <: NotBaseState]: Unit = {}
 
 
-  def save(and: AndWord)(implicit ev: State =:= BaseState): BehaviourNode[SaveSet] = ???
-
-  def consume(events: EventsWord)(implicit ev: State =:= SaveSet): Unit = ???
 }
 

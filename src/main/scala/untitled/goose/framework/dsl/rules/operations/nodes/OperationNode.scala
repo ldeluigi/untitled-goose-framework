@@ -4,5 +4,5 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.rules.operations.Operation
 
 trait OperationNode[T <: ConsumableGameEvent] {
-  def getOperation: Operation
+  def getOperation: Seq[T] => Operation
 }
