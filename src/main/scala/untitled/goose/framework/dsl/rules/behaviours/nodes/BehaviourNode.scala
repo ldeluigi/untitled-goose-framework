@@ -9,7 +9,9 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.operations.Operation
 
-case class BehaviourNode[EventType <: ConsumableGameEvent]
+import scala.reflect.ClassTag
+
+case class BehaviourNode[EventType <: ConsumableGameEvent : ClassTag]
 (
   condition: GameState => Boolean,
   filterStrategy: EventType => Boolean,
