@@ -55,19 +55,19 @@ object CustomEventInstance {
   }
 
   def gameEvent(name: String, ruleBook: RuleBook): CustomEventInstance =
-    new CustomEventInstanceImpl(name, ruleBook.nodeDefinitions.gameEventCollection) {
+    new CustomEventInstanceImpl(name, ruleBook.eventDefinitions.gameEventCollection) {
       override def initEvent(state: GameState): CustomGameEvent =
         CustomGameEvent(state.currentTurn, state.currentCycle, name)
     }
 
   def playerEvent(name: String, player: GameState => Player, ruleBook: RuleBook): CustomEventInstance =
-    new CustomEventInstanceImpl(name, ruleBook.nodeDefinitions.playerEventCollection) {
+    new CustomEventInstanceImpl(name, ruleBook.eventDefinitions.playerEventCollection) {
       override def initEvent(state: GameState): CustomGameEvent =
         CustomPlayerEvent(state.currentTurn, state.currentCycle, name, player(state))
     }
 
   def tileEvent(name: String, tile: GameState => Tile, ruleBook: RuleBook): CustomEventInstance =
-    new CustomEventInstanceImpl(name, ruleBook.nodeDefinitions.tileEventCollection) {
+    new CustomEventInstanceImpl(name, ruleBook.eventDefinitions.tileEventCollection) {
       override def initEvent(state: GameState): CustomGameEvent =
         CustomTileEvent(state.currentTurn, state.currentCycle, name, tile(state))
     }
