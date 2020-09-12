@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl.rules.operations.nodes
 
-import untitled.goose.framework.dsl.events.nodes.EventCollection
+import untitled.goose.framework.dsl.events.nodes.EventDefinitionCollection
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.entities.DialogContent
@@ -19,7 +19,7 @@ sealed trait OperationNode[T <: ConsumableGameEvent] extends RuleBookNode {
 //TODO IMPLEMENTATIONS OF OPERATION NODES
 object OperationNode {
 
-  case class CustomEventOperationNode[T <: ConsumableGameEvent](event: (T, GameState) => CustomEventInstance, definedEvents: EventCollection, isForEach: Boolean) extends OperationNode[T] {
+  case class CustomEventOperationNode[T <: ConsumableGameEvent](event: (T, GameState) => CustomEventInstance, definedEvents: EventDefinitionCollection, isForEach: Boolean) extends OperationNode[T] {
 
     override def getOperations: (Seq[T], GameState) => Seq[Operation] = ???
 

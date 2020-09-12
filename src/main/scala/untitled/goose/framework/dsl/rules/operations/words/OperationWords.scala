@@ -10,8 +10,9 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 trait OperationWords {
 
+  // TODO enable trigger for other event types (tile, player)
   def triggerCustom[T <: ConsumableGameEvent](customEvent: (T, GameState) => CustomEventInstance)(implicit ruleBook: RuleBook): OperationNode[T] = {
-    CustomEventOperationNode(customEvent, ruleBook.eventDefinitions, isForEach = false)
+    CustomEventOperationNode(customEvent, ruleBook.nodeDefinitions.gameEventCollection, isForEach = false)
   }
 
   def trigger[T <: ConsumableGameEvent](event: (T, GameState) => GameEvent): OperationNode[T] =
