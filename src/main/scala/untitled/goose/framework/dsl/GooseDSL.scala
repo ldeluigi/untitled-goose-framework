@@ -31,7 +31,7 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
 
   private def checkModel: Boolean = {
     val checkMessage = ruleBook.check
-    checkMessage.foreach(System.err.println)
+    checkMessage.zipWithIndex.map(e => e._2 + ": " + e._1).foreach(System.err.println)
     checkMessage.isEmpty
   }
 
