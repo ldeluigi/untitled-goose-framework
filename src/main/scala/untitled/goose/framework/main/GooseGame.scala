@@ -3,7 +3,6 @@ package untitled.goose.framework.main
 import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
-import untitled.goose.framework.model.events.consumable.StepMovementEvent
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
 
 
@@ -45,13 +44,14 @@ object GooseGame extends GooseDSL {
 
   Each turn players are(
     ///always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
-    always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
+    //always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
     always allowed to trigger (customEvent("custom") := "value" -> 5) as "Something" priority 2,
     always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5
   )
-
-  When(s => true) and numberOf(events[StepMovementEvent] matching (_.steps > 0)) is (_ >= 0) resolve (
-    forEach trigger ((e, s) => StepMovementEvent(e.steps, s.currentPlayer, s.currentTurn, s.currentCycle))
-    ) save and consume allEvents
+  /*
+    When(s => true) and numberOf(events[StepMovementEvent] matching (_.steps > 0)) is (_ >= 0) resolve (
+      forEach trigger ((e, s) => StepMovementEvent(e.steps, s.currentPlayer, s.currentTurn, s.currentCycle))
+      ) save and consume allEvents
+  */
 }
 

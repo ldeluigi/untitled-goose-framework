@@ -20,13 +20,12 @@
 }
 
 .rectangle{
-    -fx-fill: White;
     -fx-stroke: #206020;
     -fx-stroke-width: 2;
 }
 
 .label{
-    -fx-font: bold 15pt "Arial";
+    -fx-font: bold 1.2em "Arial";
     -fx-text-fill: #206020;
 }
 

@@ -36,6 +36,7 @@ object TileVisualization {
     var imageView: Option[ImageView] = None
 
     val rectangle: Rectangle = new Rectangle {
+      fill = colorToApply
       strokeType = StrokeType.Inside
       width <== parentWidth / cols
       height <== width
