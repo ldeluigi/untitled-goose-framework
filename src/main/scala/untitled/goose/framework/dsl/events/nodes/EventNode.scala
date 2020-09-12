@@ -5,7 +5,7 @@ import untitled.goose.framework.model.events.Key
 
 
 trait EventNode extends RuleBookNode {
-  def properties: Seq[Key[_]]
+  def properties: Set[Key[_]]
 
   def name: String
 
@@ -31,7 +31,7 @@ object EventNode {
 
     override def isPropertyDefined[T](key: Key[T]): Boolean = props contains key
 
-    override def properties: Seq[Key[_]] = props
+    override def properties: Set[Key[_]] = props.toSet
   }
 
   def apply(definitionName: String): EventNode = new EventNodeImpl(definitionName)

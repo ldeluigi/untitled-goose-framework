@@ -44,12 +44,12 @@ object CustomEventInstance {
 
     override def check: Seq[String] = if (definedEvents.isEventDefined(name)) {
       val e: EventNode = definedEvents.getEvent(name)
-      properties.keys.toSeq.diff(e.properties).map(p =>
-        "Trying to set property \"" + p.keyName + "\" for customGameEvent named \"" + name + "\" but it was never defined"
-      ) ++
-        e.properties.diff(properties.keys.toSeq).map(p =>
-          "Property \"" + p.keyName + "\" for customGameEvent named \"" + name + "\" was not set but was defined"
-        )
+      properties.keySet.diff(e.properties).map(p =>
+        "Trying to set property \"" + p + "\" for customGameEvent named \"" + name + "\" but it was never defined"
+      ).toSeq ++
+        e.properties.diff(properties.keySet).map(p =>
+          "Property \"" + p + "\" for customGameEvent named \"" + name + "\" was not set but was defined"
+        ).toSeq
     }
     else Seq("\"" + name + "\" is not defined in " + definedEvents.name)
   }
