@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl.events.words
 
-import untitled.goose.framework.dsl.events.nodes.{EventCollection, EventNode}
+import untitled.goose.framework.dsl.events.nodes.{EventDefinitionCollection, EventNode}
 import untitled.goose.framework.dsl.nodes.{RuleBook, RuleBookNode}
 import untitled.goose.framework.model.entities.runtime.{GameState, Player, Tile}
 import untitled.goose.framework.model.events._
@@ -21,7 +21,7 @@ trait CustomEventInstance extends RuleBookNode {
 
 object CustomEventInstance {
 
-  private abstract class CustomEventInstanceImpl(override val name: String, definedEvents: EventCollection) extends CustomEventInstance {
+  private abstract class CustomEventInstanceImpl(override val name: String, definedEvents: EventDefinitionCollection) extends CustomEventInstance {
 
     var properties: Map[Key[_], Any] = Map()
 

@@ -7,9 +7,9 @@ case class GooseEventCollectionsNode() extends GooseEventCollections {
 
   override def check: Seq[String] = gameEvent.check ++ playerEvent.check ++ tileEvent.check
 
-  override def gameEventCollection: EventCollection = gameEvent
+  override def gameEventCollection: EventDefinitionCollection = gameEvent
 
-  override def playerEventCollection: EventCollection = playerEvent
+  override def playerEventCollection: EventDefinitionCollection = playerEvent
 
-  override def tileEventCollection: EventCollection = tileEvent
+  override def tileEventCollection: EventDefinitionCollection = tileEvent
 }

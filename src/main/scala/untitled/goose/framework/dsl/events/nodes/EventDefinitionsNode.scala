@@ -2,7 +2,7 @@ package untitled.goose.framework.dsl.events.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 
-case class EventDefinitionsNode(override val name: String) extends RuleBookNode with EventCollection {
+case class EventDefinitionsNode(override val name: String) extends RuleBookNode with EventDefinitionCollection {
   private var definitions: List[EventNode] = List()
 
   override def isEventDefined(name: String): Boolean = definitions exists (_.name == name)
