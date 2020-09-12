@@ -16,8 +16,6 @@ trait RuleBook extends RuleBookNode {
   def setGameName(name: String): Unit
 
   def diceCollection: DiceCollection
-
-  def addDice(diceNode: DiceNode[_]): Unit
 }
 
 object RuleBook {
@@ -50,7 +48,6 @@ object RuleBook {
         ruleSet.check
     }
 
-    override def addDice(diceNode: DiceNode[_]): Unit = diceCollection.add(diceNode)
   }
 
   def apply(): RuleBook = new RuleBookImpl()

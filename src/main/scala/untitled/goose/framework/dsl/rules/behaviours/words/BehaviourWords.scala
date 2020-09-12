@@ -1,5 +1,6 @@
 package untitled.goose.framework.dsl.rules.behaviours.words
 
+import untitled.goose.framework.dsl.rules.behaviours.words.SaveOrConsumeWord.{ConsumeWord, SaveWord}
 import untitled.goose.framework.dsl.rules.operations.words.{ForEachWord, OperationWords}
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
@@ -15,7 +16,7 @@ trait BehaviourWords extends OperationWords {
 
   val forEach: ForEachWord = ForEachWord()
 
-  val and: AndWord = AndWord()
+  val consume: ConsumeWord = ConsumeWord()
 
-  val allEvents: EventsWord = EventsWord()
+  val save: SaveWord = SaveWord()
 }

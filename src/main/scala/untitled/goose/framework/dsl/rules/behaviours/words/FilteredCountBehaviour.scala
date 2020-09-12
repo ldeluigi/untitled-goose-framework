@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.rules.behaviours.words
 
+import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.behaviours.nodes.BehaviourNode
-import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourNodeState.BaseState
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
@@ -15,5 +15,10 @@ case class FilteredCountBehaviour[T <: ConsumableGameEvent : ClassTag]
   countStrategy: Int => Boolean,
 ) {
 
-  def resolve(operations: OperationNode[T]*): BehaviourNode[BaseState] = ???
+  def resolve(operations: OperationNode[T]*)(implicit ruleBook: RuleBook): BehaviourNode[T] = {
+    val b = BehaviourNode[T](condition, filterStrategy, countStrategy, operations: _*)
+    ruleBook.ruleSet.behaviourCollectionNode.addBehaviourNode(b)
+    b
+  }
+
 }
