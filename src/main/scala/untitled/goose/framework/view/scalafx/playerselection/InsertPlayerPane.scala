@@ -8,6 +8,7 @@ import scalafx.geometry.Pos
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
+import scalafx.stage.Stage
 import untitled.goose.framework.model
 import untitled.goose.framework.model.Colour.Colour
 import untitled.goose.framework.model.entities.runtime.{Piece, Player}
@@ -23,14 +24,14 @@ trait InsertPlayerPane extends BorderPane {
 
 object InsertPlayerPane {
 
-  def apply(playersRange: Range): InsertPlayerPane = new InsertPlayerPaneImpl(playersRange)
+  def apply(playersRange: Range, stage: Stage): InsertPlayerPane = new InsertPlayerPaneImpl(playersRange, stage)
 
   class PlayerPiece(n: String, val color: Colour) {
     val name = new StringProperty(this, "Name", n)
     val colorProp = new ObjectProperty(this, "Piece", ColorUtils.getColor(color))
   }
 
-  private class InsertPlayerPaneImpl(playersRange: Range) extends InsertPlayerPane {
+  private class InsertPlayerPaneImpl(playersRange: Range, stage: Stage) extends InsertPlayerPane {
 
     val playerBuffer: ObservableBuffer[PlayerPiece] = ObservableBuffer()
     val playerPieces: PlayerPieceTable = PlayerPieceTable(playerBuffer)
@@ -94,6 +95,7 @@ object InsertPlayerPane {
         playerNameFromInput.clear()
       } else {
         new Alert(AlertType.Error) {
+          initOwner(stage)
           title = "Error!"
           headerText = "This username is already taken!"
           contentText = "Choose a different name."

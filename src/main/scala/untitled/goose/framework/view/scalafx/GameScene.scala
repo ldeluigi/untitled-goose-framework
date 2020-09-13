@@ -1,9 +1,9 @@
 package untitled.goose.framework.view.scalafx
 
 import scalafx.application.Platform
+import scalafx.geometry.Orientation
 import scalafx.scene.Scene
-import scalafx.scene.control.{Tab, TabPane}
-import scalafx.scene.layout.BorderPane
+import scalafx.scene.control.{SplitPane, Tab, TabPane}
 import scalafx.stage.Stage
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
@@ -36,13 +36,16 @@ object GameScene {
   private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameMatch: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends GameScene {
 
-    val boardProportion = 0.7
+    val boardProportion = 0.8
 
-    val borderPane = new BorderPane
-    this.content = borderPane
+    val splitPane: SplitPane = new SplitPane {
+      orientation = Orientation.Vertical
+    }
+
+    this.content = splitPane
 
     val boardView: BoardDisplay = BoardDisplay(gameMatch.gameBoard, graphicMap)
-    borderPane.center = boardView
+    splitPane.items.add(boardView)
     boardView.prefWidth <== this.width
     boardView.prefHeight <== this.height * boardProportion
 
@@ -50,22 +53,22 @@ object GameScene {
     val logger: EventLogger = EventLogger(gameMatch)
 
     val tabPane = new TabPane
-    val actionsTab = new Tab
-    val loggerTab = new Tab
-    actionsTab.text = "Action Menu"
-    loggerTab.text = "Logger"
-    actionsTab.content = actionMenu
-    loggerTab.content = logger
+    val actionsTab: Tab = new Tab {
+      text = "Action Menu"
+      content = actionMenu
+    }
+    val loggerTab: Tab = new Tab {
+      text = "Logger"
+      content = logger
+    }
     tabPane.tabs = List(actionsTab, loggerTab)
 
     tabPane.prefWidth <== this.width
     tabPane.prefHeight <== this.height * (1 - boardProportion)
-    logger.prefHeight <== tabPane.height
-    actionMenu.prefHeight <== tabPane.height
-    logger.prefWidth <== tabPane.width
-    actionMenu.prefWidth <== tabPane.width
+    tabPane.minHeight <== this.height * (1 - boardProportion)
 
-    borderPane.bottom = tabPane
+    splitPane.items.add(tabPane)
+    splitPane.setDividerPositions(boardProportion)
 
     stage.setOnCloseRequest(_ => commandSender.stopGame())
 
