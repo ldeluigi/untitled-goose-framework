@@ -16,7 +16,7 @@ trait EventLogger extends Pane {
 
 object EventLogger {
 
-  private class EventLoggerImpl(gameState: GameState, height: Int) extends EventLogger {
+  private class EventLoggerImpl(gameState: GameState) extends EventLogger {
 
     var previousState: GameState = gameState
     val logText: TextArea = new TextArea {
@@ -26,7 +26,7 @@ object EventLogger {
 
     this.children.add(logText)
     logText.prefWidth <== this.width
-    logText.prefHeight = height
+    logText.prefHeight <== this.height
 
     /** Prints events, that need to be logged, on a text area contained in itself.
      *
@@ -48,6 +48,6 @@ object EventLogger {
   }
 
   /** A factory that renders a new EventLogger, given a certain height. */
-  def apply(gameState: GameState, height: Int): EventLogger = new EventLoggerImpl(gameState, height)
+  def apply(gameState: GameState): EventLogger = new EventLoggerImpl(gameState)
 
 }

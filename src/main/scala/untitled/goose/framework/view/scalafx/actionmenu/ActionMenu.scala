@@ -1,12 +1,11 @@
 package untitled.goose.framework.view.scalafx.actionmenu
 
-import scalafx.beans.binding.Bindings
 import scalafx.geometry.Pos
 import scalafx.scene.control.Label
 import scalafx.scene.layout.{HBox, StackPane}
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
-import untitled.goose.framework.model.entities.runtime.GameState
+import untitled.goose.framework.model.entities.runtime.{GameState, Player}
 import untitled.goose.framework.view.scalafx.board.BoardDisplay
 
 
@@ -14,7 +13,7 @@ import untitled.goose.framework.view.scalafx.board.BoardDisplay
  */
 trait ActionMenu extends StackPane {
 
-  def displayActions(actions: Set[Action])
+  def displayActions(actions: Set[Action], currentPlayer: Player)
 
 }
 
@@ -37,10 +36,10 @@ object ActionMenu {
      *
      * @param actions the set containing the actions
      */
-    override def displayActions(actions: Set[Action]): Unit = {
+    override def displayActions(actions: Set[Action], currentPlayer: Player): Unit = {
       actionBox.children.removeAll(actionBox.children)
       actionBox.children.add(currentPlayerName)
-      currentPlayerName.textProperty().bind(Bindings.createStringBinding(() => "Current player: " + game.currentPlayer.name))
+      currentPlayerName.text = currentPlayer.name
       for (a <- actions) {
         actionBox.children.add(ActionVisualization(a, controller))
       }

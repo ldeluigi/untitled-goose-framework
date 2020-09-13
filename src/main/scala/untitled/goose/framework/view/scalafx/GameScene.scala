@@ -36,21 +36,18 @@ object GameScene {
   private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameMatch: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends GameScene {
 
-    val boardProportion = 0.8
-    val logHeight = 160
+    val boardProportion = 0.7
 
     val borderPane = new BorderPane
     this.content = borderPane
 
     val boardView: BoardDisplay = BoardDisplay(gameMatch.gameBoard, graphicMap)
     borderPane.center = boardView
-    boardView.prefWidth <== this.width * boardProportion
-    boardView.prefHeight <== this.height - logHeight
+    boardView.prefWidth <== this.width
+    boardView.prefHeight <== this.height * boardProportion
 
     val actionMenu: ActionMenu = ActionMenu(boardView, gameMatch, commandSender)
-    actionMenu.prefWidth <== this.width * (1 - boardProportion)
-
-    val logger: EventLogger = EventLogger(gameMatch, logHeight)
+    val logger: EventLogger = EventLogger(gameMatch)
 
     val tabPane = new TabPane
     val actionsTab = new Tab
@@ -61,8 +58,12 @@ object GameScene {
     loggerTab.content = logger
     tabPane.tabs = List(actionsTab, loggerTab)
 
-    logger.prefWidth <== tabPane.width
     tabPane.prefWidth <== this.width
+    tabPane.prefHeight <== this.height * (1 - boardProportion)
+    logger.prefHeight <== tabPane.height
+    actionMenu.prefHeight <== tabPane.height
+    logger.prefWidth <== tabPane.width
+    actionMenu.prefWidth <== tabPane.width
 
     borderPane.bottom = tabPane
 
@@ -71,7 +72,7 @@ object GameScene {
     override def updateScene(state: GameState, availableActions: Set[Action]): Unit =
       Platform.runLater(() => {
         boardView.updateMatchState(state)
-        actionMenu.displayActions(availableActions)
+        actionMenu.displayActions(availableActions, state.currentPlayer)
         logger.logHistoryDiff(state)
       })
 
