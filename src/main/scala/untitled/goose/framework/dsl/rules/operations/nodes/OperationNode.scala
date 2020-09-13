@@ -29,9 +29,11 @@ object OperationNode {
   case class TriggerOperationNode[T <: ConsumableGameEvent](event: (T, GameState) => GameEvent, isForEach: Boolean) extends OperationNode[T] {
     override def getOperations: (Seq[T], GameState) => Seq[Operation] =
       if (isForEach)
-        (e, s) => Seq(Operation.trigger(e.map(event(_, s)): _*))
+        (e, s) => e.map(ev => Operation.trigger(event(ev, s)))
       else
-        (e, s) => Seq(Operation.trigger(event(e.head, s)))
+        (e, s) => if (e.nonEmpty) {
+          Seq(Operation.trigger(event(e.head, s)))
+        } else Seq()
 
     override def check: Seq[String] = Seq()
   }
@@ -41,10 +43,10 @@ object OperationNode {
       if (isForEach)
         (e, s) => e.map(dialog(_, s)).map(c => DialogOperation(DialogContent(c._1, c._2, c._3: _*)))
       else
-        (e, s) => {
+        (e, s) => if (e.nonEmpty) {
           val c = dialog(e.head, s)
           Seq(DialogOperation(DialogContent(c._1, c._2, c._3: _*)))
-        }
+        } else Seq()
 
     override def check: Seq[String] = Seq()
   }
@@ -54,7 +56,9 @@ object OperationNode {
       if (isForEach)
         (e, s) => e.map(ev => Operation.updateState(f(ev, s)))
       else
-        (e, s) => Seq(Operation.updateState(f(e.head, s)))
+        (e, s) => if (e.nonEmpty) {
+          Seq(Operation.updateState(f(e.head, s)))
+        } else Seq()
 
 
     override def check: Seq[String] = Seq()
