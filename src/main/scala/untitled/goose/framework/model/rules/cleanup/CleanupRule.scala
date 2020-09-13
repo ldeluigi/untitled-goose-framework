@@ -10,5 +10,5 @@ trait CleanupRule {
 }
 
 object CleanupRule {
-  implicit def apply(f: MutableGameState => Unit): CleanupRule = (state: MutableGameState) => f(state)
+  def apply(f: MutableGameState => Unit): CleanupRule = (state: MutableGameState) => f(state)
 }
