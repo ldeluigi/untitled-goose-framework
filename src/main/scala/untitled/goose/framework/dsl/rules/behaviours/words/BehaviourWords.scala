@@ -2,13 +2,14 @@ package untitled.goose.framework.dsl.rules.behaviours.words
 
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.behaviours.words.SaveOrConsumeWord.{ConsumeWord, SaveWord}
+import untitled.goose.framework.dsl.rules.behaviours.words.system.SystemBehavioursWords
 import untitled.goose.framework.dsl.rules.operations.words.{ForEachWord, OperationWords}
 import untitled.goose.framework.model.entities.runtime.{GameState, Player, Tile}
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 import scala.reflect.ClassTag
 
-trait BehaviourWords extends OperationWords {
+trait BehaviourWords extends OperationWords with SystemBehavioursWords {
 
   def customBehaviourGameEvent[T <: ConsumableGameEvent](name: String)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
     BehaviourCustomEventInstance.gameEvent(name, ruleBook)

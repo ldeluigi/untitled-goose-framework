@@ -65,5 +65,14 @@ object GooseGame extends GooseDSL {
   After resolving each action (
     _.currentTurn += 0
     )
+
+  Include these system behaviours(
+    MovementWithDice,
+    MultipleStep,
+    Teleport,
+    SkipTurnManager,
+    VictoryManager,
+
+  )
 }
 
