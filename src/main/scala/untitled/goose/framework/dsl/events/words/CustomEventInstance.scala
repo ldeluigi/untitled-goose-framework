@@ -12,9 +12,7 @@ trait CustomEventInstance extends RuleBookNode {
 
   def generateEvent(state: GameState): GameEvent
 
-  def +[T: ClassTag](prop: (String, T)): CustomEventInstance
-
-  def :=[T: ClassTag](prop: (String, T)): CustomEventInstance
+  def +[T: ClassTag](name: String, value: GameState => T): CustomEventInstance
 
   def name: String
 }
@@ -23,14 +21,12 @@ object CustomEventInstance {
 
   private abstract class CustomEventInstanceImpl(override val name: String, definedEvents: EventDefinitionCollection) extends CustomEventInstance {
 
-    var properties: Map[Key[_], Any] = Map()
+    var properties: Map[Key[_], GameState => Any] = Map()
 
-    override def +[T: ClassTag](prop: (String, T)): CustomEventInstance = {
-      properties += Key[T](prop._1) -> prop._2
+    def +[T: ClassTag](name: String, value: GameState => T): CustomEventInstance = {
+      properties += Key[T](name) -> value
       this
     }
-
-    override def :=[T: ClassTag](prop: (String, T)): CustomEventInstance = this + prop
 
     override def generateEvent(state: GameState): GameEvent = {
       val e: CustomGameEvent = initEvent(state)

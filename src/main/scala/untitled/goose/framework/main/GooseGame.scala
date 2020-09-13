@@ -47,20 +47,20 @@ object GooseGame extends GooseDSL {
 
   Create movementDice "six-faced" having totalSides(6)
 
-  Each turn players are (
+  Each turn players are(
     always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
     //always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
-    //always allowed to trigger (customGameEvent("custom") := "value" -> 5) as "Something" priority 2,
+    always allowed to trigger (customGameEvent("custom") + ("value", _ => "ciao")) as "Something" priority 2,
     //always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
     //always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3
-    )
+  )
 
-  When(s => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve (
-    triggerCustom((e, s) => customGameEvent("custom") := "value" -> 5),
-    triggerCustom((e, s) => customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok"),
+  When(s => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve(
+    triggerCustom(customBehaviourGameEvent("custom") + ("value", (e, s) => e.result.sum)),
+    triggerCustom(customBehaviourPlayerEvent("custom2", _.currentPlayer)),
     //forEach displayMessage("Event", "Working"),
     forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
-    ) andThen consume
+  ) andThen consume
 
 }
 

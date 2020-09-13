@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl.rules.operations.words
 
-import untitled.goose.framework.dsl.events.words.CustomEventInstance
+import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourCustomEventInstance
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode.{CustomEventOperationNode, DisplayDialogOperationNode, TriggerOperationNode, UpdateOperationNode}
 import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState}
@@ -9,7 +9,7 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 trait OperationWords {
 
-  def triggerCustom[T <: ConsumableGameEvent](customEvent: (T, GameState) => CustomEventInstance): OperationNode[T] = {
+  def triggerCustom[T <: ConsumableGameEvent](customEvent: BehaviourCustomEventInstance[T]): OperationNode[T] = {
     CustomEventOperationNode(customEvent, isForEach = false)
   }
 
