@@ -30,7 +30,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
   root = borderPane
   borderPane.styleClass.add("borderPane")
 
-  val playersPane: InsertPlayerPane = InsertPlayerPane(gameData.playersRange)
+  val playersPane: InsertPlayerPane = InsertPlayerPane(gameData.playersRange, stage)
 
   val startGame: Button = new Button {
     text = "Start game!"

@@ -26,7 +26,7 @@ object EventLogger {
 
     this.children.add(logText)
     logText.prefWidth <== this.width
-    logText.prefHeight <== this.height
+    logText.prefHeight <== this.height - 10
 
     /** Prints events, that need to be logged, on a text area contained in itself.
      *
