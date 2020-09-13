@@ -8,7 +8,7 @@ import untitled.goose.framework.model.events._
 import scala.reflect.ClassTag
 
 trait CustomEventInstance extends RuleBookNode {
-  def properties: Map[Key[_], Any]
+  def properties: Map[Key[_], GameState => Any]
 
   def generateEvent(state: GameState): GameEvent
 
@@ -31,7 +31,7 @@ object CustomEventInstance {
     override def generateEvent(state: GameState): GameEvent = {
       val e: CustomGameEvent = initEvent(state)
       properties foreach { prop =>
-        e.setProperty(prop._1.keyName, prop._2)
+        e.setProperty(prop._1.keyName, prop._2(state))
       }
       e
     }

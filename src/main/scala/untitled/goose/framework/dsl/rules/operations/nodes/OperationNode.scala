@@ -14,14 +14,15 @@ sealed trait OperationNode[T <: ConsumableGameEvent] extends RuleBookNode {
 
   def isForEach: Boolean
 }
-//TODO implement checks
+
 object OperationNode {
 
   case class CustomEventOperationNode[T <: ConsumableGameEvent](event: BehaviourCustomEventInstance[T], isForEach: Boolean) extends OperationNode[T] {
 
     override def getOperations: (Seq[T], GameState) => Seq[Operation] = (events, state) => events.map(e => Operation.trigger(event.generateEvent(state, e)))
 
-    override def check: Seq[String] = Seq() // TODO Probably impossible to make something that is not "Seq()"
+    //TODO implement checks on customEventinstance
+    override def check: Seq[String] = Seq()
 
   }
 
