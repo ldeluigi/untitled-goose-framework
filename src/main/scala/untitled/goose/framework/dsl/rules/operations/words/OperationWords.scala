@@ -9,7 +9,7 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 trait OperationWords {
 
-  def triggerCustom[T <: ConsumableGameEvent](customEvent: BehaviourCustomEventInstance[T]): OperationNode[T] = {
+  def trigger[T <: ConsumableGameEvent](customEvent: BehaviourCustomEventInstance[T]): OperationNode[T] = {
     CustomEventOperationNode(customEvent, isForEach = false)
   }
 

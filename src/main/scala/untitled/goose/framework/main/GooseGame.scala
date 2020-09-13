@@ -56,8 +56,8 @@ object GooseGame extends GooseDSL {
   )
 
   When(s => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve(
-    triggerCustom(customBehaviourGameEvent("custom") + ("value", (e, s) => e.result.sum)),
-    triggerCustom(customBehaviourPlayerEvent("custom2", _.currentPlayer)),
+    trigger(customBehaviourGameEvent[MovementDiceRollEvent]("custom") + ("value", (e, s) => e.result.sum)),
+    trigger(customBehaviourPlayerEvent[MovementDiceRollEvent]("custom2", _.currentPlayer)),
     //forEach displayMessage("Event", "Working"),
     forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
   ) andThen consume

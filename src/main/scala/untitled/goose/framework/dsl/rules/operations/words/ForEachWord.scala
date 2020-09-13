@@ -9,7 +9,7 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 case class ForEachWord() extends OperationWords {
 
-  override def triggerCustom[T <: ConsumableGameEvent](customEvent: BehaviourCustomEventInstance[T]): OperationNode[T] = {
+  override def trigger[T <: ConsumableGameEvent](customEvent: BehaviourCustomEventInstance[T]): OperationNode[T] = {
     CustomEventOperationNode(customEvent, isForEach = true)
   }
 
