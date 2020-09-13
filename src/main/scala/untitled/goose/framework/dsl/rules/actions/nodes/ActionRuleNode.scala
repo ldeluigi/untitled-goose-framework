@@ -91,7 +91,7 @@ object ActionRuleNode {
 
   case class CustomEventActionNode(actionName: String,
                                    when: GameState => Boolean,
-                                   customEvent: CustomEventInstance,
+                                   customEvent: CustomEventInstance[GameState],
                                    priority: Int,
                                    allow: Boolean)
     extends ActionRuleNode with ActionGeneration {

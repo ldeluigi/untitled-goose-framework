@@ -18,7 +18,7 @@ class AllowWord(when: GameState => Boolean)(implicit ruleBook: RuleBook) {
   def displayQuestion(title: String, text: String, options: (String, GameState => GameEvent)*): UnnamedAction =
     trigger(s => DialogLaunchEvent(s.currentTurn, s.currentCycle, DialogContent(title, text, options.map(o => (o._1, o._2(s))): _*)))
 
-  def trigger[T: ClassTag](customEventInstance: CustomEventInstance): UnnamedCustomAction = UnnamedCustomAction(when, customEventInstance, allow = true)
+  def trigger[T: ClassTag](customEventInstance: CustomEventInstance[GameState]): UnnamedCustomAction = UnnamedCustomAction(when, customEventInstance, allow = true)
 
   def trigger(trigger: GameState => GameEvent): UnnamedAction = UnnamedAction(when, trigger, allow = true)
 

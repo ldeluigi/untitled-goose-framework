@@ -19,10 +19,9 @@ object OperationNode {
 
   case class CustomEventOperationNode[T <: ConsumableGameEvent](event: BehaviourCustomEventInstance[T], isForEach: Boolean) extends OperationNode[T] {
 
-    override def getOperations: (Seq[T], GameState) => Seq[Operation] = (events, state) => events.map(e => Operation.trigger(event.generateEvent(state, e)))
+    override def getOperations: (Seq[T], GameState) => Seq[Operation] = (events, state) => events.map(e => Operation.trigger(event.generateEvent((state, e))))
 
-    //TODO implement checks on customEventinstance
-    override def check: Seq[String] = Seq()
+    override def check: Seq[String] = event.check
 
   }
 
