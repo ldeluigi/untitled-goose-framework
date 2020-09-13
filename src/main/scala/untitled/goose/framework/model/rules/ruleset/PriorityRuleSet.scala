@@ -7,7 +7,6 @@ import untitled.goose.framework.model.rules.behaviours.{BehaviourRule, DialogLau
 import untitled.goose.framework.model.rules.cleanup.{CleanupRule, TurnEndConsumer}
 import untitled.goose.framework.model.rules.operations.Operation
 
-// TODO consider making a builder of this
 // TODO scaladoc afterwards
 class PriorityRuleSet(playerOrdering: PlayerOrdering,
                       playersRange: Range,
