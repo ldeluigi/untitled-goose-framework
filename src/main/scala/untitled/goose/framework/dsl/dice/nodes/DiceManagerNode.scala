@@ -21,8 +21,8 @@ case class DiceManagerNode() extends RuleBookNode with DiceCollection {
     case DiceNode.MovementDiceNode(diceName, _) => diceName == name
   }
 
-  override def getDice(name: String): Dice[Any] = diceNodes.find(_.name == name).get match {
-    case d: DiceNode.GenericDiceNode[Any] => d.dice // TODO solve warning @samubura
+  override def getDice(name: String): Dice[_] = diceNodes.find(_.name == name).get match {
+    case d: DiceNode.GenericDiceNode[_] => d.dice
     case _ => throw new IllegalStateException("Dice with name: \"" + name + "\" used as generic but declared as movement dice")
   }
 

@@ -9,7 +9,7 @@ trait DiceCollection {
 
   def isMovementDice(name: String): Boolean
 
-  def getDice(name: String): Dice[Any]
+  def getDice(name: String): Dice[_]
 
   def getMovementDice(name: String): MovementDice
 
