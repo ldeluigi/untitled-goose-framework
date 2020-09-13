@@ -20,6 +20,8 @@ trait RuleSetNode extends RuleBookNode {
 
   def cleanupRules: Seq[CleanupRule]
 
+  def cleanupRules_=(c: Seq[CleanupRule]): Unit
+
   def actionRules: Set[ActionRule]
 
   def behaviourRules: Seq[BehaviourRule]
@@ -50,7 +52,7 @@ object RuleSetNode {
 
     override def playerOrderingType: PlayerOrderingType = playerOrderingTypeNode.value
 
-    val cleanupRules: Seq[CleanupRule] = Seq()
+    var cleanupRules: Seq[CleanupRule] = Seq()
 
     def behaviourRules: Seq[BehaviourRule] = behaviourCollectionNode.behaviours
 

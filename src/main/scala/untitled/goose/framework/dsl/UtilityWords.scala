@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl
 
-import untitled.goose.framework.dsl.UtilityWords.{BoardWord, OnWord, ToWord, ValueWord}
+import untitled.goose.framework.dsl.UtilityWords._
 
 trait UtilityWords {
 
@@ -8,10 +8,13 @@ trait UtilityWords {
   val board: BoardWord = BoardWord()
   val value: ValueWord = ValueWord()
   val to: ToWord = ToWord()
+  val each: EachWord = EachWord()
 
 }
 
 object UtilityWords {
+
+  case class EachWord()
 
   case class OnWord()
 

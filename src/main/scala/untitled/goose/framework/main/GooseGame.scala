@@ -62,5 +62,8 @@ object GooseGame extends GooseDSL {
     forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
   ) andThen consume
 
+  After resolving each action (
+    _.currentTurn += 0
+    )
 }
 

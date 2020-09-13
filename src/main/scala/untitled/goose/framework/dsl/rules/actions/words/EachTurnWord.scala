@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl.rules.actions.words
 
-case class EachWord() {
+case class EachTurnWord() {
 
   def turn: TurnWord = new TurnWord
 

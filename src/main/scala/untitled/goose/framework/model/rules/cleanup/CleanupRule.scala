@@ -8,3 +8,7 @@ trait CleanupRule {
   def applyRule(state: MutableGameState): Unit
 
 }
+
+object CleanupRule {
+  implicit def apply(f: MutableGameState => Unit): CleanupRule = (state: MutableGameState) => f(state)
+}
