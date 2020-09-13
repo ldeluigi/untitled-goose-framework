@@ -20,7 +20,6 @@ class SkipOneTurnAction extends Action {
 }
 
 object SkipOneTurnAction {
-
   /** This factory instantiates a SkipOneTurnAction. */
   def apply(): SkipOneTurnAction = new SkipOneTurnAction()
 }

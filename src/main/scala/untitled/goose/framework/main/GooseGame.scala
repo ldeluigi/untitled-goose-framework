@@ -3,7 +3,7 @@ package untitled.goose.framework.main
 import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
-import untitled.goose.framework.model.events.consumable.{MovementDiceRollEvent, StepMovementEvent}
+import untitled.goose.framework.model.events.consumable.MovementDiceRollEvent
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
 
 
@@ -47,20 +47,24 @@ object GooseGame extends GooseDSL {
 
   Create movementDice "six-faced" having totalSides(6)
 
-  Each turn players are(
+  Players loseTurn priority is 5
+
+  Each turn players are (
     always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
     //always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
-    always allowed to trigger (customGameEvent("custom") + ("value", _ => 6)) as "Something" priority 2,
+    //always allowed to trigger (customGameEvent("custom") + ("value", _ => 6)) as "Something" priority 2,
     //always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
     //always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3
-  )
+    )
 
-  When(s => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve(
-    trigger(customBehaviourGameEvent[MovementDiceRollEvent]("custom") + ("value", (_, e) => e.result.sum)),
-    trigger(customBehaviourPlayerEvent[MovementDiceRollEvent]("custom2", _.currentPlayer) + ("asd", (_, _) => "ok")),
+
+  When(_ => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve (
+    //trigger(customBehaviourGameEvent[MovementDiceRollEvent]("custom") + ("value", (_, e) => e.result.sum)),
+    //trigger(customBehaviourPlayerEvent[MovementDiceRollEvent]("custom2", _.currentPlayer) + ("asd", (_, _) => "ok")),
     //forEach displayMessage("Event", "Working"),
-    forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
-  ) andThen consume
+    //forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
+    forEach trigger ((_, s) => LoseTurn(s))
+    )
 
   After resolving each action (
     _.currentTurn += 0
@@ -71,8 +75,7 @@ object GooseGame extends GooseDSL {
     MultipleStep,
     Teleport,
     SkipTurnManager,
-    VictoryManager,
-
+    VictoryManager
   )
 }
 

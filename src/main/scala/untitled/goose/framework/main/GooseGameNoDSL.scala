@@ -19,7 +19,7 @@ import untitled.goose.framework.model.rules.actionrules.{ActionRule, LoseTurnAct
 import untitled.goose.framework.model.rules.behaviours._
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
-import untitled.goose.framework.model.rules.ruleset.{PlayerOrderingType, RulePriorities}
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
 import untitled.goose.framework.view.scalafx.GameScene
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
@@ -28,7 +28,6 @@ import scala.collection.immutable.ListMap
 
 object GooseGameNoDSL extends JFXApp {
 
-  import RulePriorities.DefaultPriorities
   import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
 
   //You will need:
@@ -307,7 +306,7 @@ object GooseGameNoDSL extends JFXApp {
 
   behaviourRule = behaviourRule ++ FrameworkBehaviours
 
-  val actionRules: Set[ActionRule] = Set(rollDiceActionRule, LoseTurnActionRule(Set(rollAction)))
+  val actionRules: Set[ActionRule] = Set(rollDiceActionRule, LoseTurnActionRule(Set(rollAction), 10))
 
   //From a menu GUI that select and creates player and pieces on the press of a "Start runtime" button
 
