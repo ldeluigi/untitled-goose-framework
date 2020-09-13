@@ -56,7 +56,8 @@ object GooseGame extends GooseDSL {
     )
 
   When(s => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve (
-    //triggerCustom((e, s) => customGameEvent("custom") := "value" -> 5),
+    triggerCustom((e, s) => customGameEvent("custom") := "value" -> 5),
+    triggerCustom((e, s) => customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok"),
     //forEach displayMessage("Event", "Working"),
     forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
     ) andThen consume

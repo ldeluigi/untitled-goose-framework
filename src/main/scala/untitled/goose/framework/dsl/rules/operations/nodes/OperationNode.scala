@@ -1,6 +1,5 @@
 package untitled.goose.framework.dsl.rules.operations.nodes
 
-import untitled.goose.framework.dsl.events.nodes.EventDefinitionCollection
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.entities.DialogContent
@@ -18,11 +17,11 @@ sealed trait OperationNode[T <: ConsumableGameEvent] extends RuleBookNode {
 //TODO implement checks
 object OperationNode {
 
-  case class CustomEventOperationNode[T <: ConsumableGameEvent](event: (T, GameState) => CustomEventInstance, definedEvents: EventDefinitionCollection, isForEach: Boolean) extends OperationNode[T] {
+  case class CustomEventOperationNode[T <: ConsumableGameEvent](event: (T, GameState) => CustomEventInstance, isForEach: Boolean) extends OperationNode[T] {
 
-    override def getOperations: (Seq[T], GameState) => Seq[Operation] = ??? //TODO Delu pensaci tu
+    override def getOperations: (Seq[T], GameState) => Seq[Operation] = (events, state) => events.map(e => Operation.trigger(event(e, state).generateEvent(state)))
 
-    override def check: Seq[String] = ???
+    override def check: Seq[String] = ??? // TODO Probably impossible to make something that is not "Seq()"
 
   }
 

@@ -1,7 +1,6 @@
 package untitled.goose.framework.dsl.rules.operations.words
 
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
-import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode.{CustomEventOperationNode, DisplayDialogOperationNode, TriggerOperationNode, UpdateOperationNode}
 import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState}
@@ -10,9 +9,8 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 case class ForEachWord() extends OperationWords {
 
-  // TODO enable trigger for other event types (player, tile)
-  override def triggerCustom[T <: ConsumableGameEvent](customEvent: (T, GameState) => CustomEventInstance)(implicit ruleBook: RuleBook): OperationNode[T] = {
-    CustomEventOperationNode(customEvent, ruleBook.eventDefinitions.gameEventCollection, isForEach = true)
+  override def triggerCustom[T <: ConsumableGameEvent](customEvent: (T, GameState) => CustomEventInstance): OperationNode[T] = {
+    CustomEventOperationNode(customEvent, isForEach = true)
   }
 
   override def trigger[T <: ConsumableGameEvent](event: (T, GameState) => GameEvent): OperationNode[T] =
