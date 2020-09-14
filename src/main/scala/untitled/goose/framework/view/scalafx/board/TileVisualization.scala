@@ -27,6 +27,7 @@ trait TileVisualization extends StackPane {
 
 object TileVisualization {
 
+  //TODO take width property as constructur parameter and use that
   private class TileVisualizationImpl(val tile: Tile, parentWidth: ReadOnlyDoubleProperty,
                                       parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
 
