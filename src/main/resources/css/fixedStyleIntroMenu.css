@@ -1,0 +1,19 @@
+.upperGameNameHeader{
+    -fx-padding: 20pt;
+}
+
+.bottomGameControls{
+    -fx-padding: 10pt;
+}
+
+.inputPlayers{
+    -fx-padding: 5pt;
+}
+
+.tableControls{
+    -fx-padding: 5pt;
+}
+
+.startGame{
+    -fx-padding: 5pt;
+}

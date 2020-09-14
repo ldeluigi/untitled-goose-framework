@@ -48,6 +48,19 @@ object TileVisualization {
     }
 
     val label = new Label(text)
+    label.maxWidth <== rectangle.width
+    //var maxTextWidth: Double =
+    //var defaultFontSize: Double = 1.2
+    var textWidth: Double = 0
+    //val newFontSize: Double = defaultFontSize*maxTextWidth / textWidth
+    textWidth = label.getLayoutBounds().getWidth
+    if (textWidth <= label.maxWidth() / 2) {
+      label.setStyle("-fx-font: bold 15pt Arial")
+    }
+    else {
+      label.setStyle("-fx-font: bold 5pt Arial")
+    }
+    label wrapText = true
     label.styleClass.add("label")
 
     graphicDescriptor.foreach(applyStyle)

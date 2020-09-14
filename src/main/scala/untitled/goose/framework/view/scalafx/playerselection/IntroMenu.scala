@@ -78,5 +78,6 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
   borderPane.bottom = bottomGameControls
 
   this.stylesheets.add("css/styleIntroMenu.css")
+  this.stylesheets.add("css/fixedStyleIntroMenu.css")
 
 }

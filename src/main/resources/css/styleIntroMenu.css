@@ -3,7 +3,10 @@
 }
 
 .borderPane{
--fx-background-image: url("../oca.png");
+    -fx-background-image: url("../oca.png");
+    -fx-background-repeat: repeat;
+    -fx-background-position: center center;
+    -fx-background-size: 370 380;
 }
 
 .button{
@@ -13,26 +16,12 @@
 
 .upperGameNameHeader{
     -fx-font: bold italic 40pt "Arial";
-    -fx-padding: 20pt;
-}
-
-.bottomGameControls{
-    -fx-padding: 10pt;
-}
-
-.inputPlayers{
-    -fx-padding: 5pt;
-}
-
-.tableControls{
-    -fx-padding: 5pt;
 }
 
 .startGame{
     -fx-font-size: 12pt;
     -fx-text-fill: #206020;
     -fx-background-color: White;
-    -fx-padding: 5pt;
     -fx-font: bold italic 15pt "Arial";
 }
 

@@ -4,7 +4,6 @@
 
 .button {
     -fx-border-radius: 2;
-    -fx-padding: 5pt;
     -fx-background-color: White;
     -fx-text-fill: #206020;
     -fx-border-color: #206020;
@@ -12,7 +11,6 @@
 
 .actionBox {
     -fx-background-color: white;
-    -fx-padding: 15pt;
 }
 
 .currentPlayerName {
@@ -25,7 +23,7 @@
 }
 
 .label {
-    -fx-font: bold 1.2em "Arial";
+    -fx-text-alignment: center;
     -fx-text-fill: #206020;
 }
 
