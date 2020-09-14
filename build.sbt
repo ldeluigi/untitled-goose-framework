@@ -43,7 +43,7 @@ githubWorkflowPublish := Seq(WorkflowStep.Use(
   "marvinpinto", "action-automatic-releases", "@latest",
   name = Some("Upload new GitHub Release"),
   params = Map(
-    "repo_token" -> s"$${{ secrets.GITHUB_TOKEN }}",
+    "repo_token" -> "${{ secrets.GITHUB_TOKEN }}",
     "automatic_release_tag" -> version.key.label,
     "prerelease" -> version.key.label.startsWith("0.").toString,
     "title" -> "Development Build",
