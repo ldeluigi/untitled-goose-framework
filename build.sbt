@@ -31,11 +31,21 @@ lazy val osName = System.getProperty("os.name") match {
 
 // Add dependency on JavaFX libraries, OS dependent
 lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-libraryDependencies ++= javaFXModules.map( m =>
+libraryDependencies ++= javaFXModules.map(m =>
   "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName
 )
-
 
 githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
 
 organization := "untitled.goose.framework"
+
+githubWorkflowPublish := Seq(WorkflowStep.Use(
+  "marvinpinto", "action-automatic-releases", "@latest",
+  name = Some("Upload new GitHub Release"),
+  params = Map(
+    "repo_token" -> s"$${{ secrets.GITHUB_TOKEN }}",
+    "automatic_release_tag" -> version.key.label,
+    "prerelease" -> version.key.label.startsWith("0.").toString,
+    "title" -> "Development Build",
+    "files" -> "*.jar"
+  )))
