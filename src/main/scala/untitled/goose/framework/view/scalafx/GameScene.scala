@@ -30,10 +30,10 @@ trait GameScene extends Scene {
 
 object GameScene {
 
-  def apply(stage: Stage, commandSender: GameManager, gameMatch: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor]): GameScene =
-    new GameSceneImpl(stage, commandSender, gameMatch, graphicMap)
+  def apply(stage: Stage, commandSender: GameManager, gameState: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor]): GameScene =
+    new GameSceneImpl(stage, commandSender, gameState, graphicMap)
 
-  private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameMatch: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
+  private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameState: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends GameScene {
 
     val boardProportion = 0.75
@@ -44,13 +44,13 @@ object GameScene {
 
     this.content = splitPane
 
-    val boardView: BoardDisplay = BoardDisplay(gameMatch.gameBoard, graphicMap)
+    val boardView: BoardDisplay = BoardDisplay(gameState.gameBoard, graphicMap)
     splitPane.items.add(boardView)
     boardView.prefWidth <== this.width
     boardView.prefHeight <== this.height * boardProportion
 
-    val actionMenu: ActionMenu = ActionMenu(boardView, gameMatch, commandSender)
-    val logger: EventLogger = EventLogger(gameMatch)
+    val actionMenu: ActionMenu = ActionMenu(boardView, gameState, commandSender)
+    val logger: EventLogger = EventLogger(gameState)
 
     val tabPane = new TabPane
     val gameControlTab: Tab = new Tab {
