@@ -1,5 +1,6 @@
 package untitled.goose.framework.view.scalafx.board
 
+import scalafx.beans.binding.NumberBinding
 import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label
@@ -28,8 +29,7 @@ trait TileVisualization extends StackPane {
 object TileVisualization {
 
   //TODO take width property as constructur parameter and use that
-  private class TileVisualizationImpl(val tile: Tile, parentWidth: ReadOnlyDoubleProperty,
-                                      parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
+  private class TileVisualizationImpl(val tile: Tile, givenWidth: NumberBinding, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
 
     var graphics: Option[Image] = None
     var imageView: Option[ImageView] = None
@@ -37,7 +37,7 @@ object TileVisualization {
     val rectangle: Rectangle = new Rectangle {
       fill = White
       strokeType = StrokeType.Inside
-      width <== parentWidth / cols
+      width <== givenWidth
       height <== width
     }
     rectangle.styleClass.add("rectangle")
@@ -110,6 +110,6 @@ object TileVisualization {
   }
 
   /** A factory used to render a new Tile, given the tile itself, its parent and panel dimension and the graphic properties that need to be set. */
-  def apply(tile: Tile, parentWidth: ReadOnlyDoubleProperty, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, graphicDescriptor: Option[GraphicDescriptor]): TileVisualization =
-    new TileVisualizationImpl(tile, parentWidth, parentHeight, rows, cols, graphicDescriptor: Option[GraphicDescriptor])
+  def apply(tile: Tile, givenWidth: NumberBinding, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, graphicDescriptor: Option[GraphicDescriptor]): TileVisualization =
+    new TileVisualizationImpl(tile, givenWidth, graphicDescriptor: Option[GraphicDescriptor])
 }

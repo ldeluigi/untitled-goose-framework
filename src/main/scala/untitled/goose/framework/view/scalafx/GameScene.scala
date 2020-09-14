@@ -36,7 +36,7 @@ object GameScene {
   private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameMatch: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends GameScene {
 
-    val boardProportion = 0.8
+    val boardProportion = 0.75
 
     val splitPane: SplitPane = new SplitPane {
       orientation = Orientation.Vertical
