@@ -8,6 +8,7 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color.White
 import scalafx.scene.shape.{Rectangle, StrokeType}
+import scalafx.scene.text.TextAlignment
 import untitled.goose.framework.model.entities.runtime.Tile
 
 /**
@@ -17,7 +18,7 @@ trait TileVisualization extends StackPane {
 
   def tile: Tile
 
-  def text: String
+  def tileText: String
 
   def setPiece(piece: PieceVisualization): Unit
 
@@ -42,26 +43,31 @@ object TileVisualization {
     }
     rectangle.styleClass.add("rectangle")
 
-    val text: String = tile.definition.name match {
+    val tileText: String = tile.definition.name match {
       case Some(value) => value
       case None => tile.definition.number.get.toString
     }
 
-    val label = new Label(text)
-    label.maxWidth <== rectangle.width
-    //var maxTextWidth: Double =
-    //var defaultFontSize: Double = 1.2
-    var textWidth: Double = 0
-    //val newFontSize: Double = defaultFontSize*maxTextWidth / textWidth
-    textWidth = label.getLayoutBounds().getWidth
-    if (textWidth <= label.maxWidth() / 2) {
-      label.setStyle("-fx-font: bold 15pt Arial")
+
+    val label: Label = new Label {
+      text = tileText
+      alignment = Center
+      textAlignment = TextAlignment.Center
+      maxWidth <== rectangle.width
+      wrapText = true
     }
-    else {
-      label.setStyle("-fx-font: bold 5pt Arial")
-    }
-    label wrapText = true
-    label.styleClass.add("label")
+
+    def fontSize(w: Double): Double = (w * 0.15) * Math.exp(-tileText.length / 10.0) + 10
+
+    rectangle.width.onChange((_, _, w) => {
+      label.style = "-fx-font-size: " + fontSize(w.asInstanceOf[Double]).toInt + "pt"
+    })
+
+
+    //val isMaxWidth: BooleanBinding = label.width > rectangle.width / 2
+    //label.style <== when(isMaxWidth) choose "-fx-font: bold 10pt Arial; -fx-" otherwise "-fx-font: bold 15pt Arial"
+    label.styleClass.add("tileLabel")
+
 
     graphicDescriptor.foreach(applyStyle)
 

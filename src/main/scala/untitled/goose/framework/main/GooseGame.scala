@@ -20,7 +20,7 @@ object GooseGame extends GooseDSL {
   the tile 6 has name("The bridge")
   the tile 19 has name("The Inn")
   the tile 31 has name("The well")
-  the tile 42 has name("The labyrinth")
+  the tile 42 has name("The labyrinth aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   the tile 52 has name("The prison")
   the tile 58 has name("The death")
 

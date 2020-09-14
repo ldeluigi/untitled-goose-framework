@@ -11,8 +11,6 @@ import untitled.goose.framework.model.entities.runtime.{Board, GameState, Tile}
  */
 trait BoardDisplay extends ScrollPane {
   def updateMatchState(matchState: GameState)
-
-  def renderBoard(): Unit
 }
 
 object BoardDisplay {
@@ -30,15 +28,13 @@ object BoardDisplay {
     this.content = boardPane
     renderBoard()
 
+    this.setVvalue(1)
 
     //TODO call this when resizing and take a "zoom" parameter to compute width of tiles link
-    //call this when resizing(?)
-    def renderBoard(): Unit = {
+    private def renderBoard(): Unit = {
       import untitled.goose.framework.model.entities.runtime.Tile._
       for (tile <- matchBoard.tiles.toList.sorted)
         renderTile(TileVisualization(tile, width / cols, height, rows, cols, getGraphicDescriptor(tile)))
-      val firstTile = tiles.find(v => v.tile == matchBoard.first).get
-      setFocus(firstTile)
     }
 
     private def renderTile(currentTile: TileVisualization): Unit = {
@@ -48,9 +44,6 @@ object BoardDisplay {
       i = i + 1
       tiles = currentTile :: tiles
     }
-
-    //val firstTile: TileVisualization = tiles.head
-    //setFocus(firstTile)
 
     private def getGraphicDescriptor(tile: Tile): Option[GraphicDescriptor] = {
       var graphicSeq: Seq[GraphicDescriptor] = Seq()
@@ -86,7 +79,6 @@ object BoardDisplay {
       }
     }
 
-    //TODO rework focus
     private def setFocus(positionTile: TileVisualization): Unit = {
       val tileOffset = 1.5
       this.setHvalue((positionTile.getLayoutX * tileOffset) / this.getWidth)

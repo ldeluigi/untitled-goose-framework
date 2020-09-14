@@ -22,9 +22,10 @@
     -fx-stroke-width: 2;
 }
 
-.label {
-    -fx-text-alignment: center;
+.tileLabel {
     -fx-text-fill: #206020;
+    -fx-font-weight: bold;
+    -fx-font-family: Arial;
 }
 
 .pieceShape {
