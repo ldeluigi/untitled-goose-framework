@@ -35,3 +35,7 @@ libraryDependencies ++= javaFXModules.map( m =>
   "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName
 )
 
+
+githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
+
+organization := "untitled.goose.framework"
