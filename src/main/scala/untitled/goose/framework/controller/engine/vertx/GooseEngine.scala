@@ -86,7 +86,7 @@ object GooseEngine {
     private def onEvent(event: GameEvent): Unit = {
       event match {
         case ExitEvent => controller.close()
-        case NoOpEvent => executeOperation()
+        case NoOpEvent => if (stack.nonEmpty) executeOperation()
         case _ =>
           if (stack.isEmpty) {
             stack = stack :+ gameMatch.cleanup

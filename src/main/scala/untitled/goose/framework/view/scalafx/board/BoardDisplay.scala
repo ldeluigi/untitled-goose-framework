@@ -1,9 +1,9 @@
 package untitled.goose.framework.view.scalafx.board
 
+import scalafx.scene.Group
 import scalafx.scene.control.ScrollPane
-import scalafx.scene.layout.Pane
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
-import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
+import untitled.goose.framework.model.entities.definitions.TileIdentifier.{Group => TileGroup}
 import untitled.goose.framework.model.entities.runtime.{Board, GameState, Tile}
 
 /** A custom pane that contains the runtime definition.
@@ -16,27 +16,25 @@ trait BoardDisplay extends ScrollPane {
 object BoardDisplay {
 
   private class BoardDisplayImpl(matchBoard: Board, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends BoardDisplay {
-    val boardPane = new Pane()
+
+    val boardPane = new Group()
 
     var tiles: List[TileVisualization] = Nil
-
-    this.content = boardPane
-    this.pannable = true
-    this.hbarPolicy = ScrollPane.ScrollBarPolicy.Always
-    this.vbarPolicy = ScrollPane.ScrollBarPolicy.Always
 
     var i = 0
     val rows: Int = matchBoard.definition.disposition.rows
     val cols: Int = matchBoard.definition.disposition.columns
 
+    this.content = boardPane
     renderBoard()
 
+    this.setVvalue(1)
+
     //TODO call this when resizing and take a "zoom" parameter to compute width of tiles link
-    //call this when resizing(?)
     private def renderBoard(): Unit = {
-      for (tile <- matchBoard.tiles.toList.sorted) {
-        renderTile(TileVisualization(tile, width, height, rows, cols, getGraphicDescriptor(tile)))
-      }
+      import untitled.goose.framework.model.entities.runtime.Tile._
+      for (tile <- matchBoard.tiles.toList.sorted)
+        renderTile(TileVisualization(tile, width / cols, height, rows, cols, getGraphicDescriptor(tile)))
     }
 
     private def renderTile(currentTile: TileVisualization): Unit = {
@@ -46,7 +44,6 @@ object BoardDisplay {
       i = i + 1
       tiles = currentTile :: tiles
     }
-
 
     private def getGraphicDescriptor(tile: Tile): Option[GraphicDescriptor] = {
       var graphicSeq: Seq[GraphicDescriptor] = Seq()
@@ -59,14 +56,13 @@ object BoardDisplay {
           .foreach(g => graphicSeq = graphicSeq :+ g)
       }
       for (group <- tile.definition.groups) {
-        graphicMap.get(TileIdentifier(Group(group)))
+        graphicMap.get(TileIdentifier(TileGroup(group)))
           .foreach(g => graphicSeq = graphicSeq :+ g)
       }
       if (graphicSeq.nonEmpty) {
         Some(graphicSeq.reduce(GraphicDescriptor.merge))
       } else None
     }
-
 
     override def updateMatchState(matchState: GameState): Unit = {
       for (t <- tiles) {
@@ -83,11 +79,10 @@ object BoardDisplay {
       }
     }
 
-    //TODO rework focus
     private def setFocus(positionTile: TileVisualization): Unit = {
       val tileOffset = 1.5
-      this.setHvalue((positionTile.getLayoutX * tileOffset) / boardPane.getWidth)
-      this.setVvalue((positionTile.getLayoutY * tileOffset) / boardPane.getHeight)
+      this.setHvalue((positionTile.getLayoutX * tileOffset) / this.getWidth)
+      this.setVvalue((positionTile.getLayoutY * tileOffset) / this.getHeight)
     }
   }
 
