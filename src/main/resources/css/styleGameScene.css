@@ -10,7 +10,7 @@
     -fx-border-color: #206020;
 }
 
-.container {
+.actionBox {
     -fx-background-color: white;
     -fx-padding: 15pt;
 }
