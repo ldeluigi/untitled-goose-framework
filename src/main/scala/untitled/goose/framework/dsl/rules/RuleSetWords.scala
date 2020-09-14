@@ -14,6 +14,8 @@ trait RuleSetWords extends EventDefinitionWords with EventsShortcut with Behavio
 
   val Players: PlayersWord = PlayersWord()
 
+  val priority: PriorityWord = PriorityWord()
+
   def order(order: PlayerOrderingType): PlayerOrderProperty = PlayerOrderProperty(order)
 
   def Each: EachTurnWord = EachTurnWord()

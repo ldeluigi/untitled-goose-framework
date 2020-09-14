@@ -60,12 +60,12 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       val controller: ScalaFxController = ApplicationController(currentMatch)
       val gameScene: GameScene = GameScene(stage, controller, clonedState, graphicMap)
       controller setScene gameScene
-      stage scene = gameScene
-      stage width = widthSize
-      stage height = heightSize
-      stage minWidth = widthSize * 0.5
-      stage minHeight = heightSize * 0.5
-      stage.setMaximized(true)
+      stage.scene = gameScene
+      stage.width = widthSize
+      stage.height = heightSize
+      stage.minWidth = widthSize * 0.5
+      stage.minHeight = heightSize * 0.5
+      stage setMaximized true
       stage setResizable true
       stage centerOnScreen
     } else {

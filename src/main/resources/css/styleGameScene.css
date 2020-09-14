@@ -1,8 +1,8 @@
-.root{
+.root {
     -fx-background: #e4a411;
 }
 
-.button{
+.button {
     -fx-border-radius: 2;
     -fx-padding: 5pt;
     -fx-background-color: White;
@@ -10,26 +10,26 @@
     -fx-border-color: #206020;
 }
 
-.actionBox{
-   -fx-background-color: white;
-   -fx-padding: 15pt;
+.actionBox {
+    -fx-background-color: white;
+    -fx-padding: 15pt;
 }
 
-.currentPlayerName{
+.currentPlayerName {
     -fx-font: bold 14pt "Arial";
 }
 
-.rectangle{
+.rectangle {
     -fx-stroke: #206020;
     -fx-stroke-width: 2;
 }
 
-.label{
+.label {
     -fx-font: bold 1.2em "Arial";
     -fx-text-fill: #206020;
 }
 
-.pieceShape{
+.pieceShape {
     -fx-stroke: transparent;
     -fx-stroke-width: 1;
 }
