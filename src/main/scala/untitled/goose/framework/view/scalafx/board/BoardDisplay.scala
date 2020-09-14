@@ -47,6 +47,8 @@ object BoardDisplay {
       tiles = currentTile :: tiles
     }
 
+    //val firstTile: TileVisualization = tiles.head
+    //setFocus(firstTile)
 
     private def getGraphicDescriptor(tile: Tile): Option[GraphicDescriptor] = {
       var graphicSeq: Seq[GraphicDescriptor] = Seq()
@@ -66,7 +68,6 @@ object BoardDisplay {
         Some(graphicSeq.reduce(GraphicDescriptor.merge))
       } else None
     }
-
 
     override def updateMatchState(matchState: GameState): Unit = {
       for (t <- tiles) {

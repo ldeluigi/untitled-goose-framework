@@ -53,7 +53,7 @@ object GameScene {
     val logger: EventLogger = EventLogger(gameMatch)
 
     val tabPane = new TabPane
-    val actionsTab: Tab = new Tab {
+    val gameControlTab: Tab = new Tab {
       text = "Action Menu"
       content = actionMenu
     }
@@ -61,7 +61,7 @@ object GameScene {
       text = "Logger"
       content = logger
     }
-    tabPane.tabs = List(actionsTab, loggerTab)
+    tabPane.tabs = List(gameControlTab, loggerTab)
 
     tabPane.prefWidth <== this.width
     tabPane.prefHeight <== this.height * (1 - boardProportion)
