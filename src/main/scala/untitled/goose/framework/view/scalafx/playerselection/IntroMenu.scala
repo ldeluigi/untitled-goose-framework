@@ -64,6 +64,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       stage.minWidth = widthSize * 0.5
       stage.minHeight = heightSize * 0.5
       stage setResizable true
+      stage setMaximized true
     } else {
       new Alert(AlertType.Error) {
         initOwner(stage)
