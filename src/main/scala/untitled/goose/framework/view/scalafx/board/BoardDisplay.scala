@@ -29,8 +29,14 @@ object BoardDisplay {
     val rows: Int = matchBoard.definition.disposition.rows
     val cols: Int = matchBoard.definition.disposition.columns
 
-    for (tile <- matchBoard.tiles.toList.sorted) {
-      renderTile(TileVisualization(tile, width, height, rows, cols, getGraphicDescriptor(tile)))
+    renderBoard()
+
+    //TODO call this when resizing and take a "zoom" parameter to compute width of tiles link
+    //call this when resizing(?)
+    private def renderBoard(): Unit = {
+      for (tile <- matchBoard.tiles.toList.sorted) {
+        renderTile(TileVisualization(tile, width, height, rows, cols, getGraphicDescriptor(tile)))
+      }
     }
 
     private def renderTile(currentTile: TileVisualization): Unit = {
@@ -77,6 +83,7 @@ object BoardDisplay {
       }
     }
 
+    //TODO rework focus
     private def setFocus(positionTile: TileVisualization): Unit = {
       val tileOffset = 1.5
       this.setHvalue((positionTile.getLayoutX * tileOffset) / boardPane.getWidth)
