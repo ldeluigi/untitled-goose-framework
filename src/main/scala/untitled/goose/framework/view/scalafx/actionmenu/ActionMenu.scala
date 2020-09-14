@@ -1,8 +1,8 @@
 package untitled.goose.framework.view.scalafx.actionmenu
 
-import scalafx.geometry.Pos
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Label
-import scalafx.scene.layout.{HBox, StackPane}
+import scalafx.scene.layout.{HBox, StackPane, VBox}
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.runtime.{GameState, Player}
@@ -21,16 +21,23 @@ object ActionMenu {
 
   private class ActionMenuImpl(boardView: BoardDisplay, game: GameState, controller: GameManager) extends ActionMenu {
 
+    val currentPlayerName: Label = new Label {}
+    currentPlayerName.styleClass.add("currentPlayerName")
+
     val actionBox: HBox = new HBox {
       alignment = Pos.TopCenter
       spacing = 20
     }
     actionBox.styleClass.add("actionBox")
 
-    this.children.add(actionBox)
+    val container: VBox = new VBox {
+      alignment = Pos.TopCenter
+      spacing = 20
+      padding = Insets(30)
+      children = List(currentPlayerName, actionBox)
+    }
 
-    val currentPlayerName: Label = new Label {}
-    currentPlayerName.styleClass.add("currentPlayerName")
+    this.children.add(container)
 
     /** Utility method to add every action into a VBox.
      *
@@ -38,10 +45,12 @@ object ActionMenu {
      */
     override def displayActions(actions: Set[Action], currentPlayer: Player): Unit = {
       actionBox.children.removeAll(actionBox.children)
-      actionBox.children.add(currentPlayerName)
-      currentPlayerName.text = currentPlayer.name
+      container.children.removeAll(currentPlayerName, actionBox)
+      currentPlayerName.text = "Current player: " + currentPlayer.name
+      container.children.add(currentPlayerName)
       for (a <- actions) {
         actionBox.children.add(ActionVisualization(a, controller))
+        container.children.add(actionBox)
       }
     }
   }
