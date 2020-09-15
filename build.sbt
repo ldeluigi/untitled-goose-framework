@@ -9,7 +9,7 @@ scalaVersion := "2.12.10"
 ThisBuild / sbtVersion := "1.3.13"
 ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
 ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
-  "marvinpinto", "action-automatic-releases", "@latest",
+  "marvinpinto", "action-automatic-releases", "latest",
   name = Some("Upload new GitHub Release"),
   params = Map(
     "repo_token" -> "${{ secrets.GITHUB_TOKEN }}",
