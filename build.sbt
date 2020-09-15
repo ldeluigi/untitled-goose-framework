@@ -8,7 +8,8 @@ scalaVersion := "2.12.10"
 
 ThisBuild / sbtVersion := "1.3.13"
 ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
-ThisBuild /githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(List("sbt package", "find . -type f -name \"*.jar\"")))
+ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "package")))
+ThisBuild /githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(List("find . -type f -name \"*.jar\"")))
 ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
   "marvinpinto", "action-automatic-releases", "latest",
   name = Some("Upload new GitHub Release"),

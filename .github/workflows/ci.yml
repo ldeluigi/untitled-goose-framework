@@ -84,9 +84,8 @@ jobs:
         shell: bash
         run: sbt ++${{ matrix.scala }} githubWorkflowCheck
 
-      - name: Build project
-        shell: bash
-        run: sbt ++${{ matrix.scala }} test
+      - shell: bash
+        run: sbt ++${{ matrix.scala }} test package
 
       - name: Compress target directories
         shell: bash
@@ -172,9 +171,7 @@ jobs:
           tar xf targets.tar
           rm targets.tar
 
-      - run: |
-          sbt package
-          find . -type f -name "*.jar"
+      - run: find . -type f -name "*.jar"
 
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
