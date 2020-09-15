@@ -171,13 +171,12 @@ jobs:
         run: |
           tar xf targets.tar
           rm targets.tar
-          ls
 
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           prerelease: true
-          files: '*.jar'
+          files: '*'
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           title: Development Build
           automatic_release_tag: 0.2

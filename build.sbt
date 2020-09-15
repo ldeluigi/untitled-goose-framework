@@ -16,7 +16,7 @@ ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
     "automatic_release_tag" -> version.value,
     "prerelease" -> version.value.startsWith("0.").toString,
     "title" -> "Development Build",
-    "files" -> "*.jar"
+    "files" -> "*"
   )
 ))
 
