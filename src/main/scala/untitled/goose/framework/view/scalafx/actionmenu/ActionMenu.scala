@@ -55,8 +55,8 @@ object ActionMenu {
       container.children.add(currentPlayerName)
       for (a <- actions) {
         actionBox.children.add(ActionVisualization(a, controller))
-        container.children.add(actionBox)
       }
+      container.children.add(actionBox)
     }
   }
 
