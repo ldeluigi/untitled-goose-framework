@@ -2,8 +2,6 @@ package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.events.PlayerEvent
 
-// TODO create immutable wrapper
-
 /** A player currently playing the game. */
 trait Player {
 
