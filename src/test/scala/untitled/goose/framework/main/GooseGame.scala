@@ -17,18 +17,27 @@ object GooseGame extends GooseDSL {
   The game board has size(63)
   the game board has disposition(Spiral)
 
-  the tile 6 has name("The bridge")
-  the tile 19 has name("The Inn")
-  the tile 31 has name("The well")
-  the tile 42 has name("The labyrinth")
-  the tile 52 has name("The prison")
-  the tile 58 has name("The death")
+  val gooseTileGroup = "GooseTile"
+  val theBridge = "the Bridge"
+  val theWell = "the Well"
+  val theInn = "the Inn"
+  val theLabyrinth = "the Labyrinth"
+  val thePrison = "the Prison"
+  val theDeath = "the Death"
+  val theEnd = "the End"
+
+  the tile 6 has name(theBridge)
+  the tile 19 has name(theInn)
+  the tile 31 has name(theWell)
+  the tile 42 has name(theLabyrinth)
+  the tile 52 has name(thePrison)
+  the tile 58 has name(theDeath)
 
   The tiles (1 to 63) have group("field")
   All tiles "field" have color(Green)
 
-  the tile "The well" has background("pozzo.png")
-  the tile "The Inn" has background("pozzo.png")
+  the tile theWell has background("pozzo.png")
+  the tile theInn has background("pozzo.png")
 
   The tiles(6, 19, 31, 42, 52, 58) have group("Special")
   All tiles "Special" have color(LightBlue)
