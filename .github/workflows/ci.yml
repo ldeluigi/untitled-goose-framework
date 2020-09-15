@@ -173,8 +173,8 @@ jobs:
           rm targets.tar
 
       - run: |
-          find . -type f
           sbt package
+          find . -type f -name "*.jar"
 
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
