@@ -32,10 +32,15 @@ object GooseGame extends GooseDSL {
 
   the tile 63 has name("The end")
   The tile 63 has color(Yellow)
+  The tile 63 has background("oca.png")
+
 
   The tiles(5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59) have group("Goose")
   All tiles "Goose" have background("oca.png")
 
+
+  The tiles (1 to 63) have group("field")
+  All tiles "field" have color(Green)
   Players start on tile 1
 
   Define event "custom" having (
