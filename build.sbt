@@ -8,7 +8,7 @@ scalaVersion := "2.12.10"
 
 ThisBuild / sbtVersion := "1.3.13"
 ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
-ThisBuild /githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(List("ls target/scala-2.12")))
+ThisBuild /githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(List("find target/scala-2.12")))
 ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
   "marvinpinto", "action-automatic-releases", "latest",
   name = Some("Upload new GitHub Release"),
@@ -20,7 +20,6 @@ ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
     "files" -> "target/scala-2.12/*.jar"
   )
 ))
-
 resolvers += "Local Ivy Repository" at "file:///" + Path.userHome.absolutePath + "/.ivy2/local"
 
 // Add dependency on ScalaFX library

@@ -172,7 +172,7 @@ jobs:
           tar xf targets.tar
           rm targets.tar
 
-      - run: ls target/scala-2.12
+      - run: find target/scala-2.12
 
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
