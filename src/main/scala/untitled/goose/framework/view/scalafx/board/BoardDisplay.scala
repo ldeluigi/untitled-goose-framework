@@ -4,12 +4,18 @@ import scalafx.scene.Group
 import scalafx.scene.control.ScrollPane
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.{Group => TileGroup}
+import untitled.goose.framework.model.entities.runtime.Tile._
 import untitled.goose.framework.model.entities.runtime.{Board, GameState, Tile}
 
-/** A custom pane that contains the runtime definition.
+/** A custom pane that contains the runtime definition of the board.
  *
  */
 trait BoardDisplay extends ScrollPane {
+
+  /** Updates both the focus on which a player has landed and the renders the corresponding tile onto it.
+   *
+   * @param matchState the game state to update from which withdraw the needed information about tiles and players.
+   */
   def updateMatchState(matchState: GameState)
 }
 
@@ -30,13 +36,18 @@ object BoardDisplay {
 
     this.setVvalue(1)
 
-    //TODO call this when resizing and take a "zoom" parameter to compute width of tiles link
+    /** Renders the board, creating the specified number of tiles a setting a custom dimension to them,
+     * while carrying the custom graphic properties.
+     */
     private def renderBoard(): Unit = {
-      import untitled.goose.framework.model.entities.runtime.Tile._
       for (tile <- matchBoard.tiles.toList.sorted)
         renderTile(TileVisualization(tile, width / cols, height, rows, cols, getGraphicDescriptor(tile)))
     }
 
+    /** Renders a single tile, setting its coordinates and adding it to the board panel.
+     *
+     * @param currentTile the tile to render.
+     */
     private def renderTile(currentTile: TileVisualization): Unit = {
       currentTile.layoutX <== currentTile.width * matchBoard.definition.disposition(i)._1
       currentTile.layoutY <== currentTile.height * matchBoard.definition.disposition(i)._2
@@ -45,6 +56,11 @@ object BoardDisplay {
       tiles = currentTile :: tiles
     }
 
+    /** Creates a GraphicDescriptor if the tile's name, number or group are defined.
+     *
+     * @param tile the tile to analyze and from which to withdraw graphic information from.
+     * @return the GraphicDescriptor containing custom graphic properties.
+     */
     private def getGraphicDescriptor(tile: Tile): Option[GraphicDescriptor] = {
       var graphicSeq: Seq[GraphicDescriptor] = Seq()
       if (tile.definition.name.isDefined) {
@@ -79,6 +95,10 @@ object BoardDisplay {
       }
     }
 
+    /** Sets the board to be able to place follow on which tile the player has landed.
+     *
+     * @param positionTile the tile on which to set the focus.
+     */
     private def setFocus(positionTile: TileVisualization): Unit = {
       val tileOffset = 1.5
       this.setHvalue((positionTile.getLayoutX * tileOffset) / this.getWidth)

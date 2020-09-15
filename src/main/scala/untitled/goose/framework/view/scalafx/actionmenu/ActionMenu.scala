@@ -9,10 +9,15 @@ import untitled.goose.framework.model.entities.runtime.{GameState, Player}
 import untitled.goose.framework.view.scalafx.board.BoardDisplay
 
 
-/** An object that organizes a set of actions into a graphical menu.
+/** A panel that organizes a set of player's available actions, and the current player into a graphical menu.
  */
 trait ActionMenu extends StackPane {
 
+  /** Sets all player's information into the panel itself, generating custom buttons based on the actions passed to it.
+   *
+   * @param actions       the set of actions that needs a custom button to trigger.
+   * @param currentPlayer the current player playing the game.
+   */
   def displayActions(actions: Set[Action], currentPlayer: Player)
 
 }
@@ -50,11 +55,11 @@ object ActionMenu {
       container.children.add(currentPlayerName)
       for (a <- actions) {
         actionBox.children.add(ActionVisualization(a, controller))
-        container.children.add(actionBox)
       }
+      container.children.add(actionBox)
     }
   }
 
-  /** A factory which creates a new ActionMenu. */
+  /** A factory which creates a new ActionMenu panel. */
   def apply(boardView: BoardDisplay, game: GameState, controller: GameManager): ActionMenu = new ActionMenuImpl(boardView, game, controller)
 }

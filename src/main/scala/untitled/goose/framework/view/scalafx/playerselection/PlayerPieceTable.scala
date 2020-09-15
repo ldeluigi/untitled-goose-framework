@@ -8,6 +8,10 @@ import scalafx.scene.paint.Color
 import scalafx.scene.shape.Circle
 import untitled.goose.framework.view.scalafx.playerselection.InsertPlayerPane.PlayerPiece
 
+/** A case class creating a table to set into IntroMenu containing the currently enrolled players into the game.
+ *
+ * @param playerPieces the player pieces to set into the table.
+ */
 case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
 
   private val customWidth: Double = 600

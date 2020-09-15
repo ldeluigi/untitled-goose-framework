@@ -12,24 +12,40 @@ import scalafx.scene.text.TextAlignment
 import untitled.goose.framework.model.entities.runtime.Tile
 
 /**
- * An object which models how a single tile is rendered.
+ * A pane which models how a single tile is rendered.
  */
 trait TileVisualization extends StackPane {
 
+  /** Gets the current tile.
+   *
+   * @return the tile to get.
+   */
   def tile: Tile
 
+  /** Gets the current tile's text.
+   *
+   * @return the tile's text to gst.
+   */
   def tileText: String
 
+  /** Sets the position of the tile's piece on the tile itself, avoiding overlapping.
+   *
+   * @param piece the piece to be placed.
+   */
   def setPiece(piece: PieceVisualization): Unit
 
+  /** Remove all pieces from the tile. */
   def removePieces(): Unit
 
+  /** Gets the rectangle holding the tile.
+   *
+   * @return the rectangle holding the tile.
+   */
   def rectangle: Rectangle
 }
 
 object TileVisualization {
 
-  //TODO take width property as constructur parameter and use that
   private class TileVisualizationImpl(val tile: Tile, givenWidth: NumberBinding, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
 
     var graphics: Option[Image] = None
@@ -48,7 +64,6 @@ object TileVisualization {
       case None => tile.definition.number.get.toString
     }
 
-
     val label: Label = new Label {
       text = tileText
       alignment = Center
@@ -57,17 +72,18 @@ object TileVisualization {
       wrapText = true
     }
 
-    def fontSize(w: Double): Double = (w * 0.15) * Math.exp(-tileText.length / 10.0) + 10
+    /** Computes the label's font size to avoid going over tile's limits.
+     *
+     * @param width the width onto which computes the new font's dimension.
+     * @return a Double property specifying the font size.
+     */
+    def fontSize(width: Double): Double = (width * 0.15) * Math.exp(-tileText.length / 10.0) + 10
 
     rectangle.width.onChange((_, _, w) => {
       label.style = "-fx-font-size: " + fontSize(w.asInstanceOf[Double]).toInt + "pt"
     })
 
-
-    //val isMaxWidth: BooleanBinding = label.width > rectangle.width / 2
-    //label.style <== when(isMaxWidth) choose "-fx-font: bold 10pt Arial; -fx-" otherwise "-fx-font: bold 15pt Arial"
     label.styleClass.add("tileLabel")
-
 
     graphicDescriptor.foreach(applyStyle)
 
@@ -81,10 +97,6 @@ object TileVisualization {
 
     var pieceList: List[PieceVisualization] = Nil
 
-    /** Sets the position of the tile's piece on the piece itself.
-     *
-     * @param piece the piece to be placed.
-     */
     override def setPiece(piece: PieceVisualization): Unit = {
       pieceList.size match {
         case 0 => piece.alignment = CenterLeft
@@ -101,7 +113,6 @@ object TileVisualization {
       pieceList = piece :: pieceList
     }
 
-    /** Remove all pieces from the tile. */
     override def removePieces(): Unit = {
       for (p <- pieceList) {
         this.children.remove(p)
@@ -109,7 +120,10 @@ object TileVisualization {
       pieceList = Nil
     }
 
-
+    /** Applies a custom style to the board's tiles, based on which properties are defined into the GraphicDescriptor.
+     *
+     * @param graphicDescriptor the GraphicDescriptor to withdraw graphic properties to apply from.
+     */
     private def applyStyle(graphicDescriptor: GraphicDescriptor): Unit = {
       if (graphicDescriptor.color.isDefined) {
         rectangle.fill = graphicDescriptor.color.get
