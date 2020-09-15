@@ -172,6 +172,8 @@ jobs:
           tar xf targets.tar
           rm targets.tar
 
+      - run: ls
+
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
