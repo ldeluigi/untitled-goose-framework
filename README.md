@@ -2,12 +2,15 @@
 Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to run the definition of a game based on [The Game of the Goose](https://en.wikipedia.org/wiki/Game_of_the_Goose).
 
 ## Features
-WIP
+- Ability to create new games with the shortest, most readable syntax possible through Scala DSL (natural language oriented, in English).
+- Ability to play created games locally. Given that each game must be turn-based, one single device is needed to play.
+- Possibility to extend game classes, objects or data structures to implement more complex behaviours or functionalities. This can mean both extend the framework functionalities or the game logic.
+- Possibility to extend the DSL with custom shortcuts.
 
 ## Installation
-- Download the jar of the last version available in the [Release](https://github.com/ldeluigi/untitled-goose-framework/releases) section.
-- Add the jar as a dependency for your project
-  - For __sbt__ projects you can simply put the jar inside a _lib_ folder in the project root.
+1. Download the jar of the last version available in the [Release](https://github.com/ldeluigi/untitled-goose-framework/releases) section.
+1. Add the jar as a dependency for your project
+    - For __sbt__ projects you can simply put the jar inside a _lib_ folder in the project root.
 
 ## Usage
 - Add to your project the following mandatory dependencies:
