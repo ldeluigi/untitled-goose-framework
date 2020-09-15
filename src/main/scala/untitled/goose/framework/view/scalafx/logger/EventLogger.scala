@@ -43,10 +43,18 @@ object EventLogger {
     }
 
     def logHistoryDiff(state: GameState): Unit = {
-      (state.consumableBuffer.diff(previousState.consumableBuffer) ++
-        state.gameHistory.diff(previousState.gameHistory) ++
-        state.players.flatMap(_.history).diff(previousState.players.flatMap(_.history)) ++
-        state.gameBoard.tiles.flatMap(_.history).diff(previousState.gameBoard.tiles.flatMap(_.history)))
+      (state.consumableBuffer
+        .diff(previousState.consumableBuffer) ++
+        state.gameHistory
+          .diff(previousState.gameHistory) ++
+        state.players
+          .flatMap(_.history)
+          .diff(previousState.players
+            .flatMap(_.history)) ++
+        state.gameBoard.tiles
+          .flatMap(_.history)
+          .diff(previousState.gameBoard.tiles
+            .flatMap(_.history)))
         .foreach(logEvent)
       previousState = state
     }

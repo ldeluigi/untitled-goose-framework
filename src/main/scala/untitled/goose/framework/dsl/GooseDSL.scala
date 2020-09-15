@@ -43,7 +43,7 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
       .actionRules(ruleBook.ruleSet.actionRules)
       .behaviourRules(ruleBook.ruleSet.behaviourRules)
       .cleanupRules(ruleBook.ruleSet.cleanupRules)
-      .build
+      .build()
 
   private def start(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
     new View(gameData, graphicMap).main(Array())

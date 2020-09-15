@@ -9,7 +9,7 @@ trait Dice[DiceSide] {
   def name: String
 
   /** Returns one face of the dice, at random. */
-  def roll: DiceSide
+  def roll(): DiceSide
 }
 
 object Dice {
@@ -20,7 +20,7 @@ object Dice {
   object Factory {
 
     private class RandomDice[DiceSide](sides: Seq[DiceSide], val name: String) extends Dice[DiceSide] {
-      override def roll: DiceSide = Random.shuffle(sides).head
+      override def roll(): DiceSide = Random.shuffle(sides).head
     }
 
     private class RandomMovementDice(sides: Seq[Int], diceName: String)

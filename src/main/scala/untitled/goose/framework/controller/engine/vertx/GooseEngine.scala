@@ -72,7 +72,7 @@ object GooseEngine {
       if (stopped.get()) return
       controller.update(gameMatch.currentState)
       if (stack.nonEmpty) {
-        stack = gameMatch.stateBasedOperations ++ stack
+        stack = gameMatch.stateBasedOperations() ++ stack
         executeOperation()
       }
     }
@@ -88,9 +88,7 @@ object GooseEngine {
         case ExitEvent => controller.close()
         case NoOpEvent => if (stack.nonEmpty) executeOperation()
         case _ =>
-          if (stack.isEmpty) {
-            stack = stack :+ gameMatch.cleanup
-          }
+          if (stack.isEmpty) stack :+= gameMatch.cleanup()
           stack = Operation.trigger(event) +: stack
           executeOperation()
       }

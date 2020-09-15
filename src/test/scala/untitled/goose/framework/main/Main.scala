@@ -54,7 +54,7 @@ object Main extends JFXApp {
     .actionRules(actionRules)
     .behaviourRules(behaviourRule)
     .cleanupRules(Seq())
-    .build
+    .build()
 
   // simulazione di mappa definita dall'utente
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map(

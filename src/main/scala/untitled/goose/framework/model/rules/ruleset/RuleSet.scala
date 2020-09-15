@@ -46,7 +46,7 @@ trait RuleSet {
    * Returns the minimum and maximum number of players.
    * @return a range of players.
    */
-  def admissiblePlayers: Range
+  def allowedPlayers: Range
 
 }
 

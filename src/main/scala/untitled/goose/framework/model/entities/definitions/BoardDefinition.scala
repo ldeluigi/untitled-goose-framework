@@ -51,10 +51,10 @@ object BoardDefinition {
     private val myTiles: Seq[TileDefinition] = (1 to tileNum).map(i => TileDefinition(i))
 
     override def next(tile: TileDefinition): Option[TileDefinition] =
-      tile.number flatMap (i => myTiles lift i)
+      tile.number flatMap (i => myTiles.lift(i))
 
     override def prev(tile: TileDefinition): Option[TileDefinition] =
-      tile.number flatMap (i => myTiles lift i - 2)
+      tile.number flatMap (i => myTiles.lift(i - 2))
 
     override def tiles: Set[TileDefinition] = myTiles.toSet
 
@@ -64,10 +64,10 @@ object BoardDefinition {
   private class BoardDefinitionImpl(val name: String, val tiles: Set[TileDefinition], val disposition: Disposition, val first: TileDefinition) extends BoardDefinition {
 
     override def next(tile: TileDefinition): Option[TileDefinition] =
-      tile.number flatMap (i => tiles.toSeq.sorted lift i)
+      tile.number flatMap (i => tiles.toSeq.sorted.lift(i))
 
     override def prev(tile: TileDefinition): Option[TileDefinition] =
-      tile.number flatMap (i => tiles.toSeq.sorted lift i - 2)
+      tile.number flatMap (i => tiles.toSeq.sorted.lift(i - 2))
   }
 
   /**

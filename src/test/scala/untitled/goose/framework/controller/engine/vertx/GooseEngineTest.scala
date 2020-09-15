@@ -28,7 +28,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     .cleanupRules(Seq())
     .playerOrderingType(PlayerOrderingType.FirstTurnRandomThenFixed)
     .playersRange(1 to 10)
-    .build, ListMap(Player("") -> Piece(Colour.Blue)))
+    .build(), ListMap(Player("") -> Piece(Colour.Blue)))
 
   def cGenerator(handler: GameEvent => Unit): ViewController = new ViewController {
     override def update(state: GameState): Unit = {}

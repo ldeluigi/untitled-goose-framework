@@ -18,11 +18,12 @@ object ActionRule {
 
   private class ActionRuleImpl(availabilities: Set[ActionAvailability], when: GameState => Boolean) extends ActionRule {
 
-    override def allowedActions(state: GameState): Set[ActionAvailability] = if (when(state)) {
-      availabilities
-    } else {
-      Set()
-    }
+    override def allowedActions(state: GameState): Set[ActionAvailability] =
+      if (when(state)) {
+        availabilities
+      } else {
+        Set()
+      }
   }
 
   /** A factory that creates a new, empty action rule. */
@@ -36,5 +37,6 @@ object ActionRule {
    * @param when           if evaluation returns true, it will output the availabilities, or else an empty set.
    * @return a new action created with given parameters.
    */
-  def apply(availabilities: Set[ActionAvailability], when: GameState => Boolean): ActionRule = new ActionRuleImpl(availabilities, when)
+  def apply(availabilities: Set[ActionAvailability], when: GameState => Boolean): ActionRule =
+    new ActionRuleImpl(availabilities, when)
 }

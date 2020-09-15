@@ -19,7 +19,7 @@ class RollDice[DiceSide](actionName: String, dice: Dice[DiceSide], diceNumber: I
   override def name: String = actionName
 
   override def trigger(state: GameState): GameEvent = {
-    val result: Seq[DiceSide] = for (_ <- 0 until diceNumber) yield dice.roll
+    val result: Seq[DiceSide] = for (_ <- 0 until diceNumber) yield dice.roll()
     DiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, result: _*)
   }
 }

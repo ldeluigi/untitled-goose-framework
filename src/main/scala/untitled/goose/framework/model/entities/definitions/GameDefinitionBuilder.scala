@@ -28,7 +28,7 @@ trait GameDefinitionBuilder {
   def cleanupRules(orderedRules: Seq[CleanupRule]): GameDefinitionBuilder
 
   /** Completes the GameDefinition build process. */
-  def build: GameDefinition
+  def build(): GameDefinition
 }
 
 object GameDefinitionBuilder {
@@ -76,7 +76,7 @@ object GameDefinitionBuilder {
       this
     }
 
-    override def build: GameDefinition =
+    override def build(): GameDefinition =
       GameDefinitionImpl(_board.get,
         _orderingType.get,
         _playersRange.get,

@@ -47,7 +47,7 @@ class PriorityRuleSet(playerOrdering: PlayerOrdering,
     TurnEndConsumer.applyRule(state)
   }
 
-  override def admissiblePlayers: Range = playersRange
+  override def allowedPlayers: Range = playersRange
 }
 
 object PriorityRuleSet {

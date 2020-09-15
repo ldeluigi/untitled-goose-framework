@@ -19,13 +19,13 @@ trait Game extends Defined[GameDefinition] {
   /** The game current state. */
   def currentState: MutableGameState
 
-  /** Based on current state and rules, the sequence of operation to execute. */
-  def stateBasedOperations: Seq[Operation]
+  /** Based on current state and rules, the sequence of operation to execute. Can alter state. */
+  def stateBasedOperations(): Seq[Operation]
 
   /** Based on current state and rules, the operation that cleans the buffers
    * at the end of a cycle. Can also alter state.
    */
-  def cleanup: Operation
+  def cleanup(): Operation
 }
 
 object Game {
@@ -62,9 +62,9 @@ object Game {
         rules.actions(currentState)
       else Set()
 
-    override def stateBasedOperations: Seq[Operation] = rules.stateBasedOperations(currentState)
+    override def stateBasedOperations(): Seq[Operation] = rules.stateBasedOperations(currentState)
 
-    override def cleanup: Operation = {
+    override def cleanup(): Operation = {
       Operation.updateState(state => {
         rules.cleanupOperations(state)
         currentState.consumableBuffer = currentState.consumableBuffer.filter(_.cycle > currentState.currentCycle)

@@ -320,7 +320,7 @@ object GooseGameNoDSL extends JFXApp {
     .cleanupRules(Seq())
     .playerOrderingType(PlayerOrderingType.FirstTurnRandomThenFixed)
     .playersRange(1 to 10)
-    .build,
+    .build(),
     players)
 
   //View launch
@@ -336,7 +336,7 @@ object GooseGameNoDSL extends JFXApp {
   }
   val gameScene: GameScene = GameScene(stage, controller, currentMatch.currentState, graphicMap)
   controller.setScene(gameScene)
-  stage scene = gameScene
+  stage.scene = gameScene
 
   stage.getScene.setOnKeyPressed(
     key => if (key.getCode.equals(KeyCode.F11)) {

@@ -11,7 +11,7 @@ object MatchMock {
 
   def board: BoardDefinition = BoardDefinition("mock", 10, Disposition.snake(10))
 
-  def board2: BoardDefinition = BoardDefinition("mock2", Set(TileDefinition(11), TileDefinition("Prison")), Disposition.snake(10, 1), TileDefinition(11))
+  def board2: BoardDefinition = BoardDefinition("mock2", Set(TileDefinition(11), TileDefinition("Prison")), Disposition.snake(10), TileDefinition(11))
 
   def p1: Player = Player("P1")
   def p2: Player = Player("P2")
@@ -25,7 +25,7 @@ object MatchMock {
     .cleanupRules(Seq())
     .playerOrderingType(PlayerOrderingType.Fixed)
     .playersRange(1 to 10)
-    .build, players)
+    .build(), players)
 
   def alternative: Game = Game(GameDefinitionBuilder()
     .board(board2)
@@ -34,5 +34,5 @@ object MatchMock {
     .cleanupRules(Seq())
     .playerOrderingType(PlayerOrderingType.Fixed)
     .playersRange(1 to 2)
-    .build, players)
+    .build(), players)
 }
