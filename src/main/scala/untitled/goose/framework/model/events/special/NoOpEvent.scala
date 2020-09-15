@@ -8,7 +8,7 @@ case object NoOpEvent extends GameEvent {
 
   override def turn: Int = -1
 
-  override def groups: Set[String] = Set()
+  override def groups: Seq[String] = Seq()
 
   override def cycle: Int = -1
 }

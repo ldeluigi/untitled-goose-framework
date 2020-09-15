@@ -8,5 +8,5 @@ trait Groupable {
   def belongsTo(group: String): Boolean = groups.contains(group)
 
   /** Returns the set of groups this entity belongs to. */
-  def groups: Set[String]
+  def groups: Seq[String]
 }

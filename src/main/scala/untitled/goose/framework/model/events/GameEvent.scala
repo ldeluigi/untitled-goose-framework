@@ -5,7 +5,7 @@ import untitled.goose.framework.model.Groupable
 /** An event that occurred during gameplay. */
 trait GameEvent extends Serializable with Groupable {
 
-  override def groups: Set[String] = Set()
+  override def groups: Seq[String] = Seq()
 
   /** The name of the event. */
   def name: String = this.getClass.getSimpleName

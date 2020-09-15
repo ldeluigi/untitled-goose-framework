@@ -38,20 +38,20 @@ object TileDefinition {
       case (Some(xNum), Some(yNum)) => xNum compare yNum
     }
 
-  private class TileDefinitionImpl(val number: Option[Int], val name: Option[String], val groups: Set[String]) extends TileDefinition
+  private class TileDefinitionImpl(val number: Option[Int], val name: Option[String], val groups: Seq[String]) extends TileDefinition
 
   /** A factory that creates a tile definition based on a number. */
-  def apply(number: Int): TileDefinition = new TileDefinitionImpl(Some(number), None, Set())
+  def apply(number: Int): TileDefinition = new TileDefinitionImpl(Some(number), None, Seq())
 
   /** A factory that creates a tile definition based on a string. */
-  def apply(name: String): TileDefinition = new TileDefinitionImpl(None, Some(name), Set())
+  def apply(name: String): TileDefinition = new TileDefinitionImpl(None, Some(name), Seq())
 
   /** A factory that creates a tile definition based on a number and a group specifying a certain property. */
-  def apply(number: Int, groups: Set[String]): TileDefinition = new TileDefinitionImpl(Some(number), None, groups)
+  def apply(number: Int, groups: Seq[String]): TileDefinition = new TileDefinitionImpl(Some(number), None, groups)
 
   /** A factory that creates a tile definition based on a name and a group specifying a certain property. */
-  def apply(name: String, groups: Set[String]): TileDefinition = new TileDefinitionImpl(None, Some(name), groups)
+  def apply(name: String, groups: Seq[String]): TileDefinition = new TileDefinitionImpl(None, Some(name), groups)
 
   /** A factory that creates a tile definition based on a number, a name and a group specifying a certain property. */
-  def apply(number: Int, name: String, groups: Set[String] = Set()): TileDefinition = new TileDefinitionImpl(Some(number), Some(name), groups)
+  def apply(number: Int, name: String, groups: Seq[String] = Seq()): TileDefinition = new TileDefinitionImpl(Some(number), Some(name), groups)
 }

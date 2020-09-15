@@ -63,7 +63,7 @@ object BoardBuilder {
     private var from: Option[Int] = None
     private var totalTiles: Option[Int] = None
     private var nameMap: Map[Int, String] = Map()
-    private var groupMap: Map[Int, Set[String]] = Map()
+    private var groupMap: Map[Int, Seq[String]] = Map()
     private var disposition: Option[Int => Disposition] = None
     private var first: Option[TileIdentifier] = None
 
@@ -99,9 +99,9 @@ object BoardBuilder {
     private def assignGroup(group: String, number: Seq[Int]): Unit =
       for (n <- number) {
         if (groupMap.contains(n)) {
-          groupMap = groupMap + (n -> groupMap(n).+(group))
+          groupMap = groupMap + (n -> (group +: groupMap(n)))
         } else {
-          groupMap = groupMap + (n -> Set(group))
+          groupMap = groupMap + (n -> Seq(group))
         }
       }
 
