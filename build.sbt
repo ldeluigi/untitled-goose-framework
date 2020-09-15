@@ -2,7 +2,7 @@ name := "untitled-goose-framework"
 
 organization := "untitled.goose.framework"
 
-version := "0.3.0"
+version := "0.3.1"
 
 scalaVersion := "2.12.10"
 
@@ -12,7 +12,7 @@ ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-
 
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "package")))
 
-ThisBuild /githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(
+ThisBuild / githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(
   List("mv ./target/scala-2.12/*.jar .",
     "find . -type f -name \"*.jar\"")
 ))
@@ -23,7 +23,12 @@ ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
     "repo_token" -> "${{ secrets.GITHUB_TOKEN }}",
     "automatic_release_tag" -> version.value,
     "prerelease" -> version.value.startsWith("0.").toString,
-    "title" -> "Development Build",
+    "title" -> {
+      if (version.value.startsWith("0."))
+        "Development Build - Version " + version.value
+      else
+        "Release - Version " + version.value
+    },
     "files" -> "*.jar"
   )
 ))
@@ -51,8 +56,8 @@ scalacOptions ++= {
 
 // Determine OS version of JavaFX binaries
 lazy val osName = System.getProperty("os.name") match {
-  case n if n.startsWith("Linux")   => "linux"
-  case n if n.startsWith("Mac")     => "mac"
+  case n if n.startsWith("Linux") => "linux"
+  case n if n.startsWith("Mac") => "mac"
   case n if n.startsWith("Windows") => "win"
   case _ => throw new Exception("Unknown platform!")
 }
