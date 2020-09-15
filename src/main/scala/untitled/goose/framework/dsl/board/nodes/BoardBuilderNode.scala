@@ -24,26 +24,20 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
 
   override def containsNumber(num: Int): Boolean = tileRange.contains(num)
 
-  private var errorMessages: Seq[String] = Seq()
-
-
   override def check: Seq[String] = {
-    //TODO add double name for different tiles check? redefinition of tiles names?
-    errorMessages ++= (if (isCompletable) Seq() else Seq("BoardDefinition definition not complete: "))
-
-    if (!nameDefined) {
-      errorMessages :+= "\tName not defined"
-    }
-    if (!dispositionDefined) {
-      errorMessages :+= "\tDisposition not defined"
-    }
-    if (!numberDefined) {
-      errorMessages :+= "\tNumber of tiles not defined"
-    }
-    if (!firstDefined) {
-      errorMessages :+= "\tFirst tile not defined"
-    }
-    errorMessages ++ definedNumbers.filter(!tileRange.contains(_)).map("Tile " + _ + " define properties but is not valid in this definition")
+    if (isCompletable) {
+      Seq()
+    } else {
+      Seq(
+        true -> "BoardDefinition definition not complete: ",
+        !nameDefined -> "\tName not defined",
+        !dispositionDefined -> "\tDisposition not defined",
+        !numberDefined -> "\tNumber of tiles not defined",
+        !firstDefined -> "\tFirst tile not defined"
+      ).flatMap(t => if (t._1) Seq(t._2) else Seq())
+    } ++
+      definedNumbers.filter(!tileRange.contains(_))
+        .map("Tile " + _ + " define properties but is not valid in this definition")
   }
 
   override def withName(name: String): BoardBuilder = {
