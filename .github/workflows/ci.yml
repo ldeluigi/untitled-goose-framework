@@ -173,7 +173,7 @@ jobs:
           rm targets.tar
 
       - run: |
-          find . -f
+          find . -type f
           sbt package
 
       - name: Upload new GitHub Release
