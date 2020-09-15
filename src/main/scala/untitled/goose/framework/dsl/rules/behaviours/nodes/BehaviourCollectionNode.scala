@@ -27,11 +27,10 @@ object BehaviourCollectionNode {
       nodes.map(_.generateBehaviour) ++ systemBehaviours
 
     override def check: Seq[String] = {
-      val seq = Seq()
-      if (doubleSystemBehaviour) {
-        seq :+ "At least one system behaviour was included more than one time"
-      }
-      seq ++ nodes.flatMap(_.check)
+      (if (doubleSystemBehaviour) {
+        Seq("At least one system behaviour was included more than one time")
+      } else Seq()) ++
+        nodes.flatMap(_.check)
     }
 
 

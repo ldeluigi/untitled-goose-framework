@@ -54,7 +54,7 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
   }
 
   override def withDisposition(disposition: Int => Disposition): BoardBuilder = {
-    builder.withDisposition(disposition)
+    builder withDisposition disposition
     dispositionDefined = true
     this
   }
@@ -67,29 +67,29 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
   }
 
   override def withGroupedTiles(group: String, number: Int*): BoardBuilder = {
-    builder.withGroupedTiles(group, number: _*)
+    builder withGroupedTiles(group, number: _*)
     definedNumbers ++= number
     definedGroups += group
     this
   }
 
   override def withFirstTile(tile: TileIdentifier): BoardBuilder = {
-    builder.withFirstTile(tile)
+    builder withFirstTile tile
     firstDefined = true
     this
   }
 
   override def withGroupedTiles(group: String, newGroup: String): BoardBuilder = {
-    builder.withGroupedTiles(group, newGroup)
+    builder withGroupedTiles(group, newGroup)
     definedGroups += newGroup
     this
   }
 
   override def complete(): BoardDefinition = {
-    builder.complete()
+    builder complete()
   }
 
   override def isCompletable: Boolean =
-    builder.isCompletable
+    builder isCompletable
 
 }

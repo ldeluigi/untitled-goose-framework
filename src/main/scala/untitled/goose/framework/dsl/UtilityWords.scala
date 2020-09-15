@@ -9,7 +9,8 @@ trait UtilityWords {
   val value: ValueWord = ValueWord()
   val to: ToWord = ToWord()
   val each: EachWord = EachWord()
-
+  val system: SystemWord = SystemWord()
+  val priority: PriorityWord = PriorityWord()
 }
 
 object UtilityWords {
@@ -23,5 +24,9 @@ object UtilityWords {
   case class ValueWord()
 
   case class ToWord()
+
+  case class SystemWord()
+
+  case class PriorityWord()
 
 }

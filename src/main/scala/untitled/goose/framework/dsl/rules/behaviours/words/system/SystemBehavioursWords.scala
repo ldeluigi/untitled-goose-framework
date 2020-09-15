@@ -6,8 +6,6 @@ trait SystemBehavioursWords {
 
   def Include: IncludeWord = new IncludeWord
 
-  val system: SystemWord = SystemWord()
-
   val MovementWithDice: BehaviourRule = MovementWithDiceBehaviour()
   val MultipleStep: BehaviourRule = MultipleStepBehaviour()
   val Teleport: BehaviourRule = TeleportBehaviour()

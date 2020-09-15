@@ -1,6 +1,7 @@
-package untitled.goose.framework.dsl.nodes
+package untitled.goose.framework.dsl.rules
 
 import untitled.goose.framework.dsl.board.nodes.TileIdentifiersCollection
+import untitled.goose.framework.dsl.nodes.{RuleBookNode, SingleValueNode}
 import untitled.goose.framework.dsl.rules.actions.nodes.ActionRuleSetNode
 import untitled.goose.framework.dsl.rules.behaviours.nodes.BehaviourCollectionNode
 import untitled.goose.framework.model.rules.actionrules.ActionRule

@@ -3,6 +3,7 @@ package untitled.goose.framework.dsl.nodes
 import untitled.goose.framework.dsl.board.nodes.{BoardBuilderNode, GraphicMapNode}
 import untitled.goose.framework.dsl.dice.nodes.{DiceCollection, DiceManagerNode}
 import untitled.goose.framework.dsl.events.nodes.GooseEventCollectionsNode
+import untitled.goose.framework.dsl.rules.RuleSetNode
 
 trait RuleBook extends RuleBookNode {
   def boardBuilder: BoardBuilderNode

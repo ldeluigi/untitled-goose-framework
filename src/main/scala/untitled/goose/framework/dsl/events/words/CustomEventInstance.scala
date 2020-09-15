@@ -31,7 +31,7 @@ object CustomEventInstance {
 
     override def generateEvent(input: PropertyInput): GameEvent = {
       val e: CustomGameEvent = initEvent(input)
-      properties foreach { prop =>
+      properties.foreach { prop =>
         e.setProperty(prop._1.keyName, prop._2(input))
       }
       e

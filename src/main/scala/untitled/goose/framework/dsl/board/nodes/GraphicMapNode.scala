@@ -20,23 +20,22 @@ class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNod
   }
 
   override def check: Seq[String] = {
-    var seq = graphicMap.keys
+    graphicMap.keys
       .filter(_.number.isDefined)
       .map(_.number.get)
       .filter(!identifiers.containsNumber(_))
       .map("Tile " + _ + " define style but is not valid in this definition")
-      .toSeq
-    seq ++= graphicMap.keys
+      .toSeq ++
+     graphicMap.keys
       .filter(_.name.isDefined)
       .map(_.name.get)
       .filter(!identifiers.containsName(_))
       .map(_ + " name define style but is not assigned to any tile")
-      .toSeq
-    seq ++= graphicMap.keys
+      .toSeq ++
+     graphicMap.keys
       .filter(_.group.isDefined)
       .map(_.group.get)
       .filter(!identifiers.containsGroup(_))
       .map(_ + " group define style but is not assigned to any tile").toSeq
-    seq
   }
 }

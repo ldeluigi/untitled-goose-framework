@@ -1,8 +1,7 @@
 package untitled.goose.framework.dsl.rules.players
 
-import untitled.goose.framework.dsl.UtilityWords.OnWord
+import untitled.goose.framework.dsl.UtilityWords.{OnWord, PriorityWord}
 import untitled.goose.framework.dsl.nodes.RuleBook
-import untitled.goose.framework.dsl.rules.PriorityWord
 
 case class PlayersWord() {
   def start(on: OnWord): StartWord = new StartWord

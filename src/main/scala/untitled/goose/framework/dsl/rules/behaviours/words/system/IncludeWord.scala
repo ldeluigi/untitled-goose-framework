@@ -1,5 +1,6 @@
 package untitled.goose.framework.dsl.rules.behaviours.words.system
 
+import untitled.goose.framework.dsl.UtilityWords.SystemWord
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 

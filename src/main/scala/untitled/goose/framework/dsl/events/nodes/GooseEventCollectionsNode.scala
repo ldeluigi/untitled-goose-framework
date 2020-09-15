@@ -5,7 +5,10 @@ case class GooseEventCollectionsNode() extends GooseEventCollections {
   private val playerEvent: EventDefinitionsNode = EventDefinitionsNode("Player Events")
   private val tileEvent: EventDefinitionsNode = EventDefinitionsNode("Tile Events")
 
-  override def check: Seq[String] = gameEvent.check ++ playerEvent.check ++ tileEvent.check
+  override def check: Seq[String] =
+    gameEvent.check ++
+      playerEvent.check ++
+      tileEvent.check
 
   override def gameEventCollection: EventDefinitionCollection = gameEvent
 

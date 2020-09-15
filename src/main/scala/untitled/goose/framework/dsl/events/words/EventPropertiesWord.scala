@@ -5,7 +5,7 @@ import untitled.goose.framework.model.events.Key
 
 case class EventPropertiesWord(event: EventNode) {
   def having(properties: Key[_]*): Unit = properties foreach {
-    event defineProperty _
+    event.defineProperty(_)
   }
 }
 

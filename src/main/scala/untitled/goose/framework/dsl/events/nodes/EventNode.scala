@@ -21,8 +21,10 @@ object EventNode {
     private var props: List[Key[_]] = List()
 
     override def check: Seq[String] = {
-      props.groupBy(identity).collect { case (x, List(_, _, _*)) => x }
-        .map("Multiple definitions of event property: \"" + _ + "\"").toSeq
+      props.groupBy(identity)
+        .collect({ case (x, List(_, _, _*)) => x })
+        .map("Multiple definitions of event property: \"" + _ + "\"")
+        .toSeq
     }
 
     override def defineProperty[T](key: Key[T]): Unit = {
