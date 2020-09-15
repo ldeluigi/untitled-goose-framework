@@ -10,8 +10,14 @@ class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNod
 
   def map: Map[TileIdentifier, GraphicDescriptor] = graphicMap
 
-  def addGraphicDescription(tileIdentifier: TileIdentifier, graphicDescriptor: GraphicDescriptor): Unit =
-    graphicMap = graphicMap + (tileIdentifier -> graphicDescriptor)
+  def addGraphicDescription(tileIdentifier: TileIdentifier, graphicDescriptor: GraphicDescriptor): Unit = {
+    if (graphicMap.contains(tileIdentifier)) {
+      graphicMap += (tileIdentifier -> GraphicDescriptor.merge(graphicDescriptor, graphicMap(tileIdentifier)))
+    } else {
+      graphicMap += (tileIdentifier -> graphicDescriptor)
+    }
+
+  }
 
   override def check: Seq[String] = {
     var seq = graphicMap.keys
