@@ -10,6 +10,7 @@ import untitled.goose.framework.model.events.{CustomGameEvent, CustomPlayerEvent
 trait ActionCustomEventInstance extends CustomEventInstance[GameState]
 
 object ActionCustomEventInstance {
+
   private abstract class AbstractActionCustomEventInstance(name: String,
                                                            definedEvents: EventDefinitionCollection)
     extends AbstractCustomEventInstance[GameState](name, definedEvents) with ActionCustomEventInstance

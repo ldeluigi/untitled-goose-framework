@@ -1,8 +1,8 @@
 package untitled.goose.framework.model
 
-import untitled.goose.framework.model.entities.runtime.Player
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.model.entities.runtime.Player
 
 class PlayerTest extends AnyFlatSpec with Matchers {
 

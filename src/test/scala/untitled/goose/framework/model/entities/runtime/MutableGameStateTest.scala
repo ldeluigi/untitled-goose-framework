@@ -1,9 +1,9 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.Colour
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock
+import untitled.goose.framework.model.Colour
 
 class MutableGameStateTest extends AnyFlatSpec with Matchers {
 

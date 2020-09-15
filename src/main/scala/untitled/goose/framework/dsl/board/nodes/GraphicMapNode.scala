@@ -26,16 +26,16 @@ class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNod
       .filter(!identifiers.containsNumber(_))
       .map("Tile " + _ + " define style but is not valid in this definition")
       .toSeq ++
-     graphicMap.keys
-      .filter(_.name.isDefined)
-      .map(_.name.get)
-      .filter(!identifiers.containsName(_))
-      .map(_ + " name define style but is not assigned to any tile")
-      .toSeq ++
-     graphicMap.keys
-      .filter(_.group.isDefined)
-      .map(_.group.get)
-      .filter(!identifiers.containsGroup(_))
-      .map(_ + " group define style but is not assigned to any tile").toSeq
+      graphicMap.keys
+        .filter(_.name.isDefined)
+        .map(_.name.get)
+        .filter(!identifiers.containsName(_))
+        .map(_ + " name define style but is not assigned to any tile")
+        .toSeq ++
+      graphicMap.keys
+        .filter(_.group.isDefined)
+        .map(_.group.get)
+        .filter(!identifiers.containsGroup(_))
+        .map(_ + " group define style but is not assigned to any tile").toSeq
   }
 }

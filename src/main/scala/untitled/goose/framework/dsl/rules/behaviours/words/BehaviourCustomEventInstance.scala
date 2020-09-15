@@ -17,7 +17,7 @@ trait BehaviourCustomEventInstance[E <: ConsumableGameEvent] extends CustomEvent
 object BehaviourCustomEventInstance {
 
   private abstract class AbstractBehaviourCustomEventInstance[E <: ConsumableGameEvent](name: String,
-                                                                                definedEvents: EventDefinitionCollection)
+                                                                                        definedEvents: EventDefinitionCollection)
     extends AbstractCustomEventInstance[(GameState, E)](name, definedEvents) with BehaviourCustomEventInstance[E] {
 
     override def +[T: ClassTag](name: String, value: (GameState, E) => T): BehaviourCustomEventInstance[E] = {

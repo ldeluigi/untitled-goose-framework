@@ -1,9 +1,9 @@
 package untitled.goose.framework.model.rules.cleanup
 
-import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.entities.runtime.{Game, MutableGameState}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock
+import untitled.goose.framework.model.entities.runtime.{Game, MutableGameState}
 
 class TurnEndConsumerTest extends AnyFlatSpec with Matchers {
 

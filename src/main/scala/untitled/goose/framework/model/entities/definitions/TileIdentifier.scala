@@ -24,8 +24,8 @@ trait TileIdentifier {
 
   override def hashCode(): Int =
     13 * name.map(_.hashCode).getOrElse(1) +
-    17 * number.map(_.hashCode).getOrElse(1) +
-    19 * group.map(_.hashCode).getOrElse(1)
+      17 * number.map(_.hashCode).getOrElse(1) +
+      19 * group.map(_.hashCode).getOrElse(1)
 
 }
 

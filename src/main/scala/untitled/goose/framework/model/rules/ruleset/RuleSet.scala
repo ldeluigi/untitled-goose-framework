@@ -10,6 +10,7 @@ trait RuleSet {
   /**
    * Computes a sequence of operations based on the state.
    * This method can alter the state buffers or histories.
+   *
    * @param state the mutable game state.
    * @return a sequence of operations
    */
@@ -17,12 +18,14 @@ trait RuleSet {
 
   /**
    * Applies cleanup operations on the state.
+   *
    * @param state the mutable game state.
    */
   def cleanupOperations(state: MutableGameState): Unit
 
   /**
    * Select the first player from a user-defined list.
+   *
    * @param players the players in the order they were defined by the user.
    * @return who should go first.
    */
@@ -30,6 +33,7 @@ trait RuleSet {
 
   /**
    * Select the next player based on the entire state.
+   *
    * @param state the current state.
    * @return the player that should go next.
    */
@@ -37,6 +41,7 @@ trait RuleSet {
 
   /**
    * Returns the set of actions current player can do in this state.
+   *
    * @param state the current game state.
    * @return the set of action available to current player.
    */
@@ -44,6 +49,7 @@ trait RuleSet {
 
   /**
    * Returns the minimum and maximum number of players.
+   *
    * @return a range of players.
    */
   def allowedPlayers: Range

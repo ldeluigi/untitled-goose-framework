@@ -19,7 +19,7 @@ trait CustomEventInstance[PropertyInput] extends RuleBookNode {
 object CustomEventInstance {
 
   private[dsl] abstract class AbstractCustomEventInstance[PropertyInput](override val name: String,
-                                                     definedEvents: EventDefinitionCollection)
+                                                                         definedEvents: EventDefinitionCollection)
     extends CustomEventInstance[PropertyInput] {
 
     var properties: Map[Key[_], PropertyInput => Any] = Map()
@@ -50,4 +50,5 @@ object CustomEventInstance {
     }
     else Seq("\"" + name + "\" is not defined in " + definedEvents.name)
   }
+
 }

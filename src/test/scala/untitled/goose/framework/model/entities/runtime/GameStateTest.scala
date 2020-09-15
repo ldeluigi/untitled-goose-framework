@@ -1,10 +1,10 @@
 package untitled.goose.framework.model.entities.runtime
 
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock
 import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
 
 class GameStateTest extends AnyFlatSpec with Matchers {
 

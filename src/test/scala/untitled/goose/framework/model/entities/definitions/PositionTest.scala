@@ -1,8 +1,8 @@
 package untitled.goose.framework.model.entities.definitions
 
-import untitled.goose.framework.model.entities.runtime.{Position, Tile}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.model.entities.runtime.{Position, Tile}
 
 class PositionTest extends AnyFlatSpec with Matchers {
 

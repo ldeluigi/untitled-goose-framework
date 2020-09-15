@@ -130,7 +130,7 @@ object BoardBuilder {
 
     override def isCompletable: Boolean =
       !consumed && from.isDefined && totalTiles.isDefined &&
-      name.isDefined && disposition.isDefined && first.isDefined
+        name.isDefined && disposition.isDefined && first.isDefined
 
   }
 

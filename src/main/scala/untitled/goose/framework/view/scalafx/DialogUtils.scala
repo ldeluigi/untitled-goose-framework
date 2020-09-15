@@ -9,7 +9,7 @@ import untitled.goose.framework.model.events.special.NoOpEvent
 
 import scala.concurrent.Promise
 
-/** Custom dialog properties modeling.  */
+/** Custom dialog properties modeling. */
 object DialogUtils {
 
   /**

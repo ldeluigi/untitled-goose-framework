@@ -1,9 +1,9 @@
 package untitled.goose.framework.model.entities.definitions
 
-import untitled.goose.framework.model.Colour
-import untitled.goose.framework.model.entities.runtime.{Piece, Position, Tile}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.model.Colour
+import untitled.goose.framework.model.entities.runtime.{Piece, Position, Tile}
 
 class PieceTest extends AnyFlatSpec with Matchers {
 

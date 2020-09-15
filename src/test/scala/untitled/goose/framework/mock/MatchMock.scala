@@ -14,6 +14,7 @@ object MatchMock {
   def board2: BoardDefinition = BoardDefinition("mock2", Set(TileDefinition(11), TileDefinition("Prison")), Disposition.snake(10), TileDefinition(11))
 
   def p1: Player = Player("P1")
+
   def p2: Player = Player("P2")
 
   def players: ListMap[Player, Piece] = ListMap(p1 -> Piece(Colour.Red), p2 -> Piece(Colour.Blue))

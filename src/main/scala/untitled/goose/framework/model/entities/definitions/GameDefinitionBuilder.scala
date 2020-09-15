@@ -1,10 +1,10 @@
 package untitled.goose.framework.model.entities.definitions
 
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
 import untitled.goose.framework.model.entities.definitions.GameDefinition.GameDefinitionImpl
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
 
 /** Builder pattern implemented for a [[GameDefinition]]. */
 trait GameDefinitionBuilder {

@@ -1,10 +1,10 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.Colour
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}
+import untitled.goose.framework.mock.MatchMock
+import untitled.goose.framework.model.Colour
 
 class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEach with Matchers {
 
