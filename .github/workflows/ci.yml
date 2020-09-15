@@ -177,7 +177,7 @@ jobs:
         uses: marvinpinto/action-automatic-releases@latest
         with:
           prerelease: true
-          files: '*.jar'
+          files: /target/scala-2.12/*.jar
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           title: Development Build
           automatic_release_tag: 0.2

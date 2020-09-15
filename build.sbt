@@ -18,7 +18,7 @@ ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
     "automatic_release_tag" -> version.value,
     "prerelease" -> version.value.startsWith("0.").toString,
     "title" -> "Development Build",
-    "files" -> "*.jar"
+    "files" -> "/target/scala-2.12/*.jar"
   )
 ))
 resolvers += "Local Ivy Repository" at "file:///" + Path.userHome.absolutePath + "/.ivy2/local"
