@@ -25,6 +25,7 @@ object GooseGame extends GooseDSL {
   the tile 58 has name("The death")
 
   the tile "The well" has background("pozzo.png")
+  the tile "The Inn" has background("pozzo.png")
 
   The tiles(6, 19, 31, 42, 52, 58) have group("Special")
   All tiles "Special" have color(LightBlue)

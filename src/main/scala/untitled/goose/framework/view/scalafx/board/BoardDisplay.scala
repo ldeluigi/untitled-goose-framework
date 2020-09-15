@@ -55,7 +55,7 @@ object BoardDisplay {
         graphicMap.get(TileIdentifier(tile.definition.number.get))
           .foreach(g => graphicSeq = graphicSeq :+ g)
       }
-      for (group <- tile.definition.groups) {
+      tile.definition.groups.foreach { group =>
         graphicMap.get(TileIdentifier(TileGroup(group)))
           .foreach(g => graphicSeq = graphicSeq :+ g)
       }

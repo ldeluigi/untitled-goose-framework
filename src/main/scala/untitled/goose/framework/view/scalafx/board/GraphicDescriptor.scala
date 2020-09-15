@@ -11,6 +11,7 @@ trait GraphicDescriptor {
 
   def path: Option[String]
 
+  override def toString: String = "Color: " + this.color.toString + " Path: " + this.path.toString
 }
 
 object GraphicDescriptor {

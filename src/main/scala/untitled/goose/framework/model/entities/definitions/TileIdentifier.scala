@@ -12,6 +12,20 @@ trait TileIdentifier {
   /** If present, this identifies tiles with that group. */
   def group: Option[String]
 
+  override def toString: String =
+    if (number.isDefined)
+      number.get.toString
+    else if (name.isDefined)
+      name.get
+    else if (group.isDefined)
+      "Group(" + group.get + ")"
+    else
+      "Empty"
+
+  override def hashCode(): Int = 13 * name.map(_.hashCode).getOrElse(1) +
+    17 * number.map(_.hashCode).getOrElse(1) +
+    19 * group.map(_.hashCode).getOrElse(1)
+
 }
 
 object TileIdentifier {
@@ -69,4 +83,5 @@ object TileIdentifier {
     def check(tile: TileDefinition): Boolean =
       tile.number == id.number || tile.name == id.name || id.group.exists(tile.groups.contains(_))
   }
+
 }
