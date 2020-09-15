@@ -172,13 +172,15 @@ jobs:
           tar xf targets.tar
           rm targets.tar
 
-      - run: find target/scala-2.12
+      - run: |
+          find . -f
+          sbt package
 
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           prerelease: true
-          files: target/scala-2.12/*.jar
+          files: '*.jar'
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           title: Development Build
           automatic_release_tag: 0.2
