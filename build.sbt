@@ -8,7 +8,7 @@ scalaVersion := "2.12.10"
 
 ThisBuild / sbtVersion := "1.3.13"
 ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
-ThisBuild /githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(List("ls")))
+ThisBuild /githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(List("ls target/")))
 ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
   "marvinpinto", "action-automatic-releases", "latest",
   name = Some("Upload new GitHub Release"),
@@ -17,7 +17,7 @@ ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
     "automatic_release_tag" -> version.value,
     "prerelease" -> version.value.startsWith("0.").toString,
     "title" -> "Development Build",
-    "files" -> "*"
+    "files" -> "target/*.jar"
   )
 ))
 
@@ -52,3 +52,5 @@ lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "s
 libraryDependencies ++= javaFXModules.map(m =>
   "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName
 )
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
