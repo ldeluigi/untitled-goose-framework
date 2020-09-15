@@ -57,7 +57,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     var now: Int = Thread.currentThread().getThreadGroup.activeCount()
     // Non deterministic: now - prev should be >= 2
     ge.stop()
-    Eventually.eventually(Waiters.timeout(5 seconds)) {
+    Eventually.eventually(Waiters.timeout(10 seconds)) {
       now = Thread.currentThread().getThreadGroup.activeCount()
       val b: Array[Thread] = Array.ofDim(now)
       Thread.currentThread().getThreadGroup.enumerate(b)
