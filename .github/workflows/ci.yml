@@ -172,13 +172,13 @@ jobs:
           tar xf targets.tar
           rm targets.tar
 
-      - run: ls target/
+      - run: ls target/${{ matrix.scala }}
 
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           prerelease: true
-          files: target/*.jar
+          files: target/${{ matrix.scala }}/*.jar
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           title: Development Build
           automatic_release_tag: 0.2
