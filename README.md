@@ -8,8 +8,8 @@ Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to 
 - Possibility to extend the DSL with custom shortcuts.
 
 ## Installation
-- Download the jar of the last version available in the [Release](https://github.com/ldeluigi/untitled-goose-framework/releases) section.
-- Add the jar as a dependency for your project
+1. Download the jar of the last version available in the [Release](https://github.com/ldeluigi/untitled-goose-framework/releases) section.
+1. Add the jar as a dependency for your project
   - For __sbt__ projects you can simply put the jar inside a _lib_ folder in the project root.
 
 ## Usage
