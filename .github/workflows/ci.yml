@@ -182,4 +182,4 @@ jobs:
           files: '*.jar'
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           title: Development Build
-          automatic_release_tag: 0.2
+          automatic_release_tag: 0.3.0
