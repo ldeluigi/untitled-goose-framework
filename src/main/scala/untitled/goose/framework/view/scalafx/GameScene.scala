@@ -17,14 +17,35 @@ import untitled.goose.framework.view.scalafx.logger.EventLogger
 
 import scala.concurrent.Promise
 
+/**
+ * A custom scene that holds the whole game board and a TabPane containing information about the current game state and a logger.
+ */
 trait GameScene extends Scene {
 
+  /** When possible, delegates the task of updating the scene with the new information regarding the board,
+   * re-renders now available actions and updates the logger.
+   *
+   * @param state            the new game's state.
+   * @param availableActions the new available action for the player in turn.
+   */
   def updateScene(state: GameState, availableActions: Set[Action]): Unit
 
+  /**
+   * Closes the stage.
+   */
   def close(): Unit
 
+  /** When possible, updates the logger with the newly happened event.
+   *
+   * @param event the event to append to the logger.
+   */
   def logEvent(event: GameEvent): Unit
 
+  /** When possible, creates a new dialog.
+   *
+   * @param dialogContent the content to add to the dialog.
+   * @param promise       the promise used to check the action the user has chosen, passed to the new dialog itself.
+   */
   def showDialog(dialogContent: DialogContent, promise: Promise[GameEvent]): Unit
 }
 

@@ -10,6 +10,8 @@ trait ActionVisualization extends Button {
 
   onMouseClicked = _ => onClick()
 
+  /** Utility method to link an external behaviour to the actual button click handler that solves the selected action.
+   */
   def onClick(): Unit
 }
 
@@ -19,8 +21,6 @@ object ActionVisualization {
 
     this.text = action.name
 
-    /** Utility method to link an external behaviour to the actual button click handler.
-     */
     override def onClick(): Unit = controller.resolveAction(action)
   }
 

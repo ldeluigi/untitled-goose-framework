@@ -9,6 +9,11 @@ import untitled.goose.framework.model.entities.definitions.{GameDefinition, Tile
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.playerselection.IntroMenu
 
+/** Main ScalaFX launching class.
+ *
+ * @param gameData   the game's data of the game.
+ * @param graphicMap the map containing graphic properties details.
+ */
 class View(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends JFXApp {
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
   val appTitle: String = gameData.board.name
@@ -18,7 +23,6 @@ class View(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDesc
     width = 0.5 * screenSize.width
     height = 0.5 * screenSize.height
     resizable = true
-    //fullScreen = true
     minWidth = 0.5 * screenSize.width
     minHeight = 0.5 * screenSize.height
     scene = new IntroMenu(this, gameData, appTitle, screenSize.width, screenSize.height, graphicMap)

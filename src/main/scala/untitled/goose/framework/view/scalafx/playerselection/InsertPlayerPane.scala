@@ -14,11 +14,27 @@ import untitled.goose.framework.model.Colour.Colour
 import untitled.goose.framework.model.entities.runtime.{Piece, Player}
 import untitled.goose.framework.view.scalafx.ColorUtils
 
+/**
+ * A custom pane to insert the player to play the game and customize their playing order in the game.
+ */
 trait InsertPlayerPane extends BorderPane {
+
+  /** Checks if the players can fit into the game's players min/max range.
+   *
+   * @return the boolean property regarding the fitting range.
+   */
   def checkPlayers: Boolean
 
+  /** Gets a sequence of the current players names.
+   *
+   * @return the sequence that holds all the current players names.
+   */
   def getPlayerSeq: Seq[Player]
 
+  /** Maps a player to its piece.
+   *
+   * @return the map containing the player and related piece.
+   */
   def getPlayersPiecesMap: Map[Player, Piece]
 }
 
