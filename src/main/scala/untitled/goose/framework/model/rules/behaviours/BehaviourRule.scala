@@ -43,6 +43,19 @@ object BehaviourRule {
   }
 
   // TODO scaladoc
+  /**
+   * This factory creates a BehaviourRule that return the operation that should be executed from a given state.
+   *
+   * @param filterStrategy
+   * @param countStrategy
+   * @param when       when in the GameState execute the operation.
+   * @param operations a sequence of operations to execute.
+   * @param consume
+   * @param save
+   * @param t
+   * @tparam T
+   * @return A new BehaviourRule.
+   */
   def apply[T <: ConsumableGameEvent](filterStrategy: T => Boolean = (_: T) => true, countStrategy: Int => Boolean = _ > 0, when: GameState => Boolean = _ => true, operations: (Seq[T], GameState) => Seq[Operation], consume: Boolean = true, save: Boolean = false)(implicit t: ClassTag[T]): BehaviourRule =
     new BehaviourRuleImpl(filterStrategy, countStrategy, operations, when, consume, save)
 
