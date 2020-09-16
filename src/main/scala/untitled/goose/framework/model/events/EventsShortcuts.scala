@@ -1,4 +1,4 @@
-package untitled.goose.framework.shortcuts
+package untitled.goose.framework.model.events
 
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
 import untitled.goose.framework.model.entities.runtime.GameState
@@ -7,7 +7,7 @@ import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, LoseTurnEvent}
 import untitled.goose.framework.model.events.special.{ExitEvent, NoOpEvent}
 
-trait EventsShortcut {
+trait EventsShortcuts {
 
   /*special*/
   def ExitGame: GameState => ExitEvent.type = _ => ExitEvent

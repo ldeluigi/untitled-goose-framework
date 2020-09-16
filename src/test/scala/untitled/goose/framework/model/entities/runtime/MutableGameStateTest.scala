@@ -11,7 +11,7 @@ class MutableGameStateTest extends AnyFlatSpec with Matchers {
   val gameMutableState: MutableGameState = gameMatch.currentState
 
   val p1: Player = Player("P1")
-  val piece: Piece = Piece(Colour.Blue)
+  val piece: Piece = Piece(Colour.Default.Blue)
 
   behavior of "MutableGameStateTest"
 

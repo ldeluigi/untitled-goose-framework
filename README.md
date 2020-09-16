@@ -36,3 +36,9 @@ Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to 
 
 ## Contribute
 You can contribute to the project with [Pull Requests](https://github.com/ldeluigi/untitled-goose-framework/pulls) or [Issues](https://github.com/ldeluigi/untitled-goose-framework/issues) about bugs or feature requirements.
+
+## Examples
+These are the official examples of projects that implemented games using this framework:
+- __[The Game of the Goose (Goose Game)](https://github.com/ldeluigi/goose-game)__
+- __[Snakes and Ladders](https://github.com/ldeluigi/snakes-and-ladders)__
+- __[Quiz Race](https://github.com/ldeluigi/quiz-race)__

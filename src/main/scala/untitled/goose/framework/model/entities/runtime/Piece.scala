@@ -1,6 +1,6 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.model.Colour.Colour
+import untitled.goose.framework.model.Colour
 
 
 /** A player's piece on the board. Can be removed from the board if position is None. */

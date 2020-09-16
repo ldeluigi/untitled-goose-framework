@@ -1,9 +1,9 @@
-package untitled.goose.framework.controller
+package untitled.goose.framework.view
 
 import untitled.goose.framework.model.actions.Action
 
-/** A turn based game manager, with few controls. */
-trait GameManager {
+/** A turn based user input manager, with few, simple controls. */
+trait InputManager {
 
   /**
    * Resolves an action for the current player in a turn-based game.

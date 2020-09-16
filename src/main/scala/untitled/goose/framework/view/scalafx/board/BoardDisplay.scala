@@ -1,5 +1,7 @@
 package untitled.goose.framework.view.scalafx.board
 
+import javafx.beans.property.SimpleIntegerProperty
+import scalafx.beans.binding.NumberBinding
 import scalafx.scene.Group
 import scalafx.scene.control.ScrollPane
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
@@ -17,6 +19,10 @@ trait BoardDisplay extends ScrollPane {
    * @param matchState the game state to update from which withdraw the needed information about tiles and players.
    */
   def updateMatchState(matchState: GameState)
+
+  def zoomIn(): Unit
+
+  def zoomOut(): Unit
 }
 
 object BoardDisplay {
@@ -31,6 +37,9 @@ object BoardDisplay {
     val rows: Int = matchBoard.definition.disposition.rows
     val cols: Int = matchBoard.definition.disposition.columns
 
+    val widthDivider = new SimpleIntegerProperty(cols)
+    val currentTileWidth: NumberBinding = width / widthDivider
+
     this.content = boardPane
     renderBoard()
 
@@ -41,7 +50,7 @@ object BoardDisplay {
      */
     private def renderBoard(): Unit = {
       for (tile <- matchBoard.tiles.toList.sorted)
-        renderTile(TileVisualization(tile, width / cols, height, rows, cols, getGraphicDescriptor(tile)))
+        renderTile(TileVisualization(tile, currentTileWidth, getGraphicDescriptor(tile)))
     }
 
     /** Renders a single tile, setting its coordinates and adding it to the board panel.
@@ -103,6 +112,18 @@ object BoardDisplay {
       val tileOffset = 1.5
       this.setHvalue((positionTile.getLayoutX * tileOffset) / this.getWidth)
       this.setVvalue((positionTile.getLayoutY * tileOffset) / this.getHeight)
+    }
+
+    override def zoomIn(): Unit = {
+      if (widthDivider.get() > 1) {
+        widthDivider.set(widthDivider.get() - 1)
+      }
+    }
+
+    override def zoomOut(): Unit = {
+      if (currentTileWidth().doubleValue() > 90) {
+        widthDivider.set(widthDivider.get() + 1)
+      }
     }
   }
 

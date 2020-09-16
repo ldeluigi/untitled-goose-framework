@@ -7,10 +7,10 @@ import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourWords
 import untitled.goose.framework.dsl.rules.cleanup.words.CleanupWords
 import untitled.goose.framework.dsl.rules.players.{PlayerOrderProperty, PlayersWord}
 import untitled.goose.framework.model.entities.runtime.GameState
+import untitled.goose.framework.model.events.EventsShortcuts
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
-import untitled.goose.framework.shortcuts.EventsShortcut
 
-trait RuleSetWords extends EventDefinitionWords with EventsShortcut with BehaviourWords with CleanupWords {
+trait RuleSetWords extends EventDefinitionWords with EventsShortcuts with BehaviourWords with CleanupWords {
 
   val Players: PlayersWord = PlayersWord()
 

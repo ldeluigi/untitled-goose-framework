@@ -1,7 +1,6 @@
 package untitled.goose.framework.view.scalafx.board
 
 import scalafx.beans.binding.NumberBinding
-import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label
 import scalafx.scene.image.{Image, ImageView}
@@ -72,12 +71,8 @@ object TileVisualization {
       wrapText = true
     }
 
-    /** Computes the label's font size to avoid going over tile's limits.
-     *
-     * @param width the width onto which computes the new font's dimension.
-     * @return a Double property specifying the font size.
-     */
-    def fontSize(width: Double): Double = (width * 0.15) * Math.exp(-tileText.length / 10.0) + 10
+
+    private def fontSize(width: Double): Double = (width * 0.15) * Math.exp(-tileText.length / 10.0) + 10
 
     rectangle.width.onChange((_, _, w) => {
       label.style = "-fx-font-size: " + fontSize(w.asInstanceOf[Double]).toInt + "pt"
@@ -143,6 +138,6 @@ object TileVisualization {
   }
 
   /** A factory used to render a new Tile, given the tile itself, its parent and panel dimension and the graphic properties that need to be set. */
-  def apply(tile: Tile, givenWidth: NumberBinding, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, graphicDescriptor: Option[GraphicDescriptor]): TileVisualization =
+  def apply(tile: Tile, givenWidth: NumberBinding, graphicDescriptor: Option[GraphicDescriptor]): TileVisualization =
     new TileVisualizationImpl(tile, givenWidth, graphicDescriptor: Option[GraphicDescriptor])
 }

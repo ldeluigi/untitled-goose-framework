@@ -10,7 +10,7 @@ import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.stage.Stage
 import untitled.goose.framework.model
-import untitled.goose.framework.model.Colour.Colour
+import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.runtime.{Piece, Player}
 import untitled.goose.framework.view.scalafx.ColorUtils
 
@@ -57,7 +57,7 @@ object InsertPlayerPane {
     val addPlayer: Button = new Button("Add")
     val playerName: Label = new Label("Insert player data:")
     val playerNameFromInput = new TextField
-    val colorsChoice = new ComboBox(model.Colour.values.toList)
+    val colorsChoice = new ComboBox(model.Colour.Default.colours)
     colorsChoice.getSelectionModel.selectFirst()
     val removePlayer: Button = new Button("Remove")
 

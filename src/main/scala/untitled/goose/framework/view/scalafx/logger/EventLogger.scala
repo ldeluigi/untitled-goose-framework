@@ -27,6 +27,7 @@ object EventLogger {
 
   private class EventLoggerImpl(gameState: GameState) extends EventLogger {
 
+    var eventNumber: Int = 0
     var previousState: GameState = gameState
     val logText: TextArea = new TextArea {
       wrapText = true
@@ -38,8 +39,9 @@ object EventLogger {
     logText.prefHeight <== this.height - 10
 
     def logEvent(event: GameEvent): Unit = {
-      logText.appendText("\nEVENT: " + event.toString)
+      logText.appendText("\nEVENT[" + eventNumber + "]: " + event.toString)
       logText.scrollTop = Double.MaxValue
+      eventNumber += 1
     }
 
     def logHistoryDiff(state: GameState): Unit = {

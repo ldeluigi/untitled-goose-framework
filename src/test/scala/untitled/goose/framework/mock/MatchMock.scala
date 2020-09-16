@@ -17,7 +17,7 @@ object MatchMock {
 
   def p2: Player = Player("P2")
 
-  def players: ListMap[Player, Piece] = ListMap(p1 -> Piece(Colour.Red), p2 -> Piece(Colour.Blue))
+  def players: ListMap[Player, Piece] = ListMap(p1 -> Piece(Colour.Default.Red), p2 -> Piece(Colour.Default.Blue))
 
   def default: Game = Game(GameDefinitionBuilder()
     .board(board)

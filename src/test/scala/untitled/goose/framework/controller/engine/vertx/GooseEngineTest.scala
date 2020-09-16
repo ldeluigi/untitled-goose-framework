@@ -1,9 +1,7 @@
 package untitled.goose.framework.controller.engine.vertx
 
-import org.scalatest.concurrent.{Eventually, Waiters}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import org.scalatest.time.SpanSugar.convertIntToGrainOfTime
 import untitled.goose.framework.controller.ViewController
 import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.DialogContent
@@ -15,7 +13,6 @@ import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
 
 import scala.collection.immutable.ListMap
 import scala.concurrent.Future
-import scala.math.abs
 
 class GooseEngineTest extends AnyFlatSpec with Matchers {
 
@@ -28,7 +25,7 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     .cleanupRules(Seq())
     .playerOrderingType(PlayerOrderingType.FirstTurnRandomThenFixed)
     .playersRange(1 to 10)
-    .build(), ListMap(Player("") -> Piece(Colour.Blue)))
+    .build(), ListMap(Player("") -> Piece(Colour.Default.Blue)))
 
   def cGenerator(handler: GameEvent => Unit): ViewController = new ViewController {
     override def update(state: GameState): Unit = {}
@@ -46,23 +43,6 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     override def groups: Seq[String] = Seq()
 
     override def cycle: Int = 1
-  }
-
-  it should "stop the engine in a reasonable amount of time " in {
-    val prev: Int =
-      Thread.currentThread().getThreadGroup.activeCount()
-    val a: Array[Thread] = Array.ofDim(prev)
-    Thread.currentThread().getThreadGroup.enumerate(a)
-    val ge = GooseEngine(m, cGenerator(_ => {}))
-    var now: Int = Thread.currentThread().getThreadGroup.activeCount()
-    // Non deterministic: now - prev should be >= 2
-    ge.stop()
-    Eventually.eventually(Waiters.timeout(10 seconds)) {
-      now = Thread.currentThread().getThreadGroup.activeCount()
-      val b: Array[Thread] = Array.ofDim(now)
-      Thread.currentThread().getThreadGroup.enumerate(b)
-      abs(prev - now) should be <= 1
-    }
   }
 
   it should "check whether the engine matches a certain custom runtime" in {

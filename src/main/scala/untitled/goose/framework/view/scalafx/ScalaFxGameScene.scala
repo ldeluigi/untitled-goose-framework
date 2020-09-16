@@ -4,58 +4,35 @@ import scalafx.application.Platform
 import scalafx.geometry.Orientation
 import scalafx.scene.Scene
 import scalafx.scene.control.{SplitPane, Tab, TabPane}
+import scalafx.scene.input.KeyCode
 import scalafx.stage.Stage
-import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
+import untitled.goose.framework.view.InputManager
 import untitled.goose.framework.view.scalafx.actionmenu.ActionMenu
 import untitled.goose.framework.view.scalafx.board.{BoardDisplay, GraphicDescriptor}
 import untitled.goose.framework.view.scalafx.logger.EventLogger
+import untitled.goose.framework.view.scene.GameScene
 
 import scala.concurrent.Promise
 
-/**
- * A custom scene that holds the whole game board and a TabPane containing information about the current game state and a logger.
- */
-trait GameScene extends Scene {
+// TODO scaladoc
+trait ScalaFxGameScene extends Scene with GameScene
 
-  /** When possible, delegates the task of updating the scene with the new information regarding the board,
-   * re-renders now available actions and updates the logger.
-   *
-   * @param state            the new game's state.
-   * @param availableActions the new available action for the player in turn.
-   */
-  def updateScene(state: GameState, availableActions: Set[Action]): Unit
+object ScalaFxGameScene {
 
-  /**
-   * Closes the stage.
-   */
-  def close(): Unit
+  // TODO scaladoc
+  def apply(stage: Stage,
+            commandSender: InputManager,
+            gameState: GameState,
+            graphicMap: Map[TileIdentifier, GraphicDescriptor]): ScalaFxGameScene =
+    new ScalaFxGameSceneImpl(stage, commandSender, gameState, graphicMap)
 
-  /** When possible, updates the logger with the newly happened event.
-   *
-   * @param event the event to append to the logger.
-   */
-  def logEvent(event: GameEvent): Unit
-
-  /** When possible, creates a new dialog.
-   *
-   * @param dialogContent the content to add to the dialog.
-   * @param promise       the promise used to check the action the user has chosen, passed to the new dialog itself.
-   */
-  def showDialog(dialogContent: DialogContent, promise: Promise[GameEvent]): Unit
-}
-
-object GameScene {
-
-  def apply(stage: Stage, commandSender: GameManager, gameState: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor]): GameScene =
-    new GameSceneImpl(stage, commandSender, gameState, graphicMap)
-
-  private class GameSceneImpl(stage: Stage, commandSender: GameManager, gameState: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
-    extends GameScene {
+  private class ScalaFxGameSceneImpl(stage: Stage, commandSender: InputManager, gameState: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
+    extends ScalaFxGameScene {
 
     val boardProportion = 0.75
 
@@ -66,6 +43,10 @@ object GameScene {
     this.content = splitPane
 
     val boardView: BoardDisplay = BoardDisplay(gameState.gameBoard, graphicMap)
+    onKeyPressed = e => {
+      if (e.getCode == KeyCode.Plus.delegate) boardView.zoomIn()
+      if (e.getCode == KeyCode.Minus.delegate) boardView.zoomOut()
+    }
     splitPane.items.add(boardView)
     boardView.prefWidth <== this.width
     boardView.prefHeight <== this.height * boardProportion
@@ -77,10 +58,12 @@ object GameScene {
     val gameControlTab: Tab = new Tab {
       text = "Action Menu"
       content = actionMenu
+      closable = false
     }
     val loggerTab: Tab = new Tab {
       text = "Logger"
       content = logger
+      closable = false
     }
     tabPane.tabs = List(gameControlTab, loggerTab)
 
