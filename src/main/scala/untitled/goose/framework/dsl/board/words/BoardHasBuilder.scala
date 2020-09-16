@@ -22,7 +22,7 @@ object BoardHasBuilder {
 
     override def has(prop: DispositionProperty): Unit = boardBuilder.withDisposition(prop.dispositionType match {
       case DispositionType.Spiral => Disposition.spiral(_)
-      case DispositionType.Loop => Disposition.loop(_)
+      case DispositionType.Ring => Disposition.ring(_)
       case DispositionType.Snake => Disposition.snake(_)
     })
 

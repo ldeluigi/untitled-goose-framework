@@ -82,36 +82,36 @@ class DispositionTest extends AnyFlatSpec with Matchers {
     list should be(List((0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (5, 1), (5, 0), (4, 0), (3, 0), (2, 0), (1, 0), (0, 0), (0, 1), (1, 1)))
   }
 
-  "Loop disposition" should "have squared rows" in {
-    val ld = Disposition.loop(100)
+  "Ring disposition" should "have squared rows" in {
+    val ld = Disposition.ring(100)
     ld.rows should be(26)
   }
 
-  "Loop disposition" should "have squared columns" in {
-    val ld = Disposition.loop(100)
+  "Ring disposition" should "have squared columns" in {
+    val ld = Disposition.ring(100)
     ld.columns should be(26)
   }
 
-  "Loop disposition" should "place correctly a square" in {
-    val ld = Disposition.loop(16)
+  "Ring disposition" should "place correctly a square" in {
+    val ld = Disposition.ring(16)
     val list: List[(Int, Int)] = Range(0, 16).map(ld).toList
     list should be(List[(Int, Int)]((0, 4), (1, 4), (2, 4), (3, 4), (4, 4), (4, 3), (4, 2), (4, 1), (4, 0), (3, 0), (2, 0), (1, 0), (0, 0), (0, 1), (0, 2), (0, 3)))
   }
 
-  "Loop disposition" should "place correctly an incomplete square" in {
-    val ld = Disposition.loop(9)
+  "Ring disposition" should "place correctly an incomplete square" in {
+    val ld = Disposition.ring(9)
     val list: List[(Int, Int)] = Range(0, 9).map(ld).toList
     list should be(List[(Int, Int)]((0, 2), (1, 2), (2, 2), (3, 2), (3, 1), (3, 0), (2, 0), (1, 0), (0, 0)))
   }
 
-  "Loop disposition" should "place correctly an incomplete rectangle with ratio" in {
-    val ld = Disposition.loop(15, 2)
+  "Ring disposition" should "place correctly an incomplete rectangle with ratio" in {
+    val ld = Disposition.ring(15, 2)
     val list: List[(Int, Int)] = Range(0, 15).map(ld).toList
     list should be(List((0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (6, 1), (6, 0), (5, 0), (4, 0), (3, 0), (2, 0), (1, 0), (0, 0)))
   }
 
-  "Loop disposition" should "place correctly a complete rectangle with ratio" in {
-    val ld = Disposition.loop(12, 2)
+  "Ring disposition" should "place correctly a complete rectangle with ratio" in {
+    val ld = Disposition.ring(12, 2)
     val list: List[(Int, Int)] = Range(0, 12).map(ld).toList
     list should be(List((0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (5, 0), (4, 0), (3, 0), (2, 0), (1, 0), (0, 0)))
   }
