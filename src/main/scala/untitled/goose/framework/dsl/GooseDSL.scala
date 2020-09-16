@@ -9,8 +9,6 @@ import untitled.goose.framework.model.entities.definitions.{GameDefinition, Game
 import untitled.goose.framework.view.scalafx.View
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
-import scala.util.Random
-
 
 trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords with DiceWords {
 
@@ -23,7 +21,6 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
   def the: BoardWords = this
 
   def main(args: Array[String]): Unit = {
-    Random.setSeed(7)
     if (checkModel) {
       start(gameGeneration(), ruleBook.graphicMap.map)
     }
