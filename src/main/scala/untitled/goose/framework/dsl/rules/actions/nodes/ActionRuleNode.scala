@@ -11,7 +11,7 @@ import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.DialogLaunchEvent
 import untitled.goose.framework.model.rules.actionrules.{ActionAvailability, ActionRule}
 
-object ActionRuleNode {
+private[dsl] object ActionRuleNode {
 
   sealed trait ActionRuleNode extends RuleBookNode {
     def generateActionRule(): ActionRule

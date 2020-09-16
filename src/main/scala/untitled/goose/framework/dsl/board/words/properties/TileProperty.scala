@@ -4,7 +4,7 @@ import scalafx.scene.paint.Color
 
 sealed trait TileProperty
 
-object TileProperty {
+private[dsl] object TileProperty {
 
   case class ColorProperty(value: Color) extends TileProperty
 

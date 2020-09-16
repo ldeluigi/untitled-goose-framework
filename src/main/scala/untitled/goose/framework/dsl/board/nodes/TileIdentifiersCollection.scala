@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl.board.nodes
 
-trait TileIdentifiersCollection {
+private[dsl] trait TileIdentifiersCollection {
 
   def containsName(name: String): Boolean
 

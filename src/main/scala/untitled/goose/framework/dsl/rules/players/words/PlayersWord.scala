@@ -1,4 +1,4 @@
-package untitled.goose.framework.dsl.rules.players
+package untitled.goose.framework.dsl.rules.players.words
 
 import untitled.goose.framework.dsl.UtilityWords.{OnWord, PriorityWord}
 import untitled.goose.framework.dsl.nodes.RuleBook

@@ -5,7 +5,7 @@ import untitled.goose.framework.dsl.rules.actions.nodes.ActionRuleNode.{ActionGe
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 
-trait ActionRuleSetNode extends RuleBookNode with ActionCollection {
+private[dsl] trait ActionRuleSetNode extends RuleBookNode with ActionCollection {
   def addLoseTurnActionNode(loseNode: LoseTurnActionNode)
 
   def addActionRuleNode(actionRuleNode: ActionRuleNode): Unit

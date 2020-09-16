@@ -49,7 +49,7 @@ object GooseEngine {
       vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(GameEventMessageCodec.name))
     }
 
-    def executeOperation(): Unit = {
+    private def executeOperation(): Unit = {
       if (stopped.get()) return
       val op: Operation = stack.head
       stack = stack.tail

@@ -1,5 +1,5 @@
 package untitled.goose.framework.dsl.nodes
 
-trait RuleBookNode {
+private[dsl] trait RuleBookNode {
   def check: Seq[String]
 }
