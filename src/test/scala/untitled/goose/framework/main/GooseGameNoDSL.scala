@@ -308,7 +308,7 @@ object GooseGameNoDSL extends JFXApp {
 
   //From a menu GUI that select and creates player and pieces on the press of a "Start runtime" button
 
-  val players: ListMap[Player, Piece] = ListMap(Player("P1") -> Piece(Colour.Red), Player("P2") -> Piece(Colour.Blue))
+  val players: ListMap[Player, Piece] = ListMap(Player("P1") -> Piece(Colour.Default.Red), Player("P2") -> Piece(Colour.Default.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
 
