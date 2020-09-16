@@ -11,13 +11,13 @@ import scala.reflect.ClassTag
 
 trait BehaviourWords extends OperationWords with SystemBehavioursWords {
 
-  def customBehaviourGameEvent[T <: ConsumableGameEvent](name: String)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
+  def gameEvent[T <: ConsumableGameEvent](name: String)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
     BehaviourCustomEventInstance.gameEvent(name, ruleBook)
 
-  def customBehaviourPlayerEvent[T <: ConsumableGameEvent](name: String, player: GameState => Player)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
+  def playerEvent[T <: ConsumableGameEvent](name: String, player: GameState => Player)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
     BehaviourCustomEventInstance.playerEvent(name, player, ruleBook)
 
-  def customBehaviourTileEvent[T <: ConsumableGameEvent](name: String, tile: GameState => Tile)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
+  def tileEvent[T <: ConsumableGameEvent](name: String, tile: GameState => Tile)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
     BehaviourCustomEventInstance.tileEvent(name, tile, ruleBook)
 
   def events[T <: ConsumableGameEvent : ClassTag]: EventsMatchingWord[T] = EventsMatchingWord()

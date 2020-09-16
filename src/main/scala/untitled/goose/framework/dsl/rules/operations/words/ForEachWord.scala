@@ -2,7 +2,7 @@ package untitled.goose.framework.dsl.rules.operations.words
 
 import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourCustomEventInstance
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode
-import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode.{CustomEventOperationNode, DisplayDialogOperationNode, TriggerOperationNode, UpdateOperationNode}
+import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode._
 import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState}
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
@@ -37,6 +37,9 @@ case class ForEachWord() extends OperationWords {
 
   override def displayQuestion[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String, Seq[(String, GameEvent)])): OperationNode[T] =
     DisplayDialogOperationNode(dialog, isForEach = true)
+
+  override def displayQuestion[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String), options: (String, BehaviourCustomEventInstance[T])*): OperationNode[T] =
+    DisplayCustomDialogOperationNode(dialog, options, isForEach = true)
 
   override def updateState[T <: ConsumableGameEvent](update: (T, GameState) => MutableGameState => Unit): OperationNode[T] =
     UpdateOperationNode(update, isForEach = true)

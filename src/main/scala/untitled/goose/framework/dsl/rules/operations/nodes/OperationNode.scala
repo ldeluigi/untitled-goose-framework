@@ -50,6 +50,19 @@ object OperationNode {
     override def check: Seq[String] = Seq()
   }
 
+  case class DisplayCustomDialogOperationNode[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String), options: Seq[(String, BehaviourCustomEventInstance[T])], isForEach: Boolean) extends OperationNode[T] {
+    override def getOperations: (Seq[T], GameState) => Seq[Operation] =
+      if (isForEach)
+        (e, s) => e.map(dialog(_, s)).map(c => DialogOperation(DialogContent(c._1, c._2, ???)))
+      else
+        (e, s) => if (e.nonEmpty) {
+          val c = dialog(e.head, s)
+          Seq(DialogOperation(DialogContent(c._1, c._2, ???)))
+        } else Seq()
+
+    override def check: Seq[String] = Seq() //TODO delu
+  }
+
   case class UpdateOperationNode[T <: ConsumableGameEvent](f: (T, GameState) => MutableGameState => Unit, isForEach: Boolean) extends OperationNode[T] {
     override def getOperations: (Seq[T], GameState) => Seq[Operation] =
       if (isForEach)
