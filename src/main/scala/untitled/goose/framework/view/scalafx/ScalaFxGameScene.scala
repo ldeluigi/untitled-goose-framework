@@ -58,10 +58,12 @@ object ScalaFxGameScene {
     val gameControlTab: Tab = new Tab {
       text = "Action Menu"
       content = actionMenu
+      closable = false
     }
     val loggerTab: Tab = new Tab {
       text = "Logger"
       content = logger
+      closable = false
     }
     tabPane.tabs = List(gameControlTab, loggerTab)
 
