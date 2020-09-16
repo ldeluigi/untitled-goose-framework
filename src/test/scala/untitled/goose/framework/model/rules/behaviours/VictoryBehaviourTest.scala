@@ -1,16 +1,16 @@
 package untitled.goose.framework.model.rules.behaviours
 
-import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.entities.DialogContent
-import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, DialogLaunchEvent, VictoryEvent}
-import untitled.goose.framework.model.events.special.ExitEvent
-import untitled.goose.framework.model.entities.runtime.GameStateExtensions.MutableStateExtensions
-import untitled.goose.framework.model.entities.runtime.{Game, MutableGameState}
-import untitled.goose.framework.model.rules.operations.Operation
-import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock
+import untitled.goose.framework.model.entities.DialogContent
+import untitled.goose.framework.model.entities.runtime.GameStateExtensions.MutableStateExtensions
+import untitled.goose.framework.model.entities.runtime.{Game, MutableGameState}
+import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, DialogLaunchEvent, VictoryEvent}
+import untitled.goose.framework.model.events.special.ExitEvent
+import untitled.goose.framework.model.rules.operations.Operation
+import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
 
 class VictoryBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
 

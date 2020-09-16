@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.board.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
-import untitled.goose.framework.model.entities.definitions.{Board, BoardBuilder, Disposition}
+import untitled.goose.framework.model.entities.definitions.{BoardBuilder, BoardDefinition, Disposition, TileIdentifier}
 
 case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileIdentifiersCollection {
 
@@ -9,6 +9,7 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
   private var nameDefined = false
   private var numberDefined = false
   private var dispositionDefined = false
+  private var firstDefined = false
 
 
   private var definedTileNames: Set[String] = Set()
@@ -23,22 +24,20 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
 
   override def containsNumber(num: Int): Boolean = tileRange.contains(num)
 
-  private var errorMessages: Seq[String] = Seq()
-
-
   override def check: Seq[String] = {
-    errorMessages ++= (if (isCompletable) Seq() else Seq("Board definition not complete: "))
-
-    if (!nameDefined) {
-      errorMessages :+= "\tName not defined"
-    }
-    if (!dispositionDefined) {
-      errorMessages :+= "\tDisposition not defined"
-    }
-    if (!numberDefined) {
-      errorMessages :+= "\tNumber of tiles not defined"
-    }
-    errorMessages ++ definedNumbers.filter(!tileRange.contains(_)).map("Tile " + _ + " define properties but is not valid in this board")
+    if (isCompletable) {
+      Seq()
+    } else {
+      Seq(
+        true -> "BoardDefinition definition not complete: ",
+        !nameDefined -> "\tName not defined",
+        !dispositionDefined -> "\tDisposition not defined",
+        !numberDefined -> "\tNumber of tiles not defined",
+        !firstDefined -> "\tFirst tile not defined"
+      ).flatMap(t => if (t._1) Seq(t._2) else Seq())
+    } ++
+      definedNumbers.filter(!tileRange.contains(_))
+        .map("Tile " + _ + " define properties but is not valid in this definition")
   }
 
   override def withName(name: String): BoardBuilder = {
@@ -55,7 +54,7 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
   }
 
   override def withDisposition(disposition: Int => Disposition): BoardBuilder = {
-    builder.withDisposition(disposition)
+    builder withDisposition disposition
     dispositionDefined = true
     this
   }
@@ -68,22 +67,29 @@ case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileId
   }
 
   override def withGroupedTiles(group: String, number: Int*): BoardBuilder = {
-    builder.withGroupedTiles(group, number: _*)
+    builder withGroupedTiles(group, number: _*)
     definedNumbers ++= number
     definedGroups += group
     this
   }
 
-  override def withGroupedTiles(originGroup: String, newGroup: String): BoardBuilder = {
-    builder.withGroupedTiles(originGroup, newGroup)
+  override def withFirstTile(tile: TileIdentifier): BoardBuilder = {
+    builder withFirstTile tile
+    firstDefined = true
+    this
+  }
+
+  override def withGroupedTiles(group: String, newGroup: String): BoardBuilder = {
+    builder withGroupedTiles(group, newGroup)
     definedGroups += newGroup
     this
   }
 
-  override def complete(): Board = {
-    builder.complete()
+  override def complete(): BoardDefinition = {
+    builder complete()
   }
 
   override def isCompletable: Boolean =
-    builder.isCompletable
+    builder isCompletable
+
 }

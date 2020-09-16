@@ -1,8 +1,8 @@
 package untitled.goose.framework.view.scalafx.actionmenu
 
+import scalafx.scene.control.Button
 import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
-import scalafx.scene.control.Button
 
 /** A custom button to handle custom behaviour for custom actions.
  */
@@ -10,6 +10,8 @@ trait ActionVisualization extends Button {
 
   onMouseClicked = _ => onClick()
 
+  /** Utility method to link an external behaviour to the actual button click handler that solves the selected action.
+   */
   def onClick(): Unit
 }
 
@@ -19,8 +21,6 @@ object ActionVisualization {
 
     this.text = action.name
 
-    /** Utility method to link an external behaviour to the actual button click handler.
-     */
     override def onClick(): Unit = controller.resolveAction(action)
   }
 

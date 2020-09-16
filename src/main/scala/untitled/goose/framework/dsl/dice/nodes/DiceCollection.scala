@@ -1,6 +1,7 @@
 package untitled.goose.framework.dsl.dice.nodes
 
-import untitled.goose.framework.model.entities.Dice.{Dice, MovementDice}
+import untitled.goose.framework.model.entities.Dice
+import untitled.goose.framework.model.entities.Dice.MovementDice
 
 trait DiceCollection {
 
@@ -8,8 +9,9 @@ trait DiceCollection {
 
   def isMovementDice(name: String): Boolean
 
-  def getDice(name: String): Dice[Any]
+  def getDice(name: String): Dice[_]
 
   def getMovementDice(name: String): MovementDice
 
+  def add(diceNode: DiceNode[_]): Unit
 }

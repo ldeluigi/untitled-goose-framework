@@ -8,6 +8,7 @@ trait EventSink[E <: GameEvent] {
   /**
    * Submits the event in the event queue. Eventually it will start the handler
    * for that event in an asynchronous fashion.
+   *
    * @param event The GameEvent that was fired from the players.
    */
   def accept(event: E): Unit

@@ -1,9 +1,9 @@
 package untitled.goose.framework.model.entities.definitions
 
-import untitled.goose.framework.model.Color
-import untitled.goose.framework.model.entities.runtime.{Piece, Position, Tile}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.model.Colour
+import untitled.goose.framework.model.entities.runtime.{Piece, Position, Tile}
 
 class PieceTest extends AnyFlatSpec with Matchers {
 
@@ -11,10 +11,10 @@ class PieceTest extends AnyFlatSpec with Matchers {
 
   val tileOne: Tile = Tile(TileDefinition(1))
   val tileTwo: Tile = Tile(TileDefinition(2))
-  val piece: Piece = Piece(Color.Blue, Some(Position(tileOne)))
+  val piece: Piece = Piece(Colour.Blue, Some(Position(tileOne)))
 
   it should "not have a position when created empty" in {
-    val emptyPiece = Piece(Color.Blue)
+    val emptyPiece = Piece(Colour.Blue)
     emptyPiece.position.isEmpty should be(true)
   }
 
@@ -24,7 +24,7 @@ class PieceTest extends AnyFlatSpec with Matchers {
 
   it should "have a color" in {
     piece.color should not be null
-    piece.color should equal(Color.Blue)
+    piece.color should equal(Colour.Blue)
   }
 
   it should "set the position of the piece when given one" in {
@@ -34,9 +34,9 @@ class PieceTest extends AnyFlatSpec with Matchers {
   }
 
   it should "set the color of the piece when given one" in {
-    val color = Color.Red
+    val color = Colour.Red
     val updatedPiece = Piece(piece, color)
-    updatedPiece.color should equal(Color.Red)
+    updatedPiece.color should equal(Colour.Red)
   }
 
 }

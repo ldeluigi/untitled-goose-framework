@@ -1,9 +1,9 @@
 package untitled.goose.framework.model.actions
 
-import untitled.goose.framework.mock.MatchMock.default
-import untitled.goose.framework.model.events.consumable.SkipTurnEvent
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock.default
+import untitled.goose.framework.model.events.consumable.SkipTurnEvent
 
 class SkipOneTurnActionTest extends AnyFlatSpec with Matchers {
 

@@ -3,15 +3,16 @@ package untitled.goose.framework.model.entities.runtime
 import untitled.goose.framework.model.entities.definitions.TileDefinition
 import untitled.goose.framework.model.events.TileEvent
 
-// TODO create immutable wrapper
+/** A tile on the board, at runtime. */
+trait Tile extends Defined[TileDefinition] {
 
-trait Tile {
+  /** The history of events related to this tile. */
   def history: Seq[TileEvent]
 
+  /** The tile's event history setter. */
   def history_=(history: Seq[TileEvent]): Unit
 
-  def definition: TileDefinition
-
+  /** Compares two tiles. */
   def ==(obj: Tile): Boolean = definition == obj.definition
 
   override def equals(obj: Any): Boolean = obj match {
@@ -30,11 +31,12 @@ trait Tile {
 object Tile {
 
   private class TileImpl(val definition: TileDefinition) extends Tile {
-
     var history: Seq[TileEvent] = List()
   }
 
+  /** Factory method that creates a new tile from the definition. */
   def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)
 
+  /** Default comparator, based on the definition's default comparator. */
   implicit def compare[A <: Tile]: Ordering[A] = Ordering.by(_.definition)
 }

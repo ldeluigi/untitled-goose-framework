@@ -3,7 +3,7 @@ package untitled.goose.framework.view.scalafx.board
 import scalafx.scene.paint.Color
 
 /**
- * An object which describes the graphical properties that the user wants the runtime to gave.
+ * An object which describes the graphical properties that the user wants the runtime to have.
  */
 trait GraphicDescriptor {
 
@@ -11,6 +11,7 @@ trait GraphicDescriptor {
 
   def path: Option[String]
 
+  override def toString: String = "Color: " + this.color.toString + " Path: " + this.path.toString
 }
 
 object GraphicDescriptor {

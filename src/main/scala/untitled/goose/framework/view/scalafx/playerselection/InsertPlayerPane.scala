@@ -1,35 +1,53 @@
 package untitled.goose.framework.view.scalafx.playerselection
 
-import untitled.goose.framework.model.entities.runtime.{Piece, Player}
 import scalafx.Includes._
 import scalafx.beans.binding.Bindings
 import scalafx.beans.property.{ObjectProperty, StringProperty}
 import scalafx.collections.ObservableBuffer
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
-import untitled.goose.framework.view.scalafx.ColorUtils
+import scalafx.stage.Stage
 import untitled.goose.framework.model
+import untitled.goose.framework.model.Colour.Colour
+import untitled.goose.framework.model.entities.runtime.{Piece, Player}
+import untitled.goose.framework.view.scalafx.ColorUtils
 
+/**
+ * A custom pane to insert the player to play the game and customize their playing order in the game.
+ */
 trait InsertPlayerPane extends BorderPane {
+
+  /** Checks if the players can fit into the game's players min/max range.
+   *
+   * @return the boolean property regarding the fitting range.
+   */
   def checkPlayers: Boolean
 
+  /** Gets a sequence of the current players names.
+   *
+   * @return the sequence that holds all the current players names.
+   */
   def getPlayerSeq: Seq[Player]
 
+  /** Maps a player to its piece.
+   *
+   * @return the map containing the player and related piece.
+   */
   def getPlayersPiecesMap: Map[Player, Piece]
 }
 
 object InsertPlayerPane {
 
-  def apply(playersRange: Range): InsertPlayerPane = new InsertPlayerPaneImpl(playersRange)
+  def apply(playersRange: Range, stage: Stage): InsertPlayerPane = new InsertPlayerPaneImpl(playersRange, stage)
 
-  class PlayerPiece(n: String, val color: untitled.goose.framework.model.Color.Color) {
+  class PlayerPiece(n: String, val color: Colour) {
     val name = new StringProperty(this, "Name", n)
     val colorProp = new ObjectProperty(this, "Piece", ColorUtils.getColor(color))
   }
 
-  private class InsertPlayerPaneImpl(playersRange: Range) extends InsertPlayerPane {
+  private class InsertPlayerPaneImpl(playersRange: Range, stage: Stage) extends InsertPlayerPane {
 
     val playerBuffer: ObservableBuffer[PlayerPiece] = ObservableBuffer()
     val playerPieces: PlayerPieceTable = PlayerPieceTable(playerBuffer)
@@ -39,23 +57,23 @@ object InsertPlayerPane {
     val addPlayer: Button = new Button("Add")
     val playerName: Label = new Label("Insert player data:")
     val playerNameFromInput = new TextField
-    val colorsChoice = new ComboBox(model.Color.values.toList)
+    val colorsChoice = new ComboBox(model.Colour.values.toList)
     colorsChoice.getSelectionModel.selectFirst()
     val removePlayer: Button = new Button("Remove")
 
     val inputPlayers: HBox = new HBox {
       alignment = Pos.Center
       spacing = 15
-      padding = Insets(5)
       children = List(playerName, playerNameFromInput, colorsChoice, addPlayer)
     }
+    inputPlayers.styleClass.add("inputPlayers")
 
     val tableControls: HBox = new HBox {
       alignment = Pos.Center
       spacing = 15
-      padding = Insets(5)
       children = List(moveUp, moveDown, removePlayer)
     }
+    tableControls.styleClass.add("tableControls")
 
     this.setTop(inputPlayers)
     this.setCenter(playerPieces.tableView)
@@ -93,6 +111,7 @@ object InsertPlayerPane {
         playerNameFromInput.clear()
       } else {
         new Alert(AlertType.Error) {
+          initOwner(stage)
           title = "Error!"
           headerText = "This username is already taken!"
           contentText = "Choose a different name."
@@ -112,6 +131,7 @@ object InsertPlayerPane {
       playerBuffer.map(p => Player(p.name.value))
 
     override def checkPlayers: Boolean = playersRange.contains(playerBuffer.size)
+
   }
 
 }

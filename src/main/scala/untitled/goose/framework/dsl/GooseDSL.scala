@@ -5,10 +5,11 @@ import untitled.goose.framework.dsl.dice.words.DiceWords
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.RuleSetWords
 import untitled.goose.framework.dsl.rules.actions.words.RulesWord
-import untitled.goose.framework.model.TileIdentifier
-import untitled.goose.framework.model.entities.runtime.{GameTemplate, GameTemplateBuilder}
+import untitled.goose.framework.model.entities.definitions.{GameDefinition, GameDefinitionBuilder, TileIdentifier}
 import untitled.goose.framework.view.scalafx.View
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+
+import scala.util.Random
 
 
 trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords with DiceWords {
@@ -22,6 +23,7 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
   def the: BoardWords = this
 
   def main(args: Array[String]): Unit = {
+    Random.setSeed(7)
     if (checkModel) {
       start(gameGeneration(), ruleBook.graphicMap.map)
     }
@@ -29,23 +31,21 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
 
   private def checkModel: Boolean = {
     val checkMessage = ruleBook.check
-    checkMessage.foreach(System.err.println)
+    checkMessage.zipWithIndex.map(e => e._2 + ": " + e._1).foreach(System.err.println)
     checkMessage.isEmpty
   }
 
-  private def gameGeneration(): GameTemplate = {
-    GameTemplateBuilder()
+  private def gameGeneration(): GameDefinition =
+    GameDefinitionBuilder()
       .board(ruleBook.boardBuilder.complete())
-      .startPositionStrategy(ruleBook.ruleSet.getFirstTileSelector)
       .playerOrderingType(ruleBook.ruleSet.playerOrderingType)
       .playersRange(ruleBook.ruleSet.playerRange)
       .actionRules(ruleBook.ruleSet.actionRules)
       .behaviourRules(ruleBook.ruleSet.behaviourRules)
       .cleanupRules(ruleBook.ruleSet.cleanupRules)
-      .build
-  }
+      .build()
 
-  private def start(gameData: GameTemplate, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
+  private def start(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
     new View(gameData, graphicMap).main(Array())
 
 

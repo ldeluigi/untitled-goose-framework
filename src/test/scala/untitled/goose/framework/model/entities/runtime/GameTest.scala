@@ -1,10 +1,10 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.Color
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterEach, OneInstancePerTest}
+import untitled.goose.framework.mock.MatchMock
+import untitled.goose.framework.model.Colour
 
 class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEach with Matchers {
 
@@ -15,11 +15,11 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   "A Match" should "have a MatchBoard" in {
-    gameMatch.board.board.tiles should equal(GameBoard(MatchMock.board).board.tiles)
+    gameMatch.currentState.gameBoard.definition.tiles should equal(Board(MatchMock.board).definition.tiles)
   }
 
   it should "have a set of players" in {
-    gameMatch.currentState.players should equal(MatchMock.players.keySet)
+    gameMatch.currentState.players should equal(MatchMock.players.keys.toSeq)
   }
 
   it should "have a current GameState" in {
@@ -42,9 +42,9 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   it should "update player pieces as told" in {
-    gameMatch.currentState.updatePlayerPiece(MatchMock.p1, _ => Piece(Color.Blue, Some(Position(gameMatch.board.first))))
+    gameMatch.currentState.updatePlayerPiece(MatchMock.p1, _ => Piece(Colour.Blue, Some(Position(gameMatch.currentState.gameBoard.first))))
 
-    gameMatch.currentState.playerPieces(MatchMock.p1).position.get should equal(Position(gameMatch.board.first))
+    gameMatch.currentState.playerPieces(MatchMock.p1).position.get should equal(Position(gameMatch.currentState.gameBoard.first))
   }
 
 }

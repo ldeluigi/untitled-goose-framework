@@ -5,6 +5,7 @@ import untitled.goose.framework.model.entities.runtime.MutableGameState
 import untitled.goose.framework.model.events.consumable.TurnShouldEndEvent
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, TurnEndedEvent}
 
+// TODO scaladoc
 object TurnEndConsumer extends CleanupRule {
 
   override def applyRule(state: MutableGameState): Unit =
@@ -25,7 +26,7 @@ object TurnEndConsumer extends CleanupRule {
         state.currentTurn = state.currentTurn + 1
         state.currentPlayer = state.nextPlayer
       } else {
-        state.currentPlayer.history = state.currentPlayer.history.remove[GainTurnEvent]()
+        state.currentPlayer.history = state.currentPlayer.history.skipOfType[GainTurnEvent]()
       }
     }
   }

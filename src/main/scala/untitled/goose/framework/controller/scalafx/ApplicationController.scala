@@ -11,6 +11,7 @@ import scala.concurrent.{Future, Promise}
 
 /**
  * Implementation for a untitled.goose.framework.controller for the Goose Engine Frameworks that uses a ScalaFx View.
+ *
  * @param game The game that encapsulates the mutable state and the rules.
  */
 case class ApplicationController(game: Game) extends ScalaFxController {
@@ -20,6 +21,7 @@ case class ApplicationController(game: Game) extends ScalaFxController {
 
   override def setScene(gameScene: GameScene): Unit = {
     this.gameScene = Some(gameScene)
+    update(engine.game.currentState)
   }
 
   override def resolveAction(action: Action): Unit =
@@ -34,9 +36,6 @@ case class ApplicationController(game: Game) extends ScalaFxController {
     stopGame()
     gameScene.get.close()
   }
-
-  override def logAsyncEvent(event: GameEvent): Unit = gameScene.get.logEvent(event)
-
 
   override def showDialog(content: DialogContent): Future[GameEvent] = {
     val promise: Promise[GameEvent] = Promise()

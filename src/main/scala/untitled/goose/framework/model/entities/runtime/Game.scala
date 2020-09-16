@@ -1,41 +1,58 @@
 package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.actions.Action
-import untitled.goose.framework.model.entities.definitions.Board
+import untitled.goose.framework.model.entities.definitions.GameDefinition
 import untitled.goose.framework.model.rules.operations.Operation
-import untitled.goose.framework.model.rules.ruleset.RuleSet
+import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.{FirstTurnRandomThenFixed, Fixed, RandomEachTurn}
+import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 
-trait Game {
+import scala.collection.immutable.ListMap
 
+/** A game encapsulates runtime dynamic information
+ * together with static definitions of a goose-game.
+ */
+trait Game extends Defined[GameDefinition] {
+
+  /** Based on current state, the available actions for the current player. */
   def availableActions: Set[Action]
 
-  /**
-   * @return the runtime board
-   */
-  def board: GameBoard
-
-  /**
-   * @return the current runtime's state
-   */
+  /** The game current state. */
   def currentState: MutableGameState
 
-  def stateBasedOperations: Seq[Operation]
+  /** Based on current state and rules, the sequence of operation to execute. Can alter state. */
+  def stateBasedOperations(): Seq[Operation]
 
-  def cleanup: Operation
-
+  /** Based on current state and rules, the operation that cleans the buffers
+   * at the end of a cycle. Can also alter state.
+   */
+  def cleanup(): Operation
 }
 
 object Game {
 
-  /** A factory that creates a runtime based on a given board, players and rules. */
-  def apply(board: Board, players: Map[Player, Piece], rules: RuleSet): Game = new GameImpl(board, players, rules)
+  private class GameImpl(playerPieces: ListMap[Player, Piece], val definition: GameDefinition) extends Game {
+    val playerOrdering: PlayerOrdering = definition.playerOrderingType match {
+      case RandomEachTurn => PlayerOrdering.fullRandom
+      case FirstTurnRandomThenFixed => PlayerOrdering.randomOrder
+      case Fixed => PlayerOrdering.fixed
+    }
 
-  private class GameImpl(gameBoard: Board, playerPieces: Map[Player, Piece], rules: RuleSet) extends Game {
+    val board: Board = Board(definition.board)
 
-    override val board: GameBoard = GameBoard(gameBoard)
+    val rules: RuleSet = PriorityRuleSet(
+      playerOrdering,
+      definition.playersRange,
+      definition.actionRules,
+      definition.behaviourRules,
+      definition.cleanupRules
+    )
+
+    private val players = playerPieces.keys.toSeq
+
     override val currentState: CycleMutableGameState = CycleMutableGameState(
-      rules.first(playerPieces.keySet),
-      () => rules.nextPlayer(currentState.currentPlayer, currentState.players),
+      rules.first,
+      rules.nextPlayer,
+      players,
       playerPieces,
       board
     )
@@ -45,9 +62,9 @@ object Game {
         rules.actions(currentState)
       else Set()
 
-    override def stateBasedOperations: Seq[Operation] = rules.stateBasedOperations(currentState)
+    override def stateBasedOperations(): Seq[Operation] = rules.stateBasedOperations(currentState)
 
-    override def cleanup: Operation = {
+    override def cleanup(): Operation = {
       Operation.updateState(state => {
         rules.cleanupOperations(state)
         currentState.consumableBuffer = currentState.consumableBuffer.filter(_.cycle > currentState.currentCycle)
@@ -56,4 +73,6 @@ object Game {
     }
   }
 
+  /** A factory that creates a game with a given board definition, players, pieces and rules. */
+  def apply(definition: GameDefinition, players: ListMap[Player, Piece]): Game = new GameImpl(players, definition)
 }

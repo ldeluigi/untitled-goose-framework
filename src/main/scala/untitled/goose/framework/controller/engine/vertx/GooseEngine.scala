@@ -72,7 +72,7 @@ object GooseEngine {
       if (stopped.get()) return
       controller.update(gameMatch.currentState)
       if (stack.nonEmpty) {
-        stack = gameMatch.stateBasedOperations ++ stack
+        stack = gameMatch.stateBasedOperations() ++ stack
         executeOperation()
       }
     }
@@ -86,12 +86,9 @@ object GooseEngine {
     private def onEvent(event: GameEvent): Unit = {
       event match {
         case ExitEvent => controller.close()
-        case NoOpEvent => executeOperation()
+        case NoOpEvent => if (stack.nonEmpty) executeOperation()
         case _ =>
-          controller.logAsyncEvent(event)
-          if (stack.isEmpty) {
-            stack = stack :+ gameMatch.cleanup
-          }
+          if (stack.isEmpty) stack :+= gameMatch.cleanup()
           stack = Operation.trigger(event) +: stack
           executeOperation()
       }
@@ -101,7 +98,8 @@ object GooseEngine {
   /**
    * This factory creates a GooseEngine actor that encapsulates a Vert.x verticle,
    * that is an autonomous control flow, to work asynchronously as a game untitled.goose.framework.controller.
-   * @param status The Game, which is modified in-place.
+   *
+   * @param status     The Game, which is modified in-place.
    * @param controller The ViewController. Its interactions with the engine are managed
    *                   with concurrency in mind.
    * @return The GooseEngine implemented using the Vert.x library.

@@ -1,20 +1,22 @@
 package untitled.goose.framework.model.entities.definitions
 
+/** The strategy used to place the tiles in the 2D space of the definition. */
 trait Disposition {
 
   /** Total number of tiles. */
   def totalTiles: Int
 
-  /** Total number of tile rows */
+  /** Number of tile rows. */
   def rows: Int
 
-  /** Total number of tile columns */
+  /** Number of tile columns. */
   def columns: Int
 
-  /** Sets the coordinate - row and column - of a specified tile
+  /**
+   * Defines where a tile should be placed on the table to compose the definition.
    *
-   * @param tileIndex the index of the tile to specify coordinates to
-   * @return the tile's coordinates
+   * @param tileIndex the index of the tile.
+   * @return the tile's coordinates.
    */
   def tilePlacement(tileIndex: Int): (Int, Int)
 
@@ -36,11 +38,6 @@ trait Disposition {
 
 object Disposition {
 
-  /** Models the possibility to have different tiles disposition in the runtime.
-   *
-   * @param totalTiles the total number of tiles
-   * @param ratio      parameter used to compute tile's height
-   */
   private abstract class BaseDisposition(val totalTiles: Int, val ratio: Int) extends Disposition {
     private val height: Double = Math.sqrt(totalTiles / ratio)
 
@@ -49,11 +46,6 @@ object Disposition {
     override val columns: Int = Math.max((totalTiles / height).ceil.toInt, 1)
   }
 
-  /** Type of disposition where the tiles go from left to right and then back in an S direction.
-   *
-   * @param totalTiles the total number of tiles
-   * @param ratio      parameter used to compute tile's height
-   */
   private class SnakeDisposition(totalTiles: Int, ratio: Int) extends BaseDisposition(totalTiles, ratio) {
     override def tilePlacement(tileIndex: Int): (Int, Int) = {
       val rowIndex = tileIndex / columns
@@ -63,11 +55,6 @@ object Disposition {
     }
   }
 
-  /** Type of disposition where the tiles start filling the board up from the outside to the inside.
-   *
-   * @param totalTiles the total number of tiles
-   * @param ratio      parameter used to compute tile's height
-   */
   private class SpiralDisposition(totalTiles: Int, ratio: Int) extends BaseDisposition(totalTiles, ratio) {
 
     override def tilePlacement(tileIndex: Int): (Int, Int) = {

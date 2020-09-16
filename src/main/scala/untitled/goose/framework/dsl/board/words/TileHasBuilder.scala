@@ -3,7 +3,7 @@ package untitled.goose.framework.dsl.board.words
 import untitled.goose.framework.dsl.board.nodes.{BoardBuilderNode, GraphicMapNode}
 import untitled.goose.framework.dsl.board.words.properties.TileProperty
 import untitled.goose.framework.dsl.board.words.properties.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty, NameProperty}
-import untitled.goose.framework.model.TileIdentifier
+import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
 trait TileHasBuilder {

@@ -10,7 +10,7 @@ private class RollMovementDice(actionName: String, dice: MovementDice, diceNumbe
   override def name: String = actionName
 
   override def trigger(state: GameState): GameEvent = {
-    val result = for (_ <- 0 until diceNumber) yield dice.roll
+    val result = for (_ <- 0 until diceNumber) yield dice.roll()
     MovementDiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, result: _*)
   }
 }

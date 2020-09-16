@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.board.words
 
-import untitled.goose.framework.dsl.board.words.properties.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty, NameProperty}
 import scalafx.scene.paint.Color
+import untitled.goose.framework.dsl.board.words.properties.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty, NameProperty}
 
 trait TilePropertyWords {
 

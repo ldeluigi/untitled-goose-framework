@@ -1,14 +1,14 @@
 package untitled.goose.framework.model.rules.behaviours
 
-import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.entities.definitions.TileDefinition
-import untitled.goose.framework.model.events.consumable._
-import untitled.goose.framework.model.entities.runtime.GameStateExtensions.MutableStateExtensions
-import untitled.goose.framework.model.entities.runtime.{Game, MutableGameState, Tile}
-import untitled.goose.framework.model.rules.operations.Operation
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock
+import untitled.goose.framework.model.entities.definitions.TileDefinition
+import untitled.goose.framework.model.entities.runtime.GameStateExtensions.MutableStateExtensions
+import untitled.goose.framework.model.entities.runtime.{Game, MutableGameState, Tile}
+import untitled.goose.framework.model.events.consumable._
+import untitled.goose.framework.model.rules.operations.Operation
 
 class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
 

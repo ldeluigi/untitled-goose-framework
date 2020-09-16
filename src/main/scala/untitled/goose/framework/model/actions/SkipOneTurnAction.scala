@@ -7,7 +7,7 @@ import untitled.goose.framework.model.events.consumable.SkipTurnEvent
 /**
  * This action is a simple way to force a player to
  * confirm the fact that its turn should be skipped.
- * When triggered, it fires a [[SkipTurnEvent]] for the
+ * When triggered, it fires a SkipTurnEvent for the
  * current player.
  */
 class SkipOneTurnAction extends Action {
@@ -20,7 +20,6 @@ class SkipOneTurnAction extends Action {
 }
 
 object SkipOneTurnAction {
-
   /** This factory instantiates a SkipOneTurnAction. */
   def apply(): SkipOneTurnAction = new SkipOneTurnAction()
 }

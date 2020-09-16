@@ -3,14 +3,20 @@ package untitled.goose.framework.model.entities.runtime
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
-trait CycleMutableGameState extends MutableGameState {
+/** A mutable game state that can set its cycle value.
+ * A cycle is an iteration of a rule-solving process based on a stack of triggers.
+ * It's useful to avoid re-evaluation of rules after the same trigger.
+ */
+private[framework] trait CycleMutableGameState extends MutableGameState {
   def currentCycle_=(cycle: Int): Unit
 }
 
-object CycleMutableGameState {
+private[framework] object CycleMutableGameState {
 
-  private class GameStateImpl(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece],
-                              val gameBoard: GameBoard) extends CycleMutableGameState {
+  private class GameStateImpl(firstPlayerStrategy: Seq[Player] => Player,
+                              nextPlayerStrategy: MutableGameState => Player,
+                              val players: Seq[Player], pieces: Map[Player, Piece],
+                              val gameBoard: Board) extends CycleMutableGameState {
 
     var consumableBuffer: Seq[ConsumableGameEvent] = Seq()
 
@@ -20,7 +26,7 @@ object CycleMutableGameState {
 
     var currentCycle: Int = 0
 
-    private var currentTurnPlayer: Player = startPlayer
+    private var currentTurnPlayer: Player = firstPlayerStrategy(players)
 
     private var playerPiecesMap: Map[Player, Piece] = pieces
 
@@ -38,9 +44,12 @@ object CycleMutableGameState {
 
     override def playerPieces: Map[Player, Piece] = playerPiecesMap
 
-    override def nextPlayer: Player = nextPlayerStrategy()
+    /** Returns the player that is supposed to go next. */
+    override def nextPlayer: Player = nextPlayerStrategy(this)
   }
 
-  def apply(startPlayer: Player, nextPlayerStrategy: () => Player, pieces: Map[Player, Piece], board: GameBoard): CycleMutableGameState =
-    new GameStateImpl(startPlayer, nextPlayerStrategy, pieces, board)
+  def apply(firstPlayerStrategy: Seq[Player] => Player,
+            nextPlayerStrategy: MutableGameState => Player,
+            players: Seq[Player], pieces: Map[Player, Piece], board: Board): CycleMutableGameState =
+    new GameStateImpl(firstPlayerStrategy, nextPlayerStrategy, players, pieces, board)
 }

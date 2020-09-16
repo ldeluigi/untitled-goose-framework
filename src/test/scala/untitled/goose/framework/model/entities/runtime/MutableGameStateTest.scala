@@ -1,9 +1,9 @@
 package untitled.goose.framework.model.entities.runtime
 
-import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.Color
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import untitled.goose.framework.mock.MatchMock
+import untitled.goose.framework.model.Colour
 
 class MutableGameStateTest extends AnyFlatSpec with Matchers {
 
@@ -11,7 +11,7 @@ class MutableGameStateTest extends AnyFlatSpec with Matchers {
   val gameMutableState: MutableGameState = gameMatch.currentState
 
   val p1: Player = Player("P1")
-  val piece: Piece = Piece(Color.Blue)
+  val piece: Piece = Piece(Colour.Blue)
 
   behavior of "MutableGameStateTest"
 
