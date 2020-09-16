@@ -4,6 +4,7 @@ import scalafx.application.Platform
 import scalafx.geometry.Orientation
 import scalafx.scene.Scene
 import scalafx.scene.control.{SplitPane, Tab, TabPane}
+import scalafx.scene.input.KeyCode
 import scalafx.stage.Stage
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
@@ -42,6 +43,10 @@ object ScalaFxGameScene {
     this.content = splitPane
 
     val boardView: BoardDisplay = BoardDisplay(gameState.gameBoard, graphicMap)
+    onKeyPressed = e => {
+      if (e.getCode == KeyCode.Plus.delegate) boardView.zoomIn()
+      if (e.getCode == KeyCode.Minus.delegate) boardView.zoomOut()
+    }
     splitPane.items.add(boardView)
     boardView.prefWidth <== this.width
     boardView.prefHeight <== this.height * boardProportion
