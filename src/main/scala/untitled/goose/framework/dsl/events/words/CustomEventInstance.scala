@@ -11,7 +11,7 @@ trait CustomEventInstance[PropertyInput] extends RuleBookNode {
 
   def generateEvent(input: PropertyInput): GameEvent
 
-  def +[T: ClassTag](name: String, value: PropertyInput => T): CustomEventInstance[PropertyInput]
+  def :+[T: ClassTag](name: String, value: PropertyInput => T): CustomEventInstance[PropertyInput]
 
   def name: String
 }
@@ -24,7 +24,7 @@ object CustomEventInstance {
 
     var properties: Map[Key[_], PropertyInput => Any] = Map()
 
-    def +[T: ClassTag](name: String, value: PropertyInput => T): CustomEventInstance[PropertyInput] = {
+    def :+[T: ClassTag](name: String, value: PropertyInput => T): CustomEventInstance[PropertyInput] = {
       properties += Key[T](name) -> value
       this
     }

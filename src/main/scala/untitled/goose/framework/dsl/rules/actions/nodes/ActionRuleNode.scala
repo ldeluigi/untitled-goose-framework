@@ -3,9 +3,12 @@ package untitled.goose.framework.dsl.rules.actions.nodes
 import untitled.goose.framework.dsl.dice.nodes.DiceCollection
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBookNode
+import untitled.goose.framework.dsl.rules.actions.words.custom.ActionCustomEventInstance
 import untitled.goose.framework.model.actions.{Action, RollDice, RollMovementDice}
+import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
+import untitled.goose.framework.model.events.consumable.DialogLaunchEvent
 import untitled.goose.framework.model.rules.actionrules.{ActionAvailability, ActionRule}
 
 object ActionRuleNode {
@@ -104,6 +107,25 @@ object ActionRuleNode {
     }
 
     override def check: Seq[String] = customEvent.check
+  }
+
+  case class DisplayActionRuleNode(name: String,
+                                   when: GameState => Boolean,
+                                   title: String,
+                                   text: String,
+                                   options: Seq[(String, ActionCustomEventInstance)],
+                                   priority: Int,
+                                   allow: Boolean)
+    extends ActionRuleNode with ActionGeneration {
+
+    override def generateActionRule(): ActionRule = ActionRule(Set(ActionAvailability(generateAction(), priority, allow)), when)
+
+
+    override def generateAction(): Action =
+      Action(name, s => DialogLaunchEvent(s.currentTurn, s.currentCycle, DialogContent(title, text, options.map(o => (o._1, o._2.generateEvent(s))): _*)))
+
+
+    override def check: Seq[String] = options.flatMap(_._2.check)
   }
 
 }

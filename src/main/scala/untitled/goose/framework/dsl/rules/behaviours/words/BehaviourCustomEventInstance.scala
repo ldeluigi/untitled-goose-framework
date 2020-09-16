@@ -11,7 +11,7 @@ import untitled.goose.framework.model.events.{CustomGameEvent, CustomPlayerEvent
 import scala.reflect.ClassTag
 
 trait BehaviourCustomEventInstance[E <: ConsumableGameEvent] extends CustomEventInstance[(GameState, E)] {
-  def +[T: ClassTag](name: String, value: (GameState, E) => T): BehaviourCustomEventInstance[E]
+  def :+[T: ClassTag](name: String, value: (GameState, E) => T): BehaviourCustomEventInstance[E]
 }
 
 object BehaviourCustomEventInstance {
@@ -20,8 +20,8 @@ object BehaviourCustomEventInstance {
                                                                                         definedEvents: EventDefinitionCollection)
     extends AbstractCustomEventInstance[(GameState, E)](name, definedEvents) with BehaviourCustomEventInstance[E] {
 
-    override def +[T: ClassTag](name: String, value: (GameState, E) => T): BehaviourCustomEventInstance[E] = {
-      this.+(name, tuple => value(tuple._1, tuple._2))
+    override def :+[T: ClassTag](name: String, value: (GameState, E) => T): BehaviourCustomEventInstance[E] = {
+      this.:+(name, tuple => value(tuple._1, tuple._2))
       this
     }
   }

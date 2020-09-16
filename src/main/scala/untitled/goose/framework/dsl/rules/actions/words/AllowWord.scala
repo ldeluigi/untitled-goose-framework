@@ -3,8 +3,9 @@ package untitled.goose.framework.dsl.rules.actions.words
 import untitled.goose.framework.dsl.UtilityWords.ToWord
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBook
-import untitled.goose.framework.dsl.rules.actions.words.custom.UnnamedCustomAction
+import untitled.goose.framework.dsl.rules.actions.words.custom.{ActionCustomEventInstance, UnnamedCustomAction}
 import untitled.goose.framework.dsl.rules.actions.words.dice.DiceWord
+import untitled.goose.framework.dsl.rules.actions.words.display.UnnamedDisplayAction
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
@@ -17,6 +18,8 @@ class AllowWord(when: GameState => Boolean)(implicit ruleBook: RuleBook) {
 
   def displayQuestion(title: String, text: String, options: (String, GameState => GameEvent)*): UnnamedAction =
     trigger(s => DialogLaunchEvent(s.currentTurn, s.currentCycle, DialogContent(title, text, options.map(o => (o._1, o._2(s))): _*)))
+
+  def displayQuestion(title: String, text: String, options: (String, ActionCustomEventInstance)*): UnnamedDisplayAction = UnnamedDisplayAction(when, title, text, options = options: _*, allow = true)
 
   def trigger[T: ClassTag](customEventInstance: CustomEventInstance[GameState]): UnnamedCustomAction = UnnamedCustomAction(when, customEventInstance, allow = true)
 
