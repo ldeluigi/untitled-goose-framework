@@ -41,6 +41,8 @@ libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
 // Add dependency on Vert.x library
 libraryDependencies += "io.vertx" %% "vertx-lang-scala" % "3.9.1"
 
+// Add dependency on tuProlog library
+libraryDependencies += "it.unibo.tuprolog" % "solve-jvm" % "0.11.2"
 
 // Test dependencies
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
