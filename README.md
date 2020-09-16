@@ -2,7 +2,7 @@
 Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to run the definition of a game based on [The Game of the Goose](https://en.wikipedia.org/wiki/Game_of_the_Goose).
 
 ## Continuous Integration
-A CI system tests, builds and makes new releases of the product.
+A CI system tests, builds and makes new releases of the framework.
 - __master__ branch:  
 ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=master)
 - __develop__ branch:  
