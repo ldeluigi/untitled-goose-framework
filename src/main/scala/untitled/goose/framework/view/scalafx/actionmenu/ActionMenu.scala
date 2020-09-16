@@ -3,9 +3,9 @@ package untitled.goose.framework.view.scalafx.actionmenu
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.Label
 import scalafx.scene.layout.{HBox, StackPane, VBox}
-import untitled.goose.framework.controller.GameManager
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.runtime.{GameState, Player}
+import untitled.goose.framework.view.InputManager
 import untitled.goose.framework.view.scalafx.board.BoardDisplay
 
 
@@ -24,7 +24,7 @@ trait ActionMenu extends StackPane {
 
 object ActionMenu {
 
-  private class ActionMenuImpl(boardView: BoardDisplay, game: GameState, controller: GameManager) extends ActionMenu {
+  private class ActionMenuImpl(boardView: BoardDisplay, game: GameState, controller: InputManager) extends ActionMenu {
 
     val currentPlayerName: Label = new Label {}
     currentPlayerName.styleClass.add("currentPlayerName")
@@ -61,5 +61,5 @@ object ActionMenu {
   }
 
   /** A factory which creates a new ActionMenu panel. */
-  def apply(boardView: BoardDisplay, game: GameState, controller: GameManager): ActionMenu = new ActionMenuImpl(boardView, game, controller)
+  def apply(boardView: BoardDisplay, game: GameState, controller: InputManager): ActionMenu = new ActionMenuImpl(boardView, game, controller)
 }

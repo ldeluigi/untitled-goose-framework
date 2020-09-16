@@ -4,7 +4,6 @@ import java.awt.{Dimension, Toolkit}
 
 import javafx.scene.input.KeyCode
 import scalafx.application.JFXApp
-import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
 import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
@@ -20,8 +19,8 @@ import untitled.goose.framework.model.rules.behaviours._
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
-import untitled.goose.framework.view.scalafx.GameScene
 import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+import untitled.goose.framework.view.scalafx.{ScalaFxController, ScalaFxGameScene}
 
 import scala.collection.immutable.ListMap
 
@@ -326,7 +325,7 @@ object GooseGameNoDSL extends JFXApp {
   //View launch
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val controller: ScalaFxController = ApplicationController(currentMatch)
+  val controller: ScalaFxController = ScalaFxController(currentMatch)
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
     //fullScreen = true
@@ -334,7 +333,7 @@ object GooseGameNoDSL extends JFXApp {
     minHeight = 0.75 * screenSize.height
     fullScreenExitHint = "ESC to exit full screen mode"
   }
-  val gameScene: GameScene = GameScene(stage, controller, currentMatch.currentState, graphicMap)
+  val gameScene: ScalaFxGameScene = ScalaFxGameScene(stage, controller, currentMatch.currentState, graphicMap)
   controller.setScene(gameScene)
   stage.scene = gameScene
 
