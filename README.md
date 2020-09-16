@@ -3,8 +3,10 @@ Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to 
 
 ## Continuous Integration
 A CI system tests, builds and makes new releases of the product.
-- __master__ branch: ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=master)
-- __develop__ branch: ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=develop)
+- __master__ branch:  
+![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=master)
+- __develop__ branch:  
+![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=develop)
 
 ## Features
 - Ability to create new games with the shortest, most readable syntax possible through Scala DSL (natural language oriented, in English).
