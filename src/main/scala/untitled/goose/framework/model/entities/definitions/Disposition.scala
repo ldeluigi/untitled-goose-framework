@@ -78,7 +78,7 @@ object Disposition {
     }
   }
 
-  private class LoopDisposition(val totalTiles: Int, ratio: Int) extends Disposition {
+  private class RingDisposition(val totalTiles: Int, ratio: Int) extends Disposition {
 
     private val rowsPlusColumns: Int = (totalTiles + totalTiles % 2) / 2 + 2
 
@@ -103,8 +103,8 @@ object Disposition {
   /** A factory that creates a new spiral type tiles disposition. */
   def spiral(total: Int, ratio: Int = 1): Disposition = new SpiralDisposition(total, ratio)
 
-  /** A factory that creates a new loop type tiles disposition. */
-  def loop(total: Int, ratio: Int = 1): Disposition = new LoopDisposition(total, ratio)
+  /** A factory that creates a new ring type tiles disposition. */
+  def ring(total: Int, ratio: Int = 1): Disposition = new RingDisposition(total, ratio)
 
   /** Implicit conversion to a function. */
   implicit def toFunction(disposition: Disposition): Int => (Int, Int) = disposition.tilePlacement
