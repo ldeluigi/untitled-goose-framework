@@ -42,16 +42,15 @@ object BehaviourRule {
     }
   }
 
-  // TODO scaladoc
   /**
    * This factory creates a BehaviourRule that return the operation that should be executed from a given state.
    *
-   * @param filterStrategy
-   * @param countStrategy
-   * @param when       when in the GameState execute the operation.
-   * @param operations a sequence of operations to execute.
-   * @param consume
-   * @param save
+   * @param filterStrategy filter the elements of the history to be considered.
+   * @param countStrategy  imposes the number of event that must be present.
+   * @param when           imposes a condition on the state that could be executed only if its true.
+   * @param operations     a sequence of operations to execute if the behaviour is activated.
+   * @param consume        remove the events only if its true.
+   * @param save           the events into the history only if its true.
    * @param t
    * @tparam T
    * @return A new BehaviourRule.
