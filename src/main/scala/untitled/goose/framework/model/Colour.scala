@@ -15,10 +15,29 @@ trait Colour {
 
 object Colour {
 
+  val maxValue = 255.0
+
   private case class ColourImpl(red: Double, green: Double, blue: Double, opacity: Double) extends Colour
 
+  def limit(x: Double): Double = if (x < 0.0) 0.0 else if (x > 1.0) 1.0 else x
+
   // TODO scaladoc
-  def apply(red: Double, green: Double, blue: Double, opacity: Double): Colour = ColourImpl(red, green, blue, opacity)
+  def apply(red: Double, green: Double, blue: Double, opacity: Double): Colour =
+    ColourImpl(limit(red), limit(green), limit(blue), limit(opacity))
+
+  implicit def hex2int(hex: String): Int = Integer.parseInt(hex, 16)
+
+  def apply(hexCode: String): Colour = {
+    val code = hexCode.replace("#", "")
+    val red: Double = code.splitAt(2)._1 / maxValue
+    val green: Double = code.splitAt(2)._2.splitAt(2)._1 / maxValue
+    val blue: Double = code.splitAt(4)._2 / maxValue
+    ColourImpl(red, green, blue, 1)
+  }
+
+  def apply(red: Int, green: Int, blue: Int): Colour = ColourImpl(red / maxValue, green / maxValue, blue / maxValue, 1)
+
+  def apply(red: Int, green: Int, blue: Int, opacity: Double): Colour = ColourImpl(red / maxValue, green / maxValue, blue / maxValue, opacity)
 
   // TODO scaladoc
   object Default extends Enumeration {

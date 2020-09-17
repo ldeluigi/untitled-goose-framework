@@ -34,16 +34,16 @@ object GooseGame extends GooseDSL {
   the tile 58 has name(theDeath)
 
   The tiles (1 to 63) have group("field")
-  All tiles "field" have color(Colour.Default.Green)
+  All tiles "field" have colour(Colour("#FF0000"))
 
   the tile theWell has background("pozzo.png")
   the tile theInn has background("pozzo.png")
 
   The tiles(6, 19, 31, 42, 52, 58) have group("Special")
-  All tiles "Special" have color(Colour.Default.Blue)
+  All tiles "Special" have colour(Colour.Default.Blue)
 
   the tile 63 has name("The end")
-  The tile 63 has color(Colour.Default.Yellow)
+  The tile 63 has colour(Colour.Default.Yellow)
   The tile 63 has background("oca.png")
 
 
