@@ -12,7 +12,7 @@ jobs:
       - name: Delete artifacts
         run: |
           # Customize those three lines with your repository and credentials:
-          REPO=https://${GITHUB_API_URL}/repos/${{ github.repository }}
+          REPO=${GITHUB_API_URL}/repos/${{ github.repository }}
           echo $REPO
 
           # A shortcut to call GitHub API.
