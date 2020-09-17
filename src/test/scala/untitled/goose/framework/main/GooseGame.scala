@@ -61,7 +61,7 @@ object GooseGame extends GooseDSL {
     "asd" as[String] value
     )
 
-  Create movementDice "six-faced" having totalSides(6)
+  Create movementDice "six-faced" having sides(1, 2, 3, -3, -2, -1)
 
   Players loseTurn priority is 5
 
