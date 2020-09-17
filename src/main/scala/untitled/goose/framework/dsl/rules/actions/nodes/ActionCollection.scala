@@ -2,7 +2,7 @@ package untitled.goose.framework.dsl.rules.actions.nodes
 
 import untitled.goose.framework.model.actions.Action
 
-trait ActionCollection {
+private[dsl] trait ActionCollection {
 
   def isActionDefined(name: String): Boolean
 

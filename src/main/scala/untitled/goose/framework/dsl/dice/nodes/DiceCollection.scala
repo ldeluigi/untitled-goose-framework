@@ -3,7 +3,7 @@ package untitled.goose.framework.dsl.dice.nodes
 import untitled.goose.framework.model.entities.Dice
 import untitled.goose.framework.model.entities.Dice.MovementDice
 
-trait DiceCollection {
+private[dsl] trait DiceCollection {
 
   def isDiceDefined(name: String): Boolean
 

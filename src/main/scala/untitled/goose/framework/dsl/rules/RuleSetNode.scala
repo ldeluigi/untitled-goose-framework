@@ -9,7 +9,7 @@ import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
 
-trait RuleSetNode extends RuleBookNode {
+private[dsl] trait RuleSetNode extends RuleBookNode {
 
   def playerRange: Range
 

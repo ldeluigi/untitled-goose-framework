@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl
 
 import untitled.goose.framework.dsl.events.words.KeyValueSetter
-import untitled.goose.framework.dsl.rules.players.PlayerRangeWord
+import untitled.goose.framework.dsl.rules.players.words.PlayerRangeWord
 
 trait Implicits {
 

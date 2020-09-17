@@ -21,16 +21,11 @@ jobs:
     name: Build and Test
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
         scala: [2.12.10]
         java: [adopt@1.8]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Ignore line ending differences in git
-        if: contains(runner.os, 'windows')
-        shell: bash
-        run: git config --global core.autocrlf false
-
       - name: Checkout current branch (full)
         uses: actions/checkout@v2
         with:
@@ -81,14 +76,11 @@ jobs:
           key: ${{ runner.os }}-sbt-cache-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/build.properties') }}
 
       - name: Check that workflows are up to date
-        shell: bash
         run: sbt ++${{ matrix.scala }} githubWorkflowCheck
 
-      - shell: bash
-        run: sbt ++${{ matrix.scala }} test package
+      - run: sbt ++${{ matrix.scala }} test package
 
       - name: Compress target directories
-        shell: bash
         run: tar cf targets.tar target project/target
 
       - name: Upload target directories
@@ -108,10 +100,6 @@ jobs:
         java: [adopt@1.8]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Ignore line ending differences in git
-        if: contains(runner.os, 'windows')
-        run: git config --global core.autocrlf false
-
       - name: Checkout current branch (full)
         uses: actions/checkout@v2
         with:
@@ -181,5 +169,5 @@ jobs:
           prerelease: true
           files: '*.jar'
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          title: Development Build - Version 0.5.1
-          automatic_release_tag: 0.5.1
+          title: Development Build - Version 0.5.2
+          automatic_release_tag: 0.5.2

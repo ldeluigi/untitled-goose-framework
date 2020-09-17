@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl.events.nodes
 
-trait EventDefinitionCollection {
+private[dsl] trait EventDefinitionCollection {
   def isEventDefined(name: String): Boolean
 
   def defineEvent(event: EventNode): Unit

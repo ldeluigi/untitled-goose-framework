@@ -4,7 +4,7 @@ import untitled.goose.framework.dsl.board.words.DispositionType.DispositionType
 
 sealed trait BoardProperty
 
-object BoardProperty {
+private[dsl] object BoardProperty {
 
   case class DispositionProperty(dispositionType: DispositionType) extends BoardProperty
 
