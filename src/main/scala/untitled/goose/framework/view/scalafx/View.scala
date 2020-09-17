@@ -6,7 +6,7 @@ import javafx.scene.input.KeyCode
 import scalafx.application.JFXApp
 import scalafx.scene.image.Image
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, TileIdentifier}
-import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+import untitled.goose.framework.view.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.playerselection.IntroMenu
 
 /** Main ScalaFX launching class.

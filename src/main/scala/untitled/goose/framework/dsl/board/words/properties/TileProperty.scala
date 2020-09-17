@@ -1,12 +1,12 @@
 package untitled.goose.framework.dsl.board.words.properties
 
-import scalafx.scene.paint.Color
+import untitled.goose.framework.model.Colour
 
 sealed trait TileProperty
 
 private[dsl] object TileProperty {
 
-  case class ColorProperty(value: Color) extends TileProperty
+  case class ColorProperty(value: Colour) extends TileProperty
 
   case class GroupProperty(value: String) extends TileProperty
 

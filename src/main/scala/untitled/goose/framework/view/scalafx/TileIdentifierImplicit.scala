@@ -2,7 +2,7 @@ package untitled.goose.framework.view.scalafx
 
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
-import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+import untitled.goose.framework.view.GraphicDescriptor
 
 object TileIdentifierImplicit {
 
