@@ -9,7 +9,7 @@ trait TilePropertyWords {
 
   def group(group: String): GroupProperty = GroupProperty(group)
 
-  def color(color: Colour): ColorProperty = ColorProperty(color)
+  def colour(color: Colour): ColorProperty = ColorProperty(color)
 
   def background(path: String): BackgroundProperty = BackgroundProperty(path)
 
