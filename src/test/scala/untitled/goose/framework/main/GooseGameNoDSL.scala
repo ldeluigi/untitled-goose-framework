@@ -225,9 +225,6 @@ object GooseGameNoDSL extends JFXApp {
       ))
     }
   )
-  //TODO Players may not share squares, so if your dice roll would land you on an occupied square
-  // you will have to stay where you are until it is your turn again.
-
 
   //Framework behaviours
   val FrameworkBehaviours: Seq[BehaviourRule] = Seq(
