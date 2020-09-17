@@ -33,7 +33,7 @@ object DialogUtils {
     val result = alert.showAndWait()
     result match {
       case Some(ButtonType.OK) => promise.success(NoOpEvent)
-      case Some(value) => promise.success(content.options(value.text))
+      case Some(value) => promise.success(content.options.find(e => e._1 == value.text).get._2)
       case None => promise.failure(new IllegalStateException("-x-Dialog cannot be closed without answering"))
     }
   }
