@@ -3,7 +3,6 @@ package untitled.goose.framework.dsl.rules.actions.nodes
 import untitled.goose.framework.dsl.dice.nodes.DiceCollection
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBookNode
-import untitled.goose.framework.dsl.rules.actions.words.custom.ActionCustomEventInstance
 import untitled.goose.framework.model.actions.{Action, RollDice, RollMovementDice}
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.GameState
@@ -113,7 +112,7 @@ private[dsl] object ActionRuleNode {
                                    when: GameState => Boolean,
                                    title: String,
                                    text: String,
-                                   options: Seq[(String, ActionCustomEventInstance)],
+                                   options: Seq[(String, CustomEventInstance[GameState])],
                                    priority: Int,
                                    allow: Boolean)
     extends ActionRuleNode with ActionGeneration {
