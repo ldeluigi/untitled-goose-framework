@@ -18,7 +18,7 @@ trait DialogContent {
   /**
    * @return a map linking the dialog's user answers to its related event.
    */
-  def options: Map[String, GameEvent]
+  def options: Seq[(String, GameEvent)]
 
   override def equals(obj: Any): Boolean = obj match {
     case obj: DialogContent => obj.title == title && obj.text == text && obj.options == options
@@ -35,7 +35,7 @@ object DialogContent {
 
       override def text: String = Text
 
-      override def options: Map[String, GameEvent] = Options.toMap
+      override def options: Seq[(String, GameEvent)] = Options
     }
 
   def apply(Title: String, Text: String): DialogContent = new DialogContent {
@@ -43,7 +43,7 @@ object DialogContent {
 
     override def text: String = Text
 
-    override def options: Map[String, GameEvent] = Map()
+    override def options: Seq[(String, GameEvent)] = Seq()
   }
 }
 
