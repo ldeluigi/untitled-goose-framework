@@ -19,7 +19,7 @@ import untitled.goose.framework.model.rules.behaviours._
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
-import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+import untitled.goose.framework.view.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.{ScalaFxController, ScalaFxGameScene}
 
 import scala.collection.immutable.ListMap
@@ -225,9 +225,6 @@ object GooseGameNoDSL extends JFXApp {
       ))
     }
   )
-  //TODO Players may not share squares, so if your dice roll would land you on an occupied square
-  // you will have to stay where you are until it is your turn again.
-
 
   //Framework behaviours
   val FrameworkBehaviours: Seq[BehaviourRule] = Seq(

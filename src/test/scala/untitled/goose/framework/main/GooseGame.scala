@@ -1,8 +1,8 @@
 package untitled.goose.framework.main
 
-import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
+import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.events.consumable.MovementDiceRollEvent
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
 
@@ -34,16 +34,16 @@ object GooseGame extends GooseDSL {
   the tile 58 has name(theDeath)
 
   The tiles (1 to 63) have group("field")
-  All tiles "field" have color(Green)
+  All tiles "field" have color(Colour.Default.Green)
 
   the tile theWell has background("pozzo.png")
   the tile theInn has background("pozzo.png")
 
   The tiles(6, 19, 31, 42, 52, 58) have group("Special")
-  All tiles "Special" have color(LightBlue)
+  All tiles "Special" have color(Colour.Default.Blue)
 
   the tile 63 has name("The end")
-  The tile 63 has color(Yellow)
+  The tile 63 has color(Colour.Default.Yellow)
   The tile 63 has background("oca.png")
 
 
@@ -67,7 +67,7 @@ object GooseGame extends GooseDSL {
 
   Each turn players are (
     always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
-    // TODO fix: always allowed to displayQuestion("Title", "Text", "Si" -> customGameEvent("custom").:+("value", _=>5)) as "Show dialog" priority 3,
+    always allowed to displayQuestion("Title", "Text", "Si" -> (customGameEvent("custom") :+ ("value", _ => 5))) as "Show dialog" priority 3,
     always allowed to trigger (customGameEvent("custom") :+ ("value", _ => 6)) as "Something" priority 2,
     //always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
     //always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3

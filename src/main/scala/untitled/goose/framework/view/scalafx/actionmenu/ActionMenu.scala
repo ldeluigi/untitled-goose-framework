@@ -1,6 +1,6 @@
 package untitled.goose.framework.view.scalafx.actionmenu
 
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.control.Label
 import scalafx.scene.layout.{HBox, StackPane, VBox}
 import untitled.goose.framework.model.actions.Action
@@ -38,10 +38,9 @@ object ActionMenu {
     val container: VBox = new VBox {
       alignment = Pos.TopCenter
       spacing = 20
-      padding = Insets(30)
       children = List(currentPlayerName, actionBox)
     }
-
+    container.styleClass.add("container")
     this.children.add(container)
 
     /** Utility method to add every action into a VBox.
