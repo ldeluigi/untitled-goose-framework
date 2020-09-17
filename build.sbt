@@ -2,7 +2,7 @@ name := "untitled-goose-framework"
 
 organization := "untitled.goose.framework"
 
-version := "0.5.1"
+version := "0.5.2"
 
 scalaVersion := "2.12.10"
 
