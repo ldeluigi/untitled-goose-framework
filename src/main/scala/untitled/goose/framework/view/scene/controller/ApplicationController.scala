@@ -25,7 +25,7 @@ object ApplicationController {
     private val engine: GooseEngine = GooseEngine(game, this)
     private var gameScene: Option[GameScene] = None
 
-    override def setScene(gameScene: GameScene): Unit = {
+    override def setGameScene(gameScene: GameScene): Unit = {
       this.gameScene = Some(gameScene)
       update(engine.game.currentState)
     }

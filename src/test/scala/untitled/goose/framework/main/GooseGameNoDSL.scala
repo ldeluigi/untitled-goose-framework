@@ -284,7 +284,7 @@ object GooseGameNoDSL extends JFXApp {
     fullScreenExitHint = "ESC to exit full screen mode"
   }
   val gameScene: ScalaFxGameScene = ScalaFxGameScene(stage, controller, currentMatch.currentState, graphicMap)
-  controller.setScene(gameScene)
+  controller.setGameScene(gameScene)
   stage.scene = gameScene
 
   stage.getScene.setOnKeyPressed(
