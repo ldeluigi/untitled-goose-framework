@@ -58,9 +58,9 @@ object Colour {
    */
   def apply(hexCode: String): Colour = {
     val code = hexCode.replace("#", "")
-    val red: Double = hex2int(code.splitAt(2)._1) / 255
-    val green: Double = hex2int(code.splitAt(2)._2.splitAt(2)._1) / 255
-    val blue: Double = hex2int(code.splitAt(4)._2) / 255
+    val red: Double = hex2int(code.splitAt(2)._1) / 255.0
+    val green: Double = hex2int(code.splitAt(2)._2.splitAt(2)._1) / 255.0
+    val blue: Double = hex2int(code.splitAt(4)._2) / 255.0
     ColourImpl(red, green, blue, 1)
   }
 
@@ -73,7 +73,7 @@ object Colour {
    * @return a Colour object.
    */
   def apply(red: Int, green: Int, blue: Int): Colour =
-    ColourImpl(sanitizeDouble(red / 255), sanitizeDouble(green / 255), sanitizeDouble(blue / 255), 1)
+    ColourImpl(sanitizeDouble(red / 255.0), sanitizeDouble(green / 255.0), sanitizeDouble(blue / 255.0), 1)
 
   /**
    * This factory creates a Colour object with the given values, clamped to the correct range if necessary.
@@ -85,7 +85,7 @@ object Colour {
    * @return a Colour object.
    */
   def apply(red: Int, green: Int, blue: Int, opacity: Double): Colour =
-    ColourImpl(sanitizeDouble(red / 255), sanitizeDouble(green / 255), sanitizeDouble(blue / 255), sanitizeDouble(opacity))
+    ColourImpl(sanitizeDouble(red / 255.0), sanitizeDouble(green / 255.0), sanitizeDouble(blue / 255.0), sanitizeDouble(opacity))
 
   /**
    * An object containing some default [[Colour]] values.

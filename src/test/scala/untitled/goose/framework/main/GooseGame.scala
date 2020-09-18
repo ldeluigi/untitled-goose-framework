@@ -3,7 +3,7 @@ package untitled.goose.framework.main
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
 import untitled.goose.framework.model.Colour
-import untitled.goose.framework.model.events.consumable.MovementDiceRollEvent
+import untitled.goose.framework.model.events.CustomGameEvent
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
 
 
@@ -31,10 +31,10 @@ object GooseGame extends GooseDSL {
   the tile 31 has name(theWell)
   the tile 42 has name(theLabyrinth)
   the tile 52 has name(thePrison)
-  the tile 70 has name(theDeath)
+  the tile 58 has name(theDeath)
 
   The tiles (1 to 63) have group("field")
-  All tiles "field" have colour(Colour("#FF0000"))
+  All tiles "field" have colour(Colour("#B39DDB"))
 
   the tile theWell has background("pozzo.png")
   the tile theInn has background("pozzo.png")
@@ -73,10 +73,10 @@ object GooseGame extends GooseDSL {
   )
 
 
-  When(_ => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve(
+  When(_ => true) and numberOf(events[CustomGameEvent] matching (_ => true)) is (_ > 0) resolve(
     //trigger(customBehaviourGameEvent[MovementDiceRollEvent]("custom") + ("value", (_, e) => e.result.sum)),
     //trigger(customBehaviourPlayerEvent[MovementDiceRollEvent]("custom2", _.currentPlayer) + ("asd", (_, _) => "ok")),
-    forEach displayCustomQuestion((e, s) => ("ciao", "ciao"), ((e, s) => "ciao", gameEvent[MovementDiceRollEvent]("custom") :+ ("value", (e, s) => 6))),
+    forEach displayCustomQuestion((e, s) => ("ciao", "ciao"), ((e, s) => "ciao", gameEvent[CustomGameEvent]("custom") :+ ("value", (e, s) => 6))),
     //forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
     forEach trigger ((_, s) => LoseTurn(s))
   )
