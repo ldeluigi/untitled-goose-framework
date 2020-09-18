@@ -5,8 +5,8 @@ import untitled.goose.framework.model.rules.behaviours.BehaviourRule.BehaviourRu
 import untitled.goose.framework.model.rules.operations.Operation
 
 /**
- * TurnEndEventBehaviour is an extension of BehaviourRuleImpl based on a TurnShouldEndEvent
- * that declare for each player that every round must end.
+ * TurnEndEventBehaviour is a BehaviourRule that uses TurnShouldEndEvent(s)
+ * to declare, for each player, that every turn must end, with a TurnShouldEndEvent.
  */
 private[rules] case class TurnEndEventBehaviour() extends BehaviourRuleImpl[TurnShouldEndEvent](
   countStrategy = _ == 0,
