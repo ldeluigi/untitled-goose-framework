@@ -67,7 +67,6 @@ object GooseGame extends GooseDSL {
 
   Each turn players are (
     always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
-    always allowed to displayQuestion("Title", "Text", "Si" -> (customGameEvent("custom") :+ ("value", _ => 5))) as "Show dialog" priority 3,
     always allowed to trigger (customGameEvent("custom") :+ ("value", _ => 6)) as "Something" priority 2,
     //always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
     //always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3
@@ -77,7 +76,7 @@ object GooseGame extends GooseDSL {
   When(_ => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve(
     //trigger(customBehaviourGameEvent[MovementDiceRollEvent]("custom") + ("value", (_, e) => e.result.sum)),
     //trigger(customBehaviourPlayerEvent[MovementDiceRollEvent]("custom2", _.currentPlayer) + ("asd", (_, _) => "ok")),
-    forEach displayCustomQuestion((e, s) => ("ciao", "ciao", Seq("ciao")), Seq(gameEvent[MovementDiceRollEvent]("custom") :+ ("value", (e, s) => 6))),
+    forEach displayCustomQuestion((e, s) => ("ciao", "ciao"), ((e, s) => "ciao", gameEvent[MovementDiceRollEvent]("custom") :+ ("value", (e, s) => 6))),
     //forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
     forEach trigger ((_, s) => LoseTurn(s))
   )
