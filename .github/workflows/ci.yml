@@ -169,5 +169,5 @@ jobs:
           prerelease: true
           files: '*.jar'
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          title: Development Build - Version 0.8.0
-          automatic_release_tag: 0.8.0
+          title: Development Build - Version 0.8.1
+          automatic_release_tag: 0.8.1
