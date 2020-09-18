@@ -5,7 +5,6 @@ import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
-import scalafx.scene.text.Text
 import scalafx.stage.Stage
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, TileIdentifier}
 import untitled.goose.framework.model.entities.runtime.{Game, GameState}
@@ -38,7 +37,7 @@ private[scalafx] class IntroMenu(stage: Stage, gameData: GameDefinition, boardNa
 
   private val upperGameNameHeader: HBox = new HBox {
     alignment = Pos.Center
-    children = new Text {
+    children = new Label {
       text = boardName
     }
   }
