@@ -1,13 +1,21 @@
 package untitled.goose.framework.model
 
 // TODO scaladoc
+/**
+ * A colour allows to each player to assign a colour to their piece.
+ */
 trait Colour {
+
+  /*The red component for the colour*/
   def red: Double
 
+  /*The green component for the colour*/
   def green: Double
 
+  /*The blue component for the colour*/
   def blue: Double
 
+  /*The opacity assigned to the colour*/
   def opacity: Double
 
   override def toString: String = "Colour(R:" + red + ", G:" + green + ", B:" + blue + ", Alpha:" + opacity + ")"
@@ -17,7 +25,15 @@ object Colour {
 
   private case class ColourImpl(red: Double, green: Double, blue: Double, opacity: Double) extends Colour
 
-  // TODO scaladoc
+  /**
+   * This factory creates a Colour starting from a value for each of its colour components.
+   *
+   * @param red     specify the red component for the color.
+   * @param green   specify the green component for the color.
+   * @param blue    specify the blue component for the color.
+   * @param opacity specify the opacity assigned to the color.
+   * @return a new Colour.
+   */
   def apply(red: Double, green: Double, blue: Double, opacity: Double): Colour = ColourImpl(red, green, blue, opacity)
 
   // TODO scaladoc
