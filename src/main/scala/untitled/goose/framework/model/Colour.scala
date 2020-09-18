@@ -5,16 +5,16 @@ package untitled.goose.framework.model
  */
 trait Colour {
 
-  /*The red component for the colour*/
+  /** The red component for the colour. */
   def red: Double
 
-  /*The green component for the colour*/
+  /** The green component for the colour. */
   def green: Double
 
-  /*The blue component for the colour*/
+  /** The blue component for the colour. */
   def blue: Double
 
-  /*The opacity assigned to the colour*/
+  /** The opacity assigned to the colour. */
   def opacity: Double
 
   override def toString: String = "Colour(R:" + red + ", G:" + green + ", B:" + blue + ", Alpha:" + opacity + ")"
