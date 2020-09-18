@@ -1,5 +1,5 @@
 # untitled-goose-framework
-Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to run the definition of a game based on [The Game of the Goose](https://en.wikipedia.org/wiki/Game_of_the_Goose).
+Untitled Goose Framework _(not a trademark)_ is a Scala library that allows to define, run and play any game similar to [The Game of the Goose](https://en.wikipedia.org/wiki/Game_of_the_Goose).
 
 ## Continuous Integration
 A CI system tests, builds and makes new releases of the framework.
