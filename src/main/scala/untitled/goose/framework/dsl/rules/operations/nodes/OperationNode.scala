@@ -19,7 +19,7 @@ private[dsl] object OperationNode {
 
   case class CustomEventOperationNode[T <: ConsumableGameEvent](event: BehaviourCustomEventInstance[T], isForEach: Boolean) extends OperationNode[T] {
 
-    override def getOperations: (Seq[T], GameState) => Seq[Operation] = (events, state) => events.map(e => Operation.trigger(event.generateEvent((state, e))))
+    override def getOperations: (Seq[T], GameState) => Seq[Operation] = (events, state) => events.map(e => Operation.trigger(event.generateEvent((e, state))))
 
     override def check: Seq[String] = event.check
 
@@ -54,7 +54,7 @@ private[dsl] object OperationNode {
     override def getOperations: (Seq[T], GameState) => Seq[Operation] = {
       def _createCustomDialog(e: T, s: GameState): DialogOperation = {
         val d = dialog(e, s)
-        val o: Seq[(String, GameEvent)] = options.map(x => (x._1(e, s), x._2.generateEvent(s, e)))
+        val o: Seq[(String, GameEvent)] = options.map(x => (x._1(e, s), x._2.generateEvent(e, s)))
         DialogOperation(DialogContent(
           d._1,
           d._2,
