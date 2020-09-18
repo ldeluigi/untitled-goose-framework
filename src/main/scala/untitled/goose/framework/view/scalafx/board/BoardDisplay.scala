@@ -23,6 +23,7 @@ trait BoardDisplay extends ScrollPane {
   def zoomIn(): Unit
 
   def zoomOut(): Unit
+  //se ho campi e metodi fuori dal trait metto private
 }
 
 object BoardDisplay {

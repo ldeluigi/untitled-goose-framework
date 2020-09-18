@@ -25,18 +25,18 @@ import scala.collection.immutable.ListMap
  * @param graphicMap the graphic properties container
  */
 class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
-  val borderPane = new BorderPane
+  private val borderPane = new BorderPane
   root = borderPane
   borderPane.styleClass.add("borderPane")
 
-  val playersPane: InsertPlayerPane = InsertPlayerPane(gameData.playersRange, stage)
+  private val playersPane: InsertPlayerPane = InsertPlayerPane(gameData.playersRange, stage)
 
-  val startGame: Button = new Button {
+  private val startGame: Button = new Button {
     text = "Start game!"
   }
   startGame.styleClass.add("startGame")
 
-  val upperGameNameHeader: HBox = new HBox {
+  private val upperGameNameHeader: HBox = new HBox {
     alignment = Pos.Center
     children = new Text {
       text = boardName
@@ -44,7 +44,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
   }
   upperGameNameHeader.styleClass.add("upperGameNameHeader")
 
-  val bottomGameControls: HBox = new HBox {
+  private val bottomGameControls: HBox = new HBox {
     alignment = Pos.BottomCenter
     spacing = 15
     children = List(startGame)

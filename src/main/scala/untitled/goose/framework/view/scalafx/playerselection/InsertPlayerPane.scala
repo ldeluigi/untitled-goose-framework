@@ -49,26 +49,26 @@ object InsertPlayerPane {
 
   private class InsertPlayerPaneImpl(playersRange: Range, stage: Stage) extends InsertPlayerPane {
 
-    val playerBuffer: ObservableBuffer[PlayerPiece] = ObservableBuffer()
-    val playerPieces: PlayerPieceTable = PlayerPieceTable(playerBuffer)
+    private val playerBuffer: ObservableBuffer[PlayerPiece] = ObservableBuffer()
+    private val playerPieces: PlayerPieceTable = PlayerPieceTable(playerBuffer)
 
-    val moveUp = new Button("▲")
-    val moveDown = new Button("▼")
-    val addPlayer: Button = new Button("Add")
-    val playerName: Label = new Label("Insert player data:")
-    val playerNameFromInput = new TextField
-    val colorsChoice = new ComboBox(model.Colour.Default.colours)
+    private val moveUp = new Button("▲")
+    private val moveDown = new Button("▼")
+    private val addPlayer: Button = new Button("Add")
+    private val playerName: Label = new Label("Insert player data:")
+    private val playerNameFromInput = new TextField
+    private val colorsChoice = new ComboBox(model.Colour.Default.colours)
     colorsChoice.getSelectionModel.selectFirst()
-    val removePlayer: Button = new Button("Remove")
+    private val removePlayer: Button = new Button("Remove")
 
-    val inputPlayers: HBox = new HBox {
+    private val inputPlayers: HBox = new HBox {
       alignment = Pos.Center
       spacing = 15
       children = List(playerName, playerNameFromInput, colorsChoice, addPlayer)
     }
     inputPlayers.styleClass.add("inputPlayers")
 
-    val tableControls: HBox = new HBox {
+    private val tableControls: HBox = new HBox {
       alignment = Pos.Center
       spacing = 15
       children = List(moveUp, moveDown, removePlayer)
