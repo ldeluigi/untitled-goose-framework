@@ -31,7 +31,7 @@ object GooseGame extends GooseDSL {
   the tile 31 has name(theWell)
   the tile 42 has name(theLabyrinth)
   the tile 52 has name(thePrison)
-  the tile 58 has name(theDeath)
+  the tile 70 has name(theDeath)
 
   The tiles (1 to 63) have group("field")
   All tiles "field" have colour(Colour("#FF0000"))
@@ -77,7 +77,7 @@ object GooseGame extends GooseDSL {
   When(_ => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve(
     //trigger(customBehaviourGameEvent[MovementDiceRollEvent]("custom") + ("value", (_, e) => e.result.sum)),
     //trigger(customBehaviourPlayerEvent[MovementDiceRollEvent]("custom2", _.currentPlayer) + ("asd", (_, _) => "ok")),
-    forEach displayQuestion((e, s) => ("ciao", "ciao"), "ciao" -> (gameEvent[MovementDiceRollEvent]("custom") :+ ("value", (e, s) => 6))),
+    forEach displayCustomQuestion((e, s) => ("ciao", "ciao", Seq("ciao")), Seq(gameEvent[MovementDiceRollEvent]("custom") :+ ("value", (e, s) => 6))),
     //forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
     forEach trigger ((_, s) => LoseTurn(s))
   )

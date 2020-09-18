@@ -38,8 +38,8 @@ case class ForEachWord() extends OperationWords {
   override def displayQuestion[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String, Seq[(String, GameEvent)])): OperationNode[T] =
     DisplayDialogOperationNode(dialog, isForEach = true)
 
-  override def displayQuestion[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String), options: (String, BehaviourCustomEventInstance[T])*): OperationNode[T] =
-    DisplayCustomDialogOperationNode(dialog, options, isForEach = true)
+  override def displayCustomQuestion[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String, Seq[String]), events: Seq[BehaviourCustomEventInstance[T]]): OperationNode[T] =
+    DisplayCustomDialogOperationNode(dialog, events, isForEach = true)
 
   override def updateState[T <: ConsumableGameEvent](update: (T, GameState) => MutableGameState => Unit): OperationNode[T] =
     UpdateOperationNode(update, isForEach = true)
