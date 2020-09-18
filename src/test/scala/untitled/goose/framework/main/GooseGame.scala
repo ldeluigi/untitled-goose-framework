@@ -67,7 +67,6 @@ object GooseGame extends GooseDSL {
 
   Each turn players are (
     always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
-    always allowed to displayQuestion("Title", "Text", "Si" -> (customGameEvent("custom") :+ ("value", _ => 5))) as "Show dialog" priority 3,
     always allowed to trigger (customGameEvent("custom") :+ ("value", _ => 6)) as "Something" priority 2,
     //always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
     //always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3
