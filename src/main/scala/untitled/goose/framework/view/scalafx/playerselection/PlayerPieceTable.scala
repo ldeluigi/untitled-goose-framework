@@ -12,7 +12,7 @@ import untitled.goose.framework.view.scalafx.playerselection.InsertPlayerPane.Pl
  *
  * @param playerPieces the player pieces to set into the table.
  */
-case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
+private[scalafx] case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
 
   private val customWidth: Double = 600
 
@@ -33,6 +33,7 @@ case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
     }
     prefWidth = customWidth / 3 - 1
   }
+
   private val colorCol: TableColumn[PlayerPiece, Color] = new TableColumn[PlayerPiece, Color] {
     text = "Piece"
     prefWidth = customWidth / 3
@@ -51,6 +52,7 @@ case class PlayerPieceTable(playerPieces: ObservableBuffer[PlayerPiece]) {
       }
     }
   }
+
   val tableView: TableView[PlayerPiece] = new TableView(playerPieces) {
     columns ++= List(orderCol, nameCol, colorCol)
   }

@@ -7,37 +7,47 @@ import untitled.goose.framework.model.Colour
  */
 trait GraphicDescriptor {
 
+  /** If present, the background colour. */
   def color: Option[Colour]
 
-  def path: Option[String]
+  /** If present, the path to the background image. */
+  def imagePath: Option[String]
 
-  override def toString: String = "Color: " + this.color.toString + " Path: " + this.path.toString
+  override def toString: String = "Color: " + this.color.toString + " Path: " + this.imagePath.toString
 }
 
 object GraphicDescriptor {
 
   private class GraphicDescriptorImpl
-  (val color: Option[Colour], val path: Option[String])
+  (val color: Option[Colour], val imagePath: Option[String])
     extends GraphicDescriptor
 
-
+  /** Merges two graphic descriptors giving priority to the first one. */
   def merge(a: GraphicDescriptor, b: GraphicDescriptor): GraphicDescriptor = {
     GraphicDescriptor(
       if (a.color.isDefined) a.color else b.color,
-      if (a.path.isDefined) a.path else b.path
+      if (a.imagePath.isDefined) a.imagePath else b.imagePath
     )
   }
 
-  def apply(colorOption: Option[Colour], pathOption: Option[String]): GraphicDescriptor = new GraphicDescriptorImpl(colorOption, pathOption)
+  /**
+   * Factory method that creates a GraphicDescriptor with given specifications.
+   *
+   * @param colorOption     If specified, represents the background colour.
+   * @param imagePathOption If specified, represents the path for the background image.
+   * @return a new GraphicDescriptor.
+   */
+  def apply(colorOption: Option[Colour], imagePathOption: Option[String]): GraphicDescriptor =
+    new GraphicDescriptorImpl(colorOption, imagePathOption)
 
   /** A factory which creates a new GraphicDescriptor if only a custom color is specified. */
-  def apply(specifiedColor: Colour): GraphicDescriptor = new GraphicDescriptorImpl(Some(specifiedColor), None)
+  def apply(specifiedColor: Colour): GraphicDescriptor = apply(Some(specifiedColor), None)
 
-  /** A factory which creates a new GraphicDescriptor if only a custom resource path is specified. */
-  def apply(path: String): GraphicDescriptor = new GraphicDescriptorImpl(None, Some(path))
+  /** A factory which creates a new GraphicDescriptor if only a custom resource imagePath is specified. */
+  def apply(path: String): GraphicDescriptor = apply(None, Some(path))
 
-  /** A factory which creates a new GraphicDescriptor if a custom color, path, stroke color and tile's name are specified. */
+  /** A factory which creates a new GraphicDescriptor if a custom color, imagePath, stroke color and tile's name are specified. */
   def apply(specifiedColor: Colour, path: String, strokeColor: Colour, tileName: String): GraphicDescriptor =
-    new GraphicDescriptorImpl(Some(specifiedColor), Some(path))
+    apply(Some(specifiedColor), Some(path))
 
 }

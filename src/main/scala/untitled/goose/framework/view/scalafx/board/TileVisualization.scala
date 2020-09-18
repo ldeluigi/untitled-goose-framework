@@ -49,10 +49,10 @@ object TileVisualization {
 
   private class TileVisualizationImpl(val tile: Tile, givenWidth: NumberBinding, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
 
-    var graphics: Option[Image] = None
-    var imageView: Option[ImageView] = None
+    private var graphics: Option[Image] = None
+    private var imageView: Option[ImageView] = None
 
-    val rectangle: Rectangle = new Rectangle {
+    override val rectangle: Rectangle = new Rectangle {
       fill = White
       strokeType = StrokeType.Inside
       width <== givenWidth
@@ -60,12 +60,12 @@ object TileVisualization {
     }
     rectangle.styleClass.add("rectangle")
 
-    val tileText: String = tile.definition.name match {
+    override val tileText: String = tile.definition.name match {
       case Some(value) => value
       case None => tile.definition.number.get.toString
     }
 
-    val label: Label = new Label {
+    private val label: Label = new Label {
       text = tileText
       alignment = Center
       textAlignment = TextAlignment.Center
@@ -126,8 +126,8 @@ object TileVisualization {
         rectangle.fill = ColorUtils.getColor(graphicDescriptor.color.get)
       }
 
-      if (graphicDescriptor.path.isDefined) {
-        val backgroundToApply: String = graphicDescriptor.path.get
+      if (graphicDescriptor.imagePath.isDefined) {
+        val backgroundToApply: String = graphicDescriptor.imagePath.get
         graphics = Some(new Image(backgroundToApply))
         imageView = Some(new ImageView {
           image = graphics.get

@@ -7,7 +7,18 @@ import untitled.goose.framework.model.rules.behaviours.{BehaviourRule, DialogLau
 import untitled.goose.framework.model.rules.cleanup.{CleanupRule, TurnEndConsumer}
 import untitled.goose.framework.model.rules.operations.Operation
 
-// TODO scaladoc afterwards
+/**
+ * A PriorityRuleSet is a RuleSet that evaluates rules in order, giving
+ * more priority to the first. Action rules use ActionAvailability for priority-based
+ * action availabilities, so their order is not important.
+ *
+ * @param playerOrdering the strategy that determines the player order.
+ * @param playersRange   determines minimum and maximum number of player allowed.
+ * @param actionRules    a set of action rules, that will determine the available actions for
+ *                       a user, using [[untitled.goose.framework.model.rules.actionrules.ActionAvailability]].
+ * @param behaviourRules a sequence of behaviour rules, ordered by priority of evaluation.
+ * @param cleanupRules   a sequence of cleanup rules, ordered by priority of evaluation.
+ */
 class PriorityRuleSet(playerOrdering: PlayerOrdering,
                       playersRange: Range,
                       actionRules: Set[ActionRule],
@@ -52,6 +63,16 @@ class PriorityRuleSet(playerOrdering: PlayerOrdering,
 
 object PriorityRuleSet {
 
+  /**
+   * Factory method that creates a new PriorityRuleSet with given parameters.
+   *
+   * @param playerOrdering    the strategy for the player order in the game.
+   * @param admissiblePlayers the minimum and maximum number of players allowed.
+   * @param actionRules       the set of action rules for the game.
+   * @param behaviourRule     the sequence of behaviour rules, ordered by priority.
+   * @param cleanupRules      the sequence of cleanup rules, ordered by priority.
+   * @return a new PriorityRuleSet.
+   */
   def apply(playerOrdering: PlayerOrdering = PlayerOrdering.randomOrder,
             admissiblePlayers: Range,
             actionRules: Set[ActionRule] = Set(),

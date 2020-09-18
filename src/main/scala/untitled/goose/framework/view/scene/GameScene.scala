@@ -7,7 +7,10 @@ import untitled.goose.framework.model.events.GameEvent
 
 import scala.concurrent.Promise
 
-// TODO scaladoc
+/**
+ * A GameScene is a scene, that is a particular point of view of the application,
+ * that is able to draw and tell the players information about the game.
+ */
 trait GameScene {
 
   /** When possible, delegates the task of updating the scene with the new information regarding the board,

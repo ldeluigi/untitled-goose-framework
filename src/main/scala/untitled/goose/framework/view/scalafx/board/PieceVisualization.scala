@@ -23,7 +23,7 @@ object PieceVisualization {
 
   private class PieceVisualizationImpl(piece: Piece, parentWidth: ReadOnlyDoubleProperty) extends PieceVisualization {
 
-    val pieceShape: Shape = new Circle {
+    override val pieceShape: Shape = new Circle {
       fill = ColorUtils.getColor(piece.color)
       radius <== parentWidth * 0.012
       styleClass = ObservableBuffer("pieceShape")

@@ -20,6 +20,7 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
 
   def the: BoardWords = this
 
+  @deprecatedOverriding("You don't need to override this, override start method instead.")
   def main(args: Array[String]): Unit = {
     if (checkModel) {
       start(gameGeneration(), ruleBook.graphicMap.map)
@@ -42,7 +43,14 @@ trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityW
       .cleanupRules(ruleBook.ruleSet.cleanupRules)
       .build()
 
-  private def start(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
+  /**
+   * Launch the application view with the given parameters generated from the DSL.
+   * Override this method to change the view implementation used by the DSL.
+   *
+   * @param gameData   the collection of all game model related elements
+   * @param graphicMap the map containing the GraphicDescriptors for the defined TileIdentifiers
+   */
+  protected def start(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]): Unit =
     new View(gameData, graphicMap).main(Array())
 
 
