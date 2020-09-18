@@ -19,12 +19,20 @@ import untitled.goose.framework.view.{GraphicDescriptor, InputManager}
 
 import scala.concurrent.Promise
 
-// TODO scaladoc
+/** A ScalaFxGameScene is a GameScene which uses ScalaFx as graphic library. */
 trait ScalaFxGameScene extends Scene with GameScene
 
 object ScalaFxGameScene {
 
-  // TODO scaladoc
+  /**
+   * Factory method to create a new ScalaFxGameScene.
+   *
+   * @param stage         the [[scalafx.scene.Scene]] containing the graphic components.
+   * @param commandSender the input manager for user actions.
+   * @param gameState     the starting game state, that allows the drawing of the first board.
+   * @param graphicMap    the graphic representation of tiles.
+   * @return a new ScalaFxGameScene.
+   */
   def apply(stage: Stage,
             commandSender: InputManager,
             gameState: GameState,
@@ -34,15 +42,15 @@ object ScalaFxGameScene {
   private class ScalaFxGameSceneImpl(stage: Stage, commandSender: InputManager, gameState: GameState, graphicMap: Map[TileIdentifier, GraphicDescriptor])
     extends ScalaFxGameScene {
 
-    val boardProportion = 0.75
+    private val boardProportion = 0.75
 
-    val splitPane: SplitPane = new SplitPane {
+    private val splitPane: SplitPane = new SplitPane {
       orientation = Orientation.Vertical
     }
 
     this.content = splitPane
 
-    val boardView: BoardDisplay = BoardDisplay(gameState.gameBoard, graphicMap)
+    private val boardView: BoardDisplay = BoardDisplay(gameState.gameBoard, graphicMap)
     onKeyPressed = e => {
       if (e.getCode == KeyCode.Plus.delegate) boardView.zoomIn()
       if (e.getCode == KeyCode.Minus.delegate) boardView.zoomOut()
@@ -51,16 +59,16 @@ object ScalaFxGameScene {
     boardView.prefWidth <== this.width
     boardView.prefHeight <== this.height * boardProportion
 
-    val actionMenu: ActionMenu = ActionMenu(boardView, gameState, commandSender)
-    val logger: EventLogger = EventLogger(gameState)
+    private val actionMenu: ActionMenu = ActionMenu(boardView, gameState, commandSender)
+    private val logger: EventLogger = EventLogger(gameState)
 
-    val tabPane = new TabPane
-    val gameControlTab: Tab = new Tab {
+    private val tabPane = new TabPane
+    private val gameControlTab: Tab = new Tab {
       text = "Action Menu"
       content = actionMenu
       closable = false
     }
-    val loggerTab: Tab = new Tab {
+    private val loggerTab: Tab = new Tab {
       text = "Logger"
       content = logger
       closable = false

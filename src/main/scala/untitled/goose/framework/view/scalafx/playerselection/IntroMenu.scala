@@ -24,7 +24,7 @@ import scala.collection.immutable.ListMap
  * @param heightSize height of the scene
  * @param graphicMap the graphic properties container
  */
-class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
+private[scalafx] class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
   private val borderPane = new BorderPane
   root = borderPane
   borderPane.styleClass.add("borderPane")
@@ -58,7 +58,7 @@ class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, width
       val clonedState: GameState = currentMatch.currentState.clone()
       val controller: ScalaFxController = ScalaFxController(currentMatch)
       val gameScene: ScalaFxGameScene = ScalaFxGameScene(stage, controller, clonedState, graphicMap)
-      controller.setScene(gameScene)
+      controller.setGameScene(gameScene)
       stage.scene = gameScene
       stage.minWidth = widthSize * 0.5
       stage.minHeight = heightSize * 0.5

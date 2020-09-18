@@ -4,6 +4,7 @@ import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
 import untitled.goose.framework.view.GraphicDescriptor
 
+/** Defines implicit conversions for tile identifiers -> graphic descriptors. */
 object TileIdentifierImplicit {
 
   /** An implicit mapping from a 2-entry tuple containing the tile's number and its properties, to a map containing the tile's number and the its properties. */

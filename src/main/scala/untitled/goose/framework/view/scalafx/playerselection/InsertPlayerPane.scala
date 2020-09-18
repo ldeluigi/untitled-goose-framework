@@ -40,9 +40,16 @@ trait InsertPlayerPane extends BorderPane {
 
 object InsertPlayerPane {
 
+  /**
+   * Factory Method for a InsertPlayerPane.
+   *
+   * @param playersRange the minimum and maximum number of players allowed.
+   * @param stage        the stage containing this pane.
+   * @return a new InsertPlayerPane.
+   */
   def apply(playersRange: Range, stage: Stage): InsertPlayerPane = new InsertPlayerPaneImpl(playersRange, stage)
 
-  class PlayerPiece(n: String, val color: Colour) {
+  private[scalafx] class PlayerPiece(n: String, val color: Colour) {
     val name = new StringProperty(this, "Name", n)
     val colorProp = new ObjectProperty(this, "Piece", ColorUtils.getColor(color))
   }
