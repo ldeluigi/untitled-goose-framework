@@ -1,8 +1,8 @@
 package untitled.goose.framework.main
 
-import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
+import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.events.consumable.MovementDiceRollEvent
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
 
@@ -34,16 +34,16 @@ object GooseGame extends GooseDSL {
   the tile 58 has name(theDeath)
 
   The tiles (1 to 63) have group("field")
-  All tiles "field" have color(Green)
+  All tiles "field" have colour(Colour("#FF0000"))
 
   the tile theWell has background("pozzo.png")
   the tile theInn has background("pozzo.png")
 
   The tiles(6, 19, 31, 42, 52, 58) have group("Special")
-  All tiles "Special" have color(LightBlue)
+  All tiles "Special" have colour(Colour.Default.Blue)
 
   the tile 63 has name("The end")
-  The tile 63 has color(Yellow)
+  The tile 63 has colour(Colour.Default.Yellow)
   The tile 63 has background("oca.png")
 
 
@@ -61,7 +61,7 @@ object GooseGame extends GooseDSL {
     "asd" as[String] value
     )
 
-  Create movementDice "six-faced" having totalSides(6)
+  Create movementDice "six-faced" having sides(1, 2, 3, -3, -2, -1)
 
   Players loseTurn priority is 5
 

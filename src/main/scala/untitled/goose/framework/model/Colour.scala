@@ -1,7 +1,7 @@
 package untitled.goose.framework.model
 
 /**
- * A colour allows to each player to assign a colour to their piece.
+ * Represent a colour in the RGBA format.
  */
 trait Colour {
 
@@ -22,20 +22,64 @@ trait Colour {
 
 object Colour {
 
+  val maxValue = 255.0
+
   private case class ColourImpl(red: Double, green: Double, blue: Double, opacity: Double) extends Colour
 
-  /**
-   * This factory creates a Colour starting from a value for each of its colour components.
-   *
-   * @param red     specify the red component for the color.
-   * @param green   specify the green component for the color.
-   * @param blue    specify the blue component for the color.
-   * @param opacity specify the opacity assigned to the color.
-   * @return a new Colour.
-   */
-  def apply(red: Double, green: Double, blue: Double, opacity: Double): Colour = ColourImpl(red, green, blue, opacity)
+  def limit(x: Double): Double = if (x < 0.0) 0.0 else if (x > 1.0) 1.0 else x
 
-  // TODO scaladoc
+  /**
+   * This factory creates a [[Colour]] object with the given values, clamped to the correct range if necessary.
+   *
+   * @param red     a double from 0.0 to 1.0
+   * @param green   a double from 0.0 to 1.0
+   * @param blue    a double from 0.0 to 1.0
+   * @param opacity a double from 0.0 to 1.0
+   * @return a [[Colour]] object
+   */
+  def apply(red: Double, green: Double, blue: Double, opacity: Double): Colour =
+    ColourImpl(limit(red), limit(green), limit(blue), limit(opacity))
+
+  implicit def hex2int(hex: String): Int = Integer.parseInt(hex, 16)
+
+  /**
+   * This factory creates a [[Colour]] object with the given values, clamped to the correct range if necessary.
+   *
+   * @param hexCode the hex code for this color using '#000000' syntax
+   * @return a [[Colour]] object
+   */
+  def apply(hexCode: String): Colour = {
+    val code = hexCode.replace("#", "")
+    val red: Double = code.splitAt(2)._1 / maxValue
+    val green: Double = code.splitAt(2)._2.splitAt(2)._1 / maxValue
+    val blue: Double = code.splitAt(4)._2 / maxValue
+    ColourImpl(red, green, blue, 1)
+  }
+
+  /**
+   * This factory creates a [[Colour]] object with the given values, clamped to the correct range if necessary.
+   *
+   * @param red   an Int from 0 to 255
+   * @param green an Int from 0 to 255
+   * @param blue  an Int from 0 to 255
+   * @return a [[Colour]] object
+   */
+  def apply(red: Int, green: Int, blue: Int): Colour = ColourImpl(red / maxValue, green / maxValue, blue / maxValue, 1)
+
+  /**
+   * This factory creates a [[Colour]] object with the given values, clamped to the correct range if necessary.
+   *
+   * @param red     an Int from 0 to 255
+   * @param green   an Int from 0 to 255
+   * @param blue    an Int from 0 to 255
+   * @param opacity a double from 0.0 to 1.0
+   * @return a [[Colour]] object
+   */
+  def apply(red: Int, green: Int, blue: Int, opacity: Double): Colour = ColourImpl(red / maxValue, green / maxValue, blue / maxValue, opacity)
+
+  /**
+   * An object containing some default [[Colour]] values to be used with a user friendly syntax using the colour name.
+   */
   object Default extends Enumeration {
 
     protected case class Val(name: String, red: Double, green: Double, blue: Double, opacity: Double)
@@ -59,7 +103,11 @@ object Colour {
     val Orange: Colour = Val("Orange", 1.0, 0.65, 0.0, 1.0)
     val Purple: Colour = Val("Purple", 0.5, 0.0, 0.5, 1.0)
 
-    // TODO scaladoc
+    /**
+     * A Seq containing all the default color values available.
+     *
+     * @return
+     */
     def colours: Seq[Colour] = super.values.toSeq.map(valueToColourVal)
   }
 

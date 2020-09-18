@@ -8,6 +8,7 @@ import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.{Group => TileGroup}
 import untitled.goose.framework.model.entities.runtime.Tile._
 import untitled.goose.framework.model.entities.runtime.{Board, GameState, Tile}
+import untitled.goose.framework.view.GraphicDescriptor
 
 /** A custom pane that contains the runtime definition of the board.
  *

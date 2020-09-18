@@ -1,13 +1,13 @@
-package untitled.goose.framework.view.scalafx.board
+package untitled.goose.framework.view
 
-import scalafx.scene.paint.Color
+import untitled.goose.framework.model.Colour
 
 /**
  * An object which describes the graphical properties that the user wants the runtime to have.
  */
 trait GraphicDescriptor {
 
-  def color: Option[Color]
+  def color: Option[Colour]
 
   def path: Option[String]
 
@@ -17,7 +17,7 @@ trait GraphicDescriptor {
 object GraphicDescriptor {
 
   private class GraphicDescriptorImpl
-  (val color: Option[Color], val path: Option[String])
+  (val color: Option[Colour], val path: Option[String])
     extends GraphicDescriptor
 
 
@@ -28,16 +28,16 @@ object GraphicDescriptor {
     )
   }
 
-  def apply(colorOption: Option[Color], pathOption: Option[String]): GraphicDescriptor = new GraphicDescriptorImpl(colorOption, pathOption)
+  def apply(colorOption: Option[Colour], pathOption: Option[String]): GraphicDescriptor = new GraphicDescriptorImpl(colorOption, pathOption)
 
   /** A factory which creates a new GraphicDescriptor if only a custom color is specified. */
-  def apply(specifiedColor: Color): GraphicDescriptor = new GraphicDescriptorImpl(Some(specifiedColor), None)
+  def apply(specifiedColor: Colour): GraphicDescriptor = new GraphicDescriptorImpl(Some(specifiedColor), None)
 
   /** A factory which creates a new GraphicDescriptor if only a custom resource path is specified. */
   def apply(path: String): GraphicDescriptor = new GraphicDescriptorImpl(None, Some(path))
 
   /** A factory which creates a new GraphicDescriptor if a custom color, path, stroke color and tile's name are specified. */
-  def apply(specifiedColor: Color, path: String, strokeColor: Color, tileName: String): GraphicDescriptor =
+  def apply(specifiedColor: Colour, path: String, strokeColor: Colour, tileName: String): GraphicDescriptor =
     new GraphicDescriptorImpl(Some(specifiedColor), Some(path))
 
 }

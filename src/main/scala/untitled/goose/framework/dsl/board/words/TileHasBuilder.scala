@@ -4,7 +4,7 @@ import untitled.goose.framework.dsl.board.nodes.{BoardBuilderNode, GraphicMapNod
 import untitled.goose.framework.dsl.board.words.properties.TileProperty
 import untitled.goose.framework.dsl.board.words.properties.TileProperty.{BackgroundProperty, ColorProperty, GroupProperty, NameProperty}
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
-import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+import untitled.goose.framework.view.GraphicDescriptor
 
 trait TileHasBuilder {
   def has(name: NameProperty): Unit

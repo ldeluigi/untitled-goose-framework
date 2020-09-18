@@ -9,6 +9,8 @@ import scalafx.scene.paint.Color.White
 import scalafx.scene.shape.{Rectangle, StrokeType}
 import scalafx.scene.text.TextAlignment
 import untitled.goose.framework.model.entities.runtime.Tile
+import untitled.goose.framework.view.GraphicDescriptor
+import untitled.goose.framework.view.scalafx.ColorUtils
 
 /**
  * A pane which models how a single tile is rendered.
@@ -121,7 +123,7 @@ object TileVisualization {
      */
     private def applyStyle(graphicDescriptor: GraphicDescriptor): Unit = {
       if (graphicDescriptor.color.isDefined) {
-        rectangle.fill = graphicDescriptor.color.get
+        rectangle.fill = ColorUtils.getColor(graphicDescriptor.color.get)
       }
 
       if (graphicDescriptor.path.isDefined) {
