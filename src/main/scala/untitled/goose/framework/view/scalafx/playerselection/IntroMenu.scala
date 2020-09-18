@@ -24,7 +24,7 @@ import scala.collection.immutable.ListMap
  * @param heightSize height of the scene
  * @param graphicMap the graphic properties container
  */
-class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
+private[scalafx] class IntroMenu(stage: Stage, gameData: GameDefinition, boardName: String, widthSize: Int, heightSize: Int, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends Scene {
   private val borderPane = new BorderPane
   root = borderPane
   borderPane.styleClass.add("borderPane")

@@ -19,7 +19,12 @@ trait ApplicationController extends ViewController with InputManager with GameSc
 
 object ApplicationController {
 
-  // TODO scaladoc
+  /**
+   * This implementation of an ApplicationController delegates to the scene the
+   * responsibility to draw/print updates received from the Engine.
+   *
+   * @param game the game definition to be passed to the engine.
+   */
   case class ApplicationControllerImpl(game: Game) extends ApplicationController {
 
     private val engine: GooseEngine = GooseEngine(game, this)

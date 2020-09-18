@@ -26,16 +26,16 @@ object ActionMenu {
 
   private class ActionMenuImpl(boardView: BoardDisplay, game: GameState, controller: InputManager) extends ActionMenu {
 
-    val currentPlayerName: Label = new Label {}
+    private val currentPlayerName: Label = new Label {}
     currentPlayerName.styleClass.add("currentPlayerName")
 
-    val actionBox: HBox = new HBox {
+    private val actionBox: HBox = new HBox {
       alignment = Pos.TopCenter
       spacing = 20
     }
     actionBox.styleClass.add("actionBox")
 
-    val container: VBox = new VBox {
+    private val container: VBox = new VBox {
       alignment = Pos.TopCenter
       spacing = 20
       children = List(currentPlayerName, actionBox)
