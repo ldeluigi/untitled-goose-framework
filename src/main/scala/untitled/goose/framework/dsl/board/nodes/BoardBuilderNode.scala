@@ -25,16 +25,17 @@ private[dsl] case class BoardBuilderNode() extends RuleBookNode with BoardBuilde
   override def containsNumber(num: Int): Boolean = tileRange.contains(num)
 
   override def check: Seq[String] = {
-    if (isCompletable) {
-      Seq()
-    } else {
-      Seq(
-        true -> "BoardDefinition definition not complete: ",
-        !nameDefined -> "\tName not defined",
-        !dispositionDefined -> "\tDisposition not defined",
-        !numberDefined -> "\tNumber of tiles not defined",
-        !firstDefined -> "\tFirst tile not defined"
-      ).flatMap(t => if (t._1) Seq(t._2) else Seq())
+    {
+      if (isCompletable)
+        Seq()
+      else
+        Seq(
+          true -> "BoardDefinition definition not complete: ",
+          !nameDefined -> "\tName not defined",
+          !dispositionDefined -> "\tDisposition not defined",
+          !numberDefined -> "\tNumber of tiles not defined",
+          !firstDefined -> "\tFirst tile not defined"
+        ).flatMap(t => if (t._1) Seq(t._2) else Seq())
     } ++
       definedNumbers.filter(!tileRange.contains(_))
         .map("Tile " + _ + " define properties but is not valid in this definition")

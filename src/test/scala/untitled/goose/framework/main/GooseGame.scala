@@ -31,7 +31,7 @@ object GooseGame extends GooseDSL {
   the tile 31 has name(theWell)
   the tile 42 has name(theLabyrinth)
   the tile 52 has name(thePrison)
-  the tile 58 has name(theDeath)
+  the tile 70 has name(theDeath)
 
   The tiles (1 to 63) have group("field")
   All tiles "field" have colour(Colour("#FF0000"))
