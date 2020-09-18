@@ -1,6 +1,5 @@
 package untitled.goose.framework.model
 
-// TODO scaladoc
 /**
  * A colour allows to each player to assign a colour to their piece.
  */
