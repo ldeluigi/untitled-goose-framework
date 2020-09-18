@@ -1,5 +1,5 @@
 # untitled-goose-framework
-Untitled Goose Framework _(not a trademark)_ is a Scala library that allows to define, run and play any game similar to [The Game of the Goose](https://en.wikipedia.org/wiki/Game_of_the_Goose).
+Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to run the definition of a game based on [The Game of the Goose](https://en.wikipedia.org/wiki/Game_of_the_Goose).
 
 ## Continuous Integration
 A CI system tests, builds and makes new releases of the framework.
@@ -8,11 +8,14 @@ A CI system tests, builds and makes new releases of the framework.
 - __develop__ branch:  
 ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=develop)
 
+New [releases](https://github.com/ldeluigi/untitled-goose-framework/releases) are generated based on the [master](https://github.com/ldeluigi/untitled-goose-framework/tree/master) branch.
+
 ## Features
-- Ability to create new games with the shortest, most readable syntax possible through Scala DSL (natural language oriented, in English).
-- Ability to play created games locally. Given that each game must be turn-based, one single device is needed to play.
-- Possibility to extend game classes, objects or data structures to implement more complex behaviours or functionalities. This can mean both extend the framework functionalities or the game logic.
-- Possibility to extend the DSL with custom shortcuts.
+- Ability to create new games with the shortest, most readable syntax possible through a Scala DSL (_Domain Specific Language_) called **GooseDSL**.
+  GooseDSL is natural language oriented, in English.
+- Ability to play created games locally. Given that each game must be turn-based, one single device is enough to play with any number of human players.
+- Possibility to extend game classes, objects or data structures to implement more complex behaviours or functionalities. This can mean both extend the framework functionalities or customize default game logic. For example, one can reimplement the graphical components to make their own visualization.
+- Possibility to extend the GooseDSL with custom shortcuts, keywords and more.
 
 ## Installation
 1. Download the jar of the last version available in the [Release](https://github.com/ldeluigi/untitled-goose-framework/releases) section.
@@ -42,10 +45,10 @@ A CI system tests, builds and makes new releases of the framework.
 - Create a class or object that extends __GooseDSL__ (package: `untitled.goose.framework.dsl`) and write your own game. Documentation on how to write a game can be found in the Wiki.
 
 ## Contribute
-You can contribute to the project with [Pull Requests](https://github.com/ldeluigi/untitled-goose-framework/pulls) or [Issues](https://github.com/ldeluigi/untitled-goose-framework/issues) about bugs or feature requirements.
+You can contribute to the project with [Pull Requests](https://github.com/ldeluigi/untitled-goose-framework/pulls) or [Issues](https://github.com/ldeluigi/untitled-goose-framework/issues) about bugs or feature requests.
 
 ## Examples
-These are the official examples of projects that implemented games using this framework:
+These are the official examples of projects that implement games using this framework:
 - __[The Game of the Goose (Goose Game)](https://github.com/ldeluigi/goose-game)__
 - __[Snakes and Ladders](https://github.com/ldeluigi/snakes-and-ladders)__
 - __[Quiz Race](https://github.com/ldeluigi/quiz-race)__
