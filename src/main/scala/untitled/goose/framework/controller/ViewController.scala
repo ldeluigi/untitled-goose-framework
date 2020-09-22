@@ -1,5 +1,6 @@
 package untitled.goose.framework.controller
 
+import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
@@ -12,10 +13,11 @@ trait ViewController {
   /**
    * Updates the view with the current game state.
    *
-   * @param state The GameState. __Note__ that for lazy display, this object should be
-   *              safe-copied because it's mutable and can be updated by the engine.
+   * @param state            The GameState. __Note__ that for lazy display, this object is
+   *                         safe-copied because it's mutable and can be updated by the engine.
+   * @param availableActions A set of available actions for the current player.
    */
-  def update(state: GameState)
+  def update(state: GameState, availableActions: Set[Action])
 
   /**
    * Displays a dialog to the user, waits asynchronously for the answer, and submits

@@ -8,12 +8,13 @@ import io.vertx.scala.core.eventbus.DeliveryOptions
 import untitled.goose.framework.controller.ViewController
 import untitled.goose.framework.controller.engine.EventSink
 import untitled.goose.framework.model.entities.DialogContent
-import untitled.goose.framework.model.entities.runtime.Game
+import untitled.goose.framework.model.entities.runtime.{CloneGameState, Game}
 import untitled.goose.framework.model.events.GameEvent
-import untitled.goose.framework.model.events.special.{ExitEvent, NoOpEvent}
+import untitled.goose.framework.model.events.special.{ActionEvent, ExitEvent, NoOpEvent}
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.{DialogOperation, SpecialOperation}
 
+import scala.annotation.tailrec
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
@@ -21,12 +22,26 @@ import scala.util.{Failure, Success}
 /**
  * The runtime engine of the game. It can receive events to handle,
  * and can be polled to get the game, which includes the state.
+ *
+ * It uses a stack for operations.
  */
 trait GooseEngine {
-  def game: Game
 
+  /**
+   * Schedules a view update to be run when possible (next time the operation stack is freed).
+   *
+   * Should be roughly equivalent to eventSink.accept([[NoOpEvent]]).
+   */
+  def callViewUpdate(): Unit
+
+  /**
+   * Returns an event sink that manages incoming asynchronous event.
+   *
+   * Useful to select actions with [[ActionEvent]].
+   */
   def eventSink: EventSink[GameEvent]
 
+  /** Clears resources and stops permanently the engine. */
   def stop(): Unit
 }
 
@@ -49,50 +64,55 @@ object GooseEngine {
       vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(GameEventMessageCodec.name))
     }
 
+    @tailrec
     private def executeOperation(): Unit = {
       if (stopped.get()) return
-      val op: Operation = stack.head
-      stack = stack.tail
-      op.execute(gameMatch.currentState)
-      op match {
-        case operation: SpecialOperation =>
-          operation match {
-            case o: DialogOperation =>
-              stopped.set(true)
-              dialogDisplay(o.content).onComplete(res => {
-                stopped.set(false)
-                res match {
-                  case Failure(_) => executeOperation()
-                  case Success(event) => accept(event)
-                }
-              })
-          }
-        case _ => Unit
+      if (stack.nonEmpty) {
+        val op: Operation = stack.head
+        stack = stack.tail
+        op.execute(gameMatch.currentState)
+        op match {
+          case operation: SpecialOperation =>
+            operation match {
+              case o: DialogOperation =>
+                stopped.set(true)
+                dialogDisplay(o.content).onComplete(res => {
+                  stopped.set(false)
+                  res match {
+                    case Failure(_) => accept(NoOpEvent)
+                    case Success(event) => accept(event)
+                  }
+                })
+            }
+          case _ => Unit
+        }
+        if (stopped.get()) return
       }
-      if (stopped.get()) return
-      controller.update(gameMatch.currentState)
+      controller.update(CloneGameState(gameMatch.currentState), gameMatch.availableActions)
       if (stack.nonEmpty) {
         stack = gameMatch.stateBasedOperations() ++ stack
         executeOperation()
       }
     }
 
-    override def game: Game = gameMatch
-
     override def eventSink: EventSink[GameEvent] = this
 
     override def stop(): Unit = vertx.close()
 
+    @tailrec
     private def onEvent(event: GameEvent): Unit = {
       event match {
         case ExitEvent => controller.close()
-        case NoOpEvent => if (stack.nonEmpty) executeOperation()
+        case NoOpEvent => executeOperation()
+        case ActionEvent(action) => onEvent(action.trigger(gameMatch.currentState))
         case _ =>
           if (stack.isEmpty) stack :+= gameMatch.cleanup()
-          stack = Operation.trigger(event) +: stack
+          stack +:= Operation.trigger(event)
           executeOperation()
       }
     }
+
+    override def callViewUpdate(): Unit = accept(NoOpEvent)
   }
 
   /**

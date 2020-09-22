@@ -6,6 +6,7 @@ import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.{Game, GameState}
 import untitled.goose.framework.model.events.GameEvent
+import untitled.goose.framework.model.events.special.ActionEvent
 import untitled.goose.framework.view.InputManager
 import untitled.goose.framework.view.scene.GameScene
 
@@ -32,15 +33,14 @@ object ApplicationController {
 
     override def setGameScene(gameScene: GameScene): Unit = {
       this.gameScene = Some(gameScene)
-      update(engine.game.currentState)
+      engine.callViewUpdate()
     }
 
     override def resolveAction(action: Action): Unit =
-      engine.eventSink.accept(action.trigger(engine.game.currentState))
+      engine.eventSink.accept(ActionEvent(action))
 
-    override def update(state: GameState): Unit = {
-      val clonedState: GameState = state.clone()
-      gameScene.get.updateScene(clonedState, engine.game.availableActions)
+    override def update(state: GameState, availableActions: Set[Action]): Unit = {
+      gameScene.get.updateScene(state, availableActions)
     }
 
     override def close(): Unit = {

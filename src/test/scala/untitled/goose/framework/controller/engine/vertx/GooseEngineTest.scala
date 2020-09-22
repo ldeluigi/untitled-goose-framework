@@ -4,6 +4,7 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.controller.ViewController
 import untitled.goose.framework.model.Colour
+import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder}
 import untitled.goose.framework.model.entities.runtime.{Game, GameState, Piece, Player}
@@ -28,11 +29,12 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     .build(), ListMap(Player("") -> Piece(Colour.Default.Blue)))
 
   def cGenerator(handler: GameEvent => Unit): ViewController = new ViewController {
-    override def update(state: GameState): Unit = {}
 
     override def showDialog(content: DialogContent): Future[GameEvent] = Future.successful(NoOpEvent)
 
     override def close(): Unit = {}
+
+    override def update(state: GameState, availableActions: Set[Action]): Unit = {}
   }
 
   val e: GameEvent = new GameEvent {
@@ -43,12 +45,6 @@ class GooseEngineTest extends AnyFlatSpec with Matchers {
     override def groups: Seq[String] = Seq()
 
     override def cycle: Int = 1
-  }
-
-  it should "check whether the engine matches a certain custom runtime" in {
-    val ge = GooseEngine(m, cGenerator(_ => {}))
-    ge.game should equal(m)
-    ge.stop()
   }
 
 }
