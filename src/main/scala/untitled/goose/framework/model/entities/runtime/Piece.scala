@@ -9,7 +9,7 @@ trait Piece {
   /** The current piece position on the board. */
   def position: Option[Position]
 
-  /** This piece's color. */
+  /** This piece's colour. */
   def color: Colour
 }
 
@@ -17,10 +17,10 @@ object Piece {
 
   private case class PieceImpl(position: Option[Position], color: Colour) extends Piece
 
-  /** A factory that creates a new piece, based on a color and an optional position. */
+  /** A factory that creates a new piece, based on a colour and an optional position. */
   def apply(color: Colour, position: Option[Position] = None): Piece = PieceImpl(position, color)
 
-  /** A factory that creates a new piece, based on a color and a piece. */
+  /** A factory that creates a new piece, based on a colour and a piece. */
   def apply(piece: Piece, color: Colour): Piece = PieceImpl(piece.position, color)
 
   /** A factory that creates a new piece, based on a piece and an optional position. */

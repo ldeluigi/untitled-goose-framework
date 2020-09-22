@@ -53,7 +53,7 @@ object Colour {
   /**
    * This factory creates a Colour object with the given values.
    *
-   * @param hexCode the hex code for this color using '#000000' syntax.
+   * @param hexCode the hex code for this colour using '#000000' syntax.
    * @return a Colour object.
    */
   def apply(hexCode: String): Colour = {
@@ -114,7 +114,7 @@ object Colour {
     val Purple: Colour = Val("Purple", 0.5, 0.0, 0.5, 1.0)
 
     /**
-     * A Seq containing all the default color values available.
+     * A Seq containing all the default colour values available.
      *
      * @return a sequence of colour constants.
      */

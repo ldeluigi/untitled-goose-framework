@@ -22,7 +22,7 @@ class PieceTest extends AnyFlatSpec with Matchers {
     piece.position.nonEmpty should be(true)
   }
 
-  it should "have a color" in {
+  it should "have a colour" in {
     piece.color should not be null
     piece.color should equal(Colour.Default.Blue)
   }
@@ -33,7 +33,7 @@ class PieceTest extends AnyFlatSpec with Matchers {
     updatedPiece.position.get should equal(position)
   }
 
-  it should "set the color of the piece when given one" in {
+  it should "set the colour of the piece when given one" in {
     val color = Colour.Default.Red
     val updatedPiece = Piece(piece, color)
     updatedPiece.color should equal(Colour.Default.Red)

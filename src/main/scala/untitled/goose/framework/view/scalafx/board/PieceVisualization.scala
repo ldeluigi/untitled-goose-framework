@@ -12,7 +12,7 @@ import untitled.goose.framework.view.scalafx.ColorUtils
  */
 trait PieceVisualization extends StackPane {
 
-  /** Defines the shape of the piece by rendering a Circle object and filling it with the piece's previously specified color.
+  /** Defines the shape of the piece by rendering a Circle object and filling it with the piece's previously specified colour.
    *
    * @return a new Circle Shape object representing the Piece itself.
    */

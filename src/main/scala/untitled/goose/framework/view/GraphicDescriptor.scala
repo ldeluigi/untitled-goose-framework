@@ -40,13 +40,13 @@ object GraphicDescriptor {
   def apply(colorOption: Option[Colour], imagePathOption: Option[String]): GraphicDescriptor =
     new GraphicDescriptorImpl(colorOption, imagePathOption)
 
-  /** A factory which creates a new GraphicDescriptor if only a custom color is specified. */
+  /** A factory which creates a new GraphicDescriptor if only a custom colour is specified. */
   def apply(specifiedColor: Colour): GraphicDescriptor = apply(Some(specifiedColor), None)
 
   /** A factory which creates a new GraphicDescriptor if only a custom resource imagePath is specified. */
   def apply(path: String): GraphicDescriptor = apply(None, Some(path))
 
-  /** A factory which creates a new GraphicDescriptor if a custom color, imagePath, stroke color and tile's name are specified. */
+  /** A factory which creates a new GraphicDescriptor if a custom colour, imagePath, stroke colour and tile's name are specified. */
   def apply(specifiedColor: Colour, path: String, strokeColor: Colour, tileName: String): GraphicDescriptor =
     apply(Some(specifiedColor), Some(path))
 

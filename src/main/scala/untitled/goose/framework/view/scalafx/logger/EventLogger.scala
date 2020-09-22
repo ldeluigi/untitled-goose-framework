@@ -40,7 +40,7 @@ object EventLogger {
 
     private def logEvent(event: GameEvent, kind: String): Unit = {
       val i = eventNumber.getOrElse(kind, 0)
-      logText.appendText("\n" + (if (kind.length > 0) kind +" event" else "Event") + " [" + i + "]: " + event.toString)
+      logText.appendText("\n" + (if (kind.length > 0) kind + " event" else "Event") + " [" + i + "]: " + event.toString)
       logText.scrollTop = Double.MaxValue
       eventNumber += (kind -> (i + 1))
     }

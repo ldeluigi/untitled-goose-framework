@@ -53,7 +53,7 @@ object BehaviourRule {
    * @param operations     a sequence of operations to execute if the behaviour is activated.
    * @param consume        if true, removes the events from the buffer.
    * @param save           if true, saves the events in the history.
-   * @tparam T             events on the buffer that are not of type T are not considered.
+   * @tparam T events on the buffer that are not of type T are not considered.
    * @return A new BehaviourRule.
    */
   def apply[T <: ConsumableGameEvent](filterStrategy: T => Boolean = (_: T) => true, countStrategy: Int => Boolean = _ > 0, when: GameState => Boolean = _ => true, operations: (Seq[T], GameState) => Seq[Operation], consume: Boolean = true, save: Boolean = false)(implicit t: ClassTag[T]): BehaviourRule =

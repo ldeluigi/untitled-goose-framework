@@ -1,7 +1,7 @@
 package untitled.goose.framework.dsl.board.words
 
+import untitled.goose.framework.dsl.board.words.BoardProperty.{DispositionProperty, TileNumProperty}
 import untitled.goose.framework.dsl.board.words.DispositionType.DispositionType
-import untitled.goose.framework.dsl.board.words.properties.BoardProperty.{DispositionProperty, TileNumProperty}
 
 trait BoardPropertyWords {
 

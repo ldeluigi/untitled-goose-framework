@@ -1,8 +1,8 @@
-package untitled.goose.framework.dsl.board.words.properties
+package untitled.goose.framework.dsl.board.words
 
 import untitled.goose.framework.dsl.board.words.DispositionType.DispositionType
 
-sealed trait BoardProperty
+private[dsl] sealed trait BoardProperty
 
 private[dsl] object BoardProperty {
 
