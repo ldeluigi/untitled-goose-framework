@@ -2,9 +2,9 @@ package untitled.goose.framework.dsl.board.words
 
 import untitled.goose.framework.model.Colour
 
-private[dsl] sealed trait TileProperty
+sealed trait TileProperty
 
-private[dsl] object TileProperty {
+object TileProperty {
 
   case class ColourProperty(value: Colour) extends TileProperty
 

@@ -1,4 +1,4 @@
-package untitled.goose.framework.dsl.rules.actions.words
+package untitled.goose.framework.dsl.rules
 
 import untitled.goose.framework.dsl.nodes.RuleBook
 

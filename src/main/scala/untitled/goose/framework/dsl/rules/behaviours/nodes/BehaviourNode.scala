@@ -11,7 +11,7 @@ import untitled.goose.framework.model.rules.operations.Operation
 
 import scala.reflect.ClassTag
 
-private[dsl] case class BehaviourNode[EventType <: ConsumableGameEvent : ClassTag]
+case class BehaviourNode[EventType <: ConsumableGameEvent : ClassTag]
 (
   condition: GameState => Boolean,
   filterStrategy: EventType => Boolean,

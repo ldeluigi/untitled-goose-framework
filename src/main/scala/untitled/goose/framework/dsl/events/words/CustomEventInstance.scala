@@ -6,19 +6,34 @@ import untitled.goose.framework.model.events._
 
 import scala.reflect.ClassTag
 
+/**
+ * Defines a custom event instance with given name and properties.
+ * @tparam PropertyInput the data needed to compute property values.
+ */
 trait CustomEventInstance[PropertyInput] extends RuleBookNode {
+
+  /** The properties defined for this custom event instance. */
   def properties: Map[Key[_], PropertyInput => Any]
 
+  /** Generates the event with given information and data. */
   def generateEvent(input: PropertyInput): GameEvent
 
+  /**
+   * Appends a new value assignment to this custom event properties.
+   * @param name name of the property.
+   * @param value value assigned, computed from input.
+   * @tparam T type of the value computed. Must conform to custom event definition.
+   * @return this custom event instance.
+   */
   def :+[T: ClassTag](name: String, value: PropertyInput => T): CustomEventInstance[PropertyInput]
 
+  /** The name of this custom event. */
   def name: String
 }
 
 object CustomEventInstance {
 
-  private[dsl] abstract class AbstractCustomEventInstance[PropertyInput](override val name: String,
+  abstract class AbstractCustomEventInstance[PropertyInput](override val name: String,
                                                                          definedEvents: EventDefinitionCollection)
     extends CustomEventInstance[PropertyInput] {
 

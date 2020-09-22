@@ -9,13 +9,13 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
 
-private[dsl] sealed trait OperationNode[T <: ConsumableGameEvent] extends RuleBookNode {
+sealed trait OperationNode[T <: ConsumableGameEvent] extends RuleBookNode {
   def getOperations: (Seq[T], GameState) => Seq[Operation]
 
   def isForEach: Boolean
 }
 
-private[dsl] object OperationNode {
+object OperationNode {
 
   case class CustomEventOperationNode[T <: ConsumableGameEvent](event: BehaviourCustomEventInstance[T], isForEach: Boolean) extends OperationNode[T] {
 

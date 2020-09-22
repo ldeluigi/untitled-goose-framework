@@ -5,7 +5,7 @@ import untitled.goose.framework.dsl.dice.nodes.{DiceCollection, DiceManagerNode}
 import untitled.goose.framework.dsl.events.nodes.GooseEventCollectionsNode
 import untitled.goose.framework.dsl.rules.RuleSetNode
 
-private[dsl] trait RuleBook extends RuleBookNode {
+trait RuleBook extends RuleBookNode {
   def boardBuilder: BoardBuilderNode
 
   def graphicMap: GraphicMapNode
@@ -19,7 +19,7 @@ private[dsl] trait RuleBook extends RuleBookNode {
   def diceCollection: DiceCollection
 }
 
-private[dsl] object RuleBook {
+object RuleBook {
 
   private class RuleBookImpl() extends RuleBook {
 

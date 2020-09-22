@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl.nodes
 
-private[dsl] class SingleValueNode[T](name: String) extends RuleBookNode {
+class SingleValueNode[T](name: String) extends RuleBookNode {
   private var v: Option[T] = None
 
   def isDefined: Boolean = v.isDefined

@@ -4,7 +4,7 @@ import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.view.GraphicDescriptor
 
-private[dsl] class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNode {
+class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNode {
 
   private var graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
 

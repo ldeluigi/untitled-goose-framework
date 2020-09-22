@@ -3,7 +3,7 @@ package untitled.goose.framework.dsl.rules.behaviours.nodes
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 
-private[dsl] trait BehaviourCollectionNode extends RuleBookNode {
+trait BehaviourCollectionNode extends RuleBookNode {
   def behaviours: Seq[BehaviourRule]
 
   def addBehaviourNode(behaviourNode: BehaviourNode[_]): Unit
@@ -11,7 +11,7 @@ private[dsl] trait BehaviourCollectionNode extends RuleBookNode {
   def addSystemBehaviour(behaviour: BehaviourRule): Unit
 }
 
-private[dsl] object BehaviourCollectionNode {
+object BehaviourCollectionNode {
 
   private class BehaviourCollectionNodeImpl() extends BehaviourCollectionNode {
 
