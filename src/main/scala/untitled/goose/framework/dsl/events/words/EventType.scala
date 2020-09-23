@@ -4,5 +4,6 @@ object EventType extends Enumeration {
 
   type EventType = Value
 
+  /** Event type. */
   val gameEvent, playerEvent, tileEvent = Value
 }

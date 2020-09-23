@@ -3,7 +3,7 @@ package untitled.goose.framework.dsl.board.nodes
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.entities.definitions.{BoardBuilder, BoardDefinition, Disposition, TileIdentifier}
 
-private[dsl] case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileIdentifiersCollection {
+case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileIdentifiersCollection {
 
   private val builder: BoardBuilder = BoardBuilder()
   private var nameDefined = false

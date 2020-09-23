@@ -4,7 +4,7 @@ import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.entities.Dice
 import untitled.goose.framework.model.entities.Dice.MovementDice
 
-private[dsl] case class DiceManagerNode() extends RuleBookNode with DiceCollection {
+case class DiceManagerNode() extends RuleBookNode with DiceCollection {
   var diceNodes: Seq[DiceNode[_]] = Seq()
 
   override def add(diceNode: DiceNode[_]): Unit = diceNodes :+= diceNode

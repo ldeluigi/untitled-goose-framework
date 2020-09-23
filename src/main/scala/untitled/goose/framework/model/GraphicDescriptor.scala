@@ -1,6 +1,4 @@
-package untitled.goose.framework.view
-
-import untitled.goose.framework.model.Colour
+package untitled.goose.framework.model
 
 /**
  * An object which describes the graphical properties that the user wants the runtime to have.

@@ -10,7 +10,7 @@ import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.DialogLaunchEvent
 import untitled.goose.framework.model.rules.actionrules.{ActionAvailability, ActionRule}
 
-private[dsl] object ActionRuleNode {
+object ActionRuleNode {
 
   sealed trait ActionRuleNode extends RuleBookNode {
     def generateActionRule(): ActionRule
@@ -61,7 +61,6 @@ private[dsl] object ActionRuleNode {
   case class DiceActionNode(actionName: String,
                             when: GameState => Boolean,
                             priority: Int,
-                            allow: Boolean,
                             diceNumber: Int,
                             diceName: String,
                             isMovement: Boolean,
@@ -81,7 +80,7 @@ private[dsl] object ActionRuleNode {
     } else Seq("Dice \"" + diceName + "\" was never defined")
 
     override def generateActionRule(): ActionRule = {
-      val availabilities: Set[ActionAvailability] = Set((allow, priority, generateAction()))
+      val availabilities: Set[ActionAvailability] = Set((true, priority, generateAction()))
       ActionRule(availabilities, when)
     }
 
@@ -94,12 +93,11 @@ private[dsl] object ActionRuleNode {
   case class CustomEventActionNode(actionName: String,
                                    when: GameState => Boolean,
                                    customEvent: CustomEventInstance[GameState],
-                                   priority: Int,
-                                   allow: Boolean)
+                                   priority: Int)
     extends ActionRuleNode with ActionGeneration {
 
     override def generateActionRule(): ActionRule =
-      ActionRule(Set(ActionAvailability(generateAction(), priority, allow)), when)
+      ActionRule(Set(ActionAvailability(generateAction(), priority)), when)
 
     override def generateAction(): Action = {
       Action(actionName, customEvent.generateEvent)

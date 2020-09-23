@@ -1,6 +1,6 @@
 package untitled.goose.framework.dsl.events.nodes
 
-private[dsl] case class GooseEventCollectionsNode() extends GooseEventCollections {
+case class GooseEventCollectionsNode() extends GooseEventCollections {
   private val gameEvent: EventDefinitionsNode = EventDefinitionsNode("Game Events")
   private val playerEvent: EventDefinitionsNode = EventDefinitionsNode("Player Events")
   private val tileEvent: EventDefinitionsNode = EventDefinitionsNode("Tile Events")

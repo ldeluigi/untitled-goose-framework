@@ -6,16 +6,17 @@ import scalafx.scene.Scene
 import scalafx.scene.control.{SplitPane, Tab, TabPane}
 import scalafx.scene.input.KeyCode
 import scalafx.stage.Stage
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
+import untitled.goose.framework.view.InputManager
 import untitled.goose.framework.view.scalafx.actionmenu.ActionMenu
 import untitled.goose.framework.view.scalafx.board.BoardDisplay
 import untitled.goose.framework.view.scalafx.logger.EventLogger
 import untitled.goose.framework.view.scene.GameScene
-import untitled.goose.framework.view.{GraphicDescriptor, InputManager}
 
 import scala.concurrent.Promise
 

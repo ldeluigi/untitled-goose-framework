@@ -4,7 +4,7 @@ import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.events.Key
 
 
-private[dsl] trait EventNode extends RuleBookNode {
+trait EventNode extends RuleBookNode {
   def properties: Set[Key[_]]
 
   def name: String
@@ -14,7 +14,7 @@ private[dsl] trait EventNode extends RuleBookNode {
   def isPropertyDefined[T](key: Key[T]): Boolean
 }
 
-private[dsl] object EventNode {
+object EventNode {
 
   private class EventNodeImpl(override val name: String) extends EventNode {
 
