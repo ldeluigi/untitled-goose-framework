@@ -6,7 +6,7 @@ import io.vertx.lang.scala.VertxExecutionContext
 import io.vertx.scala.core.Vertx
 import io.vertx.scala.core.eventbus.DeliveryOptions
 import untitled.goose.framework.controller.ViewController
-import untitled.goose.framework.controller.engine.EventSink
+import untitled.goose.framework.controller.engine.{EventSink, GooseEngine}
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.{CloneGameState, Game}
 import untitled.goose.framework.model.events.GameEvent
@@ -19,33 +19,8 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
 
-/**
- * The runtime engine of the game. It can receive events to handle,
- * and can be polled to get the game, which includes the state.
- *
- * It uses a stack for operations.
- */
-trait GooseEngine {
-
-  /**
-   * Schedules a view update to be run when possible (next time the operation stack is freed).
-   *
-   * Should be roughly equivalent to eventSink.accept([[NoOpEvent]]).
-   */
-  def callViewUpdate(): Unit
-
-  /**
-   * Returns an event sink that manages incoming asynchronous event.
-   *
-   * Useful to select actions with [[ActionEvent]].
-   */
-  def eventSink: EventSink[GameEvent]
-
-  /** Clears resources and stops permanently the engine. */
-  def stop(): Unit
-}
-
-object GooseEngine {
+/** Offers GooseEngine implementation with Vert.x library. */
+object VertxGooseEngine {
 
   private class GooseEngineImpl(private val gameMatch: Game, private val controller: ViewController) extends GooseEngine with EventSink[GameEvent] {
     private type DialogDisplay = DialogContent => Future[GameEvent]
@@ -125,4 +100,5 @@ object GooseEngine {
    * @return The GooseEngine implemented using the Vert.x library.
    */
   def apply(status: Game, controller: ViewController): GooseEngine = new GooseEngineImpl(status, controller)
+
 }

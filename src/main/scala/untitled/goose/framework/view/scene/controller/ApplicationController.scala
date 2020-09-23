@@ -1,7 +1,8 @@
 package untitled.goose.framework.view.scene.controller
 
 import untitled.goose.framework.controller.ViewController
-import untitled.goose.framework.controller.engine.vertx.GooseEngine
+import untitled.goose.framework.controller.engine.GooseEngine
+import untitled.goose.framework.controller.engine.vertx.VertxGooseEngine
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.{Game, GameState}
@@ -28,7 +29,7 @@ object ApplicationController {
    */
   case class ApplicationControllerImpl(game: Game) extends ApplicationController {
 
-    private val engine: GooseEngine = GooseEngine(game, this)
+    private val engine: GooseEngine = VertxGooseEngine(game, this)
     private var gameScene: Option[GameScene] = None
 
     override def setGameScene(gameScene: GameScene): Unit = {
