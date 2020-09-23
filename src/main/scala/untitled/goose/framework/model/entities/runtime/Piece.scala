@@ -10,12 +10,12 @@ trait Piece {
   def position: Option[Position]
 
   /** This piece's colour. */
-  def color: Colour
+  def colour: Colour
 }
 
 object Piece {
 
-  private case class PieceImpl(position: Option[Position], color: Colour) extends Piece
+  private case class PieceImpl(position: Option[Position], colour: Colour) extends Piece
 
   /** A factory that creates a new piece, based on a colour and an optional position. */
   def apply(color: Colour, position: Option[Position] = None): Piece = PieceImpl(position, color)
@@ -24,6 +24,6 @@ object Piece {
   def apply(piece: Piece, color: Colour): Piece = PieceImpl(piece.position, color)
 
   /** A factory that creates a new piece, based on a piece and an optional position. */
-  def apply(piece: Piece, position: Option[Position]): Piece = PieceImpl(position, piece.color)
+  def apply(piece: Piece, position: Option[Position]): Piece = PieceImpl(position, piece.colour)
 }
 

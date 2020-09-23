@@ -29,7 +29,7 @@ class MutableGameStateTest extends AnyFlatSpec with Matchers {
 
   it should "update a player pieces as told and check correctness" in {
     gameMutableState.updatePlayerPiece(p1, _ => piece)
-    gameMutableState.playerPieces(p1).color should equal(piece.color)
+    gameMutableState.playerPieces(p1).colour should equal(piece.colour)
   }
 
   it should "return a seq of consumable runtime events" in {

@@ -29,7 +29,7 @@ trait GameDefinition {
 
 object GameDefinition {
 
-  /** Utility case class for a GameDefinition. */
+  /** Product type for a GameDefinition. */
   case class GameDefinitionImpl(board: BoardDefinition,
                                 playerOrdering: PlayerOrdering,
                                 playersRange: Range,
