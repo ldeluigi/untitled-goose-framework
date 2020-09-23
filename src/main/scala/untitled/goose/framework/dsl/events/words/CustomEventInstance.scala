@@ -46,7 +46,7 @@ object CustomEventInstance {
                                                             definedEvents: EventDefinitionCollection)
     extends CustomEventInstance[PropertyInput] {
 
-    override var properties: Map[Key[_], PropertyInput => Any] = Map()
+    var properties: Map[Key[_], PropertyInput => Any] = Map()
 
     override def :+[T: ClassTag](name: String, value: PropertyInput => T): CustomEventInstance[PropertyInput] = {
       properties += Key[T](name) -> value
