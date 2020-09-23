@@ -14,7 +14,7 @@ trait GameDefinition {
   /** Minimum and maximum number of players. */
   def playersRange: Range
 
-  /** Type of player order. */
+  /** Player order strategy. */
   def playerOrdering: PlayerOrdering
 
   /** The set of action rules. */
