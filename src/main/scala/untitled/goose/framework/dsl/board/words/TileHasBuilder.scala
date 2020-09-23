@@ -2,8 +2,8 @@ package untitled.goose.framework.dsl.board.words
 
 import untitled.goose.framework.dsl.board.nodes.{BoardBuilderNode, GraphicMapNode}
 import untitled.goose.framework.dsl.board.words.TileProperty.{BackgroundProperty, ColourProperty, GroupProperty, NameProperty}
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
-import untitled.goose.framework.view.GraphicDescriptor
 
 /** Used for "tile [verb] ..." */
 trait TileHasBuilder {

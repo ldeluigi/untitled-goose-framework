@@ -2,6 +2,7 @@ package untitled.goose.framework.main
 
 import java.awt.{Dimension, Toolkit}
 
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
 import untitled.goose.framework.model.entities.definitions._
@@ -14,7 +15,6 @@ import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import untitled.goose.framework.model.rules.behaviours.{BehaviourRule, MovementWithDiceBehaviour, MultipleStepBehaviour}
 import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
-import untitled.goose.framework.view.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.TileIdentifierImplicit._
 import untitled.goose.framework.view.scalafx.View
 

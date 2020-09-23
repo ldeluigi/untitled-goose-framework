@@ -4,8 +4,8 @@ import untitled.goose.framework.dsl.board.words.BoardWords
 import untitled.goose.framework.dsl.dice.words.DiceWords
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.{RuleSetWords, RulesWord}
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, GameDefinitionBuilder, TileIdentifier}
-import untitled.goose.framework.view.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.View
 
 

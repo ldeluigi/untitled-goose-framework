@@ -6,9 +6,9 @@ import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.stage.Stage
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, TileIdentifier}
 import untitled.goose.framework.model.entities.runtime.{Game, GameState}
-import untitled.goose.framework.view.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.{ScalaFxController, ScalaFxGameScene}
 
 import scala.collection.immutable.ListMap

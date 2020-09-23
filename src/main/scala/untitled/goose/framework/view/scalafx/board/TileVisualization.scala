@@ -8,8 +8,8 @@ import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color.White
 import scalafx.scene.shape.{Rectangle, StrokeType}
 import scalafx.scene.text.TextAlignment
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.runtime.Tile
-import untitled.goose.framework.view.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.ColorUtils
 
 /**
