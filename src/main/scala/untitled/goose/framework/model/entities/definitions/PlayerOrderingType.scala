@@ -1,4 +1,4 @@
-package untitled.goose.framework.model.rules.ruleset
+package untitled.goose.framework.model.entities.definitions
 
 /** Types of player ordering. */
 object PlayerOrderingType extends Enumeration {

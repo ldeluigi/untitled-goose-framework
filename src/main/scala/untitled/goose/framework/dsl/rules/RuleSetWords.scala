@@ -8,7 +8,7 @@ import untitled.goose.framework.dsl.rules.cleanup.words.CleanupWords
 import untitled.goose.framework.dsl.rules.players.words.{PlayerOrderProperty, PlayersWord}
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.EventsShortcuts
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
+import untitled.goose.framework.model.entities.definitions.PlayerOrderingType.PlayerOrderingType
 
 trait RuleSetWords extends EventDefinitionWords with EventsShortcuts with BehaviourWords with CleanupWords {
 

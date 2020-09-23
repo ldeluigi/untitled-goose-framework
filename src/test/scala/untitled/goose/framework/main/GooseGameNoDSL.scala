@@ -6,7 +6,7 @@ import javafx.scene.input.KeyCode
 import scalafx.application.JFXApp
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder, TileIdentifier}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder, PlayerOrderingType, TileIdentifier}
 import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.consumable
@@ -17,7 +17,6 @@ import untitled.goose.framework.model.rules.actionrules.{ActionRule, LoseTurnAct
 import untitled.goose.framework.model.rules.behaviours._
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
 import untitled.goose.framework.model.{Colour, GraphicDescriptor}
 import untitled.goose.framework.view.scalafx.{ScalaFxController, ScalaFxGameScene}
 

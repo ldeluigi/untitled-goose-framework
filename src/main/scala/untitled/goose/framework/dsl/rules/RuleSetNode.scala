@@ -7,7 +7,7 @@ import untitled.goose.framework.dsl.rules.behaviours.nodes.BehaviourCollectionNo
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
+import untitled.goose.framework.model.entities.definitions.PlayerOrderingType.PlayerOrderingType
 
 trait RuleSetNode extends RuleBookNode {
 

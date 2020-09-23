@@ -1,10 +1,11 @@
 package untitled.goose.framework.model.entities.definitions
 
 import untitled.goose.framework.model.entities.definitions.GameDefinition.GameDefinitionImpl
+import untitled.goose.framework.model.entities.definitions.PlayerOrderingType.{FirstTurnRandomThenFixed, Fixed, PlayerOrderingType, RandomEachTurn}
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.PlayerOrderingType
+import untitled.goose.framework.model.rules.ruleset.PlayerOrdering
 
 /** Builder pattern implemented for a [[GameDefinition]]. */
 trait GameDefinitionBuilder {
@@ -78,7 +79,11 @@ object GameDefinitionBuilder {
 
     override def build(): GameDefinition =
       GameDefinitionImpl(_board.get,
-        _orderingType.get,
+        _orderingType.get match {
+          case RandomEachTurn => PlayerOrdering.fullRandom
+          case FirstTurnRandomThenFixed => PlayerOrdering.randomOrder
+          case Fixed => PlayerOrdering.fixed
+        },
         _playersRange.get,
         _actionRules.get,
         _behaviorRules.get,

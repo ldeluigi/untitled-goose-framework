@@ -3,7 +3,6 @@ package untitled.goose.framework.model.entities.runtime
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.definitions.GameDefinition
 import untitled.goose.framework.model.rules.operations.Operation
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.{FirstTurnRandomThenFixed, Fixed, RandomEachTurn}
 import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
 
 import scala.collection.immutable.ListMap
@@ -31,11 +30,7 @@ trait Game extends Defined[GameDefinition] {
 object Game {
 
   private class GameImpl(playerPieces: ListMap[Player, Piece], val definition: GameDefinition) extends Game {
-    val playerOrdering: PlayerOrdering = definition.playerOrderingType match {
-      case RandomEachTurn => PlayerOrdering.fullRandom
-      case FirstTurnRandomThenFixed => PlayerOrdering.randomOrder
-      case Fixed => PlayerOrdering.fixed
-    }
+    private val playerOrdering: PlayerOrdering = definition.playerOrdering
 
     val board: Board = Board(definition.board)
 
