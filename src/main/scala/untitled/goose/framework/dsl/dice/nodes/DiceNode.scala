@@ -5,6 +5,11 @@ import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.entities.Dice
 import untitled.goose.framework.model.entities.Dice.MovementDice
 
+/**
+ * This node contains all the information needed to create a Dice instance.
+ *
+ * @tparam T the type of the dice sides
+ */
 sealed trait DiceNode[T] extends RuleBookNode {
   def name: String
 

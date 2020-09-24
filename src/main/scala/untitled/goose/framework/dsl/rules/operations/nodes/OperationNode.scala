@@ -9,6 +9,11 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
 
+/**
+ * A node containing the information needed to return a seq of operations.
+ *
+ * @tparam T the event this operation is a response of.
+ */
 sealed trait OperationNode[T <: ConsumableGameEvent] extends RuleBookNode {
   def getOperations: (Seq[T], GameState) => Seq[Operation]
 

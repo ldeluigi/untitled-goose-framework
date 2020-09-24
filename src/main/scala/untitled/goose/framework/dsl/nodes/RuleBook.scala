@@ -5,6 +5,10 @@ import untitled.goose.framework.dsl.dice.nodes.{DiceCollection, DiceManagerNode}
 import untitled.goose.framework.dsl.events.nodes.GooseEventCollectionsNode
 import untitled.goose.framework.dsl.rules.RuleSetNode
 
+/**
+ * This is the central point of the whole DSL tree structure.
+ * It is responsible of keeping all the nodes and call the check recursively on them.
+ */
 trait RuleBook extends RuleBookNode {
   def boardBuilder: BoardBuilderNode
 

@@ -8,6 +8,11 @@ import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, GameDefinitionBuilder, TileIdentifier}
 import untitled.goose.framework.view.scalafx.View
 
+/**
+ * The base class that needs to be extended when wanting to use the DSL in your project.
+ * This provides the entry points for all the DSL syntaxes and also the methods to run the model checking and the
+ * application with the generated game.
+ */
 
 trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords with DiceWords {
 

@@ -11,6 +11,15 @@ import untitled.goose.framework.model.rules.operations.Operation
 
 import scala.reflect.ClassTag
 
+/**
+ * This node contains all the information needed to create a behaviour.
+ *
+ * @param condition      the condition on the state that tells when this behaviour may be activated
+ * @param filterStrategy the strategy to filter the consumable event buffer
+ * @param countStrategy  the strategy to count the result after filtering
+ * @param operationNodes the Nodes representing the operations to be returned as the result of this behaviour
+ * @tparam EventType the type of the event on this behaviour is interested in
+ */
 case class BehaviourNode[EventType <: ConsumableGameEvent : ClassTag]
 (
   condition: GameState => Boolean,

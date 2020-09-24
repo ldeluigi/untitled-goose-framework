@@ -4,10 +4,10 @@ import untitled.goose.framework.dsl.board.nodes.TileIdentifiersCollection
 import untitled.goose.framework.dsl.nodes.{RuleBookNode, SingleValueNode}
 import untitled.goose.framework.dsl.rules.actions.nodes.ActionRuleSetNode
 import untitled.goose.framework.dsl.rules.behaviours.nodes.BehaviourCollectionNode
+import untitled.goose.framework.model.entities.definitions.PlayerOrderingType.PlayerOrderingType
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 import untitled.goose.framework.model.rules.cleanup.CleanupRule
-import untitled.goose.framework.model.entities.definitions.PlayerOrderingType.PlayerOrderingType
 
 trait RuleSetNode extends RuleBookNode {
 
@@ -33,6 +33,10 @@ trait RuleSetNode extends RuleBookNode {
 
 }
 
+/**
+ * This node is a collection of all nodes related to the RuleSet.
+ * It is responsible of managing the check and generation of its children.
+ */
 object RuleSetNode {
 
   class RuleSetNodeImpl extends RuleSetNode {
