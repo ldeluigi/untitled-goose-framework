@@ -166,8 +166,8 @@ jobs:
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
-          prerelease: true
+          prerelease: false
           files: '*.jar'
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          title: Development Build - Version 0.9.0
-          automatic_release_tag: 0.9.0
+          title: Release - Version 1.0.0
+          automatic_release_tag: 1.0.0
