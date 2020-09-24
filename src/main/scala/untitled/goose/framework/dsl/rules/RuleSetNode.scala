@@ -43,9 +43,9 @@ object RuleSetNode {
 
     private val playerRangeNode: SingleValueNode[Range] = new SingleValueNode("Number of players")
 
-    val behaviourCollectionNode: BehaviourCollectionNode = BehaviourCollectionNode()
+    override val behaviourCollectionNode: BehaviourCollectionNode = BehaviourCollectionNode()
 
-    val actionRuleSetNode: ActionRuleSetNode = ActionRuleSetNode()
+    override val actionRuleSetNode: ActionRuleSetNode = ActionRuleSetNode()
 
     private val playerOrderingTypeNode: SingleValueNode[PlayerOrderingType] = new SingleValueNode[PlayerOrderingType]("Order of players")
 
@@ -57,12 +57,11 @@ object RuleSetNode {
 
     override def playerOrderingType: PlayerOrderingType = playerOrderingTypeNode.value
 
-    var cleanupRules: Seq[CleanupRule] = Seq()
+    override var cleanupRules: Seq[CleanupRule] = Seq()
 
-    def behaviourRules: Seq[BehaviourRule] = behaviourCollectionNode.behaviours
+    override def behaviourRules: Seq[BehaviourRule] = behaviourCollectionNode.behaviours
 
-    def actionRules: Set[ActionRule] = actionRuleSetNode.actionRules
-
+    override def actionRules: Set[ActionRule] = actionRuleSetNode.actionRules
 
     override def check: Seq[String] =
       playerRangeNode.check ++

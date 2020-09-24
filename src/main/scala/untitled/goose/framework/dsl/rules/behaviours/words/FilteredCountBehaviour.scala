@@ -8,6 +8,7 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 import scala.reflect.ClassTag
 
+/** Used for "[behaviour filter] [then] ..." */
 case class FilteredCountBehaviour[T <: ConsumableGameEvent : ClassTag]
 (
   condition: GameState => Boolean,
@@ -15,6 +16,7 @@ case class FilteredCountBehaviour[T <: ConsumableGameEvent : ClassTag]
   countStrategy: Int => Boolean,
 ) {
 
+  /** Enables "... resolve([operation], [operation]) ..." */
   def resolve(operations: OperationNode[T]*)(implicit ruleBook: RuleBook): BehaviourNode[T] = {
     val b = BehaviourNode[T](condition, filterStrategy, countStrategy, operations: _*)
     ruleBook.ruleSet.behaviourCollectionNode.addBehaviourNode(b)

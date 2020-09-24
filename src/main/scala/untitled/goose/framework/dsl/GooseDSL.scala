@@ -16,12 +16,16 @@ import untitled.goose.framework.view.scalafx.View
 
 trait GooseDSL extends BoardWords with RuleSetWords with Implicits with UtilityWords with DiceWords {
 
+  /** Override is allowed as an extension feature. */
   protected implicit val ruleBook: RuleBook = RuleBook()
 
+  /** Enables "Rules ..." */
   val Rules: RulesWord = new RulesWord()
 
+  /** Enables "The ..." */
   def The: BoardWords = this
 
+  /** Enables "the ..." */
   def the: BoardWords = this
 
   @deprecatedOverriding("You don't need to override this, override start method instead.")

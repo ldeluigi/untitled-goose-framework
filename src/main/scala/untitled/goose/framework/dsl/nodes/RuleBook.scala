@@ -10,6 +10,7 @@ import untitled.goose.framework.dsl.rules.RuleSetNode
  * It is responsible of keeping all the nodes and call the check recursively on them.
  */
 trait RuleBook extends RuleBookNode {
+
   def boardBuilder: BoardBuilderNode
 
   def graphicMap: GraphicMapNode

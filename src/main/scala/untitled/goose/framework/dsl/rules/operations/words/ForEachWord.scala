@@ -7,6 +7,7 @@ import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameSt
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
+/** Implements every possible operation offered by default. */
 case class ForEachWord() extends OperationWords {
 
   override def trigger[T <: ConsumableGameEvent](customEvent: BehaviourCustomEventInstance[T]): OperationNode[T] = {
@@ -23,7 +24,6 @@ case class ForEachWord() extends OperationWords {
     }
     DisplayDialogOperationNode(content, isForEach = true)
   }
-
 
   override def displayMessage[T <: ConsumableGameEvent](title: String, text: String): OperationNode[T] = {
     val dialog: (T, GameState) => (String, String, Seq[(String, GameEvent)]) = (e, s) => (title, text, Seq())

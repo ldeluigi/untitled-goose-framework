@@ -10,7 +10,17 @@ import untitled.goose.framework.model.events.{CustomGameEvent, CustomPlayerEvent
 
 import scala.reflect.ClassTag
 
+/** Custom event instance extension for behaviours. */
 trait BehaviourCustomEventInstance[E <: ConsumableGameEvent] extends CustomEventInstance[(E, GameState)] {
+
+  /**
+   * Adds a property of type T to this instance.
+   *
+   * @param name  name of the key for the property.
+   * @param value property value based on event and state.
+   * @tparam T type of property value.
+   * @return this instance.
+   */
   def :+[T: ClassTag](name: String, value: (E, GameState) => T): BehaviourCustomEventInstance[E]
 }
 
