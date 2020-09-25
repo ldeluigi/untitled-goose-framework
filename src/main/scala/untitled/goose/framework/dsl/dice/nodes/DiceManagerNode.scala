@@ -4,6 +4,9 @@ import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.entities.Dice
 import untitled.goose.framework.model.entities.Dice.MovementDice
 
+/**
+ * This Node implements the DiceCollection providing also a check on double defined dice.
+ */
 case class DiceManagerNode() extends RuleBookNode with DiceCollection {
   var diceNodes: Seq[DiceNode[_]] = Seq()
 

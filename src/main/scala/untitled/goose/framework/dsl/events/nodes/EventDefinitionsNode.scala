@@ -2,6 +2,11 @@ package untitled.goose.framework.dsl.events.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 
+/**
+ * This node can check the correct definition of custom game events
+ *
+ * @param name the name of this collection.
+ */
 case class EventDefinitionsNode(override val name: String) extends RuleBookNode with EventDefinitionCollection {
   private var definitions: List[EventNode] = List()
 

@@ -3,6 +3,10 @@ package untitled.goose.framework.dsl.board.nodes
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.entities.definitions.{BoardBuilder, BoardDefinition, Disposition, TileIdentifier}
 
+/**
+ * This node wraps the BoardBuilder of the model keeping information about the defined identifiers and
+ * returning some more readable error messages for the users that uses the DSL.
+ */
 case class BoardBuilderNode() extends RuleBookNode with BoardBuilder with TileIdentifiersCollection {
 
   private val builder: BoardBuilder = BoardBuilder()

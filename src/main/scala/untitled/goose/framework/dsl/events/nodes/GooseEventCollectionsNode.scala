@@ -1,5 +1,8 @@
 package untitled.goose.framework.dsl.events.nodes
 
+/**
+ * This node is a wrapper of all types of custom events collections.
+ */
 case class GooseEventCollectionsNode() extends GooseEventCollections {
   private val gameEvent: EventDefinitionsNode = EventDefinitionsNode("Game Events")
   private val playerEvent: EventDefinitionsNode = EventDefinitionsNode("Player Events")

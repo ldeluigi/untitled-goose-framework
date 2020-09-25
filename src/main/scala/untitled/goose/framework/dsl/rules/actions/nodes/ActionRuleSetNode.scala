@@ -5,6 +5,10 @@ import untitled.goose.framework.dsl.rules.actions.nodes.ActionRuleNode.{ActionGe
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 
+/**
+ * This node implement the ActionCollection and provide a recursive check on all the defined node.
+ * It is responsible of generating Actions when a new node is added to the tree.
+ */
 trait ActionRuleSetNode extends RuleBookNode with ActionCollection {
   def addLoseTurnActionNode(loseNode: LoseTurnActionNode)
 
