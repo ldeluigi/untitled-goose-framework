@@ -4,27 +4,27 @@ import untitled.goose.framework.dsl.UtilityWords.ToWord
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.actions.words.custom.UnnamedCustomAction
-import untitled.goose.framework.dsl.rules.actions.words.dice.DiceWord
-import untitled.goose.framework.model.entities.DialogContent
+import untitled.goose.framework.dsl.rules.actions.words.dice.ActionDiceWord
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
-import untitled.goose.framework.model.events.consumable.DialogLaunchEvent
 
 import scala.reflect.ClassTag
 
 class AllowWord(when: GameState => Boolean)(implicit ruleBook: RuleBook) {
   def apply(to: ToWord): AllowWord = this
 
-  def displayQuestion(title: String, text: String, options: (String, GameState => GameEvent)*): UnnamedAction =
-    trigger(s => DialogLaunchEvent(s.currentTurn, s.currentCycle, DialogContent(title, text, options.map(o => (o._1, o._2(s))): _*)))
+  /** Enables "to trigger [custom event]" */
+  def trigger[T: ClassTag](customEventInstance: CustomEventInstance[GameState]): UnnamedCustomAction = UnnamedCustomAction(when, customEventInstance)
 
-  def trigger[T: ClassTag](customEventInstance: CustomEventInstance[GameState]): UnnamedCustomAction = UnnamedCustomAction(when, customEventInstance, allow = true)
-
+  /** Enables "to trigger (state => [event])" */
   def trigger(trigger: GameState => GameEvent): UnnamedAction = UnnamedAction(when, trigger, allow = true)
 
+  /** Enables "to use [action name]" */
   def use(refName: String): RefAction = RefAction(when, allow = true, Set(refName))
 
+  /** Enables "to use ([action name], [action name], ...)" */
   def use(refNames: String*): RefAction = RefAction(when, allow = true, refNames.toSet)
 
-  def roll(number: Int): DiceWord = dice.DiceWord(when, allow = true, number)
+  /** Enables "to roll [number] [dice] ..." */
+  def roll(number: Int): ActionDiceWord = dice.ActionDiceWord(when, number)
 }

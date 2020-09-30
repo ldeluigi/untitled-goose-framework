@@ -26,11 +26,7 @@ private[vertx] class GameEventMessageCodec extends MessageCodec[GameEvent, GameE
 
   override def transform(s: GameEvent): GameEvent = s
 
-  override def name(): String = GameEventMessageCodec.name
+  override def name(): String = "GameEvent_Codec"
 
   override def systemCodecID(): Byte = -1
-}
-
-private[vertx] object GameEventMessageCodec {
-  def name: String = "GameEvent_Codec"
 }

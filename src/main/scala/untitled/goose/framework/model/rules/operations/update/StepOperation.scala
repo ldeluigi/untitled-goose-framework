@@ -17,8 +17,8 @@ object StepOperation {
    * @return a sequence of operations, each doing one step or an event trigger.
    */
   def apply(state: GameState, steps: Int, player: Player, forward: Boolean): Seq[Operation] = {
-    (1 to steps).toList.flatMap(i => {
-      stepOperation(state, player, forward, steps - i)
+    (1 to steps.abs).toList.flatMap(i => {
+      stepOperation(state, player, forward, steps.abs - i)
     })
   }
 
@@ -55,7 +55,7 @@ object StepOperation {
               .prev(pos.tile)
           }
         }
-        case None => Some(state.gameBoard.first)
+        case None => if (forward) Some(state.gameBoard.first) else None
       }
     }
 
@@ -79,7 +79,7 @@ object StepOperation {
     val tile = state.playerPieces(player).position.map(_.tile)
     var opSeq: Seq[Operation] = Seq()
     if (tile.isDefined) {
-      for (other <- state.players.toSeq if !other.equals(player)) {
+      for (other <- state.players if !other.equals(player)) {
         if (state.playerLastTurn(other).exists(l => state.playerStopOnTileTurns(tile.get, other).contains(l))) {
           opSeq = opSeq :+ Operation.trigger(PlayerPassedEvent(other, player, tile.get, state.currentTurn, state.currentCycle))
         }

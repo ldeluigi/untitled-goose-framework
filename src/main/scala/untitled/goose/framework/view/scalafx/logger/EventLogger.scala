@@ -27,8 +27,9 @@ object EventLogger {
 
   private class EventLoggerImpl(gameState: GameState) extends EventLogger {
 
-    var previousState: GameState = gameState
-    val logText: TextArea = new TextArea {
+    private var eventNumber: Map[String, Int] = Map()
+    private var previousState: GameState = gameState
+    private val logText: TextArea = new TextArea {
       wrapText = true
       editable = false
     }
@@ -37,25 +38,29 @@ object EventLogger {
     logText.prefWidth <== this.width
     logText.prefHeight <== this.height - 10
 
-    def logEvent(event: GameEvent): Unit = {
-      logText.appendText("\nEVENT: " + event.toString)
+    private def logEvent(event: GameEvent, kind: String): Unit = {
+      val i = eventNumber.getOrElse(kind, 0)
+      logText.appendText("\n" + (if (kind.length > 0) kind + " event" else "Event") + " [" + i + "]: " + event.toString)
       logText.scrollTop = Double.MaxValue
+      eventNumber += (kind -> (i + 1))
     }
 
-    def logHistoryDiff(state: GameState): Unit = {
+    override def logEvent(event: GameEvent): Unit = logEvent(event, "")
+
+    override def logHistoryDiff(state: GameState): Unit = {
       (state.consumableBuffer
-        .diff(previousState.consumableBuffer) ++
+        .diff(previousState.consumableBuffer).map((_, "Consumable")) ++
         state.gameHistory
-          .diff(previousState.gameHistory) ++
+          .diff(previousState.gameHistory).map((_, "Game")) ++
         state.players
           .flatMap(_.history)
           .diff(previousState.players
-            .flatMap(_.history)) ++
+            .flatMap(_.history)).map((_, "Player")) ++
         state.gameBoard.tiles
           .flatMap(_.history)
           .diff(previousState.gameBoard.tiles
-            .flatMap(_.history)))
-        .foreach(logEvent)
+            .flatMap(_.history)).map((_, "Tile")))
+        .foreach(d => logEvent(d._1, d._2))
       previousState = state
     }
   }

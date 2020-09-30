@@ -3,8 +3,7 @@ package untitled.goose.framework.model.entities.runtime
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.definitions.GameDefinition
 import untitled.goose.framework.model.rules.operations.Operation
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.{FirstTurnRandomThenFixed, Fixed, RandomEachTurn}
-import untitled.goose.framework.model.rules.ruleset.{PlayerOrdering, PriorityRuleSet, RuleSet}
+import untitled.goose.framework.model.rules.ruleset.{PriorityRuleSet, RuleSet}
 
 import scala.collection.immutable.ListMap
 
@@ -31,16 +30,11 @@ trait Game extends Defined[GameDefinition] {
 object Game {
 
   private class GameImpl(playerPieces: ListMap[Player, Piece], val definition: GameDefinition) extends Game {
-    val playerOrdering: PlayerOrdering = definition.playerOrderingType match {
-      case RandomEachTurn => PlayerOrdering.fullRandom
-      case FirstTurnRandomThenFixed => PlayerOrdering.randomOrder
-      case Fixed => PlayerOrdering.fixed
-    }
 
     val board: Board = Board(definition.board)
 
     val rules: RuleSet = PriorityRuleSet(
-      playerOrdering,
+      definition.playerOrdering,
       definition.playersRange,
       definition.actionRules,
       definition.behaviourRules,

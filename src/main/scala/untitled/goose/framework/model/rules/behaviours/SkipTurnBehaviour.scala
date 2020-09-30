@@ -6,7 +6,10 @@ import untitled.goose.framework.model.events.persistent.LoseTurnEvent
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule.BehaviourRuleImpl
 import untitled.goose.framework.model.rules.operations.Operation
 
-// TODO scaladoc
+/**
+ * SkipTurnBehaviour is an extension of BehaviourRuleImpl
+ * and takes care of making the player to skip a turn.
+ */
 case class SkipTurnBehaviour() extends BehaviourRuleImpl[SkipTurnEvent](
   operationsStrategy = (events, _) => {
     events.map(e => Operation.updateState(_ => e.player.history = e.player.history.skipOfType[LoseTurnEvent]()))

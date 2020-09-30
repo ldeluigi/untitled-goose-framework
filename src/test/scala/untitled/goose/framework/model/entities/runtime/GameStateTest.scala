@@ -14,7 +14,7 @@ class GameStateTest extends AnyFlatSpec with Matchers {
   val board: BoardDefinition = BoardDefinition("test", 10, Disposition.snake(10))
   val p1: Player = Player("P1")
   val p2: Player = Player("P2")
-  val players: Map[Player, Piece] = Map(p1 -> Piece(Colour.Red), p2 -> Piece(Colour.Blue))
+  val players: Map[Player, Piece] = Map(p1 -> Piece(Colour.Default.Red), p2 -> Piece(Colour.Default.Blue))
 
   val gameBoard: Board = gameState.gameBoard
 

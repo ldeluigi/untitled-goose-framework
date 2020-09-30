@@ -1,10 +1,10 @@
 package untitled.goose.framework.main
 
-import scalafx.scene.paint.Color._
 import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
-import untitled.goose.framework.model.events.consumable.MovementDiceRollEvent
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType.Fixed
+import untitled.goose.framework.model.Colour
+import untitled.goose.framework.model.entities.definitions.PlayerOrderingType.Fixed
+import untitled.goose.framework.model.events.CustomGameEvent
 
 
 object GooseGame extends GooseDSL {
@@ -34,16 +34,16 @@ object GooseGame extends GooseDSL {
   the tile 58 has name(theDeath)
 
   The tiles (1 to 63) have group("field")
-  All tiles "field" have color(Green)
+  All tiles "field" have colour(Colour("#B39DDB"))
 
   the tile theWell has background("pozzo.png")
   the tile theInn has background("pozzo.png")
 
   The tiles(6, 19, 31, 42, 52, 58) have group("Special")
-  All tiles "Special" have color(LightBlue)
+  All tiles "Special" have colour(Colour.Default.Blue)
 
   the tile 63 has name("The end")
-  The tile 63 has color(Yellow)
+  The tile 63 has colour(Colour.Default.Yellow)
   The tile 63 has background("oca.png")
 
 
@@ -57,30 +57,29 @@ object GooseGame extends GooseDSL {
     "value" as[Int] value,
     )
 
-  Define playerEvent "custom2" having (
+  Define playerEvent "custom" having (
     "asd" as[String] value
     )
 
-  Create movementDice "six-faced" having totalSides(6)
+  Create movementDice "six-faced" having sides(1, 2, 3, -3, -2, -1)
 
   Players loseTurn priority is 5
 
   Each turn players are (
     always allowed to roll 1 movementDice "six-faced" as "roll a dice" priority 5,
-    //always allowed to displayQuestion("Title", "Text", "Si" -> MakeSteps(5), "No" -> Nothing) as "Show dialog" priority 3,
-    //always allowed to trigger (customGameEvent("custom") + ("value", _ => 6)) as "Something" priority 2,
+    always allowed to trigger (customGameEvent("custom") :+ ("value", _ => 6)) as "Something" priority 2,
     //always allowed to trigger MakeSteps(10) as "Fai 10 passi" priority 5,
     //always allowed to trigger (customPlayerEvent("custom2", _.currentPlayer) := "asd" -> "ok") as "SomethingP" priority 3
-    )
+  )
 
 
-  When(_ => true) and numberOf(events[MovementDiceRollEvent] matching (_ => true)) is (_ > 0) resolve (
+  When(_ => true) and numberOf(events[CustomGameEvent] matching (_ => true)) is (_ > 0) resolve(
     //trigger(customBehaviourGameEvent[MovementDiceRollEvent]("custom") + ("value", (_, e) => e.result.sum)),
     //trigger(customBehaviourPlayerEvent[MovementDiceRollEvent]("custom2", _.currentPlayer) + ("asd", (_, _) => "ok")),
-    //forEach displayMessage("Event", "Working"),
+    forEach displayCustomQuestion((e, s) => ("ciao", "ciao"), ((e, s) => "ciao", gameEvent[CustomGameEvent]("custom") :+ ("value", (e, s) => 6))),
     //forEach trigger ((e, s) => StepMovementEvent(e.result.sum, s.currentPlayer, s.currentTurn, s.currentCycle))
     forEach trigger ((_, s) => LoseTurn(s))
-    )
+  )
 
   After resolving each action (
     _.currentTurn += 0

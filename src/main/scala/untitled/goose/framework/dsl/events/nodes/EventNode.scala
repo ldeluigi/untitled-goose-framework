@@ -3,7 +3,10 @@ package untitled.goose.framework.dsl.events.nodes
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.events.Key
 
-
+/**
+ * This node contains the information necessary to create an instance of a CustomGameEvent.
+ * It provides a check on the correct definition of properties.
+ */
 trait EventNode extends RuleBookNode {
   def properties: Set[Key[_]]
 

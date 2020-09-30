@@ -1,7 +1,6 @@
 package untitled.goose.framework.view.scalafx.board
 
 import scalafx.beans.binding.NumberBinding
-import scalafx.beans.property.ReadOnlyDoubleProperty
 import scalafx.geometry.Pos._
 import scalafx.scene.control.Label
 import scalafx.scene.image.{Image, ImageView}
@@ -9,7 +8,9 @@ import scalafx.scene.layout.StackPane
 import scalafx.scene.paint.Color.White
 import scalafx.scene.shape.{Rectangle, StrokeType}
 import scalafx.scene.text.TextAlignment
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.runtime.Tile
+import untitled.goose.framework.view.scalafx.ColorUtils
 
 /**
  * A pane which models how a single tile is rendered.
@@ -48,10 +49,10 @@ object TileVisualization {
 
   private class TileVisualizationImpl(val tile: Tile, givenWidth: NumberBinding, val graphicDescriptor: Option[GraphicDescriptor]) extends TileVisualization {
 
-    var graphics: Option[Image] = None
-    var imageView: Option[ImageView] = None
+    private var graphics: Option[Image] = None
+    private var imageView: Option[ImageView] = None
 
-    val rectangle: Rectangle = new Rectangle {
+    override val rectangle: Rectangle = new Rectangle {
       fill = White
       strokeType = StrokeType.Inside
       width <== givenWidth
@@ -59,12 +60,12 @@ object TileVisualization {
     }
     rectangle.styleClass.add("rectangle")
 
-    val tileText: String = tile.definition.name match {
+    override val tileText: String = tile.definition.name match {
       case Some(value) => value
       case None => tile.definition.number.get.toString
     }
 
-    val label: Label = new Label {
+    private val label: Label = new Label {
       text = tileText
       alignment = Center
       textAlignment = TextAlignment.Center
@@ -72,12 +73,8 @@ object TileVisualization {
       wrapText = true
     }
 
-    /** Computes the label's font size to avoid going over tile's limits.
-     *
-     * @param width the width onto which computes the new font's dimension.
-     * @return a Double property specifying the font size.
-     */
-    def fontSize(width: Double): Double = (width * 0.15) * Math.exp(-tileText.length / 10.0) + 10
+
+    private def fontSize(width: Double): Double = (width * 0.15) * Math.exp(-tileText.length / 10.0) + 10
 
     rectangle.width.onChange((_, _, w) => {
       label.style = "-fx-font-size: " + fontSize(w.asInstanceOf[Double]).toInt + "pt"
@@ -126,11 +123,11 @@ object TileVisualization {
      */
     private def applyStyle(graphicDescriptor: GraphicDescriptor): Unit = {
       if (graphicDescriptor.color.isDefined) {
-        rectangle.fill = graphicDescriptor.color.get
+        rectangle.fill = ColorUtils.getColor(graphicDescriptor.color.get)
       }
 
-      if (graphicDescriptor.path.isDefined) {
-        val backgroundToApply: String = graphicDescriptor.path.get
+      if (graphicDescriptor.imagePath.isDefined) {
+        val backgroundToApply: String = graphicDescriptor.imagePath.get
         graphics = Some(new Image(backgroundToApply))
         imageView = Some(new ImageView {
           image = graphics.get
@@ -143,6 +140,6 @@ object TileVisualization {
   }
 
   /** A factory used to render a new Tile, given the tile itself, its parent and panel dimension and the graphic properties that need to be set. */
-  def apply(tile: Tile, givenWidth: NumberBinding, parentHeight: ReadOnlyDoubleProperty, rows: Int, cols: Int, graphicDescriptor: Option[GraphicDescriptor]): TileVisualization =
+  def apply(tile: Tile, givenWidth: NumberBinding, graphicDescriptor: Option[GraphicDescriptor]): TileVisualization =
     new TileVisualizationImpl(tile, givenWidth, graphicDescriptor: Option[GraphicDescriptor])
 }

@@ -5,3 +5,7 @@
 .actionBox {
     -fx-padding: 15pt;
 }
+
+.container{
+    -fx-padding: 30pt;
+}

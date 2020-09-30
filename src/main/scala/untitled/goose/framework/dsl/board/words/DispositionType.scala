@@ -4,6 +4,7 @@ object DispositionType extends Enumeration {
 
   type DispositionType = Value
 
-  val Spiral, Snake, Loop = Value
+  /** Disposition type. */
+  val Spiral, Snake, Ring = Value
 }
 

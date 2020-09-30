@@ -11,6 +11,7 @@ trait UtilityWords {
   val each: EachWord = EachWord()
   val system: SystemWord = SystemWord()
   val priority: PriorityWord = PriorityWord()
+  val players: PlayersAreWord = PlayersAreWord()
 }
 
 object UtilityWords {
@@ -28,5 +29,7 @@ object UtilityWords {
   case class SystemWord()
 
   case class PriorityWord()
+
+  case class PlayersAreWord()
 
 }

@@ -3,6 +3,9 @@ package untitled.goose.framework.dsl.rules.behaviours.nodes
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.model.rules.behaviours.BehaviourRule
 
+/**
+ * This is a collection of all defined behaviour provided from the DSL.
+ */
 trait BehaviourCollectionNode extends RuleBookNode {
   def behaviours: Seq[BehaviourRule]
 

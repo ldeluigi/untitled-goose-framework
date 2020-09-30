@@ -1,9 +1,15 @@
 package untitled.goose.framework.dsl.board.nodes
 
 import untitled.goose.framework.dsl.nodes.RuleBookNode
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
-import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 
+/**
+ * This node contains all the information about the GraphicMap containing TileIdentifiers as keys and GraphicDescriptors as values
+ * It provides a check on valid defined identifiers according to the TileIdentifiersCollection taken as a parameter.
+ *
+ * @param identifiers the collections of all the defined identifiers in this game scope
+ */
 class GraphicMapNode(identifiers: TileIdentifiersCollection) extends RuleBookNode {
 
   private var graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()

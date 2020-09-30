@@ -1,7 +1,10 @@
 package untitled.goose.framework.view.scalafx.board
 
+import javafx.beans.property.SimpleIntegerProperty
+import scalafx.beans.binding.NumberBinding
 import scalafx.scene.Group
 import scalafx.scene.control.ScrollPane
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.definitions.TileIdentifier
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.{Group => TileGroup}
 import untitled.goose.framework.model.entities.runtime.Tile._
@@ -17,19 +20,28 @@ trait BoardDisplay extends ScrollPane {
    * @param matchState the game state to update from which withdraw the needed information about tiles and players.
    */
   def updateMatchState(matchState: GameState)
+
+  /** Performs a zoom-in on the board. */
+  def zoomIn(): Unit
+
+  /** Performs a zoom-out on the board. */
+  def zoomOut(): Unit
 }
 
 object BoardDisplay {
 
   private class BoardDisplayImpl(matchBoard: Board, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends BoardDisplay {
 
-    val boardPane = new Group()
+    private val boardPane = new Group()
 
-    var tiles: List[TileVisualization] = Nil
+    private var tiles: List[TileVisualization] = Nil
 
-    var i = 0
-    val rows: Int = matchBoard.definition.disposition.rows
-    val cols: Int = matchBoard.definition.disposition.columns
+    private var i = 0
+    private val rows: Int = matchBoard.definition.disposition.rows
+    private val cols: Int = matchBoard.definition.disposition.columns
+
+    private val widthDivider = new SimpleIntegerProperty(cols)
+    private val currentTileWidth: NumberBinding = width / widthDivider
 
     this.content = boardPane
     renderBoard()
@@ -41,7 +53,7 @@ object BoardDisplay {
      */
     private def renderBoard(): Unit = {
       for (tile <- matchBoard.tiles.toList.sorted)
-        renderTile(TileVisualization(tile, width / cols, height, rows, cols, getGraphicDescriptor(tile)))
+        renderTile(TileVisualization(tile, currentTileWidth, getGraphicDescriptor(tile)))
     }
 
     /** Renders a single tile, setting its coordinates and adding it to the board panel.
@@ -103,6 +115,18 @@ object BoardDisplay {
       val tileOffset = 1.5
       this.setHvalue((positionTile.getLayoutX * tileOffset) / this.getWidth)
       this.setVvalue((positionTile.getLayoutY * tileOffset) / this.getHeight)
+    }
+
+    override def zoomIn(): Unit = {
+      if (widthDivider.get() > 1) {
+        widthDivider.set(widthDivider.get() - 1)
+      }
+    }
+
+    override def zoomOut(): Unit = {
+      if (currentTileWidth().doubleValue() > 90) {
+        widthDivider.set(widthDivider.get() + 1)
+      }
     }
   }
 

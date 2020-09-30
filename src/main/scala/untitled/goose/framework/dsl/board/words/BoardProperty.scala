@@ -1,4 +1,4 @@
-package untitled.goose.framework.dsl.board.words.properties
+package untitled.goose.framework.dsl.board.words
 
 import untitled.goose.framework.dsl.board.words.DispositionType.DispositionType
 

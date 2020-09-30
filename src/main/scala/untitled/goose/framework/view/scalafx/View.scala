@@ -5,8 +5,8 @@ import java.awt.{Dimension, Toolkit}
 import javafx.scene.input.KeyCode
 import scalafx.application.JFXApp
 import scalafx.scene.image.Image
+import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, TileIdentifier}
-import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
 import untitled.goose.framework.view.scalafx.playerselection.IntroMenu
 
 /** Main ScalaFX launching class.
@@ -15,7 +15,10 @@ import untitled.goose.framework.view.scalafx.playerselection.IntroMenu
  * @param graphicMap the map containing graphic properties details.
  */
 class View(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDescriptor]) extends JFXApp {
+  /** Screen dimension from the default toolkit. */
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
+
+  /** The title of the application. */
   val appTitle: String = gameData.board.name
 
   stage = new JFXApp.PrimaryStage {

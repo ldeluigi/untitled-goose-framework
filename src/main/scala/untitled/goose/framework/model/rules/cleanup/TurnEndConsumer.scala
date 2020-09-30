@@ -5,7 +5,11 @@ import untitled.goose.framework.model.entities.runtime.MutableGameState
 import untitled.goose.framework.model.events.consumable.TurnShouldEndEvent
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, TurnEndedEvent}
 
-// TODO scaladoc
+/**
+ * TurnEndConsumer is a CleanupRule that looks for TurnShouldEndEvent for the current player
+ * and, if it finds one relative to the current turn, consumes it and ends the turn, moving the game
+ * to the next player.
+ */
 object TurnEndConsumer extends CleanupRule {
 
   override def applyRule(state: MutableGameState): Unit =

@@ -2,11 +2,12 @@ package untitled.goose.framework.dsl.rules.operations.words
 
 import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourCustomEventInstance
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode
-import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode.{CustomEventOperationNode, DisplayDialogOperationNode, TriggerOperationNode, UpdateOperationNode}
+import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode._
 import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState}
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
+/** Implements every possible operation offered by default. */
 case class ForEachWord() extends OperationWords {
 
   override def trigger[T <: ConsumableGameEvent](customEvent: BehaviourCustomEventInstance[T]): OperationNode[T] = {
@@ -24,7 +25,6 @@ case class ForEachWord() extends OperationWords {
     DisplayDialogOperationNode(content, isForEach = true)
   }
 
-
   override def displayMessage[T <: ConsumableGameEvent](title: String, text: String): OperationNode[T] = {
     val dialog: (T, GameState) => (String, String, Seq[(String, GameEvent)]) = (e, s) => (title, text, Seq())
     DisplayDialogOperationNode(dialog, isForEach = true)
@@ -37,6 +37,9 @@ case class ForEachWord() extends OperationWords {
 
   override def displayQuestion[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String, Seq[(String, GameEvent)])): OperationNode[T] =
     DisplayDialogOperationNode(dialog, isForEach = true)
+
+  override def displayCustomQuestion[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String), options: ((T, GameState) => String, BehaviourCustomEventInstance[T])*): OperationNode[T] =
+    DisplayCustomDialogOperationNode(dialog, options, isForEach = true)
 
   override def updateState[T <: ConsumableGameEvent](update: (T, GameState) => MutableGameState => Unit): OperationNode[T] =
     UpdateOperationNode(update, isForEach = true)

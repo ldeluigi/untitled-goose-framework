@@ -4,24 +4,21 @@ import java.awt.{Dimension, Toolkit}
 
 import javafx.scene.input.KeyCode
 import scalafx.application.JFXApp
-import untitled.goose.framework.controller.scalafx.{ApplicationController, ScalaFxController}
-import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder, TileIdentifier}
+import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder, PlayerOrderingType, TileIdentifier}
 import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
+import untitled.goose.framework.model.events.consumable
 import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, LoseTurnEvent, TileActivatedEvent, TurnEndedEvent}
-import untitled.goose.framework.model.events.{GameEvent, consumable}
 import untitled.goose.framework.model.rules.actionrules.AlwaysActionRule.AlwaysPermittedActionRule
 import untitled.goose.framework.model.rules.actionrules.{ActionRule, LoseTurnActionRule}
 import untitled.goose.framework.model.rules.behaviours._
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
-import untitled.goose.framework.model.rules.ruleset.PlayerOrderingType
-import untitled.goose.framework.view.scalafx.GameScene
-import untitled.goose.framework.view.scalafx.board.GraphicDescriptor
+import untitled.goose.framework.model.{Colour, GraphicDescriptor}
+import untitled.goose.framework.view.scalafx.{ScalaFxController, ScalaFxGameScene}
 
 import scala.collection.immutable.ListMap
 
@@ -96,13 +93,7 @@ object GooseGameNoDSL extends JFXApp {
     when = _.currentPlayer.history.only[TurnEndedEvent].isEmpty,
     operations = (_, state) => {
       Seq(
-        DialogOperation(new DialogContent {
-          override def title: String = "Special first throw!"
-
-          override def text: String = "You roll a 3 on your first turn, go to tile 26"
-
-          override def options: Map[String, GameEvent] = Map()
-        }),
+        DialogOperation(DialogContent("Special first throw!", "You roll a 3 on your first turn, go to tile 26")),
         Operation.trigger(TeleportEvent(state.getTile(26).get, state.currentPlayer, state.currentTurn, state.currentCycle))
       )
     },
@@ -119,13 +110,7 @@ object GooseGameNoDSL extends JFXApp {
         Operation.trigger(GainTurnEvent(e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
         ),
-        DialogOperation(new DialogContent {
-          override def title: String = "Landed on a goose"
-
-          override def text: String = "You can roll your dices again"
-
-          override def options: Map[String, GameEvent] = Map()
-        })
+        DialogOperation(DialogContent("Landed on a goose", "You can roll your dices again"))
       ))
     }
   )
@@ -135,13 +120,7 @@ object GooseGameNoDSL extends JFXApp {
     filterStrategy = _.tile.definition.name.contains(theBridge),
     operations = (events, state) => {
       events.flatMap(e => Seq(
-        DialogOperation(new DialogContent {
-          override def title: String = "The Bridge"
-
-          override def text: String = "You landed on the Bridge. Miss a turn while you pay the toll"
-
-          override def options: Map[String, GameEvent] = Map()
-        }),
+        DialogOperation(DialogContent("The Bridge", "You landed on the Bridge. Miss a turn while you pay the toll")),
         Operation.trigger(LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle))
       ))
@@ -154,13 +133,7 @@ object GooseGameNoDSL extends JFXApp {
     filterStrategy = _.tile.definition.name.contains(theInn),
     operations = (events, state) => {
       events.flatMap(e => Seq(
-        DialogOperation(new DialogContent {
-          override def title: String = "The Inn"
-
-          override def text: String = "You landed on the Inn. Miss a turn while you stop for some tasty dinner"
-
-          override def options: Map[String, GameEvent] = Map()
-        }),
+        DialogOperation(DialogContent("The Inn", "You landed on the Inn. Miss a turn while you stop for some tasty dinner")),
         Operation.trigger(LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle))
       ))
@@ -179,14 +152,9 @@ object GooseGameNoDSL extends JFXApp {
           LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
         ),
-        DialogOperation(new DialogContent {
-          override def title: String = "The Well"
-
-          override def text: String = "You landed on the Well! Miss 3 turns and make a wish... " +
-            "\nIf another player passes you before the three turns are up you can start moving again"
-
-          override def options: Map[String, GameEvent] = Map()
-        })
+        DialogOperation(DialogContent("The Well",
+          "You landed on the Well! Miss 3 turns and make a wish... " +
+            "\nIf another player passes you before the three turns are up you can start moving again"))
       ))
     }
   )
@@ -213,14 +181,8 @@ object GooseGameNoDSL extends JFXApp {
           LoseTurnEvent(e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
         ),
-        DialogOperation(new DialogContent {
-          override def title: String = "The Prison"
-
-          override def text: String = "You landed on the Prison! Miss 3 turns while you are behind bars" +
-            "\nIf another player passes you before the three turns are up you can start moving again"
-
-          override def options: Map[String, GameEvent] = Map()
-        })
+        DialogOperation(DialogContent("The Prison", "You landed on the Prison! Miss 3 turns while you are behind bars" +
+          "\nIf another player passes you before the three turns are up you can start moving again"))
       ))
     }
   )
@@ -239,13 +201,7 @@ object GooseGameNoDSL extends JFXApp {
     filterStrategy = _.tile.definition.name.contains(theLabyrinth),
     operations = (events, state) => {
       events.flatMap(e => Seq(
-        DialogOperation(new DialogContent {
-          override def title: String = "The Labyrinth"
-
-          override def text: String = "You enter the labyrinth but you get lost. You exit on tile 37"
-
-          override def options: Map[String, GameEvent] = Map()
-        }),
+        DialogOperation(DialogContent("The Labyrinth", "You enter the labyrinth but you get lost. You exit on tile 37")),
         Operation.trigger(
           TeleportEvent(state.getTile(37).get, e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
@@ -259,13 +215,7 @@ object GooseGameNoDSL extends JFXApp {
     filterStrategy = _.tile.definition.name.contains(theDeath),
     operations = (events, state) => {
       events.flatMap(e => Seq(
-        DialogOperation(new DialogContent {
-          override def title: String = "The Death"
-
-          override def text: String = "You died. Go back to the beginning and try again to reach the end!"
-
-          override def options: Map[String, GameEvent] = Map()
-        }),
+        DialogOperation(DialogContent("The Death", "You died. Go back to the beginning and try again to reach the end!")),
         Operation.trigger(
           TeleportEvent(state.getTile(1).get, e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
@@ -273,9 +223,6 @@ object GooseGameNoDSL extends JFXApp {
       ))
     }
   )
-  //TODO Players may not share squares, so if your dice roll would land you on an occupied square
-  // you will have to stay where you are until it is your turn again.
-
 
   //Framework behaviours
   val FrameworkBehaviours: Seq[BehaviourRule] = Seq(
@@ -309,7 +256,7 @@ object GooseGameNoDSL extends JFXApp {
 
   //From a menu GUI that select and creates player and pieces on the press of a "Start runtime" button
 
-  val players: ListMap[Player, Piece] = ListMap(Player("P1") -> Piece(Colour.Red), Player("P2") -> Piece(Colour.Blue))
+  val players: ListMap[Player, Piece] = ListMap(Player("P1") -> Piece(Colour.Default.Red), Player("P2") -> Piece(Colour.Default.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
 
@@ -326,7 +273,7 @@ object GooseGameNoDSL extends JFXApp {
   //View launch
   val graphicMap: Map[TileIdentifier, GraphicDescriptor] = Map()
   val screenSize: Dimension = Toolkit.getDefaultToolkit.getScreenSize
-  val controller: ScalaFxController = ApplicationController(currentMatch)
+  val controller: ScalaFxController = ScalaFxController(currentMatch)
   stage = new JFXApp.PrimaryStage {
     title.value = "Untitled Goose Framework"
     //fullScreen = true
@@ -334,8 +281,8 @@ object GooseGameNoDSL extends JFXApp {
     minHeight = 0.75 * screenSize.height
     fullScreenExitHint = "ESC to exit full screen mode"
   }
-  val gameScene: GameScene = GameScene(stage, controller, currentMatch.currentState, graphicMap)
-  controller.setScene(gameScene)
+  val gameScene: ScalaFxGameScene = ScalaFxGameScene(stage, controller, currentMatch.currentState, graphicMap)
+  controller.setGameScene(gameScene)
   stage.scene = gameScene
 
   stage.getScene.setOnKeyPressed(

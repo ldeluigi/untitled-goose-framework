@@ -11,10 +11,10 @@ class PieceTest extends AnyFlatSpec with Matchers {
 
   val tileOne: Tile = Tile(TileDefinition(1))
   val tileTwo: Tile = Tile(TileDefinition(2))
-  val piece: Piece = Piece(Colour.Blue, Some(Position(tileOne)))
+  val piece: Piece = Piece(Colour.Default.Blue, Some(Position(tileOne)))
 
   it should "not have a position when created empty" in {
-    val emptyPiece = Piece(Colour.Blue)
+    val emptyPiece = Piece(Colour.Default.Blue)
     emptyPiece.position.isEmpty should be(true)
   }
 
@@ -22,9 +22,9 @@ class PieceTest extends AnyFlatSpec with Matchers {
     piece.position.nonEmpty should be(true)
   }
 
-  it should "have a color" in {
-    piece.color should not be null
-    piece.color should equal(Colour.Blue)
+  it should "have a colour" in {
+    piece.colour should not be null
+    piece.colour should equal(Colour.Default.Blue)
   }
 
   it should "set the position of the piece when given one" in {
@@ -33,10 +33,10 @@ class PieceTest extends AnyFlatSpec with Matchers {
     updatedPiece.position.get should equal(position)
   }
 
-  it should "set the color of the piece when given one" in {
-    val color = Colour.Red
+  it should "set the colour of the piece when given one" in {
+    val color = Colour.Default.Red
     val updatedPiece = Piece(piece, color)
-    updatedPiece.color should equal(Colour.Red)
+    updatedPiece.colour should equal(Colour.Default.Red)
   }
 
 }

@@ -9,6 +9,11 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.operations.Operation.DialogOperation
 
+/**
+ * A node containing the information needed to return a seq of operations.
+ *
+ * @tparam T the event this operation is a response of.
+ */
 sealed trait OperationNode[T <: ConsumableGameEvent] extends RuleBookNode {
   def getOperations: (Seq[T], GameState) => Seq[Operation]
 
@@ -19,7 +24,7 @@ object OperationNode {
 
   case class CustomEventOperationNode[T <: ConsumableGameEvent](event: BehaviourCustomEventInstance[T], isForEach: Boolean) extends OperationNode[T] {
 
-    override def getOperations: (Seq[T], GameState) => Seq[Operation] = (events, state) => events.map(e => Operation.trigger(event.generateEvent((state, e))))
+    override def getOperations: (Seq[T], GameState) => Seq[Operation] = (events, state) => events.map(e => Operation.trigger(event.generateEvent((e, state))))
 
     override def check: Seq[String] = event.check
 
@@ -48,6 +53,27 @@ object OperationNode {
         } else Seq()
 
     override def check: Seq[String] = Seq()
+  }
+
+  case class DisplayCustomDialogOperationNode[T <: ConsumableGameEvent](dialog: (T, GameState) => (String, String), options: Seq[((T, GameState) => String, BehaviourCustomEventInstance[T])], isForEach: Boolean) extends OperationNode[T] {
+    override def getOperations: (Seq[T], GameState) => Seq[Operation] = {
+      def _createCustomDialog(e: T, s: GameState): DialogOperation = {
+        val d = dialog(e, s)
+        val o: Seq[(String, GameEvent)] = options.map(x => (x._1(e, s), x._2.generateEvent(e, s)))
+        DialogOperation(DialogContent(
+          d._1,
+          d._2,
+          o: _*
+        ))
+      }
+
+      if (isForEach)
+        (evList, s) => evList.map(e => _createCustomDialog(e, s))
+      else
+        (e, s) => if (e.nonEmpty) Seq(_createCustomDialog(e.head, s)) else Seq()
+    }
+
+    override def check: Seq[String] = options.flatMap(_._2.check)
   }
 
   case class UpdateOperationNode[T <: ConsumableGameEvent](f: (T, GameState) => MutableGameState => Unit, isForEach: Boolean) extends OperationNode[T] {

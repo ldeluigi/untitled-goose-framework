@@ -2,13 +2,13 @@ name := "untitled-goose-framework"
 
 organization := "untitled.goose.framework"
 
-version := "0.3.1"
+version := "1.0.0"
 
 scalaVersion := "2.12.10"
 
 ThisBuild / sbtVersion := "1.3.13"
 
-ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
+//ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
 
 ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "package")))
 

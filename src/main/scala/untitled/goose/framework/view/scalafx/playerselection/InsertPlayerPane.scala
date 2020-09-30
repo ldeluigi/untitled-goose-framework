@@ -10,7 +10,7 @@ import scalafx.scene.control._
 import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.stage.Stage
 import untitled.goose.framework.model
-import untitled.goose.framework.model.Colour.Colour
+import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.runtime.{Piece, Player}
 import untitled.goose.framework.view.scalafx.ColorUtils
 
@@ -40,35 +40,42 @@ trait InsertPlayerPane extends BorderPane {
 
 object InsertPlayerPane {
 
+  /**
+   * Factory Method for a InsertPlayerPane.
+   *
+   * @param playersRange the minimum and maximum number of players allowed.
+   * @param stage        the stage containing this pane.
+   * @return a new InsertPlayerPane.
+   */
   def apply(playersRange: Range, stage: Stage): InsertPlayerPane = new InsertPlayerPaneImpl(playersRange, stage)
 
-  class PlayerPiece(n: String, val color: Colour) {
+  private[scalafx] class PlayerPiece(n: String, val color: Colour) {
     val name = new StringProperty(this, "Name", n)
     val colorProp = new ObjectProperty(this, "Piece", ColorUtils.getColor(color))
   }
 
   private class InsertPlayerPaneImpl(playersRange: Range, stage: Stage) extends InsertPlayerPane {
 
-    val playerBuffer: ObservableBuffer[PlayerPiece] = ObservableBuffer()
-    val playerPieces: PlayerPieceTable = PlayerPieceTable(playerBuffer)
+    private val playerBuffer: ObservableBuffer[PlayerPiece] = ObservableBuffer()
+    private val playerPieces: PlayerPieceTable = PlayerPieceTable(playerBuffer)
 
-    val moveUp = new Button("▲")
-    val moveDown = new Button("▼")
-    val addPlayer: Button = new Button("Add")
-    val playerName: Label = new Label("Insert player data:")
-    val playerNameFromInput = new TextField
-    val colorsChoice = new ComboBox(model.Colour.values.toList)
+    private val moveUp = new Button("▲")
+    private val moveDown = new Button("▼")
+    private val addPlayer: Button = new Button("Add")
+    private val playerName: Label = new Label("Insert player data:")
+    private val playerNameFromInput = new TextField
+    private val colorsChoice = new ComboBox(model.Colour.Default.colours)
     colorsChoice.getSelectionModel.selectFirst()
-    val removePlayer: Button = new Button("Remove")
+    private val removePlayer: Button = new Button("Remove")
 
-    val inputPlayers: HBox = new HBox {
+    private val inputPlayers: HBox = new HBox {
       alignment = Pos.Center
       spacing = 15
       children = List(playerName, playerNameFromInput, colorsChoice, addPlayer)
     }
     inputPlayers.styleClass.add("inputPlayers")
 
-    val tableControls: HBox = new HBox {
+    private val tableControls: HBox = new HBox {
       alignment = Pos.Center
       spacing = 15
       children = List(moveUp, moveDown, removePlayer)

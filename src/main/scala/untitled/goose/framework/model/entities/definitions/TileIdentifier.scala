@@ -82,7 +82,15 @@ object TileIdentifier {
   /** Implements the check method to check if a tile is identified. */
   implicit class IdentifierCheck(id: TileIdentifier) {
     def check(tile: TileDefinition): Boolean =
-      tile.number == id.number || tile.name == id.name || id.group.exists(tile.groups.contains(_))
+      if (id.name.isDefined && tile.name.isDefined) {
+        tile.name.get == id.name.get
+      } else if (id.number.isDefined && tile.number.isDefined) {
+        tile.number.get == id.number.get
+      } else if (id.group.isDefined) {
+        tile.groups.contains(id.group.get)
+      } else {
+        false
+      }
   }
 
 }
