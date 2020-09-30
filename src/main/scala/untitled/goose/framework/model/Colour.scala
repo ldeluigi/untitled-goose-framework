@@ -18,6 +18,9 @@ trait Colour {
   /** The opacity assigned to the colour, between 0.0 and 1.0. */
   def opacity: Double
 
+  /** Hexadecimal representation. */
+  def toHex: String = "%02x%02x%02x".format(red.toInt * 255, green.toInt * 255, blue.toInt * 255)
+
   override def toString: String = "Colour(R:" + red + ", G:" + green + ", B:" + blue + ", Alpha:" + opacity + ")"
 }
 
