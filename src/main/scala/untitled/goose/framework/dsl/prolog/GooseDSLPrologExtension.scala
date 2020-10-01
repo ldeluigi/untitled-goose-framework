@@ -17,16 +17,16 @@ trait GooseDSLPrologExtension {
    *
    * An example of such theory, taken form the GooseGame, is:
    * <pre>
-   * currentTurn(4).
-   * currentCycle(4).
-   * currentPlayer(player(asd,history([event(TurnEndedEvent,cycle(2),turn(2)),event(TurnEndedEvent,cycle(0),turn(0)),event(MovementDiceRollEvent,cycle(0),turn(0))]))).
-   * nextPlayer(player(dsa,history([event(TurnEndedEvent,cycle(3),turn(3)),event(MovementDiceRollEvent,cycle(3),turn(3)),event(TurnEndedEvent,cycle(1),turn(1)),event(MovementDiceRollEvent,cycle(1),turn(1))]))).
-   * gameBoard(board([tile(4,history([])),tile(9,history([])),tile(55,history([])),tile(41,history([])),tile(23,history([])),tile(36,history([])),tile(24,history([])),tile(51,history([])),tile(13,history([])),tile(19,history([])),tile(45,history([])),tile(56,history([])),tile(28,history([])),tile(60,history([])),tile(5,history([])),tile(59,history([])),tile(27,history([])),tile(37,history([])),tile(20,history([])),tile(32,history([])),tile(8,history([])),tile(52,history([])),tile(12,history([])),tile(40,history([])),tile(1,history([])),tile(31,history([])),tile(33,history([])),tile(44,history([])),tile(63,history([])),tile(16,history([])),tile(21,history([])),tile(43,history([])),tile(58,history([])),tile(26,history([])),tile(11,history([])),tile(53,history([])),tile(48,history([])),tile(6,history([event(TileActivatedEvent,cycle(0),turn(0))])),tile(38,history([])),tile(2,history([])),tile(34,history([])),tile(47,history([])),tile(62,history([])),tile(17,history([])),tile(49,history([])),tile(15,history([])),tile(30,history([])),tile(10,history([])),tile(42,history([])),tile(39,history([])),tile(25,history([])),tile(54,history([])),tile(22,history([])),tile(7,history([])),tile(57,history([])),tile(35,history([])),tile(29,history([])),tile(50,history([])),tile(18,history([])),tile(3,history([])),tile(46,history([])),tile(14,history([])),tile(61,history([]))],first(tile(1,history([]))))).
-   * consumableBuffer([event(MovementDiceRollEvent,cycle(4),turn(4))]).
-   * gameHistory([event(MovementDiceRollEvent,cycle(3),turn(3)),event(MovementDiceRollEvent,cycle(1),turn(1)),event(MovementDiceRollEvent,cycle(0),turn(0))]).
-   * players([player(asd,history([event(TurnEndedEvent,cycle(2),turn(2)),event(TurnEndedEvent,cycle(0),turn(0)),event(MovementDiceRollEvent,cycle(0),turn(0))])),player(dsa,history([event(TurnEndedEvent,cycle(3),turn(3)),event(MovementDiceRollEvent,cycle(3),turn(3)),event(TurnEndedEvent,cycle(1),turn(1)),event(MovementDiceRollEvent,cycle(1),turn(1))]))]).
-   * owns(player(asd,history([event(TurnEndedEvent,cycle(2),turn(2)),event(TurnEndedEvent,cycle(0),turn(0)),event(MovementDiceRollEvent,cycle(0),turn(0))])),piece(position(tile(6,history([event(TileActivatedEvent,cycle(0),turn(0))]))),colour(1.0,0.0,0.0))).
-   * owns(player(dsa,history([event(TurnEndedEvent,cycle(3),turn(3)),event(MovementDiceRollEvent,cycle(3),turn(3)),event(TurnEndedEvent,cycle(1),turn(1)),event(MovementDiceRollEvent,cycle(1),turn(1))])),piece(position(tile(34,history([]))),colour(0.0,1.0,0.0))).
+   * currentTurn(3).
+   * currentCycle(3).
+   * currentPlayer(player('AGAGA',history([event('TurnEndedEvent',cycle(3),turn(3),[]),event('MovementDiceRollEvent',cycle(3),turn(3),[]),event('TurnEndedEvent',cycle(1),turn(1),[]),event('MovementDiceRollEvent',cycle(1),turn(1),[])]))).
+   * nextPlayer(player(sad,history([event('TurnEndedEvent',cycle(2),turn(2),[]),event('TurnEndedEvent',cycle(0),turn(0),[]),event('MovementDiceRollEvent',cycle(0),turn(0),[])]))).
+   * gameBoard(board([tile(4,history([]),[path]),tile(9,history([event('TileActivatedEvent',cycle(3),turn(3),[])]),['GooseTile',path]),tile(55,history([]),[path]),tile(41,history([]),['GooseTile',path]),tile(23,history([]),['GooseTile',path]),tile(36,history([]),['GooseTile',path]),tile(24,history([]),[path]),tile(51,history([]),[path]),tile(13,history([]),[path]),tile(19,history([]),[path]),tile(45,history([]),['GooseTile',path]),tile(56,history([]),[path]),tile(28,history([]),[path]),tile(60,history([]),[path]),tile(5,history([]),['GooseTile',path]),tile(59,history([]),['GooseTile',path]),tile(27,history([]),['GooseTile',path]),tile(37,history([]),[path]),tile(20,history([]),[path]),tile(32,history([]),['GooseTile',path]),tile(8,history([]),[path]),tile(52,history([]),[path]),tile(12,history([]),[path]),tile(40,history([]),[path]),tile(1,history([]),[path]),tile(31,history([]),[path]),tile(33,history([]),[path]),tile(44,history([]),[path]),tile(63,history([]),[path]),tile(16,history([]),[path]),tile(21,history([]),[path]),tile(43,history([]),[path]),tile(58,history([]),[path]),tile(26,history([]),[path]),tile(11,history([]),[path]),tile(53,history([]),[path]),tile(48,history([]),[path]),tile(6,history([event('TileActivatedEvent',cycle(0),turn(0),[])]),[path]),tile(38,history([]),[path]),tile(2,history([]),[path]),tile(34,history([]),[path]),tile(47,history([]),[path]),tile(62,history([]),[path]),tile(17,history([]),[path]),tile(49,history([]),[path]),tile(15,history([]),[path]),tile(30,history([]),[path]),tile(10,history([]),[path]),tile(42,history([]),[path]),tile(39,history([]),[path]),tile(25,history([]),[path]),tile(54,history([]),['GooseTile',path]),tile(22,history([]),[path]),tile(7,history([]),[path]),tile(57,history([]),[path]),tile(35,history([]),[path]),tile(29,history([]),[path]),tile(50,history([]),['GooseTile',path]),tile(18,history([]),['GooseTile',path]),tile(3,history([]),[path]),tile(46,history([]),[path]),tile(14,history([]),['GooseTile',path]),tile(61,history([]),[path])],first(tile(1,history([]),[path])))).
+   * consumableBuffer([event('MovementDiceRollEvent',cycle(4),turn(3),[])]).
+   * gameHistory([event('MovementDiceRollEvent',cycle(3),turn(3),[]),event('MovementDiceRollEvent',cycle(1),turn(1),[]),event('MovementDiceRollEvent',cycle(0),turn(0),[])]).
+   * players([player(sad,history([event('TurnEndedEvent',cycle(2),turn(2),[]),event('TurnEndedEvent',cycle(0),turn(0),[]),event('MovementDiceRollEvent',cycle(0),turn(0),[])])),player('AGAGA',history([event('TurnEndedEvent',cycle(3),turn(3),[]),event('MovementDiceRollEvent',cycle(3),turn(3),[]),event('TurnEndedEvent',cycle(1),turn(1),[]),event('MovementDiceRollEvent',cycle(1),turn(1),[])]))]).
+   * owns(player(sad,history([event('TurnEndedEvent',cycle(2),turn(2),[]),event('TurnEndedEvent',cycle(0),turn(0),[]),event('MovementDiceRollEvent',cycle(0),turn(0),[])])),piece(position(tile(6,history([event('TileActivatedEvent',cycle(0),turn(0),[])]),[path])),colour(1.0,0.0,0.0))).
+   * owns(player('AGAGA',history([event('TurnEndedEvent',cycle(3),turn(3),[]),event('MovementDiceRollEvent',cycle(3),turn(3),[]),event('TurnEndedEvent',cycle(1),turn(1),[]),event('MovementDiceRollEvent',cycle(1),turn(1),[])])),piece(position(tile(9,history([event('TileActivatedEvent',cycle(3),turn(3),[])]),['GooseTile',path])),colour(1.0,0.0,0.0))).
    * </pre>
    *
    * @param s the prolog goal. It must have valid syntax.
@@ -51,7 +51,7 @@ trait GooseDSLPrologExtension {
    *
    * An example of such theory is:
    * <pre>
-   * event(TurnEndedEvent,cycle(2),turn(2))
+   * event(TurnEndedEvent,cycle(2),turn(2), [group1, group2])
    * </pre>
    *
    * @param s the prolog goal. It must have valid syntax.
@@ -79,16 +79,16 @@ trait GooseDSLPrologExtension {
      *
      * Output example:
      * <pre>
-     * currentTurn(4).
-     * currentCycle(4).
-     * currentPlayer(player(asd,history([event(TurnEndedEvent,cycle(2),turn(2)),event(TurnEndedEvent,cycle(0),turn(0)),event(MovementDiceRollEvent,cycle(0),turn(0))]))).
-     * nextPlayer(player(dsa,history([event(TurnEndedEvent,cycle(3),turn(3)),event(MovementDiceRollEvent,cycle(3),turn(3)),event(TurnEndedEvent,cycle(1),turn(1)),event(MovementDiceRollEvent,cycle(1),turn(1))]))).
-     * gameBoard(board([tile(4,history([])),tile(9,history([])),tile(55,history([])),tile(41,history([])),tile(23,history([])),tile(36,history([])),tile(24,history([])),tile(51,history([])),tile(13,history([])),tile(19,history([])),tile(45,history([])),tile(56,history([])),tile(28,history([])),tile(60,history([])),tile(5,history([])),tile(59,history([])),tile(27,history([])),tile(37,history([])),tile(20,history([])),tile(32,history([])),tile(8,history([])),tile(52,history([])),tile(12,history([])),tile(40,history([])),tile(1,history([])),tile(31,history([])),tile(33,history([])),tile(44,history([])),tile(63,history([])),tile(16,history([])),tile(21,history([])),tile(43,history([])),tile(58,history([])),tile(26,history([])),tile(11,history([])),tile(53,history([])),tile(48,history([])),tile(6,history([event(TileActivatedEvent,cycle(0),turn(0))])),tile(38,history([])),tile(2,history([])),tile(34,history([])),tile(47,history([])),tile(62,history([])),tile(17,history([])),tile(49,history([])),tile(15,history([])),tile(30,history([])),tile(10,history([])),tile(42,history([])),tile(39,history([])),tile(25,history([])),tile(54,history([])),tile(22,history([])),tile(7,history([])),tile(57,history([])),tile(35,history([])),tile(29,history([])),tile(50,history([])),tile(18,history([])),tile(3,history([])),tile(46,history([])),tile(14,history([])),tile(61,history([]))],first(tile(1,history([]))))).
-     * consumableBuffer([event(MovementDiceRollEvent,cycle(4),turn(4))]).
-     * gameHistory([event(MovementDiceRollEvent,cycle(3),turn(3)),event(MovementDiceRollEvent,cycle(1),turn(1)),event(MovementDiceRollEvent,cycle(0),turn(0))]).
-     * players([player(asd,history([event(TurnEndedEvent,cycle(2),turn(2)),event(TurnEndedEvent,cycle(0),turn(0)),event(MovementDiceRollEvent,cycle(0),turn(0))])),player(dsa,history([event(TurnEndedEvent,cycle(3),turn(3)),event(MovementDiceRollEvent,cycle(3),turn(3)),event(TurnEndedEvent,cycle(1),turn(1)),event(MovementDiceRollEvent,cycle(1),turn(1))]))]).
-     * owns(player(asd,history([event(TurnEndedEvent,cycle(2),turn(2)),event(TurnEndedEvent,cycle(0),turn(0)),event(MovementDiceRollEvent,cycle(0),turn(0))])),piece(position(tile(6,history([event(TileActivatedEvent,cycle(0),turn(0))]))),colour(1.0,0.0,0.0))).
-     * owns(player(dsa,history([event(TurnEndedEvent,cycle(3),turn(3)),event(MovementDiceRollEvent,cycle(3),turn(3)),event(TurnEndedEvent,cycle(1),turn(1)),event(MovementDiceRollEvent,cycle(1),turn(1))])),piece(position(tile(34,history([]))),colour(0.0,1.0,0.0))).
+     * currentTurn(3).
+     * currentCycle(3).
+     * currentPlayer(player('AGAGA',history([event('TurnEndedEvent',cycle(3),turn(3),[]),event('MovementDiceRollEvent',cycle(3),turn(3),[]),event('TurnEndedEvent',cycle(1),turn(1),[]),event('MovementDiceRollEvent',cycle(1),turn(1),[])]))).
+     * nextPlayer(player(sad,history([event('TurnEndedEvent',cycle(2),turn(2),[]),event('TurnEndedEvent',cycle(0),turn(0),[]),event('MovementDiceRollEvent',cycle(0),turn(0),[])]))).
+     * gameBoard(board([tile(4,history([]),[path]),tile(9,history([event('TileActivatedEvent',cycle(3),turn(3),[])]),['GooseTile',path]),tile(55,history([]),[path]),tile(41,history([]),['GooseTile',path]),tile(23,history([]),['GooseTile',path]),tile(36,history([]),['GooseTile',path]),tile(24,history([]),[path]),tile(51,history([]),[path]),tile(13,history([]),[path]),tile(19,history([]),[path]),tile(45,history([]),['GooseTile',path]),tile(56,history([]),[path]),tile(28,history([]),[path]),tile(60,history([]),[path]),tile(5,history([]),['GooseTile',path]),tile(59,history([]),['GooseTile',path]),tile(27,history([]),['GooseTile',path]),tile(37,history([]),[path]),tile(20,history([]),[path]),tile(32,history([]),['GooseTile',path]),tile(8,history([]),[path]),tile(52,history([]),[path]),tile(12,history([]),[path]),tile(40,history([]),[path]),tile(1,history([]),[path]),tile(31,history([]),[path]),tile(33,history([]),[path]),tile(44,history([]),[path]),tile(63,history([]),[path]),tile(16,history([]),[path]),tile(21,history([]),[path]),tile(43,history([]),[path]),tile(58,history([]),[path]),tile(26,history([]),[path]),tile(11,history([]),[path]),tile(53,history([]),[path]),tile(48,history([]),[path]),tile(6,history([event('TileActivatedEvent',cycle(0),turn(0),[])]),[path]),tile(38,history([]),[path]),tile(2,history([]),[path]),tile(34,history([]),[path]),tile(47,history([]),[path]),tile(62,history([]),[path]),tile(17,history([]),[path]),tile(49,history([]),[path]),tile(15,history([]),[path]),tile(30,history([]),[path]),tile(10,history([]),[path]),tile(42,history([]),[path]),tile(39,history([]),[path]),tile(25,history([]),[path]),tile(54,history([]),['GooseTile',path]),tile(22,history([]),[path]),tile(7,history([]),[path]),tile(57,history([]),[path]),tile(35,history([]),[path]),tile(29,history([]),[path]),tile(50,history([]),['GooseTile',path]),tile(18,history([]),['GooseTile',path]),tile(3,history([]),[path]),tile(46,history([]),[path]),tile(14,history([]),['GooseTile',path]),tile(61,history([]),[path])],first(tile(1,history([]),[path])))).
+     * consumableBuffer([event('MovementDiceRollEvent',cycle(4),turn(3),[])]).
+     * gameHistory([event('MovementDiceRollEvent',cycle(3),turn(3),[]),event('MovementDiceRollEvent',cycle(1),turn(1),[]),event('MovementDiceRollEvent',cycle(0),turn(0),[])]).
+     * players([player(sad,history([event('TurnEndedEvent',cycle(2),turn(2),[]),event('TurnEndedEvent',cycle(0),turn(0),[]),event('MovementDiceRollEvent',cycle(0),turn(0),[])])),player('AGAGA',history([event('TurnEndedEvent',cycle(3),turn(3),[]),event('MovementDiceRollEvent',cycle(3),turn(3),[]),event('TurnEndedEvent',cycle(1),turn(1),[]),event('MovementDiceRollEvent',cycle(1),turn(1),[])]))]).
+     * owns(player(sad,history([event('TurnEndedEvent',cycle(2),turn(2),[]),event('TurnEndedEvent',cycle(0),turn(0),[]),event('MovementDiceRollEvent',cycle(0),turn(0),[])])),piece(position(tile(6,history([event('TileActivatedEvent',cycle(0),turn(0),[])]),[path])),colour(1.0,0.0,0.0))).
+     * owns(player('AGAGA',history([event('TurnEndedEvent',cycle(3),turn(3),[]),event('MovementDiceRollEvent',cycle(3),turn(3),[]),event('TurnEndedEvent',cycle(1),turn(1),[]),event('MovementDiceRollEvent',cycle(1),turn(1),[])])),piece(position(tile(9,history([event('TileActivatedEvent',cycle(3),turn(3),[])]),['GooseTile',path])),colour(1.0,0.0,0.0))).
      * </pre>
      */
     def asPrologTheory: String = stateToTheory(state).getText
@@ -126,7 +126,7 @@ trait GooseDSLPrologExtension {
 
   private def toTerm(player: Player): Struct = {
     Struct.of("player",
-      Term.createTerm(player.name),
+      Term.createTerm(player.name.sanitizeAtom),
       Struct.of("history",
         toTerm(player.history))
     )
@@ -143,9 +143,10 @@ trait GooseDSLPrologExtension {
   private def toTerm(tile: Tile): Struct =
     Struct.of("tile",
       tile.definition.number.map(tp.Int.of)
-        .orElse(tile.definition.name.map(Term.createTerm))
+        .orElse(tile.definition.name.map(_.sanitizeAtom).map(Term.createTerm))
         .getOrElse(Term.createTerm("emptyTile")),
-      Struct.of("history", toTerm(tile.history))
+      Struct.of("history", toTerm(tile.history)),
+      Struct.list(JavaConverters.asJavaIterable(tile.definition.groups.map(_.sanitizeAtom).map(Term.createTerm)))
     )
 
   private def toTerm(colour: Colour): Struct =
@@ -169,8 +170,18 @@ trait GooseDSLPrologExtension {
     Struct.list(JavaConverters.asJavaIterable(history.map(toTerm)))
   }
 
-  private def toTerm(event: GameEvent): Struct = {
-    // TODO add event groups
-    Struct.of("event", Term.createTerm(event.name), createTerm("cycle", event.cycle), createTerm("turn", event.turn))
+  private def toTerm(event: GameEvent): Struct =
+    Struct.of("event",
+      Term.createTerm(event.name.sanitizeAtom),
+      createTerm("cycle", event.cycle),
+      createTerm("turn", event.turn),
+      Struct.list(JavaConverters.asJavaIterable(
+        event.groups.map(_.sanitizeAtom).map(Term.createTerm)
+      ))
+    )
+
+  private implicit class PrologAtomSanitizer(string: String) {
+    def sanitizeAtom: String = "'" + string.replaceAll("""'""", "") + "'"
   }
+
 }
