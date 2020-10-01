@@ -15,7 +15,7 @@ New [releases](https://github.com/ldeluigi/untitled-goose-framework/releases) ar
   GooseDSL is natural language oriented, in English.
 - Ability to play created games locally. Given that each game must be turn-based, one single device is enough to play with any number of human players.
 - Possibility to extend game classes, objects or data structures to implement more complex behaviours or functionalities. This can mean both extend the framework functionalities or customize default game logic. For example, one can reimplement the graphical components to make their own visualization.
-- Possibility to extend the GooseDSL with custom shortcuts, keywords and more.
+- Possibility to extend the GooseDSL with custom shortcuts, keywords and more. _This project offers GooseDSLPrologExtension as an extension to GooseDSL that allows the programmer to use Prolog  in some cases._
 
 ## Installation
 1. Download the jar of the last version available in the [Release](https://github.com/ldeluigi/untitled-goose-framework/releases) section.
@@ -42,6 +42,8 @@ New [releases](https://github.com/ldeluigi/untitled-goose-framework/releases) ar
     )
     ```
   - `io.vertx/vertx-lang-scala/3.9.1` which can be found [here](https://mvnrepository.com/artifact/io.vertx/vertx-lang-scala_2.12/3.9.1).
+- If you want to use the `GooseDSLPrologExtension` you will also need this dependency:
+  - `it.unibo.alice.tuprolog/2p-core/4.1.1`
 - Create a class or object that extends __GooseDSL__ (package: `untitled.goose.framework.dsl`) and write your own game. Documentation on how to write a game can be found in the Wiki.
 
 ## Contribute
