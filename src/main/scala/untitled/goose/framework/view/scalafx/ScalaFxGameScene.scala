@@ -28,7 +28,7 @@ object ScalaFxGameScene {
   /**
    * Factory method to create a new ScalaFxGameScene.
    *
-   * @param stage         the [[scalafx.scene.Scene]] containing the graphic components.
+   * @param stage         the scalafx.scene.Scene containing the graphic components.
    * @param commandSender the input manager for user actions.
    * @param gameState     the starting game state, that allows the drawing of the first board.
    * @param graphicMap    the graphic representation of tiles.
