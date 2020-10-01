@@ -78,7 +78,7 @@ jobs:
       - name: Check that workflows are up to date
         run: sbt ++${{ matrix.scala }} githubWorkflowCheck
 
-      - run: sbt ++${{ matrix.scala }} test package
+      - run: sbt ++${{ matrix.scala }} test packagedArtifacts
 
       - name: Compress target directories
         run: tar cf targets.tar target project/target
@@ -161,13 +161,15 @@ jobs:
 
       - run: |
           mv ./target/scala-2.12/*.jar .
+          mv ./target/scala-2.12/*.pom .
           find . -type f -name "*.jar"
+          find . -type f -name "*.pom"
 
       - name: Upload new GitHub Release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           prerelease: false
-          files: '*.jar'
+          files: (*.jar|*.pom)
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          title: Release - Version 1.0.0
-          automatic_release_tag: 1.0.0
+          title: Release - Version 1.0.1
+          automatic_release_tag: 1.0.1

@@ -2,7 +2,7 @@ name := "untitled-goose-framework"
 
 organization := "untitled.goose.framework"
 
-version := "1.0.0"
+version := "1.0.1"
 
 scalaVersion := "2.12.10"
 
@@ -10,11 +10,11 @@ ThisBuild / sbtVersion := "1.3.13"
 
 //ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
 
-ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "package")))
+ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "packagedArtifacts")))
 
 ThisBuild / githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(
-  List("mv ./target/scala-2.12/*.jar .",
-    "find . -type f -name \"*.jar\"")
+  List("mv ./target/scala-2.12/*.jar .", "mv ./target/scala-2.12/*.pom .",
+    "find . -type f -name \"*.jar\"", "find . -type f -name \"*.pom\"")
 ))
 ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
   "marvinpinto", "action-automatic-releases", "latest",
@@ -29,7 +29,7 @@ ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
       else
         "Release - Version " + version.value
     },
-    "files" -> "*.jar"
+    "files" -> "(*.jar|*.pom)"
   )
 ))
 
@@ -69,3 +69,5 @@ libraryDependencies ++= javaFXModules.map(m =>
 )
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
+
+publishMavenStyle := true
