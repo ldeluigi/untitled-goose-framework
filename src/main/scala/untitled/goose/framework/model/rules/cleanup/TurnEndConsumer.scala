@@ -1,7 +1,8 @@
 package untitled.goose.framework.model.rules.cleanup
 
 import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
-import untitled.goose.framework.model.entities.runtime.MutableGameState
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
+import untitled.goose.framework.model.entities.runtime.{GameState, Player}
 import untitled.goose.framework.model.events.consumable.TurnShouldEndEvent
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, TurnEndedEvent}
 
@@ -10,12 +11,12 @@ import untitled.goose.framework.model.events.persistent.{GainTurnEvent, TurnEnde
  * and, if it finds one relative to the current turn, consumes it and ends the turn, moving the game
  * to the next player.
  */
-object TurnEndConsumer extends CleanupRule {
+case class TurnEndConsumer(nextPlayerStrategy: (Player, Seq[Player]) => Player) extends CleanupRule {
 
-  override def applyRule(state: MutableGameState): Unit =
+  override def applyRule(state: GameState): GameState =
     consumeTurn(state)
 
-  private def consumeTurn(state: MutableGameState): Unit = {
+  private def consumeTurn(state: GameState): GameState = {
     val shouldEnd = state.consumableBuffer
       .filterTurn(state.currentTurn)
       .only[TurnShouldEndEvent].nonEmpty
@@ -25,13 +26,13 @@ object TurnEndConsumer extends CleanupRule {
       .isEmpty
 
     if (shouldEnd) {
-      state.submitEvent(TurnEndedEvent(state.currentPlayer, state.currentTurn, state.currentCycle))
+      val s = state.submitEvent(TurnEndedEvent(state.currentPlayer, state.currentTurn, state.currentCycle))
       if (shouldPassTurn) {
-        state.currentTurn = state.currentTurn + 1
-        state.currentPlayer = state.nextPlayer
+        s.updateCurrentTurn(_ + 1)
+          .updateCurrentPlayer(nextPlayerStrategy)
       } else {
-        state.currentPlayer.history = state.currentPlayer.history.skipOfType[GainTurnEvent]()
+        s.updatePlayerHistory(state.currentPlayer, _.skipOfType[GainTurnEvent]())
       }
-    }
+    } else state
   }
 }

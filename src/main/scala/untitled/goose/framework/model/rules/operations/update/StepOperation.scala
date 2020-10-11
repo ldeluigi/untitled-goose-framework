@@ -1,6 +1,7 @@
 package untitled.goose.framework.model.rules.operations.update
 
 import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.entities.runtime.{GameStateExtensions => _, _}
 import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.rules.operations.Operation
@@ -40,22 +41,22 @@ object StepOperation {
       p match {
         case Some(pos) => if (forward) {
           if (!inverted) {
-            state.gameBoard
+            state.gameBoard.tileOrdering
               .next(pos.tile)
           } else {
-            state.gameBoard
+            state.gameBoard.tileOrdering
               .prev(pos.tile)
           }
         } else {
           if (inverted) {
-            state.gameBoard
+            state.gameBoard.tileOrdering
               .next(pos.tile)
           } else {
-            state.gameBoard
+            state.gameBoard.tileOrdering
               .prev(pos.tile)
           }
         }
-        case None => if (forward) Some(state.gameBoard.first) else None
+        case None => if (forward) Some(state.gameBoard.tileOrdering.first) else None
       }
     }
 

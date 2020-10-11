@@ -6,6 +6,7 @@ import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 /** The game state. */
 trait GameState {
 
+
   /** Returns the current turn of the game. Starts at 0. */
   def currentTurn: Int
 
@@ -14,9 +15,6 @@ trait GameState {
 
   /** Returns the current player. */
   def currentPlayer: Player
-
-  /** Returns the player that is supposed to go next. */
-  def nextPlayer: Player
 
   /** Returns the player-piece map. */
   def playerPieces: Map[Player, Piece]
@@ -33,7 +31,35 @@ trait GameState {
   /** Returns the set of players. */
   def players: Seq[Player]
 
-  /** Makes an immutable copy of this game state. */
-  override def clone(): GameState = CloneGameState(this)
+}
+
+object GameState {
+
+  case class GameStateImpl(currentTurn: Int,
+                           currentCycle: Int,
+                           currentPlayer: Player,
+                           playerPieces: Map[Player, Piece],
+                           gameBoard: Board,
+                           consumableBuffer: Seq[ConsumableGameEvent],
+                           gameHistory: Seq[GameEvent],
+                           players: Seq[Player]
+                          ) extends GameState {
+    require(playerPieces.keys.exists(_ == currentPlayer))
+    require(currentCycle >= 0)
+    require(playerPieces.keySet == players.toSet)
+  }
+
+  def apply(players: Seq[Player],
+            first: Seq[Player] => Player,
+            pieces: Map[Player, Piece],
+            board: Board): GameState =
+    GameStateImpl(0,
+      0,
+      first(players),
+      pieces,
+      board,
+      Seq(),
+      Seq(),
+      players)
 }
 

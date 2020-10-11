@@ -8,7 +8,7 @@ import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.stage.Stage
 import untitled.goose.framework.model.GraphicDescriptor
 import untitled.goose.framework.model.entities.definitions.{GameDefinition, TileIdentifier}
-import untitled.goose.framework.model.entities.runtime.{Game, GameState}
+import untitled.goose.framework.model.entities.runtime.Game
 import untitled.goose.framework.view.scalafx.{ScalaFxController, ScalaFxGameScene}
 
 import scala.collection.immutable.ListMap
@@ -54,9 +54,8 @@ private[scalafx] class IntroMenu(stage: Stage, gameData: GameDefinition, boardNa
     val minimumNeededPlayers: Int = gameData.playersRange.start
     if (playersPane.checkPlayers) {
       val currentMatch: Game = Game(gameData, ListMap(playersPane.getPlayerSeq.map(p => (p, playersPane.getPlayersPiecesMap(p))): _*))
-      val clonedState: GameState = currentMatch.currentState.clone()
       val controller: ScalaFxController = ScalaFxController(currentMatch)
-      val gameScene: ScalaFxGameScene = ScalaFxGameScene(stage, controller, clonedState, graphicMap)
+      val gameScene: ScalaFxGameScene = ScalaFxGameScene(stage, controller, currentMatch.currentState, graphicMap)
       controller.setGameScene(gameScene)
       stage.scene = gameScene
       stage.minWidth = widthSize * 0.5

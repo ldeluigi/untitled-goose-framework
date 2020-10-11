@@ -3,7 +3,7 @@ package untitled.goose.framework.dsl.rules.operations.nodes
 import untitled.goose.framework.dsl.nodes.RuleBookNode
 import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourCustomEventInstance
 import untitled.goose.framework.model.entities.DialogContent
-import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState}
+import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.rules.operations.Operation
@@ -76,7 +76,7 @@ object OperationNode {
     override def check: Seq[String] = options.flatMap(_._2.check)
   }
 
-  case class UpdateOperationNode[T <: ConsumableGameEvent](f: (T, GameState) => MutableGameState => Unit, isForEach: Boolean) extends OperationNode[T] {
+  case class UpdateOperationNode[T <: ConsumableGameEvent](f: (T, GameState) => GameState => GameState, isForEach: Boolean) extends OperationNode[T] {
     override def getOperations: (Seq[T], GameState) => Seq[Operation] =
       if (isForEach)
         (e, s) => e.map(ev => Operation.updateState(f(ev, s)))

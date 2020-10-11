@@ -2,7 +2,7 @@ package untitled.goose.framework.view.scalafx.logger
 
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
-import untitled.goose.framework.model.entities.runtime.GameState
+import untitled.goose.framework.model.entities.runtime.{GameState, Tile}
 import untitled.goose.framework.model.events.GameEvent
 
 /**
@@ -56,10 +56,10 @@ object EventLogger {
           .flatMap(_.history)
           .diff(previousState.players
             .flatMap(_.history)).map((_, "Player")) ++
-        state.gameBoard.tiles
-          .flatMap(_.history)
-          .diff(previousState.gameBoard.tiles
-            .flatMap(_.history)).map((_, "Tile")))
+        state.gameBoard.tiles.values.toSet
+          .flatMap((t: Tile) => t.history)
+          .diff(previousState.gameBoard.tiles.values.toSet
+            .flatMap((t: Tile) => t.history)).map((_, "Tile")))
         .foreach(d => logEvent(d._1, d._2))
       previousState = state
     }

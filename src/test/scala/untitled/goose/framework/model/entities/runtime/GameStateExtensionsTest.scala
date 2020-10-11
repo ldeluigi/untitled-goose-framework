@@ -59,23 +59,22 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   "PimpedHistory.excludeEventType[T]" should "remove all the events of type T event" in {
     skipTurnSequence = Seq(SkipTurnEvent(Player("a"), 1, 1))
     pimpedHistory = new PimpedHistory[GameEvent](skipTurnSequence)
-    pimpedHistory.excludeEventType[SkipTurnEvent] should have size (0)
+    pimpedHistory.excludeEventType[SkipTurnEvent]() should have size (0)
   }
 
   "MutableStateExtensions.submitEvent" should "submit a given event in the right histories" in {
-    var gameMatch: Game = MatchMock.default
-    val gameMutableState: MutableGameState = gameMatch.currentState
+    val gameMatch: Game = MatchMock.default
+    val gameMutableState: GameState = gameMatch.currentState
     val skipTurnEvent: ConsumableGameEvent = SkipTurnEvent(gameMatch.currentState.currentPlayer, gameMatch.currentState.currentTurn, gameMatch.currentState.currentCycle)
-    gameMutableState.submitEvent(skipTurnEvent)
-    gameMutableState.consumableBuffer should contain(skipTurnEvent)
+
+    gameMutableState.submitEvent(skipTurnEvent).consumableBuffer should contain(skipTurnEvent)
   }
 
   "MutableStateExtensions.saveEvent" should "save a consumable event onto the correct persistent history" in {
-    var gameMatch: Game = MatchMock.default
-    val gameMutableState: MutableGameState = gameMatch.currentState
+    val gameMatch: Game = MatchMock.default
+    val gameMutableState: GameState = gameMatch.currentState
     val skipTurnEvent: ConsumableGameEvent = SkipTurnEvent(gameMatch.currentState.currentPlayer, gameMatch.currentState.currentTurn, gameMatch.currentState.currentCycle)
-    gameMutableState.saveEvent(skipTurnEvent)
-    gameMutableState.gameHistory should contain(skipTurnEvent)
+    gameMutableState.saveEvent(skipTurnEvent).gameHistory should contain(skipTurnEvent)
   }
 
   "GameStateExtensions.getTile(num)" should "return the tile with that number if it exists" in {

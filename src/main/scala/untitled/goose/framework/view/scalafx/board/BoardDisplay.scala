@@ -52,7 +52,7 @@ object BoardDisplay {
      * while carrying the custom graphic properties.
      */
     private def renderBoard(): Unit = {
-      for (tile <- matchBoard.tiles.toList.sorted)
+      for (tile <- matchBoard.tiles.values.toList.sorted)
         renderTile(TileVisualization(tile, currentTileWidth, getGraphicDescriptor(tile)))
     }
 

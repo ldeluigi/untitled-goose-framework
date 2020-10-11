@@ -2,6 +2,7 @@ package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.actions.Action
 import untitled.goose.framework.model.entities.definitions.GameDefinition
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.rules.operations.Operation
 import untitled.goose.framework.model.rules.ruleset.{PriorityRuleSet, RuleSet}
 
@@ -16,15 +17,16 @@ trait Game extends Defined[GameDefinition] {
   def availableActions: Set[Action]
 
   /** The game current state. */
-  def currentState: MutableGameState
+  def currentState: GameState
 
-  /** Based on current state and rules, the sequence of operation to execute. Can alter state. */
-  def stateBasedOperations(): Seq[Operation]
+  /** Based on current state and rules, the sequence of operation to execute. */
+  def stateBasedOperations: (GameState, Seq[Operation])
 
   /** Based on current state and rules, the operation that cleans the buffers
-   * at the end of a cycle. Can also alter state.
+   * at the end of a cycle.
    */
-  def cleanup(): Operation
+  def cleanup: Operation
+
 }
 
 object Game {
@@ -43,10 +45,9 @@ object Game {
 
     private val players = playerPieces.keys.toSeq
 
-    override val currentState: CycleMutableGameState = CycleMutableGameState(
-      rules.first,
-      rules.nextPlayer,
+    override val currentState: GameState = GameState(
       players,
+      rules.first,
       playerPieces,
       board
     )
@@ -56,13 +57,13 @@ object Game {
         rules.actions(currentState)
       else Set()
 
-    override def stateBasedOperations(): Seq[Operation] = rules.stateBasedOperations(currentState)
+    override def stateBasedOperations: (GameState, Seq[Operation]) = rules.stateBasedOperations(currentState)
 
-    override def cleanup(): Operation = {
+    override def cleanup: Operation = {
       Operation.updateState(state => {
         rules.cleanupOperations(state)
-        currentState.consumableBuffer = currentState.consumableBuffer.filter(_.cycle > currentState.currentCycle)
-        this.currentState.currentCycle = this.currentState.currentCycle + 1
+          .updateConsumableBuffer(_.filter(_.cycle > currentState.currentCycle))
+          .updateCurrentCycle(_ + 1)
       })
     }
   }

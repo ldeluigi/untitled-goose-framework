@@ -11,9 +11,6 @@ trait Player {
   /** The player's event history. */
   def history: Seq[PlayerEvent]
 
-  /** The player's event history setter. */
-  def history_=(history: Seq[PlayerEvent]): Unit
-
   /** Compares two players. */
   def ==(obj: Player): Boolean = name == obj.name
 
@@ -33,7 +30,7 @@ object Player {
 
     override def name: String = playerName
 
-    var history: Seq[PlayerEvent] = List()
+    val history: Seq[PlayerEvent] = List()
 
   }
 

@@ -4,6 +4,7 @@ import untitled.goose.framework.dsl.GooseDSL
 import untitled.goose.framework.dsl.board.words.DispositionType.Spiral
 import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.definitions.PlayerOrderingType.Fixed
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.events.CustomGameEvent
 
 
@@ -82,7 +83,7 @@ object GooseGame extends GooseDSL {
   )
 
   After resolving each action (
-    _.currentTurn += 0
+    _.updateCurrentTurn(_ + 1)
     )
 
   Include these system behaviours(

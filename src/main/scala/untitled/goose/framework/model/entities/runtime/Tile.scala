@@ -9,9 +9,6 @@ trait Tile extends Defined[TileDefinition] {
   /** The history of events related to this tile. */
   def history: Seq[TileEvent]
 
-  /** The tile's event history setter. */
-  def history_=(history: Seq[TileEvent]): Unit
-
   /** Compares two tiles. */
   def ==(obj: Tile): Boolean = definition == obj.definition
 
@@ -30,12 +27,15 @@ trait Tile extends Defined[TileDefinition] {
 
 object Tile {
 
-  private class TileImpl(val definition: TileDefinition) extends Tile {
-    var history: Seq[TileEvent] = List()
+  private class TileDefImpl(val definition: TileDefinition) extends Tile {
+    val history: Seq[TileEvent] = List()
   }
 
+  case class TileImpl(definition: TileDefinition,
+                      history: Seq[TileEvent]) extends Tile
+
   /** Factory method that creates a new tile from the definition. */
-  def apply(tileDefinition: TileDefinition): Tile = new TileImpl(tileDefinition)
+  def apply(tileDefinition: TileDefinition): Tile = new TileDefImpl(tileDefinition)
 
   /** Default comparator, based on the definition's default comparator. */
   implicit def compare[A <: Tile]: Ordering[A] = Ordering.by(_.definition)

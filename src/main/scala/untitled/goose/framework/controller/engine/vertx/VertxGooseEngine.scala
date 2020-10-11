@@ -8,7 +8,8 @@ import io.vertx.scala.core.eventbus.DeliveryOptions
 import untitled.goose.framework.controller.ViewController
 import untitled.goose.framework.controller.engine.{EventSink, GooseEngine}
 import untitled.goose.framework.model.entities.DialogContent
-import untitled.goose.framework.model.entities.runtime.{CloneGameState, Game}
+import untitled.goose.framework.model.entities.runtime.Game
+import untitled.goose.framework.model.entities.runtime.functional.GameUpdate.GameUpdateImpl
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.special.{ActionEvent, ExitEvent, NoOpEvent}
 import untitled.goose.framework.model.rules.operations.Operation
@@ -19,7 +20,7 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
 
-private class VertxGooseEngine (private val gameMatch: Game, private val controller: ViewController) extends GooseEngine with EventSink[GameEvent] {
+private class VertxGooseEngine(private var gameMatch: Game, private val controller: ViewController) extends GooseEngine with EventSink[GameEvent] {
   private type DialogDisplay = DialogContent => Future[GameEvent]
   private val vertx: Vertx = Vertx.vertx()
   private val gv = new GooseVerticle(onEvent)
@@ -61,9 +62,11 @@ private class VertxGooseEngine (private val gameMatch: Game, private val control
       }
       if (stopped.get()) return
     }
-    controller.update(CloneGameState(gameMatch.currentState), gameMatch.availableActions)
+    controller.update(gameMatch.currentState, gameMatch.availableActions)
     if (stack.nonEmpty) {
-      stack = gameMatch.stateBasedOperations() ++ stack
+      val (state, operations) = gameMatch.stateBasedOperations
+      gameMatch = gameMatch.updateState(state)
+      stack = operations ++ stack
       executeOperation()
     }
   }
@@ -79,7 +82,7 @@ private class VertxGooseEngine (private val gameMatch: Game, private val control
       case NoOpEvent => executeOperation()
       case ActionEvent(action) => onEvent(action.trigger(gameMatch.currentState))
       case _ =>
-        if (stack.isEmpty) stack :+= gameMatch.cleanup()
+        if (stack.isEmpty) stack :+= gameMatch.cleanup
         stack +:= Operation.trigger(event)
         executeOperation()
     }

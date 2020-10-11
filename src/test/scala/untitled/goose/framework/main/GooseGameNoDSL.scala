@@ -6,7 +6,8 @@ import javafx.scene.input.KeyCode
 import scalafx.application.JFXApp
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
-import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition, GameDefinitionBuilder, PlayerOrderingType, TileIdentifier}
+import untitled.goose.framework.model.entities.definitions._
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.consumable
@@ -162,9 +163,7 @@ object GooseGameNoDSL extends JFXApp {
   val passedOnTheWell: BehaviourRule = BehaviourRule[PlayerPassedEvent](
     filterStrategy = _.tile.definition.name.contains(theWell),
     operations = (events, _) => {
-      events.map(e => Operation.updateState(_ => {
-        e.player.history = e.player.history.excludeEventType[LoseTurnEvent]()
-      }))
+      events.map(e => Operation.updateState(_.updatePlayerHistory(e.player, _.excludeEventType[LoseTurnEvent]())))
     }
   )
 
@@ -189,11 +188,7 @@ object GooseGameNoDSL extends JFXApp {
 
   val passedOnPrison: BehaviourRule = BehaviourRule[PlayerPassedEvent](
     filterStrategy = _.tile.definition.name.contains(thePrison),
-    operations = (events, _) => {
-      events.map(e => Operation.updateState(_ => {
-        e.player.history = e.player.history.excludeEventType[LoseTurnEvent]()
-      }))
-    }
+    operations = (events, _) => events.map(e => Operation.updateState(_.updatePlayerHistory(e.player, _.excludeEventType[LoseTurnEvent]())))
   )
 
   //If you land on the Labyrinth, square 42, you will get lost in the maze and have to move back to square 37.

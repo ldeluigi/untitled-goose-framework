@@ -1,6 +1,7 @@
 package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.events._
 import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
 import untitled.goose.framework.model.events.persistent.{PersistentGameEvent, TurnEndedEvent}
@@ -21,7 +22,7 @@ object GameStateExtensions {
      * @return the tile, if found, as an option.
      */
     def getTile(number: Int): Option[Tile] =
-      state.gameBoard.tiles.find(t => t.definition.number.isDefined && t.definition.number.get == number)
+      state.gameBoard.tiles.values.find(t => t.definition.number.isDefined && t.definition.number.get == number)
 
     /**
      * Returns a tile with specified name from the board.
@@ -30,11 +31,11 @@ object GameStateExtensions {
      * @return the tile, if found, as an option.
      */
     def getTile(name: String): Option[Tile] =
-      state.gameBoard.tiles.find(t => t.definition.name.isDefined && t.definition.name.get == name)
+      state.gameBoard.tiles.values.find(t => t.definition.name.isDefined && t.definition.name.get == name)
 
 
     def getFirstTileOf(group: Group): Option[Tile] =
-      state.gameBoard.tiles.toList.sorted.find(t => t.definition.belongsTo(group.name))
+      state.gameBoard.tiles.values.toList.sorted.find(t => t.definition.belongsTo(group.name))
 
     /**
      * Returns a sequence of values that represent the turns at which a player stopped its
@@ -53,21 +54,18 @@ object GameStateExtensions {
     def playerLastTurn(player: Player): Option[Int] = player.history
       .filter(_.isInstanceOf[TurnEndedEvent])
       .map(_.turn).reduceOption(_ max _)
-  }
 
-  /** Pimps a mutable game state object. */
-  implicit class MutableStateExtensions(mutable: MutableGameState) extends GameStateExtensions(mutable) {
 
     /**
      * Adds a given event to proper histories, based on the event type.
      *
      * @param event the event to add to the state.
      */
-    def submitEvent(event: GameEvent): Unit = event match {
-      case NoOpEvent | ExitEvent =>
-      case event: ConsumableGameEvent => mutable.consumableBuffer = event +: mutable.consumableBuffer
+    def submitEvent(event: GameEvent): GameState = event match {
+      case NoOpEvent | ExitEvent => state
+      case event: ConsumableGameEvent => state.updateConsumableBuffer(event +: _)
       case event: PersistentGameEvent => saveToProperHistories(event)
-      case event => mutable.gameHistory = event +: mutable.gameHistory
+      case event => state.updateGameHistory(event +: _)
     }
 
     /**
@@ -75,17 +73,16 @@ object GameStateExtensions {
      *
      * @param event the consumable event to save.
      */
-    def saveEvent(event: ConsumableGameEvent): Unit = {
-      mutable.gameHistory = event +: mutable.gameHistory
-      saveToProperHistories(event)
+    def saveEvent(event: ConsumableGameEvent): GameState = {
+      GameStateExtensions(state.updateGameHistory(event +: _)).saveToProperHistories(event)
     }
 
-    private def saveToProperHistories(event: GameEvent): Unit = event match {
+    private def saveToProperHistories(event: GameEvent): GameState = event match {
       case event: PlayerEvent with TileEvent =>
-        event.player.history = event +: event.player.history
-        event.tile.history = event +: event.tile.history
-      case event: PlayerEvent => event.player.history = event +: event.player.history
-      case event: TileEvent => event.tile.history = event +: event.tile.history
+        state.updateTileHistory(event.tile, event +: _)
+          .updatePlayerHistory(event.player, event +: _)
+      case event: PlayerEvent => state.updatePlayerHistory(event.player, event +: _)
+      case event: TileEvent => state.updateTileHistory(event.tile, event +: _)
     }
 
   }
@@ -123,7 +120,7 @@ object GameStateExtensions {
     /** Filters only events that are of given type and converts the sequence to that
      * generic type.
      */
-    def only[T: ClassTag]: Seq[T] = history.filter({
+    def only[T](implicit classTag: ClassTag[T]): Seq[T] = history.filter({
       case _: T => true
       case _ => false
     }).map(_.asInstanceOf[T])

@@ -24,10 +24,6 @@ class GameStateTest extends AnyFlatSpec with Matchers {
     gameState.currentCycle should be(0)
   }
 
-  it should "return who is the next player" in {
-    gameState.nextPlayer should equal(p2)
-  }
-
   it should "return its current player of execution" in {
     gameState.currentPlayer should equal(p1)
   }
