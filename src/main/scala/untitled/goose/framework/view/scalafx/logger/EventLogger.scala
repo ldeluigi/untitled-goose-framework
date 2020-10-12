@@ -2,7 +2,7 @@ package untitled.goose.framework.view.scalafx.logger
 
 import scalafx.scene.control.TextArea
 import scalafx.scene.layout.Pane
-import untitled.goose.framework.model.entities.runtime.{GameState, Tile}
+import untitled.goose.framework.model.entities.runtime.{GameState, Player, Tile}
 import untitled.goose.framework.model.events.GameEvent
 
 /**
@@ -48,14 +48,15 @@ object EventLogger {
     override def logEvent(event: GameEvent): Unit = logEvent(event, "")
 
     override def logHistoryDiff(state: GameState): Unit = {
+      // TODO FIX: don't use diff!
       (state.consumableBuffer
         .diff(previousState.consumableBuffer).map((_, "Consumable")) ++
         state.gameHistory
           .diff(previousState.gameHistory).map((_, "Game")) ++
-        state.players
-          .flatMap(_.history)
-          .diff(previousState.players
-            .flatMap(_.history)).map((_, "Player")) ++
+        state.players.values.toSet
+          .flatMap((p: Player) => p.history)
+          .diff(previousState.players.values.toSet
+            .flatMap((p: Player) => p.history)).map((_, "Player")) ++
         state.gameBoard.tiles.values.toSet
           .flatMap((t: Tile) => t.history)
           .diff(previousState.gameBoard.tiles.values.toSet

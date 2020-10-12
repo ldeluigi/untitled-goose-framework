@@ -15,8 +15,8 @@ class SkipTurnBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfte
   val game: Game = MatchMock.default
   val state: GameState = game.currentState
 
-  val skipTurnEvent: ConsumableGameEvent = SkipTurnEvent(game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
-  val loseTurnEvent: PersistentGameEvent = LoseTurnEvent(game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
+  val skipTurnEvent: ConsumableGameEvent = SkipTurnEvent(game.currentState.currentPlayer.definition, game.currentState.currentTurn, game.currentState.currentCycle)
+  val loseTurnEvent: PersistentGameEvent = LoseTurnEvent(game.currentState.currentPlayer.definition, game.currentState.currentTurn, game.currentState.currentCycle)
 
   override protected def beforeEach(): Unit = {
     //state.submitEvent(loseTurnEvent)

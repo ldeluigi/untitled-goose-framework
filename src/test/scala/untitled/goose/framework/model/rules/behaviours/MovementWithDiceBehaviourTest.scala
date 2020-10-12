@@ -18,8 +18,8 @@ class MovementWithDiceBehaviourTest extends AnyFlatSpec with Matchers with Befor
   val diceResult: Int = 6
   val landingTile: Tile = Tile(TileDefinition(diceResult))
 
-  val movementDiceRollEvent: ConsumableGameEvent = MovementDiceRollEvent(game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle, diceResult)
-  val stepMovementEvent: ConsumableGameEvent = StepMovementEvent(diceResult, game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
+  val movementDiceRollEvent: ConsumableGameEvent = MovementDiceRollEvent(game.currentState.currentPlayer.definition, game.currentState.currentTurn, game.currentState.currentCycle, diceResult)
+  val stepMovementEvent: ConsumableGameEvent = StepMovementEvent(diceResult, game.currentState.currentPlayer.definition, game.currentState.currentTurn, game.currentState.currentCycle)
 
   override protected def beforeEach(): Unit = {
     //state.submitEvent(movementDiceRollEvent)

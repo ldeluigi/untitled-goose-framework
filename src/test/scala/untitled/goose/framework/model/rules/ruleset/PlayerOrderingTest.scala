@@ -3,20 +3,22 @@ package untitled.goose.framework.model.rules.ruleset
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.model.entities.runtime.Player
+import untitled.goose.framework.model.entities.runtime.Player.PlayerImpl
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
 
 import scala.util.Random
 
 class PlayerOrderingTest extends AnyFlatSpec with Matchers {
 
-  val p1: Player = Player("P1")
-  val p2: Player = Player("P2")
+  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"), Seq())
+  val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"), Seq())
   val players = Seq(p1, p2)
 
   behavior of "PlayerOrderingTest"
 
   it should "shuffle the given players into a randomized order" in {
-    val p3: Player = Player("P3")
-    val p4: Player = Player("P4")
+    val p3: Player = PlayerImpl(PlayerDefinitionImpl("P3"), Seq())
+    val p4: Player = PlayerImpl(PlayerDefinitionImpl("P4"), Seq())
     Random.setSeed(4)
     val ordering: PlayerOrdering = PlayerOrdering.randomOrder
     val playerList: Seq[Player] = List(p1, p2, p3, p4)

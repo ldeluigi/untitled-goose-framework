@@ -1,6 +1,6 @@
 package untitled.goose.framework.model.events
 
-import untitled.goose.framework.model.entities.runtime.Tile
+import untitled.goose.framework.model.entities.definitions.TileDefinition
 
 /**
  * CustomTileEvent is a CustomGameEvent that represent a generic TileEvent
@@ -11,7 +11,7 @@ import untitled.goose.framework.model.entities.runtime.Tile
  * @param name  The name specified for the event.
  * @param tile  The tile that this event regarded.
  */
-class CustomTileEvent(turn: Int, cycle: Int, name: String, val tile: Tile) extends CustomGameEvent(turn, cycle, name) with TileEvent
+class CustomTileEvent(turn: Int, cycle: Int, name: String, val tile: TileDefinition) extends CustomGameEvent(turn, cycle, name) with TileEvent
 
 object CustomTileEvent {
   /**
@@ -23,5 +23,5 @@ object CustomTileEvent {
    * @param tile  The tile that this event regarded.
    * @return A new CustomTileEvent event.
    */
-  def apply(turn: Int, cycle: Int, name: String, tile: Tile): CustomTileEvent = new CustomTileEvent(turn, cycle, name, tile)
+  def apply(turn: Int, cycle: Int, name: String, tile: TileDefinition): CustomTileEvent = new CustomTileEvent(turn, cycle, name, tile)
 }

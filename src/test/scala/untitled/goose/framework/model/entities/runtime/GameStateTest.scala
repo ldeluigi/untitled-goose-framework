@@ -5,6 +5,8 @@ import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock
 import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
+import untitled.goose.framework.model.entities.runtime.Player.PlayerImpl
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
 
 class GameStateTest extends AnyFlatSpec with Matchers {
 
@@ -12,8 +14,8 @@ class GameStateTest extends AnyFlatSpec with Matchers {
   val gameState: GameState = gameMatch.currentState
 
   val board: BoardDefinition = BoardDefinition("test", 10, Disposition.snake(10))
-  val p1: Player = Player("P1")
-  val p2: Player = Player("P2")
+  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"), Seq())
+  val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"), Seq())
   val players: Map[Player, Piece] = Map(p1 -> Piece(Colour.Default.Red), p2 -> Piece(Colour.Default.Blue))
 
   val gameBoard: Board = gameState.gameBoard

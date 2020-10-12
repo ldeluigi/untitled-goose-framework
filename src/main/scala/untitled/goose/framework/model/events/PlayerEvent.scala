@@ -1,12 +1,12 @@
 package untitled.goose.framework.model.events
 
-import untitled.goose.framework.model.entities.runtime.Player
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition
 
 /** An event that regards a player. */
 trait PlayerEvent extends GameEvent {
 
   /** The player that this event regarded. */
-  def player: Player
+  def player: PlayerDefinition
 
   override def toString: String = super.toString + " " + player.toString
 }
@@ -14,7 +14,7 @@ trait PlayerEvent extends GameEvent {
 object PlayerEvent {
 
   /** Unapply method to extract the player of a PlayerEvent. */
-  def unapply(arg: PlayerEvent): Option[Player] = Some(arg.player)
+  def unapply(arg: PlayerEvent): Option[PlayerDefinition] = Some(arg.player)
 
 }
 

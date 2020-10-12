@@ -17,10 +17,10 @@ class MultipleStepBehaviourTest extends AnyFlatSpec with Matchers with BeforeAnd
 
   val landingTile: Tile = Tile(TileDefinition(5))
 
-  val movementEvent: ConsumableGameEvent = StepMovementEvent(5, game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
-  val stopOnTileEvent: ConsumableGameEvent = StopOnTileEvent(game.currentState.currentPlayer, landingTile, game.currentState.currentTurn, game.currentState.currentTurn)
-  val tileEnteredEvent: ConsumableGameEvent = TileEnteredEvent(game.currentState.currentPlayer, landingTile, game.currentState.currentTurn, game.currentState.currentCycle)
-  val tileLeftEvent: ConsumableGameEvent = TileExitedEvent(game.currentState.currentPlayer, Tile(TileDefinition(1)), game.currentState.currentTurn, game.currentState.currentCycle)
+  val movementEvent: ConsumableGameEvent = StepMovementEvent(5, game.currentState.currentPlayer.definition, game.currentState.currentTurn, game.currentState.currentCycle)
+  val stopOnTileEvent: ConsumableGameEvent = StopOnTileEvent(game.currentState.currentPlayer.definition, landingTile.definition, game.currentState.currentTurn, game.currentState.currentTurn)
+  val tileEnteredEvent: ConsumableGameEvent = TileEnteredEvent(game.currentState.currentPlayer.definition, landingTile.definition, game.currentState.currentTurn, game.currentState.currentCycle)
+  val tileLeftEvent: ConsumableGameEvent = TileExitedEvent(game.currentState.currentPlayer.definition, Tile(TileDefinition(1)).definition, game.currentState.currentTurn, game.currentState.currentCycle)
 
   override protected def beforeEach(): Unit = {
     //  state.submitEvent(movementEvent)

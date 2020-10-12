@@ -50,7 +50,7 @@ object ActionMenu {
     override def displayActions(actions: Set[Action], currentPlayer: Player): Unit = {
       actionBox.children.removeAll(actionBox.children)
       container.children.removeAll(currentPlayerName, actionBox)
-      currentPlayerName.text = "Current player: " + currentPlayer.name
+      currentPlayerName.text = "Current player: " + currentPlayer.definition.name
       container.children.add(currentPlayerName)
       for (a <- actions) {
         actionBox.children.add(ActionVisualization(a, controller))

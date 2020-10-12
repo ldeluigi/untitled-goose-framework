@@ -26,12 +26,12 @@ case class TurnEndConsumer(nextPlayerStrategy: (Player, Seq[Player]) => Player) 
       .isEmpty
 
     if (shouldEnd) {
-      val s = state.submitEvent(TurnEndedEvent(state.currentPlayer, state.currentTurn, state.currentCycle))
+      val s = state.submitEvent(TurnEndedEvent(state.currentPlayer.definition, state.currentTurn, state.currentCycle))
       if (shouldPassTurn) {
         s.updateCurrentTurn(_ + 1)
           .updateCurrentPlayer(nextPlayerStrategy)
       } else {
-        s.updatePlayerHistory(state.currentPlayer, _.skipOfType[GainTurnEvent]())
+        s.updatePlayerHistory(state.currentPlayer.definition, _.skipOfType[GainTurnEvent]())
       }
     } else state
   }

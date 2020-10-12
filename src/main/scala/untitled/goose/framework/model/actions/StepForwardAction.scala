@@ -10,7 +10,7 @@ private class StepForwardAction() extends Action {
   override def name: String = "Move Forward"
 
   override def trigger(state: GameState): GameEvent = {
-    StepMovementEvent(1, state.currentPlayer, state.currentTurn, state.currentCycle)
+    StepMovementEvent(1, state.currentPlayer.definition, state.currentTurn, state.currentCycle)
   }
 }
 

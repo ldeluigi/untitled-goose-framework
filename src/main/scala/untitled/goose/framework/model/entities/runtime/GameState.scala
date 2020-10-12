@@ -1,7 +1,10 @@
 package untitled.goose.framework.model.entities.runtime
 
+import untitled.goose.framework.model.entities.runtime.Player.PlayerImpl
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
+
+import scala.collection.immutable.ListMap
 
 /** The game state. */
 trait GameState {
@@ -17,7 +20,7 @@ trait GameState {
   def currentPlayer: Player
 
   /** Returns the player-piece map. */
-  def playerPieces: Map[Player, Piece]
+  def playerPieces: Map[PlayerDefinition, Piece]
 
   /** Returns the current board state and definition. */
   def gameBoard: Board
@@ -29,7 +32,7 @@ trait GameState {
   def gameHistory: Seq[GameEvent]
 
   /** Returns the set of players. */
-  def players: Seq[Player]
+  def players: ListMap[PlayerDefinition, Player]
 
 }
 
@@ -38,28 +41,28 @@ object GameState {
   case class GameStateImpl(currentTurn: Int,
                            currentCycle: Int,
                            currentPlayer: Player,
-                           playerPieces: Map[Player, Piece],
+                           playerPieces: Map[PlayerDefinition, Piece],
                            gameBoard: Board,
                            consumableBuffer: Seq[ConsumableGameEvent],
                            gameHistory: Seq[GameEvent],
-                           players: Seq[Player]
+                           players: ListMap[PlayerDefinition, Player]
                           ) extends GameState {
-    require(playerPieces.keys.exists(_ == currentPlayer))
+    require(playerPieces.keys.exists(_ == currentPlayer.definition))
     require(currentCycle >= 0)
-    require(playerPieces.keySet == players.toSet)
+    require(playerPieces.keySet == players.keySet)
   }
 
-  def apply(players: Seq[Player],
+  def apply(players: Seq[PlayerDefinition],
             first: Seq[Player] => Player,
-            pieces: Map[Player, Piece],
+            pieces: Map[PlayerDefinition, Piece],
             board: Board): GameState =
     GameStateImpl(0,
       0,
-      first(players),
+      first(players.map(Player(_))),
       pieces,
       board,
       Seq(),
       Seq(),
-      players)
+      ListMap(players.map(d => (d, PlayerImpl(d, Seq()))): _*))
 }
 

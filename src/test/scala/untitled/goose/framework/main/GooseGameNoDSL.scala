@@ -7,8 +7,9 @@ import scalafx.application.JFXApp
 import untitled.goose.framework.model.actions.{Action, RollMovementDice}
 import untitled.goose.framework.model.entities.Dice.MovementDice
 import untitled.goose.framework.model.entities.definitions._
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
-import untitled.goose.framework.model.entities.runtime.{Game, Piece, Player}
+import untitled.goose.framework.model.entities.runtime.{Game, Piece, PlayerDefinition}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.consumable
 import untitled.goose.framework.model.events.consumable._
@@ -71,14 +72,14 @@ object GooseGameNoDSL extends JFXApp {
   // each spot on the dice is still one square in this move.
   // If you land on any of the special squares while you are doing this then you must follow the normal instructions.
   val bounceBackOnLastTile: BehaviourRule = BehaviourRule[TileEnteredEvent](
-    filterStrategy = _.tile.definition.name.contains(theEnd),
+    filterStrategy = _.tile.name.contains(theEnd),
     operations = (events, state) => {
       events.map(e => Operation.trigger(InvertMovementEvent(e.player, state.currentTurn, state.currentCycle)))
     })
 
   //When you land on square 63 exactly you are the winner!
   val stopOnTheEnd: BehaviourRule = BehaviourRule[StopOnTileEvent](
-    filterStrategy = _.tile.definition.name.contains(theEnd),
+    filterStrategy = _.tile.name.contains(theEnd),
     operations = (events, state) => {
       events.flatMap(e => Seq(
         Operation.trigger(consumable.VictoryEvent(e.player, state.currentTurn, state.currentCycle),
@@ -95,7 +96,7 @@ object GooseGameNoDSL extends JFXApp {
     operations = (_, state) => {
       Seq(
         DialogOperation(DialogContent("Special first throw!", "You roll a 3 on your first turn, go to tile 26")),
-        Operation.trigger(TeleportEvent(state.getTile(26).get, state.currentPlayer, state.currentTurn, state.currentCycle))
+        Operation.trigger(TeleportEvent(state.getTile(26).get.definition, state.currentPlayer.definition, state.currentTurn, state.currentCycle))
       )
     },
     consume = true,
@@ -105,7 +106,7 @@ object GooseGameNoDSL extends JFXApp {
   //If your counter lands on a Goose square you can throw your dice again.
 
   val stopOnGooseTile: BehaviourRule = BehaviourRule[StopOnTileEvent](
-    filterStrategy = _.tile.definition.belongsTo(gooseTileGroup),
+    filterStrategy = _.tile.belongsTo(gooseTileGroup),
     operations = (events, state) => {
       events.flatMap(e => Seq(
         Operation.trigger(GainTurnEvent(e.player, state.currentTurn, state.currentCycle),
@@ -118,7 +119,7 @@ object GooseGameNoDSL extends JFXApp {
 
   //If you land on the Bridge, square 6, miss a turn while you pay the toll.
   val stopOnBridge: BehaviourRule = BehaviourRule[StopOnTileEvent](
-    filterStrategy = _.tile.definition.name.contains(theBridge),
+    filterStrategy = _.tile.name.contains(theBridge),
     operations = (events, state) => {
       events.flatMap(e => Seq(
         DialogOperation(DialogContent("The Bridge", "You landed on the Bridge. Miss a turn while you pay the toll")),
@@ -131,7 +132,7 @@ object GooseGameNoDSL extends JFXApp {
 
   //If you land on the Inn, square 19, miss a turn while you stop for some tasty dinner.
   val stopOnTheInn: BehaviourRule = BehaviourRule[StopOnTileEvent](
-    filterStrategy = _.tile.definition.name.contains(theInn),
+    filterStrategy = _.tile.name.contains(theInn),
     operations = (events, state) => {
       events.flatMap(e => Seq(
         DialogOperation(DialogContent("The Inn", "You landed on the Inn. Miss a turn while you stop for some tasty dinner")),
@@ -144,7 +145,7 @@ object GooseGameNoDSL extends JFXApp {
   //If you you land on the Well, square 31, make a wish and miss three turns.
   //If another player passes you before your three turns are up you can start moving again on your next go.
   val stopOnTheWell: BehaviourRule = BehaviourRule[StopOnTileEvent](
-    filterStrategy = _.tile.definition.name.contains(theWell),
+    filterStrategy = _.tile.name.contains(theWell),
     operations = (events, state) => {
       events.flatMap(e => Seq(
         Operation.trigger(
@@ -161,7 +162,7 @@ object GooseGameNoDSL extends JFXApp {
   )
 
   val passedOnTheWell: BehaviourRule = BehaviourRule[PlayerPassedEvent](
-    filterStrategy = _.tile.definition.name.contains(theWell),
+    filterStrategy = _.tile.name.contains(theWell),
     operations = (events, _) => {
       events.map(e => Operation.updateState(_.updatePlayerHistory(e.player, _.excludeEventType[LoseTurnEvent]())))
     }
@@ -171,7 +172,7 @@ object GooseGameNoDSL extends JFXApp {
   // If another player passes you before your three turns are up you can start moving again on your next go.
 
   val stopOnPrison: BehaviourRule = BehaviourRule[StopOnTileEvent](
-    filterStrategy = _.tile.definition.name.contains(thePrison),
+    filterStrategy = _.tile.name.contains(thePrison),
     operations = (events, state) => {
       events.flatMap(e => Seq(
         Operation.trigger(
@@ -187,18 +188,18 @@ object GooseGameNoDSL extends JFXApp {
   )
 
   val passedOnPrison: BehaviourRule = BehaviourRule[PlayerPassedEvent](
-    filterStrategy = _.tile.definition.name.contains(thePrison),
+    filterStrategy = _.tile.name.contains(thePrison),
     operations = (events, _) => events.map(e => Operation.updateState(_.updatePlayerHistory(e.player, _.excludeEventType[LoseTurnEvent]())))
   )
 
   //If you land on the Labyrinth, square 42, you will get lost in the maze and have to move back to square 37.
   val stopOnLabyrinth: BehaviourRule = BehaviourRule[StopOnTileEvent](
-    filterStrategy = _.tile.definition.name.contains(theLabyrinth),
+    filterStrategy = _.tile.name.contains(theLabyrinth),
     operations = (events, state) => {
       events.flatMap(e => Seq(
         DialogOperation(DialogContent("The Labyrinth", "You enter the labyrinth but you get lost. You exit on tile 37")),
         Operation.trigger(
-          TeleportEvent(state.getTile(37).get, e.player, state.currentTurn, state.currentCycle),
+          TeleportEvent(state.getTile(37).get.definition, e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
         )
       ))
@@ -207,12 +208,12 @@ object GooseGameNoDSL extends JFXApp {
 
   //If you land on Death, square 58, you have to go back to square 1 and start all over again!
   val stopOnDeath: BehaviourRule = BehaviourRule[StopOnTileEvent](
-    filterStrategy = _.tile.definition.name.contains(theDeath),
+    filterStrategy = _.tile.name.contains(theDeath),
     operations = (events, state) => {
       events.flatMap(e => Seq(
         DialogOperation(DialogContent("The Death", "You died. Go back to the beginning and try again to reach the end!")),
         Operation.trigger(
-          TeleportEvent(state.getTile(1).get, e.player, state.currentTurn, state.currentCycle),
+          TeleportEvent(state.getTile(1).get.definition, e.player, state.currentTurn, state.currentCycle),
           TileActivatedEvent(e.tile, state.currentTurn, state.currentCycle)
         )
       ))
@@ -251,7 +252,7 @@ object GooseGameNoDSL extends JFXApp {
 
   //From a menu GUI that select and creates player and pieces on the press of a "Start runtime" button
 
-  val players: ListMap[Player, Piece] = ListMap(Player("P1") -> Piece(Colour.Default.Red), Player("P2") -> Piece(Colour.Default.Blue))
+  val players: ListMap[PlayerDefinition, Piece] = ListMap(PlayerDefinitionImpl("P1") -> Piece(Colour.Default.Red), PlayerDefinitionImpl("P2") -> Piece(Colour.Default.Blue))
   //List.range(1, 10).map(a => Player("P" + a) -> Piece()).toMap
 
 

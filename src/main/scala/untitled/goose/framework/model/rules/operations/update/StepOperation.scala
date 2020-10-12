@@ -17,13 +17,13 @@ object StepOperation {
    * @param forward if the player should walk forward or backward.
    * @return a sequence of operations, each doing one step or an event trigger.
    */
-  def apply(state: GameState, steps: Int, player: Player, forward: Boolean): Seq[Operation] = {
+  def apply(state: GameState, steps: Int, player: PlayerDefinition, forward: Boolean): Seq[Operation] = {
     (1 to steps.abs).toList.flatMap(i => {
       stepOperation(state, player, forward, steps.abs - i)
     })
   }
 
-  private def stepOperation(state: GameState, player: Player, forward: Boolean, remainingSteps: Int): Seq[Operation] = {
+  private def stepOperation(state: GameState, player: PlayerDefinition, forward: Boolean, remainingSteps: Int): Seq[Operation] = {
 
     var opSeq: Seq[Operation] = Seq()
     opSeq = opSeq :+ Operation.triggerWhen(
@@ -42,18 +42,18 @@ object StepOperation {
         case Some(pos) => if (forward) {
           if (!inverted) {
             state.gameBoard.tileOrdering
-              .next(pos.tile)
+              .next(state.gameBoard.tiles(pos.tile))
           } else {
             state.gameBoard.tileOrdering
-              .prev(pos.tile)
+              .prev(state.gameBoard.tiles(pos.tile))
           }
         } else {
           if (inverted) {
             state.gameBoard.tileOrdering
-              .next(pos.tile)
+              .next(state.gameBoard.tiles(pos.tile))
           } else {
             state.gameBoard.tileOrdering
-              .prev(pos.tile)
+              .prev(state.gameBoard.tiles(pos.tile))
           }
         }
         case None => if (forward) Some(state.gameBoard.tileOrdering.first) else None
@@ -61,7 +61,7 @@ object StepOperation {
     }
 
     opSeq = opSeq :+ Operation.updateState(state => {
-      state.updatePlayerPiece(player, piece => Piece(piece, stepFunction(state.playerPieces(player).position, state).map(Position(_))))
+      state.updatePlayerPiece(player, piece => Piece(piece, stepFunction(state.playerPieces(player).position, state).map(t => Position(t.definition))))
     })
 
 
@@ -76,13 +76,13 @@ object StepOperation {
     )
   }
 
-  private def checkAndTriggerPassedPlayers(state: GameState, player: Player): Seq[Operation] = {
+  private def checkAndTriggerPassedPlayers(state: GameState, player: PlayerDefinition): Seq[Operation] = {
     val tile = state.playerPieces(player).position.map(_.tile)
     var opSeq: Seq[Operation] = Seq()
     if (tile.isDefined) {
-      for (other <- state.players if !other.equals(player)) {
-        if (state.playerLastTurn(other).exists(l => state.playerStopOnTileTurns(tile.get, other).contains(l))) {
-          opSeq = opSeq :+ Operation.trigger(PlayerPassedEvent(other, player, tile.get, state.currentTurn, state.currentCycle))
+      for (other <- state.players.values if !other.equals(player)) {
+        if (state.playerLastTurn(other).exists(l => state.playerStopOnTileTurns(state.gameBoard.tiles(tile.get), other).contains(l))) {
+          opSeq = opSeq :+ Operation.trigger(PlayerPassedEvent(other.definition, player, tile.get, state.currentTurn, state.currentCycle))
         }
       }
     }

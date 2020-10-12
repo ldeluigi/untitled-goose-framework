@@ -18,10 +18,10 @@ class VictoryBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfter
   val game: Game = MatchMock.default
   val state: GameState = game.currentState
 
-  val winningDialogContent: DialogContent = DialogContent("Victory!", "Winning players: " + game.currentState.currentPlayer.name, "Quit" -> ExitEvent)
+  val winningDialogContent: DialogContent = DialogContent("Victory!", "Winning players: " + game.currentState.currentPlayer.definition.name, "Quit" -> ExitEvent)
   val dialogOperation: Operation = DialogOperation(winningDialogContent)
   val dialogLaunchEvent: ConsumableGameEvent = DialogLaunchEvent(game.currentState.currentTurn, game.currentState.currentCycle, winningDialogContent)
-  val victoryEvent: ConsumableGameEvent = VictoryEvent(game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
+  val victoryEvent: ConsumableGameEvent = VictoryEvent(game.currentState.currentPlayer.definition, game.currentState.currentTurn, game.currentState.currentCycle)
   var operationSequence: Seq[Operation] = Seq()
 
   override protected def beforeEach(): Unit = {

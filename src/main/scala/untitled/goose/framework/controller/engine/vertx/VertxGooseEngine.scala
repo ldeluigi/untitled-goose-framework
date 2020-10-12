@@ -44,7 +44,7 @@ private class VertxGooseEngine(private var gameMatch: Game, private val controll
     if (stack.nonEmpty) {
       val op: Operation = stack.head
       stack = stack.tail
-      op.execute(gameMatch.currentState)
+      gameMatch = gameMatch.updateState(op.execute)
       op match {
         case operation: SpecialOperation =>
           operation match {
@@ -65,7 +65,7 @@ private class VertxGooseEngine(private var gameMatch: Game, private val controll
     controller.update(gameMatch.currentState, gameMatch.availableActions)
     if (stack.nonEmpty) {
       val (state, operations) = gameMatch.stateBasedOperations
-      gameMatch = gameMatch.updateState(state)
+      gameMatch = gameMatch.updateState(_ => state)
       stack = operations ++ stack
       executeOperation()
     }

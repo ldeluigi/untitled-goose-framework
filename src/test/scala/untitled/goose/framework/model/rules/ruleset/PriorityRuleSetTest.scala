@@ -6,6 +6,8 @@ import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock
 import untitled.goose.framework.model.actions.{Action, StepForwardAction}
 import untitled.goose.framework.model.entities.definitions.TileDefinition
+import untitled.goose.framework.model.entities.runtime.Player.PlayerImpl
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
 import untitled.goose.framework.model.entities.runtime._
 import untitled.goose.framework.model.rules.actionrules.AlwaysActionRule.{AlwaysNegatedActionRule, AlwaysPermittedActionRule}
 
@@ -15,8 +17,8 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach with Match
   val t2: Tile = Tile(TileDefinition(2))
   val tileSet: Set[Tile] = Set(t1, t2)
   val playersRange: Range = 1 to 10
-  val p1: Player = Player("P1")
-  val p2: Player = Player("P2")
+  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"), Seq())
+  val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"), Seq())
   val ordering: PlayerOrdering = PlayerOrdering.fixed
 
   var gameMatch: Game = MatchMock.default

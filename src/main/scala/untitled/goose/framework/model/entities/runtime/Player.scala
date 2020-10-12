@@ -2,38 +2,32 @@ package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.events.PlayerEvent
 
-/** A player currently playing the game. */
-trait Player {
-
-  /** The player's name. */
-  def name: String
-
-  /** The player's event history. */
-  def history: Seq[PlayerEvent]
+trait Player extends Defined[PlayerDefinition] with History[PlayerEvent] {
 
   /** Compares two players. */
-  def ==(obj: Player): Boolean = name == obj.name
+  def ==(obj: Tile): Boolean = definition == obj.definition && history == obj.history
 
   override def equals(obj: Any): Boolean = obj match {
-    case obj: Player => obj == this
+    case x: Tile => x == this
     case _ => false
   }
 
-  override def toString: String = this.getClass.getSimpleName + ": " + name
+  override def hashCode(): Int = definition.hashCode + 1
 
-  override def hashCode(): Int = name.hashCode + 1
+  override def toString: String =
+    this.getClass.getSimpleName + ":" +
+      definition.name
 }
 
 object Player {
 
-  private class PlayerImpl(playerName: String) extends Player {
-
-    override def name: String = playerName
-
+  private class PlayerDefImpl(val definition: PlayerDefinition) extends Player {
     val history: Seq[PlayerEvent] = List()
-
   }
 
-  /** Factory method to create a new player. */
-  def apply(name: String): Player = new PlayerImpl(name)
+  case class PlayerImpl(definition: PlayerDefinition, history: Seq[PlayerEvent]) extends Player
+
+  /** Factory method that creates a new tile from the definition. */
+  def apply(playerDefinition: PlayerDefinition): Player = new PlayerDefImpl(playerDefinition)
+
 }

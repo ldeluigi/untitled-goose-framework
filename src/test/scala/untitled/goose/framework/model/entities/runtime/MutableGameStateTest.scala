@@ -4,6 +4,8 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock
 import untitled.goose.framework.model.Colour
+import untitled.goose.framework.model.entities.runtime.Player.PlayerImpl
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 
 class MutableGameStateTest extends AnyFlatSpec with Matchers {
@@ -11,7 +13,7 @@ class MutableGameStateTest extends AnyFlatSpec with Matchers {
   var gameMatch: Game = MatchMock.default
   val gameMutableState: GameState = gameMatch.currentState
 
-  val p1: Player = Player("P1")
+  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"), Seq())
   val piece: Piece = Piece(Colour.Default.Blue)
 
   behavior of "MutableGameStateTest"
@@ -29,7 +31,7 @@ class MutableGameStateTest extends AnyFlatSpec with Matchers {
   }
 
   it should "update a player pieces as told and check correctness" in {
-    gameMutableState.updatePlayerPiece(p1, _ => piece).playerPieces(p1).colour should equal(piece.colour)
+    gameMutableState.updatePlayerPiece(p1.definition, _ => piece).playerPieces(p1.definition).colour should equal(piece.colour)
   }
 
   it should "return a seq of consumable runtime events" in {
