@@ -5,6 +5,10 @@ import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock
 import untitled.goose.framework.model.Colour
 import untitled.goose.framework.model.entities.definitions.{BoardDefinition, Disposition}
+import untitled.goose.framework.model.entities.runtime.Player.PlayerImpl
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
+
+import scala.collection.immutable.ListMap
 
 class GameStateTest extends AnyFlatSpec with Matchers {
 
@@ -12,9 +16,9 @@ class GameStateTest extends AnyFlatSpec with Matchers {
   val gameState: GameState = gameMatch.currentState
 
   val board: BoardDefinition = BoardDefinition("test", 10, Disposition.snake(10))
-  val p1: Player = Player("P1")
-  val p2: Player = Player("P2")
-  val players: Map[Player, Piece] = Map(p1 -> Piece(Colour.Default.Red), p2 -> Piece(Colour.Default.Blue))
+  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"))
+  val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"))
+  val players: Map[PlayerDefinition, Piece] = ListMap(p1.definition -> Piece(Colour.Default.Red), p2.definition -> Piece(Colour.Default.Blue))
 
   val gameBoard: Board = gameState.gameBoard
 
@@ -24,12 +28,8 @@ class GameStateTest extends AnyFlatSpec with Matchers {
     gameState.currentCycle should be(0)
   }
 
-  it should "return who is the next player" in {
-    gameState.nextPlayer should equal(p2)
-  }
-
   it should "return its current player of execution" in {
-    gameState.currentPlayer should equal(p1)
+    gameState.currentPlayer should equal(p1.definition)
   }
 
   it should "return a map of players and relative pieces" in {
@@ -37,7 +37,7 @@ class GameStateTest extends AnyFlatSpec with Matchers {
   }
 
   it should "return a seq of players" in {
-    gameState.players should equal(players.keys.toSeq)
+    gameState.players.keys should equal(players.keys)
   }
 
   it should "return a seq of runtime events" in {

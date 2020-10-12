@@ -1,6 +1,6 @@
 package untitled.goose.framework.model.events
 
-import untitled.goose.framework.model.entities.runtime.Player
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition
 
 /**
  * CustomTileEvent is a CustomGameEvent that represent a generic PlayerEvent
@@ -11,7 +11,7 @@ import untitled.goose.framework.model.entities.runtime.Player
  * @param name   The name specified for the event.
  * @param player The player that this event regarded.
  */
-class CustomPlayerEvent(turn: Int, cycle: Int, name: String, val player: Player) extends CustomGameEvent(turn, cycle, name) with PlayerEvent
+class CustomPlayerEvent(turn: Int, cycle: Int, name: String, val player: PlayerDefinition) extends CustomGameEvent(turn, cycle, name) with PlayerEvent
 
 object CustomPlayerEvent {
   /**
@@ -23,5 +23,5 @@ object CustomPlayerEvent {
    * @param player The player that this event regarded.
    * @return A new CustomPlayerEvent event.
    */
-  def apply(turn: Int, cycle: Int, name: String, player: Player): CustomPlayerEvent = new CustomPlayerEvent(turn, cycle, name, player)
+  def apply(turn: Int, cycle: Int, name: String, player: PlayerDefinition): CustomPlayerEvent = new CustomPlayerEvent(turn, cycle, name, player)
 }

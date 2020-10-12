@@ -4,7 +4,8 @@ import untitled.goose.framework.dsl.nodes.RuleBook
 import untitled.goose.framework.dsl.rules.behaviours.words.SaveOrConsumeWord.{ConsumeWord, SaveWord}
 import untitled.goose.framework.dsl.rules.behaviours.words.system.SystemBehavioursWords
 import untitled.goose.framework.dsl.rules.operations.words.{ForEachWord, OperationWords}
-import untitled.goose.framework.model.entities.runtime.{GameState, Player, Tile}
+import untitled.goose.framework.model.entities.definitions.TileDefinition
+import untitled.goose.framework.model.entities.runtime.{GameState, PlayerDefinition}
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
 import scala.reflect.ClassTag
@@ -16,11 +17,11 @@ trait BehaviourWords extends OperationWords with SystemBehavioursWords {
     BehaviourCustomEventInstance.gameEvent(name, ruleBook)
 
   /** Creates a behaviour related CustomEventInstance (PlayerEvent) with given event name. */
-  def playerEvent[T <: ConsumableGameEvent](name: String, player: GameState => Player)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
+  def playerEvent[T <: ConsumableGameEvent](name: String, player: GameState => PlayerDefinition)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
     BehaviourCustomEventInstance.playerEvent(name, player, ruleBook)
 
   /** Creates a behaviour related CustomEventInstance (TileEvent) with given event name. */
-  def tileEvent[T <: ConsumableGameEvent](name: String, tile: GameState => Tile)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
+  def tileEvent[T <: ConsumableGameEvent](name: String, tile: GameState => TileDefinition)(implicit ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
     BehaviourCustomEventInstance.tileEvent(name, tile, ruleBook)
 
   /** Enables "events [verb] ..." */

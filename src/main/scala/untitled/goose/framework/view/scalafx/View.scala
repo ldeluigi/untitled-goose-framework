@@ -26,8 +26,8 @@ class View(gameData: GameDefinition, graphicMap: Map[TileIdentifier, GraphicDesc
     width = 0.5 * screenSize.width
     height = 0.5 * screenSize.height
     resizable = true
-    minWidth = 0.5 * screenSize.width
-    minHeight = 0.5 * screenSize.height
+    minWidth = screenSize.width * 1 / 3
+    minHeight = screenSize.height * 1 / 3
     scene = new IntroMenu(this, gameData, appTitle, screenSize.width, screenSize.height, graphicMap)
     fullScreenExitHint = "Press esc to leave full screen mode"
   }

@@ -52,7 +52,7 @@ object BoardDisplay {
      * while carrying the custom graphic properties.
      */
     private def renderBoard(): Unit = {
-      for (tile <- matchBoard.tiles.toList.sorted)
+      for (tile <- matchBoard.tiles.values.toList.sorted)
         renderTile(TileVisualization(tile, currentTileWidth, getGraphicDescriptor(tile)))
     }
 
@@ -97,7 +97,7 @@ object BoardDisplay {
         t.removePieces()
       }
       for (p <- matchState.playerPieces) {
-        val positionTile = tiles.find(v => p._2.position.isDefined && v.tile == p._2.position.get.tile)
+        val positionTile = tiles.find(v => p._2.position.isDefined && v.tile.definition == p._2.position.get.tile)
         if (positionTile.isDefined) {
           if (p._1 == matchState.currentPlayer) {
             setFocus(positionTile.get)

@@ -1,6 +1,8 @@
 package untitled.goose.framework.model.rules.operations.update
 
+import untitled.goose.framework.model.entities.definitions.TileDefinition
 import untitled.goose.framework.model.entities.runtime._
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.events.consumable.{StopOnTileEvent, TileEnteredEvent, TileExitedEvent}
 import untitled.goose.framework.model.rules.operations.Operation
 
@@ -14,7 +16,7 @@ object TeleportOperation {
    * @param tile   the tile to which the player should teleport.
    * @return a sequence of operations to do.
    */
-  def apply(state: GameState, player: Player, tile: Tile): Seq[Operation] = {
+  def apply(state: GameState, player: PlayerDefinition, tile: TileDefinition): Seq[Operation] = {
 
     var opSeq: Seq[Operation] = Seq()
     val tileExited = state.playerPieces(player).position.map(_.tile)

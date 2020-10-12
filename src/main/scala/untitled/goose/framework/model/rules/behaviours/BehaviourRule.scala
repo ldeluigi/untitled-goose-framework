@@ -1,6 +1,7 @@
 package untitled.goose.framework.model.rules.behaviours
 
-import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState}
+import untitled.goose.framework.model.entities.runtime.GameState
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.rules.operations.Operation
 
@@ -8,13 +9,13 @@ import scala.reflect.ClassTag
 
 /** A rule that outputs the operation that should be executed from a given state. */
 sealed trait BehaviourRule {
-  def applyRule(state: MutableGameState): Seq[Operation]
+  def applyRule(state: GameState): (GameState, Seq[Operation])
 }
 
 
 object BehaviourRule {
 
-  import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
+  import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions._
 
   /** The mandatory implementation of a behaviour rule ensures constraints are honored. */
   private[behaviours] class BehaviourRuleImpl[T <: ConsumableGameEvent : ClassTag]
@@ -28,17 +29,17 @@ object BehaviourRule {
   )
     extends BehaviourRule {
 
-    final override def applyRule(state: MutableGameState): Seq[Operation] = {
+    final override def applyRule(state: GameState): (GameState, Seq[Operation]) = {
       val events = state.consumableBuffer
         .filterCycle(state.currentCycle)
         .only[T]
         .filter(filterStrategy)
       if (countStrategy(events.size) && when(state)) {
-        if (consume) state.consumableBuffer = state.consumableBuffer.excludeEventType[T]()
-        (if (save) Seq(Operation.updateState(s => events.foreach(s.saveEvent))) else Seq()) ++
-          operationsStrategy(events, state)
+        (if (consume) state.updateConsumableBuffer(_.excludeEventType[T]()) else state,
+          (if (save) Seq(Operation.updateState(s => events.foldLeft(s)((s, e) => s.saveEvent(e)))) else Seq()) ++
+            operationsStrategy(events, state))
       }
-      else Seq()
+      else (state, Seq())
     }
   }
 

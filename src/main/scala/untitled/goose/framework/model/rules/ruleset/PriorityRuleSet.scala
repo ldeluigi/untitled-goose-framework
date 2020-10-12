@@ -1,7 +1,7 @@
 package untitled.goose.framework.model.rules.ruleset
 
 import untitled.goose.framework.model.actions.Action
-import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState, Player}
+import untitled.goose.framework.model.entities.runtime.{GameState, Player}
 import untitled.goose.framework.model.rules.actionrules.ActionRule
 import untitled.goose.framework.model.rules.behaviours.{BehaviourRule, DialogLaunchBehaviour, TurnEndEventBehaviour}
 import untitled.goose.framework.model.rules.cleanup.{CleanupRule, TurnEndConsumer}
@@ -45,18 +45,18 @@ class PriorityRuleSet(playerOrdering: PlayerOrdering,
   override def first(players: Seq[Player]): Player =
     playerOrdering.first(players)
 
-  override def stateBasedOperations(state: MutableGameState): Seq[Operation] =
-    TurnEndEventBehaviour().applyRule(state) ++
-      behaviourRules.flatMap(_.applyRule(state)) ++
-      DialogLaunchBehaviour().applyRule(state)
+  override def stateBasedOperations(state: GameState): (GameState, Seq[Operation]) =
+    (behaviourRules :+ DialogLaunchBehaviour())
+      .foldLeft(TurnEndEventBehaviour().applyRule(state))((t, r) => {
+        val (state, ops) = r.applyRule(t._1)
+        (state, t._2 ++ ops)
+      })
 
-  override def nextPlayer(state: MutableGameState): Player =
-    playerOrdering.next(state.currentPlayer, state.players)
+  override def nextPlayer(state: GameState): Player =
+    playerOrdering.next(state.players(state.currentPlayer), state.players.values.toSeq)
 
-  override def cleanupOperations(state: MutableGameState): Unit = {
-    cleanupRules.foreach(_.applyRule(state))
-    TurnEndConsumer.applyRule(state)
-  }
+  override def cleanupOperations(state: GameState): GameState =
+    (cleanupRules :+ TurnEndConsumer(playerOrdering.next)).foldLeft(state)((s, r) => r.applyRule(s))
 
   override def allowedPlayers: Range = playersRange
 }

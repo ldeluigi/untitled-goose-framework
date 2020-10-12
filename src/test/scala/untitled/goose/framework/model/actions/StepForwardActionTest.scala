@@ -13,8 +13,7 @@ class StepForwardActionTest extends AnyFlatSpec with Matchers {
     val event = StepForwardAction().trigger(default.currentState)
 
     event.isInstanceOf[StepMovementEvent] should be(true)
-    event.asInstanceOf[StepMovementEvent].movement should be
-    1
+    event.asInstanceOf[StepMovementEvent].movement should be(1)
   }
 
 }

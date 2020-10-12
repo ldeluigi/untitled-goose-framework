@@ -33,7 +33,8 @@ trait Disposition {
     case _ => false
   }
 
-  override def toString: String = this.getClass.getSimpleName + " (" + totalTiles + " in " + columns + "x" + rows + ")"
+  override def toString: String =
+    this.getClass.getSimpleName + " (" + totalTiles + " in " + columns + "x" + rows + ")"
 }
 
 object Disposition {

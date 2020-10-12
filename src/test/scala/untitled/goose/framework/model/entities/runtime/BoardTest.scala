@@ -27,15 +27,15 @@ class BoardTest() extends AnyFlatSpec with Matchers {
   }
 
   it should "have a first tile" in {
-    matchBoard.first should equal(Tile(board.first))
+    matchBoard.tileOrdering.first should equal(Tile(board.tileOrdering.first))
   }
 
   it should "return the next tile of a given one" in {
-    matchBoard.next(Tile(tile1)).get should equal(Tile(board.next(tile1).get))
+    matchBoard.tileOrdering.next(Tile(tile1)).get should equal(Tile(board.tileOrdering.next(tile1).get))
   }
 
   it should "return the previous tile of a given one" in {
-    matchBoard.prev(Tile(tile2)).get should equal(Tile(board.prev(tile2).get))
+    matchBoard.tileOrdering.prev(Tile(tile2)).get should equal(Tile(board.tileOrdering.prev(tile2).get))
   }
 
 }

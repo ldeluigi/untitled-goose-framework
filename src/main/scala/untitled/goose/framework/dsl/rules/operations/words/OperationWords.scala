@@ -3,7 +3,7 @@ package untitled.goose.framework.dsl.rules.operations.words
 import untitled.goose.framework.dsl.rules.behaviours.words.BehaviourCustomEventInstance
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode
 import untitled.goose.framework.dsl.rules.operations.nodes.OperationNode._
-import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState}
+import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 
@@ -48,6 +48,6 @@ trait OperationWords {
     DisplayCustomDialogOperationNode(dialog, options, isForEach = false)
 
   /** Updates the state based on previous state and the event that triggered this behaviour. */
-  def updateState[T <: ConsumableGameEvent](update: (T, GameState) => MutableGameState => Unit): OperationNode[T] =
+  def updateState[T <: ConsumableGameEvent](update: (T, GameState) => GameState => GameState): OperationNode[T] =
     UpdateOperationNode(update, isForEach = false)
 }

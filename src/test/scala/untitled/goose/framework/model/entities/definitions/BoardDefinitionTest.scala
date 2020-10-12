@@ -28,14 +28,14 @@ class BoardDefinitionTest extends AnyFlatSpec with Matchers {
   }
 
   it should "have a first tile" in {
-    board.first should equal(tiles.head)
+    board.tileOrdering.first should equal(tiles.head)
   }
 
   it can "return the next tile of a given one" in {
-    board.next(tile1).get should equal(tile2)
+    board.tileOrdering.next(tile1).get should equal(tile2)
   }
 
   it can "return the previous tile of a given one" in {
-    board.prev(tile2).get should equal(tile1)
+    board.tileOrdering.prev(tile2).get should equal(tile1)
   }
 }

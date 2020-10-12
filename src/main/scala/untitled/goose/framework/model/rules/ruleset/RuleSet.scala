@@ -1,7 +1,7 @@
 package untitled.goose.framework.model.rules.ruleset
 
 import untitled.goose.framework.model.actions.Action
-import untitled.goose.framework.model.entities.runtime.{GameState, MutableGameState, Player}
+import untitled.goose.framework.model.entities.runtime.{GameState, Player}
 import untitled.goose.framework.model.rules.operations.Operation
 
 /** The rule set collects all rules for a game. */
@@ -9,19 +9,18 @@ trait RuleSet {
 
   /**
    * Computes a sequence of operations based on the state.
-   * This method can alter the state buffers or histories.
    *
    * @param state the mutable game state.
    * @return a sequence of operations
    */
-  def stateBasedOperations(state: MutableGameState): Seq[Operation]
+  def stateBasedOperations(state: GameState): (GameState, Seq[Operation])
 
   /**
    * Applies cleanup operations on the state.
    *
    * @param state the mutable game state.
    */
-  def cleanupOperations(state: MutableGameState): Unit
+  def cleanupOperations(state: GameState): GameState
 
   /**
    * Select the first player from a user-defined list.
@@ -37,7 +36,7 @@ trait RuleSet {
    * @param state the current state.
    * @return the player that should go next.
    */
-  def nextPlayer(state: MutableGameState): Player
+  def nextPlayer(state: GameState): Player
 
   /**
    * Returns the set of actions current player can do in this state.
