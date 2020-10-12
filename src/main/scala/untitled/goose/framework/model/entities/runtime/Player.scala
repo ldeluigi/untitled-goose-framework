@@ -2,41 +2,32 @@ package untitled.goose.framework.model.entities.runtime
 
 import untitled.goose.framework.model.events.PlayerEvent
 
-/** A player currently playing the game. */
-trait Player {
-
-  /** The player's name. */
-  def name: String
-
-  /** The player's event history. */
-  def history: Seq[PlayerEvent]
-
-  /** The player's event history setter. */
-  def history_=(history: Seq[PlayerEvent]): Unit
+trait Player extends Defined[PlayerDefinition] with History[PlayerEvent] {
 
   /** Compares two players. */
-  def ==(obj: Player): Boolean = name == obj.name
+  def ==(obj: Player): Boolean = definition == obj.definition && history == obj.history
 
   override def equals(obj: Any): Boolean = obj match {
-    case obj: Player => obj == this
+    case x: Player => x == this
     case _ => false
   }
 
-  override def toString: String = this.getClass.getSimpleName + ": " + name
+  override def hashCode(): Int = 17 * definition.hashCode + 23
 
-  override def hashCode(): Int = name.hashCode + 1
+  override def toString: String =
+    this.getClass.getSimpleName + ":" +
+      definition.name
 }
 
 object Player {
 
-  private class PlayerImpl(playerName: String) extends Player {
-
-    override def name: String = playerName
-
-    var history: Seq[PlayerEvent] = List()
-
+  private class PlayerDefImpl(val definition: PlayerDefinition) extends Player {
+    val history: Seq[PlayerEvent] = List()
   }
 
-  /** Factory method to create a new player. */
-  def apply(name: String): Player = new PlayerImpl(name)
+  case class PlayerImpl(definition: PlayerDefinition, history: Seq[PlayerEvent] = Seq()) extends Player
+
+  /** Factory method that creates a new tile from the definition. */
+  def apply(playerDefinition: PlayerDefinition): Player = new PlayerDefImpl(playerDefinition)
+
 }

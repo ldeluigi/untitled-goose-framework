@@ -63,6 +63,7 @@ object CustomEventInstance {
 
     /**
      * Template method. Should create a custom game event based on properties.
+     *
      * @param input the data available to create the custom event.
      * @return a new CustomGameEvent.
      */

@@ -88,7 +88,7 @@ object ScalaFxGameScene {
     override def updateScene(state: GameState, availableActions: Set[Action]): Unit =
       Platform.runLater(() => {
         boardView.updateMatchState(state)
-        actionMenu.displayActions(availableActions, state.currentPlayer)
+        actionMenu.displayActions(availableActions, state.players(state.currentPlayer))
         logger.logHistoryDiff(state)
       })
 

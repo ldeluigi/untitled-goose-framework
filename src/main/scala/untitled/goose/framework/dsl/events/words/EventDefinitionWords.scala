@@ -1,7 +1,8 @@
 package untitled.goose.framework.dsl.events.words
 
 import untitled.goose.framework.dsl.nodes.RuleBook
-import untitled.goose.framework.model.entities.runtime.{GameState, Player, Tile}
+import untitled.goose.framework.model.entities.definitions.TileDefinition
+import untitled.goose.framework.model.entities.runtime.{GameState, PlayerDefinition}
 
 /** Words for custom event definition. */
 trait EventDefinitionWords {
@@ -14,10 +15,10 @@ trait EventDefinitionWords {
     CustomEventInstances.gameEvent(name, ruleBook)
 
   /** Enables "customPlayerEvent ([name], state => [player]) [properties and values]" */
-  def customPlayerEvent(name: String, player: GameState => Player)(implicit ruleBook: RuleBook): CustomEventInstance[GameState] =
+  def customPlayerEvent(name: String, player: GameState => PlayerDefinition)(implicit ruleBook: RuleBook): CustomEventInstance[GameState] =
     CustomEventInstances.playerEvent(name, player, ruleBook)
 
   /** Enables "customTileEvent ([name], state => [tile]) [properties and values]" */
-  def customTileEvent(name: String, tile: GameState => Tile)(implicit ruleBook: RuleBook): CustomEventInstance[GameState] =
+  def customTileEvent(name: String, tile: GameState => TileDefinition)(implicit ruleBook: RuleBook): CustomEventInstance[GameState] =
     CustomEventInstances.tileEvent(name, tile, ruleBook)
 }

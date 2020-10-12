@@ -24,8 +24,18 @@ object RollMovementDice {
    * @param diceNumber The number of dices to roll at the same time.
    * @return A new action for rolling those dices.
    */
-  def apply(dice: MovementDice, diceNumber: Int = 1): Action = new RollMovementDice("Roll " + diceNumber + " " + dice.name, dice, diceNumber)
+  def apply(dice: MovementDice, diceNumber: Int = 1): Action =
+    apply("Roll " + diceNumber + " " + dice.name, dice, diceNumber)
 
-  def apply(actionName: String, dice: MovementDice, diceNumber: Int): Action = new RollMovementDice(actionName, dice, diceNumber)
+  /**
+   * This factory creates an Action meant for movement.
+   *
+   * @param name       The name displayed for this action.
+   * @param dice       A dice that has integer typed faces.
+   * @param diceNumber The number of dices to roll at the same time.
+   * @return A new action for rolling those dices.
+   */
+  def apply(name: String, dice: MovementDice, diceNumber: Int): Action =
+    new RollMovementDice(name, dice, diceNumber)
 }
 

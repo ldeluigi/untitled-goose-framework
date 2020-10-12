@@ -11,7 +11,8 @@ import scalafx.scene.layout.{BorderPane, HBox}
 import scalafx.stage.Stage
 import untitled.goose.framework.model
 import untitled.goose.framework.model.Colour
-import untitled.goose.framework.model.entities.runtime.{Piece, Player}
+import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
+import untitled.goose.framework.model.entities.runtime.{Piece, PlayerDefinition}
 import untitled.goose.framework.view.scalafx.ColorUtils
 
 /**
@@ -29,13 +30,13 @@ trait InsertPlayerPane extends BorderPane {
    *
    * @return the sequence that holds all the current players names.
    */
-  def getPlayerSeq: Seq[Player]
+  def getPlayerSeq: Seq[PlayerDefinition]
 
   /** Maps a player to its piece.
    *
    * @return the map containing the player and related piece.
    */
-  def getPlayersPiecesMap: Map[Player, Piece]
+  def getPlayersPiecesMap: Map[PlayerDefinition, Piece]
 }
 
 object InsertPlayerPane {
@@ -131,11 +132,11 @@ object InsertPlayerPane {
       playerBuffer.remove(index)
     }
 
-    override def getPlayersPiecesMap: Map[Player, Piece] =
-      playerBuffer.map(p => Player(p.name.value) -> Piece(p.color)).toMap
+    override def getPlayersPiecesMap: Map[PlayerDefinition, Piece] =
+      playerBuffer.map(p => PlayerDefinitionImpl(p.name.value) -> Piece(p.color)).toMap
 
-    override def getPlayerSeq: Seq[Player] =
-      playerBuffer.map(p => Player(p.name.value))
+    override def getPlayerSeq: Seq[PlayerDefinition] =
+      playerBuffer.map(p => PlayerDefinitionImpl(p.name.value))
 
     override def checkPlayers: Boolean = playersRange.contains(playerBuffer.size)
 

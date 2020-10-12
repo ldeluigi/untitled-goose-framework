@@ -33,9 +33,10 @@ trait Action {
     case _ => false
   }
 
-  override def toString: String = this.getClass.getName + "(" + name + ")"
+  override def toString: String =
+    this.getClass.getName + "(" + name + ")"
 
-  override def hashCode(): Int = name.hashCode
+  override def hashCode(): Int = name.hashCode + 1
 }
 
 object Action {
@@ -52,5 +53,6 @@ object Action {
    * @param triggerStrategy The strategy for the event creation.
    * @return A new Action.
    */
-  def apply(name: String, triggerStrategy: GameState => GameEvent): Action = new ActionImpl(name, triggerStrategy)
+  def apply(name: String, triggerStrategy: GameState => GameEvent): Action =
+    new ActionImpl(name, triggerStrategy)
 }

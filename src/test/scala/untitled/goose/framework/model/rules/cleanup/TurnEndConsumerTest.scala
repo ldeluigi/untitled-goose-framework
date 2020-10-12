@@ -3,12 +3,12 @@ package untitled.goose.framework.model.rules.cleanup
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.entities.runtime.{Game, MutableGameState}
+import untitled.goose.framework.model.entities.runtime.{Game, GameState}
 
 class TurnEndConsumerTest extends AnyFlatSpec with Matchers {
 
-  var gameMatch: Game = MatchMock.default
-  val gameMutableState: MutableGameState = gameMatch.currentState
+  val gameMatch: Game = MatchMock.default
+  val gameMutableState: GameState = gameMatch.currentState
 
   behavior of "TurnEndConsumerTest"
 
@@ -17,7 +17,7 @@ class TurnEndConsumerTest extends AnyFlatSpec with Matchers {
   }
 
   it should "execute the correct procedure to end and consume a turn" in {
-    TurnEndConsumer.applyRule(gameMutableState) should not be equal(0)
+    TurnEndConsumer(gameMatch.definition.playerOrdering.next).applyRule(gameMutableState).currentTurn should not be equal(0)
   }
 
 }

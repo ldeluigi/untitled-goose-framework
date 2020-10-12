@@ -4,7 +4,8 @@ import untitled.goose.framework.dsl.events.nodes.EventDefinitionCollection
 import untitled.goose.framework.dsl.events.words.CustomEventInstance
 import untitled.goose.framework.dsl.events.words.CustomEventInstance.AbstractCustomEventInstance
 import untitled.goose.framework.dsl.nodes.RuleBook
-import untitled.goose.framework.model.entities.runtime.{GameState, Player, Tile}
+import untitled.goose.framework.model.entities.definitions.TileDefinition
+import untitled.goose.framework.model.entities.runtime.{GameState, PlayerDefinition}
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.events.{CustomGameEvent, CustomPlayerEvent, CustomTileEvent}
 
@@ -36,13 +37,13 @@ object BehaviourCustomEventInstance {
     }
   }
 
-  def tileEvent[T <: ConsumableGameEvent](name: String, tile: GameState => Tile, ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
+  def tileEvent[T <: ConsumableGameEvent](name: String, tile: GameState => TileDefinition, ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
     new AbstractBehaviourCustomEventInstance[T](name, ruleBook.eventDefinitions.tileEventCollection) {
       override def initEvent(input: (T, GameState)): CustomGameEvent =
         CustomTileEvent(input._2.currentTurn, input._2.currentCycle, name, tile(input._2))
     }
 
-  def playerEvent[T <: ConsumableGameEvent](name: String, player: GameState => Player, ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
+  def playerEvent[T <: ConsumableGameEvent](name: String, player: GameState => PlayerDefinition, ruleBook: RuleBook): BehaviourCustomEventInstance[T] =
     new AbstractBehaviourCustomEventInstance[T](name, ruleBook.eventDefinitions.playerEventCollection) {
       override def initEvent(input: (T, GameState)): CustomGameEvent =
         CustomPlayerEvent(input._2.currentTurn, input._2.currentCycle, name, player(input._2))

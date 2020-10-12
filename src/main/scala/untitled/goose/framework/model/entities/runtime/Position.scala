@@ -1,17 +1,19 @@
 package untitled.goose.framework.model.entities.runtime
 
+import untitled.goose.framework.model.entities.definitions.TileDefinition
+
 /** A position on the board. */
 trait Position {
 
   /** The tile to which this position points. */
-  def tile: Tile
+  def tile: TileDefinition
 
   override def toString: String = this.getClass.getSimpleName + "(" + tile + ")"
 }
 
 object Position {
 
-  private class PositionImpl(val tile: Tile) extends Position {
+  private class PositionImpl(val tile: TileDefinition) extends Position {
 
     override def equals(obj: Any): Boolean = {
       obj match {
@@ -22,5 +24,5 @@ object Position {
   }
 
   /** Factory method to create a new position. */
-  def apply(tile: Tile): Position = new PositionImpl(tile)
+  def apply(tile: TileDefinition): Position = new PositionImpl(tile)
 }

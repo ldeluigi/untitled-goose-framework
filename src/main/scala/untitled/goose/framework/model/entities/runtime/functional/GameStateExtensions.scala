@@ -1,10 +1,11 @@
-package untitled.goose.framework.model.entities.runtime
+package untitled.goose.framework.model.entities.runtime.functional
 
+import untitled.goose.framework.model.entities.definitions.TileDefinition
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
+import untitled.goose.framework.model.entities.runtime.{GameState, Player, PlayerDefinition, Tile}
 import untitled.goose.framework.model.events._
-import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, StopOnTileEvent}
-import untitled.goose.framework.model.events.persistent.{PersistentGameEvent, TurnEndedEvent}
-import untitled.goose.framework.model.events.special.{ExitEvent, NoOpEvent}
+import untitled.goose.framework.model.events.consumable.StopOnTileEvent
+import untitled.goose.framework.model.events.persistent.TurnEndedEvent
 
 import scala.reflect.ClassTag
 
@@ -21,7 +22,11 @@ object GameStateExtensions {
      * @return the tile, if found, as an option.
      */
     def getTile(number: Int): Option[Tile] =
-      state.gameBoard.tiles.find(t => t.definition.number.isDefined && t.definition.number.get == number)
+      state
+        .gameBoard
+        .tiles
+        .values
+        .find(t => t.definition.number.isDefined && t.definition.number.get == number)
 
     /**
      * Returns a tile with specified name from the board.
@@ -30,11 +35,21 @@ object GameStateExtensions {
      * @return the tile, if found, as an option.
      */
     def getTile(name: String): Option[Tile] =
-      state.gameBoard.tiles.find(t => t.definition.name.isDefined && t.definition.name.get == name)
+      state
+        .gameBoard
+        .tiles
+        .values
+        .find(t => t.definition.name.isDefined && t.definition.name.get == name)
 
 
     def getFirstTileOf(group: Group): Option[Tile] =
-      state.gameBoard.tiles.toList.sorted.find(t => t.definition.belongsTo(group.name))
+      state
+        .gameBoard
+        .tiles
+        .values
+        .toList
+        .sorted
+        .find(t => t.definition.belongsTo(group.name))
 
     /**
      * Returns a sequence of values that represent the turns at which a player stopped its
@@ -44,50 +59,26 @@ object GameStateExtensions {
      * @param player the player that could have stopped on the tile.
      * @return the turns at which the player stopped on the tile.
      */
-    def playerStopOnTileTurns(tile: Tile, player: Player): Seq[Int] = tile.history
-      .only[StopOnTileEvent]
-      .filter(_.player.equals(player))
-      .map(_.turn)
+    def playerStopOnTileTurns(tile: TileDefinition, player: PlayerDefinition): Seq[Int] =
+      state
+        .gameBoard
+        .tiles(tile)
+        .history
+        .only[StopOnTileEvent]
+        .filter(_.player == player)
+        .map(_.turn)
 
     /** Returns the last turn during which given player was active. */
-    def playerLastTurn(player: Player): Option[Int] = player.history
-      .filter(_.isInstanceOf[TurnEndedEvent])
-      .map(_.turn).reduceOption(_ max _)
-  }
+    def playerLastTurn(player: PlayerDefinition): Option[Int] =
+      state
+        .players(player)
+        .history
+        .filter(_.isInstanceOf[TurnEndedEvent])
+        .map(_.turn)
+        .reduceOption(_ max _)
 
-  /** Pimps a mutable game state object. */
-  implicit class MutableStateExtensions(mutable: MutableGameState) extends GameStateExtensions(mutable) {
 
-    /**
-     * Adds a given event to proper histories, based on the event type.
-     *
-     * @param event the event to add to the state.
-     */
-    def submitEvent(event: GameEvent): Unit = event match {
-      case NoOpEvent | ExitEvent =>
-      case event: ConsumableGameEvent => mutable.consumableBuffer = event +: mutable.consumableBuffer
-      case event: PersistentGameEvent => saveToProperHistories(event)
-      case event => mutable.gameHistory = event +: mutable.gameHistory
-    }
-
-    /**
-     * Forces a permanent save of a consumable game event in proper histories, based on event type.
-     *
-     * @param event the consumable event to save.
-     */
-    def saveEvent(event: ConsumableGameEvent): Unit = {
-      mutable.gameHistory = event +: mutable.gameHistory
-      saveToProperHistories(event)
-    }
-
-    private def saveToProperHistories(event: GameEvent): Unit = event match {
-      case event: PlayerEvent with TileEvent =>
-        event.player.history = event +: event.player.history
-        event.tile.history = event +: event.tile.history
-      case event: PlayerEvent => event.player.history = event +: event.player.history
-      case event: TileEvent => event.tile.history = event +: event.tile.history
-    }
-
+    def currentPlayerInstance: Player = state.players(state.currentPlayer)
   }
 
   /** Pimps a history of events. */
@@ -123,7 +114,7 @@ object GameStateExtensions {
     /** Filters only events that are of given type and converts the sequence to that
      * generic type.
      */
-    def only[T: ClassTag]: Seq[T] = history.filter({
+    def only[T](implicit classTag: ClassTag[T]): Seq[T] = history.filter({
       case _: T => true
       case _ => false
     }).map(_.asInstanceOf[T])

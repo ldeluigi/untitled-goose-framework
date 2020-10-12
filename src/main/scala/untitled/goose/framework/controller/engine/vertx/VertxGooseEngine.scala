@@ -8,7 +8,8 @@ import io.vertx.scala.core.eventbus.DeliveryOptions
 import untitled.goose.framework.controller.ViewController
 import untitled.goose.framework.controller.engine.{EventSink, GooseEngine}
 import untitled.goose.framework.model.entities.DialogContent
-import untitled.goose.framework.model.entities.runtime.{CloneGameState, Game}
+import untitled.goose.framework.model.entities.runtime.Game
+import untitled.goose.framework.model.entities.runtime.functional.GameUpdate.GameUpdateImpl
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.special.{ActionEvent, ExitEvent, NoOpEvent}
 import untitled.goose.framework.model.rules.operations.Operation
@@ -19,7 +20,7 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success}
 
-private class VertxGooseEngine (private val gameMatch: Game, private val controller: ViewController) extends GooseEngine with EventSink[GameEvent] {
+private class VertxGooseEngine(private var gameMatch: Game, private val controller: ViewController) extends GooseEngine with EventSink[GameEvent] {
   private type DialogDisplay = DialogContent => Future[GameEvent]
   private val vertx: Vertx = Vertx.vertx()
   private val gv = new GooseVerticle(onEvent)
@@ -30,12 +31,17 @@ private class VertxGooseEngine (private val gameMatch: Game, private val control
   private val codec: GameEventMessageCodec = new GameEventMessageCodec
   vertx.eventBus.registerCodec(codec)
   Await.result(vertx.deployVerticleFuture(gv), Duration.Inf)
-  private var stack: Seq[Operation] = Seq()
   private val stopped: AtomicBoolean = new AtomicBoolean(false)
 
-  override def accept(event: GameEvent): Unit = {
-    vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(codec.name()))
-  }
+  private var stack: Seq[Operation] = Seq()
+
+  override def accept(event: GameEvent): Unit =
+    vertx.eventBus()
+      .send(gv.eventAddress,
+        Some(event),
+        DeliveryOptions()
+          .setCodecName(codec.name())
+      )
 
   @tailrec
   private def executeOperation(): Unit = {
@@ -43,7 +49,7 @@ private class VertxGooseEngine (private val gameMatch: Game, private val control
     if (stack.nonEmpty) {
       val op: Operation = stack.head
       stack = stack.tail
-      op.execute(gameMatch.currentState)
+      gameMatch = gameMatch.updateState(op.execute)
       op match {
         case operation: SpecialOperation =>
           operation match {
@@ -61,9 +67,11 @@ private class VertxGooseEngine (private val gameMatch: Game, private val control
       }
       if (stopped.get()) return
     }
-    controller.update(CloneGameState(gameMatch.currentState), gameMatch.availableActions)
+    controller.update(gameMatch.currentState, gameMatch.availableActions)
     if (stack.nonEmpty) {
-      stack = gameMatch.stateBasedOperations() ++ stack
+      val (state, operations) = gameMatch.stateBasedOperations
+      gameMatch = gameMatch.updateState(_ => state)
+      stack = operations ++ stack
       executeOperation()
     }
   }
@@ -73,17 +81,16 @@ private class VertxGooseEngine (private val gameMatch: Game, private val control
   override def stop(): Unit = vertx.close()
 
   @tailrec
-  private def onEvent(event: GameEvent): Unit = {
+  private def onEvent(event: GameEvent): Unit =
     event match {
       case ExitEvent => controller.close()
       case NoOpEvent => executeOperation()
       case ActionEvent(action) => onEvent(action.trigger(gameMatch.currentState))
       case _ =>
-        if (stack.isEmpty) stack :+= gameMatch.cleanup()
+        if (stack.isEmpty) stack :+= gameMatch.cleanup
         stack +:= Operation.trigger(event)
         executeOperation()
     }
-  }
 
   override def callViewUpdate(): Unit = accept(NoOpEvent)
 }
@@ -100,6 +107,6 @@ object VertxGooseEngine {
    *                   with concurrency in mind.
    * @return The GooseEngine implemented using the Vert.x library.
    */
-  def apply(status: Game, controller: ViewController): GooseEngine = new VertxGooseEngine (status, controller)
+  def apply(status: Game, controller: ViewController): GooseEngine = new VertxGooseEngine(status, controller)
 
 }

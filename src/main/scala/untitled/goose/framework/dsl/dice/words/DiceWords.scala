@@ -9,6 +9,7 @@ trait DiceWords {
   /**
    * Creates a sequence with the sides of a dice with integer-typed faces.
    * Enables "... totalSides [number]".
+   *
    * @param total the number of sides of the dice.
    * @return a sequence of integers, from 1 to total
    */
