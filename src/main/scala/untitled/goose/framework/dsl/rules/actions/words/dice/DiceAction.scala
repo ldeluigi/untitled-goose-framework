@@ -6,12 +6,13 @@ import untitled.goose.framework.model.entities.runtime.GameState
 
 /**
  * Creates a dice roll action.
+ *
  * @param actionName the name of the action.
- * @param when the condition on which this action should be activated.
+ * @param when       the condition on which this action should be activated.
  * @param diceNumber the number of dices to throw at the same time.
- * @param diceName the name of the dice to throw. Must be previously defined.
+ * @param diceName   the name of the dice to throw. Must be previously defined.
  * @param isMovement if true, the dice will trigger movement events.
- * @param ruleBook the rulebook of reference.
+ * @param ruleBook   the rulebook of reference.
  */
 case class DiceAction(actionName: String, when: GameState => Boolean, diceNumber: Int, diceName: String, isMovement: Boolean)(implicit ruleBook: RuleBook) {
 

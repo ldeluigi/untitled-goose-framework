@@ -40,8 +40,8 @@ object Board {
       definition,
       tileMap,
       OneWayPath(tileMap(definition.tileOrdering.first),
-          c => definition.tileOrdering.next(c.definition).map(tileMap(_)),
-          c =>definition.tileOrdering.prev(c.definition).map(tileMap(_))
+        c => definition.tileOrdering.next(c.definition).map(tileMap(_)),
+        c => definition.tileOrdering.prev(c.definition).map(tileMap(_))
       )
     )
   }

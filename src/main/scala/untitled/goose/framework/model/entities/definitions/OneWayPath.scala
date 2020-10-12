@@ -28,6 +28,7 @@ sealed trait OneWayPath[T] {
 }
 
 object OneWayPath {
+
   private case class OneWayPathImpl[E](first: E,
                                        _next: E => Option[E],
                                        _prev: E => Option[E]) extends OneWayPath[E] {

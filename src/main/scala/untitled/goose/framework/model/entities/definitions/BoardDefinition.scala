@@ -53,6 +53,7 @@ object BoardDefinition {
                                     val disposition: Disposition,
                                     val first: TileDefinition) extends BoardDefinition {
     private val _sorted = tiles.toSeq.sorted
+
     override def tileOrdering: OneWayPath[TileDefinition] =
       OneWayPath(first,
         _.number.flatMap(i => _sorted.lift(i)),

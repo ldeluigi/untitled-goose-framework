@@ -30,7 +30,7 @@ object RollMovementDice {
   /**
    * This factory creates an Action meant for movement.
    *
-   * @param name The name displayed for this action.
+   * @param name       The name displayed for this action.
    * @param dice       A dice that has integer typed faces.
    * @param diceNumber The number of dices to roll at the same time.
    * @return A new action for rolling those dices.

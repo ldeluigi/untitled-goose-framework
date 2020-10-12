@@ -107,6 +107,6 @@ object VertxGooseEngine {
    *                   with concurrency in mind.
    * @return The GooseEngine implemented using the Vert.x library.
    */
-  def apply(status: Game, controller: ViewController): GooseEngine = new VertxGooseEngine (status, controller)
+  def apply(status: Game, controller: ViewController): GooseEngine = new VertxGooseEngine(status, controller)
 
 }

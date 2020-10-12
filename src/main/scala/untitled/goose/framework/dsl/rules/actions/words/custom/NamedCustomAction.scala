@@ -6,8 +6,9 @@ import untitled.goose.framework.model.entities.runtime.GameState
 
 /**
  * Creates a custom action.
- * @param name the name of the action.
- * @param when the condition that enables the action.
+ *
+ * @param name        the name of the action.
+ * @param when        the condition that enables the action.
  * @param customEvent the custom event created by this action.
  */
 case class NamedCustomAction(name: String, when: GameState => Boolean, customEvent: CustomEventInstance[GameState]) {
