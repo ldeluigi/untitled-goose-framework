@@ -48,7 +48,6 @@ object EventLogger {
     override def logEvent(event: GameEvent): Unit = logEvent(event, "")
 
     override def logHistoryDiff(state: GameState): Unit = {
-      // TODO FIX: don't use diff!
       (state.consumableBuffer
         .diff(previousState.consumableBuffer).map((_, "Consumable")) ++
         state.gameHistory
