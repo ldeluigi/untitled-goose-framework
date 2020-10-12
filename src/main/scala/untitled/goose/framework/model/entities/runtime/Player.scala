@@ -25,7 +25,7 @@ object Player {
     val history: Seq[PlayerEvent] = List()
   }
 
-  case class PlayerImpl(definition: PlayerDefinition, history: Seq[PlayerEvent]) extends Player
+  case class PlayerImpl(definition: PlayerDefinition, history: Seq[PlayerEvent] = Seq()) extends Player
 
   /** Factory method that creates a new tile from the definition. */
   def apply(playerDefinition: PlayerDefinition): Player = new PlayerDefImpl(playerDefinition)

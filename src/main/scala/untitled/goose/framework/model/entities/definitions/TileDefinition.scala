@@ -38,7 +38,9 @@ object TileDefinition {
       case (Some(xNum), Some(yNum)) => xNum compare yNum
     }
 
-  private class TileDefinitionImpl(val number: Option[Int], val name: Option[String], val groups: Seq[String]) extends TileDefinition
+  private class TileDefinitionImpl(val number: Option[Int],
+                                   val name: Option[String],
+                                   val groups: Seq[String]) extends TileDefinition
 
   /** A factory that creates a tile definition based on a number. */
   def apply(number: Int): TileDefinition = new TileDefinitionImpl(Some(number), None, Seq())

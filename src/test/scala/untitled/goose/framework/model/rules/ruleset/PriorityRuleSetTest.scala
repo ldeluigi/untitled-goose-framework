@@ -17,8 +17,8 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach with Match
   val t2: Tile = Tile(TileDefinition(2))
   val tileSet: Set[Tile] = Set(t1, t2)
   val playersRange: Range = 1 to 10
-  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"), Seq())
-  val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"), Seq())
+  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"))
+  val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"))
   val ordering: PlayerOrdering = PlayerOrdering.fixed
 
   var gameMatch: Game = MatchMock.default

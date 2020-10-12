@@ -10,7 +10,7 @@ case class LoseTurnActionRule(private val allOtherActions: Set[Action], private 
   extends ActionRule {
 
   override def allowedActions(state: GameState): Set[ActionAvailability] =
-    if (state.currentPlayer.history.only[LoseTurnEvent].nonEmpty)
+    if (state.players(state.currentPlayer).history.only[LoseTurnEvent].nonEmpty)
       allOtherActions.map(ActionAvailability(_, priority, allowed = false)) +
         ActionAvailability(SkipOneTurnAction(), priority)
     else Set()

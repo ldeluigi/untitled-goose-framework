@@ -11,7 +11,7 @@ private class RollMovementDice(actionName: String, dice: MovementDice, diceNumbe
 
   override def trigger(state: GameState): GameEvent = {
     val result = for (_ <- 0 until diceNumber) yield dice.roll()
-    MovementDiceRollEvent(state.currentPlayer.definition, state.currentTurn, state.currentCycle, result: _*)
+    MovementDiceRollEvent(state.currentPlayer, state.currentTurn, state.currentCycle, result: _*)
   }
 }
 

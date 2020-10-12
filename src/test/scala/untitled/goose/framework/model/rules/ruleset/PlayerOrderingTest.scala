@@ -10,15 +10,15 @@ import scala.util.Random
 
 class PlayerOrderingTest extends AnyFlatSpec with Matchers {
 
-  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"), Seq())
-  val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"), Seq())
+  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"))
+  val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"))
   val players = Seq(p1, p2)
 
   behavior of "PlayerOrderingTest"
 
   it should "shuffle the given players into a randomized order" in {
-    val p3: Player = PlayerImpl(PlayerDefinitionImpl("P3"), Seq())
-    val p4: Player = PlayerImpl(PlayerDefinitionImpl("P4"), Seq())
+    val p3: Player = PlayerImpl(PlayerDefinitionImpl("P3"))
+    val p4: Player = PlayerImpl(PlayerDefinitionImpl("P4"))
     Random.setSeed(4)
     val ordering: PlayerOrdering = PlayerOrdering.randomOrder
     val playerList: Seq[Player] = List(p1, p2, p3, p4)

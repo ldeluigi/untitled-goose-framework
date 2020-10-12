@@ -12,7 +12,7 @@ class OperationTest extends AnyFlatSpec with Matchers {
   var gameMatch: Game = MatchMock.default
   val gameMutableState: GameState = gameMatch.currentState
 
-  val gameEvent: GameEvent = StopOnTileEvent(gameMutableState.currentPlayer.definition, gameMutableState.gameBoard.tileOrdering.first.definition, gameMutableState.currentTurn, gameMutableState.currentCycle)
+  val gameEvent: GameEvent = StopOnTileEvent(gameMutableState.currentPlayer, gameMutableState.gameBoard.tileOrdering.first.definition, gameMutableState.currentTurn, gameMutableState.currentCycle)
 
   behavior of "OperationTest"
 

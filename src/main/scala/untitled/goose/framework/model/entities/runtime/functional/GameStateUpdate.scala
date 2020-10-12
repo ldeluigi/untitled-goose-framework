@@ -48,9 +48,8 @@ object GameStateUpdate {
     override def updateGameHistory(update: Seq[GameEvent] => Seq[GameEvent]): GameState =
       gameState.copy(gameHistory = update(gameState.gameHistory))
 
-    override def updatePlayerPiece(player: PlayerDefinition, update: Piece => Piece): GameState = {
+    override def updatePlayerPiece(player: PlayerDefinition, update: Piece => Piece): GameState =
       gameState.copy(playerPieces = gameState.playerPieces + (player -> update(gameState.playerPieces(player))))
-    }
 
     override def updateTileHistory(tile: TileDefinition, update: Seq[TileEvent] => Seq[TileEvent]): GameState =
       gameState.copy(gameBoard = gameState.gameBoard.updateTileHistory(tile, update))
@@ -66,7 +65,7 @@ object GameStateUpdate {
       gameState.copy(currentTurn = update(gameState.currentTurn))
 
     override def updateCurrentPlayer(player: (Player, Seq[Player]) => Player): GameState =
-      gameState.copy(currentPlayer = player(gameState.currentPlayer, gameState.players.values.toSeq))
+      gameState.copy(currentPlayer = player(gameState.players(gameState.currentPlayer), gameState.players.values.toSeq).definition)
   }
 
 }

@@ -53,7 +53,7 @@ class PriorityRuleSet(playerOrdering: PlayerOrdering,
       })
 
   override def nextPlayer(state: GameState): Player =
-    playerOrdering.next(state.currentPlayer, state.players.values.toSeq)
+    playerOrdering.next(state.players(state.currentPlayer), state.players.values.toSeq)
 
   override def cleanupOperations(state: GameState): GameState =
     (cleanupRules :+ TurnEndConsumer(playerOrdering.next)).foldLeft(state)((s, r) => r.applyRule(s))

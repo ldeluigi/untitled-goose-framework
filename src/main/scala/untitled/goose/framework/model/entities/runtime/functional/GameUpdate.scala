@@ -41,17 +41,17 @@ object GameUpdate {
       game.definition.cleanupRules
     )
 
-    override def updateState(update: GameState => GameState): Game = game.copy(currentState = update(game.currentState))
+    override def updateState(update: GameState => GameState): Game =
+      game.copy(currentState = update(game.currentState))
 
-    override def stateBasedOperations: (GameState, Seq[Operation]) = rules.stateBasedOperations(game.currentState)
+    override def stateBasedOperations: (GameState, Seq[Operation]) =
+      rules.stateBasedOperations(game.currentState)
 
-    override def cleanup: Operation = {
-      Operation.updateState(state => {
+    override def cleanup: Operation =
+      Operation.updateState(state =>
         rules.cleanupOperations(state)
           .updateConsumableBuffer(_.filter(_.cycle > game.currentState.currentCycle))
-          .updateCurrentCycle(_ + 1)
-      })
-    }
+          .updateCurrentCycle(_ + 1))
 
     override def availableActions: Set[Action] =
       if (game.currentState.consumableBuffer.isEmpty)

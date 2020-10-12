@@ -66,7 +66,7 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   "MutableStateExtensions.submitEvent" should "submit a given event in the right histories" in {
     val gameMatch: Game = MatchMock.default
     val gameMutableState: GameState = gameMatch.currentState
-    val skipTurnEvent: ConsumableGameEvent = SkipTurnEvent(gameMatch.currentState.currentPlayer.definition, gameMatch.currentState.currentTurn, gameMatch.currentState.currentCycle)
+    val skipTurnEvent: ConsumableGameEvent = SkipTurnEvent(gameMatch.currentState.currentPlayer, gameMatch.currentState.currentTurn, gameMatch.currentState.currentCycle)
 
     gameMutableState.submitEvent(skipTurnEvent).consumableBuffer should contain(skipTurnEvent)
   }
@@ -74,7 +74,7 @@ class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAf
   "MutableStateExtensions.saveEvent" should "save a consumable event onto the correct persistent history" in {
     val gameMatch: Game = MatchMock.default
     val gameMutableState: GameState = gameMatch.currentState
-    val skipTurnEvent: ConsumableGameEvent = SkipTurnEvent(gameMatch.currentState.currentPlayer.definition, gameMatch.currentState.currentTurn, gameMatch.currentState.currentCycle)
+    val skipTurnEvent: ConsumableGameEvent = SkipTurnEvent(gameMatch.currentState.currentPlayer, gameMatch.currentState.currentTurn, gameMatch.currentState.currentCycle)
     gameMutableState.saveEvent(skipTurnEvent).gameHistory should contain(skipTurnEvent)
   }
 

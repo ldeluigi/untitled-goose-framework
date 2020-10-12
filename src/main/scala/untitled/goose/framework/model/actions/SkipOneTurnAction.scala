@@ -15,7 +15,7 @@ class SkipOneTurnAction extends Action {
   override def name: String = "Skip one turn"
 
   override def trigger(state: GameState): GameEvent = {
-    SkipTurnEvent(state.currentPlayer.definition, state.currentTurn, state.currentCycle)
+    SkipTurnEvent(state.currentPlayer, state.currentTurn, state.currentCycle)
   }
 }
 

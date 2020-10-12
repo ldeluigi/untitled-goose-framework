@@ -18,9 +18,9 @@ class TeleportBehaviourTest extends AnyFlatSpec with Matchers with BeforeAndAfte
   val startingTile: Tile = Tile(TileDefinition(1))
   val landingTile: Tile = Tile(TileDefinition(7))
 
-  val teleportEvent: ConsumableGameEvent = TeleportEvent(landingTile.definition, game.currentState.currentPlayer.definition, game.currentState.currentTurn, game.currentState.currentCycle)
-  val stopOnTileEvent: ConsumableGameEvent = StopOnTileEvent(game.currentState.currentPlayer.definition, landingTile.definition, game.currentState.currentTurn, game.currentState.currentTurn)
-  val tileEnteredEvent: ConsumableGameEvent = TileEnteredEvent(game.currentState.currentPlayer.definition, landingTile.definition, game.currentState.currentTurn, game.currentState.currentCycle)
+  val teleportEvent: ConsumableGameEvent = TeleportEvent(landingTile.definition, game.currentState.currentPlayer, game.currentState.currentTurn, game.currentState.currentCycle)
+  val stopOnTileEvent: ConsumableGameEvent = StopOnTileEvent(game.currentState.currentPlayer, landingTile.definition, game.currentState.currentTurn, game.currentState.currentTurn)
+  val tileEnteredEvent: ConsumableGameEvent = TileEnteredEvent(game.currentState.currentPlayer, landingTile.definition, game.currentState.currentTurn, game.currentState.currentCycle)
 
   override protected def beforeEach(): Unit = {
     //state.submitEvent(teleportEvent)

@@ -13,7 +13,7 @@ class MutableGameStateTest extends AnyFlatSpec with Matchers {
   var gameMatch: Game = MatchMock.default
   val gameMutableState: GameState = gameMatch.currentState
 
-  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"), Seq())
+  val p1: Player = PlayerImpl(PlayerDefinitionImpl("P1"))
   val piece: Piece = Piece(Colour.Default.Blue)
 
   behavior of "MutableGameStateTest"
