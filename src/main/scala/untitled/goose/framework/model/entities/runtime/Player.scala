@@ -5,10 +5,10 @@ import untitled.goose.framework.model.events.PlayerEvent
 trait Player extends Defined[PlayerDefinition] with History[PlayerEvent] {
 
   /** Compares two players. */
-  def ==(obj: Tile): Boolean = definition == obj.definition && history == obj.history
+  def ==(obj: Player): Boolean = definition == obj.definition && history == obj.history
 
   override def equals(obj: Any): Boolean = obj match {
-    case x: Tile => x == this
+    case x: Player => x == this
     case _ => false
   }
 

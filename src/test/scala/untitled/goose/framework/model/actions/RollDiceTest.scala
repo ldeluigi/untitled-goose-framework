@@ -14,7 +14,7 @@ class RollDiceTest extends AnyFlatSpec with Matchers {
     val event = RollDice("roll Dice", new Dice[Int] {
       override def name: String = "Mock dice"
 
-      override def roll: Int = 5
+      override def roll(): Int = 5
     }, 1).trigger(default.currentState)
 
     event.isInstanceOf[DiceRollEvent[_]] should be(true)

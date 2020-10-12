@@ -9,7 +9,7 @@ import untitled.goose.framework.model.events.consumable.StopOnTileEvent
 
 class OperationTest extends AnyFlatSpec with Matchers {
 
-  var gameMatch: Game = MatchMock.default
+  val gameMatch: Game = MatchMock.default
   val gameMutableState: GameState = gameMatch.currentState
 
   val gameEvent: GameEvent = StopOnTileEvent(gameMutableState.currentPlayer, gameMutableState.gameBoard.tileOrdering.first.definition, gameMutableState.currentTurn, gameMutableState.currentCycle)

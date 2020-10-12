@@ -2,7 +2,7 @@ package untitled.goose.framework.model.rules.operations
 
 import untitled.goose.framework.model.entities.DialogContent
 import untitled.goose.framework.model.entities.runtime.GameState
-import untitled.goose.framework.model.entities.runtime.GameStateExtensions.GameStateExtensions
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.events.GameEvent
 
 /** An operation alters the state in some way. */
@@ -13,6 +13,8 @@ sealed trait Operation {
 
   /** The method that alters the state. */
   def execute(state: GameState): GameState
+
+  override def toString: String = "<<" + name + ">>"
 }
 
 object Operation {

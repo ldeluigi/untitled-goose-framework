@@ -15,7 +15,7 @@ sealed trait BehaviourRule {
 
 object BehaviourRule {
 
-  import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
+  import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions._
 
   /** The mandatory implementation of a behaviour rule ensures constraints are honored. */
   private[behaviours] class BehaviourRuleImpl[T <: ConsumableGameEvent : ClassTag]

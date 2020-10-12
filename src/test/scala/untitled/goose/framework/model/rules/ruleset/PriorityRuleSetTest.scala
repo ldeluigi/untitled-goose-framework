@@ -21,7 +21,7 @@ class PriorityRuleSetTest extends AnyFlatSpec with BeforeAndAfterEach with Match
   val p2: Player = PlayerImpl(PlayerDefinitionImpl("P2"))
   val ordering: PlayerOrdering = PlayerOrdering.fixed
 
-  var gameMatch: Game = MatchMock.default
+  val gameMatch: Game = MatchMock.default
   val gameMutableState: GameState = gameMatch.currentState
 
   var ruleSet: PriorityRuleSet = PriorityRuleSet(ordering, playersRange)

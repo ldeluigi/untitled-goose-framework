@@ -1,8 +1,8 @@
 package untitled.goose.framework.model.rules.operations.update
 
-import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
+import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions._
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
-import untitled.goose.framework.model.entities.runtime.{GameStateExtensions => _, _}
+import untitled.goose.framework.model.entities.runtime._
 import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.rules.operations.Operation
 
@@ -81,7 +81,7 @@ object StepOperation {
     var opSeq: Seq[Operation] = Seq()
     if (tile.isDefined) {
       for (other <- state.players.values if !other.equals(player)) {
-        if (state.playerLastTurn(other).exists(l => state.playerStopOnTileTurns(state.gameBoard.tiles(tile.get), other).contains(l))) {
+        if (state.playerLastTurn(other.definition).exists(l => state.playerStopOnTileTurns(tile.get, other.definition).contains(l))) {
           opSeq = opSeq :+ Operation.trigger(PlayerPassedEvent(other.definition, player, tile.get, state.currentTurn, state.currentCycle))
         }
       }

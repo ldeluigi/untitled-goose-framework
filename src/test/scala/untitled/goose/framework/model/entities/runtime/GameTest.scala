@@ -20,7 +20,7 @@ class GameTest extends AnyFlatSpec with OneInstancePerTest with BeforeAndAfterEa
   }
 
   it should "have a set of players" in {
-    gameMatch.currentState.players should equal(MatchMock.players.keys.toSeq)
+    gameMatch.currentState.players.keySet should equal(Set(MatchMock.p1, MatchMock.p2))
   }
 
   it should "have a current GameState" in {

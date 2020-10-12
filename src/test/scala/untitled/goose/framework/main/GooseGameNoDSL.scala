@@ -27,7 +27,7 @@ import scala.collection.immutable.ListMap
 
 object GooseGameNoDSL extends JFXApp {
 
-  import untitled.goose.framework.model.entities.runtime.GameStateExtensions._
+  import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions._
 
   //You will need:
   val totalTiles = 63

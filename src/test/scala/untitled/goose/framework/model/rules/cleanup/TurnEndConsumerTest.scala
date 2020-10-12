@@ -7,7 +7,7 @@ import untitled.goose.framework.model.entities.runtime.{Game, GameState}
 
 class TurnEndConsumerTest extends AnyFlatSpec with Matchers {
 
-  var gameMatch: Game = MatchMock.default
+  val gameMatch: Game = MatchMock.default
   val gameMutableState: GameState = gameMatch.currentState
 
   behavior of "TurnEndConsumerTest"

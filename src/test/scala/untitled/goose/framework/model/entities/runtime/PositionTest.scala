@@ -1,8 +1,8 @@
-package untitled.goose.framework.model.entities.definitions
+package untitled.goose.framework.model.entities.runtime
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import untitled.goose.framework.model.entities.runtime.{Position, Tile}
+import untitled.goose.framework.model.entities.definitions.TileDefinition
 
 class PositionTest extends AnyFlatSpec with Matchers {
 
@@ -11,7 +11,7 @@ class PositionTest extends AnyFlatSpec with Matchers {
   val position: Position = Position(tile.definition)
 
   "A position" should "have a tile when specified" in {
-    position.tile should equal(tile)
+    position.tile should equal(tile.definition)
   }
 
 }
