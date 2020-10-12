@@ -41,31 +41,37 @@ object GameStateUpdate {
 
   implicit class GameStateUpdateImpl(gameState: GameState) extends GameStateUpdate {
 
-
     override def updateConsumableBuffer(update: Seq[ConsumableGameEvent] => Seq[ConsumableGameEvent]): GameState =
-      gameState.copy(consumableBuffer = update(gameState.consumableBuffer))
+      gameState.copy(consumableBuffer =
+        update(gameState.consumableBuffer))
 
     override def updateGameHistory(update: Seq[GameEvent] => Seq[GameEvent]): GameState =
-      gameState.copy(gameHistory = update(gameState.gameHistory))
+      gameState.copy(gameHistory =
+        update(gameState.gameHistory))
 
     override def updatePlayerPiece(player: PlayerDefinition, update: Piece => Piece): GameState =
-      gameState.copy(playerPieces = gameState.playerPieces + (player -> update(gameState.playerPieces(player))))
+      gameState.copy(playerPieces =
+        gameState.playerPieces + (player -> update(gameState.playerPieces(player))))
 
     override def updateTileHistory(tile: TileDefinition, update: Seq[TileEvent] => Seq[TileEvent]): GameState =
-      gameState.copy(gameBoard = gameState.gameBoard.updateTileHistory(tile, update))
+      gameState.copy(gameBoard =
+        gameState.gameBoard.updateTileHistory(tile, update))
 
     override def updatePlayerHistory(player: PlayerDefinition, update: Seq[PlayerEvent] => Seq[PlayerEvent]): GameState =
-      gameState.copy(players = gameState.players + (player -> PlayerImpl(player, update(gameState.players(player).history))))
-
+      gameState.copy(players =
+        gameState.players + (player -> PlayerImpl(player, update(gameState.players(player).history))))
 
     override def updateCurrentCycle(update: Int => Int): GameState =
-      gameState.copy(currentCycle = update(gameState.currentCycle))
+      gameState.copy(currentCycle =
+        update(gameState.currentCycle))
 
     override def updateCurrentTurn(update: Int => Int): GameState =
-      gameState.copy(currentTurn = update(gameState.currentTurn))
+      gameState.copy(currentTurn =
+        update(gameState.currentTurn))
 
     override def updateCurrentPlayer(player: (Player, Seq[Player]) => Player): GameState =
-      gameState.copy(currentPlayer = player(gameState.players(gameState.currentPlayer), gameState.players.values.toSeq).definition)
+      gameState.copy(currentPlayer =
+        player(gameState.players(gameState.currentPlayer), gameState.players.values.toSeq).definition)
   }
 
 }

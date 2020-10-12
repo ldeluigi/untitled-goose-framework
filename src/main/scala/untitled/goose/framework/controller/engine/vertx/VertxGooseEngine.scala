@@ -31,12 +31,17 @@ private class VertxGooseEngine(private var gameMatch: Game, private val controll
   private val codec: GameEventMessageCodec = new GameEventMessageCodec
   vertx.eventBus.registerCodec(codec)
   Await.result(vertx.deployVerticleFuture(gv), Duration.Inf)
-  private var stack: Seq[Operation] = Seq()
   private val stopped: AtomicBoolean = new AtomicBoolean(false)
 
-  override def accept(event: GameEvent): Unit = {
-    vertx.eventBus().send(gv.eventAddress, Some(event), DeliveryOptions().setCodecName(codec.name()))
-  }
+  private var stack: Seq[Operation] = Seq()
+
+  override def accept(event: GameEvent): Unit =
+    vertx.eventBus()
+      .send(gv.eventAddress,
+        Some(event),
+        DeliveryOptions()
+          .setCodecName(codec.name())
+      )
 
   @tailrec
   private def executeOperation(): Unit = {
@@ -76,7 +81,7 @@ private class VertxGooseEngine(private var gameMatch: Game, private val controll
   override def stop(): Unit = vertx.close()
 
   @tailrec
-  private def onEvent(event: GameEvent): Unit = {
+  private def onEvent(event: GameEvent): Unit =
     event match {
       case ExitEvent => controller.close()
       case NoOpEvent => executeOperation()
@@ -86,7 +91,6 @@ private class VertxGooseEngine(private var gameMatch: Game, private val controll
         stack +:= Operation.trigger(event)
         executeOperation()
     }
-  }
 
   override def callViewUpdate(): Unit = accept(NoOpEvent)
 }

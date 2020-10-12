@@ -33,5 +33,6 @@ object RollDice {
    * @tparam DiceSide The generic type of one face of the dice.
    * @return A new RollDice action.
    */
-  def apply[DiceSide](actionName: String, dice: Dice[DiceSide], diceNumber: Int) = new RollDice(actionName, dice, diceNumber)
+  def apply[DiceSide](actionName: String, dice: Dice[DiceSide], diceNumber: Int) =
+    new RollDice(actionName, dice, diceNumber)
 }

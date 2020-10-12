@@ -22,7 +22,7 @@ trait TileIdentifier {
     else
       "Empty"
 
-  override def hashCode(): Int =
+  override def hashCode(): Int = 1453 +
     13 * name.map(_.hashCode).getOrElse(1) +
       17 * number.map(_.hashCode).getOrElse(1) +
       19 * group.map(_.hashCode).getOrElse(1)
@@ -31,7 +31,9 @@ trait TileIdentifier {
 
 object TileIdentifier {
 
-  private class TileIdentifierImpl(val tileNum: Option[Int], val tileName: Option[String], val tileGroups: Option[String]) extends TileIdentifier {
+  private class TileIdentifierImpl(val tileNum: Option[Int],
+                                   val tileName: Option[String],
+                                   val tileGroups: Option[String]) extends TileIdentifier {
 
     override def number: Option[Int] = tileNum
 
@@ -39,7 +41,7 @@ object TileIdentifier {
 
     override def group: Option[String] = tileGroups
 
-    override def equals(obj: Any): Boolean = {
+    override def equals(obj: Any): Boolean =
       obj match {
         case obj: TileIdentifier =>
           if (this.name.isDefined && obj.name.isDefined) {
@@ -52,7 +54,6 @@ object TileIdentifier {
             false
           }
       }
-    }
   }
 
   /** A factory to create a new TileIdentifier, based on the tile's number.
@@ -81,6 +82,7 @@ object TileIdentifier {
 
   /** Implements the check method to check if a tile is identified. */
   implicit class IdentifierCheck(id: TileIdentifier) {
+    /** Checks if this tile identifier would match the given TileDefinition. */
     def check(tile: TileDefinition): Boolean =
       if (id.name.isDefined && tile.name.isDefined) {
         tile.name.get == id.name.get

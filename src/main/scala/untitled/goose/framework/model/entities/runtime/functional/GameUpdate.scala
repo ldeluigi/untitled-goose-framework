@@ -11,7 +11,6 @@ trait GameUpdate {
 
   def updateState(update: GameState => GameState): Game
 
-
   /** Based on current state, the available actions for the current player. */
   def availableActions: Set[Action]
 

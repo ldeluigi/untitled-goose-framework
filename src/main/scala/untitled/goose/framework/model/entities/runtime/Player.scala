@@ -12,7 +12,7 @@ trait Player extends Defined[PlayerDefinition] with History[PlayerEvent] {
     case _ => false
   }
 
-  override def hashCode(): Int = definition.hashCode + 1
+  override def hashCode(): Int = 17 * definition.hashCode + 23
 
   override def toString: String =
     this.getClass.getSimpleName + ":" +

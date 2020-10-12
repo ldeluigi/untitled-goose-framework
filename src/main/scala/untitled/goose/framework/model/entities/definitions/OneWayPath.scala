@@ -1,24 +1,41 @@
 package untitled.goose.framework.model.entities.definitions
 
-trait OneWayPath[T] {
+/** Represents the game path on the board. */
+sealed trait OneWayPath[T] {
 
-  /** Returns the next tile.
+  /**
+   * Returns the next item.
    *
-   * @param tile the tile of which to return the next one
-   * @return the next tile, if present
+   * @param curr the item of which to return the next one
+   * @return the next item, if present
    */
-  def next(tile: T): Option[T]
+  def next(curr: T): Option[T]
 
-  /** Returns the previous tile.
+  /**
+   * Returns the previous item.
    *
-   * @param tile the tile of which to return the previous one
-   * @return the previous tile, if present
+   * @param curr the item of which to return the previous one
+   * @return the previous item, if present
    */
-  def prev(tile: T): Option[T]
+  def prev(curr: T): Option[T]
 
-  /** Returns the definition's first tile.
+  /**
+   * Returns the definition's first item.
    *
-   * @return the first tile.
+   * @return the first item.
    */
   def first: T
+}
+
+object OneWayPath {
+  private case class OneWayPathImpl[E](first: E,
+                                       _next: E => Option[E],
+                                       _prev: E => Option[E]) extends OneWayPath[E] {
+    override def next(curr: E): Option[E] = _next(curr)
+
+    override def prev(curr: E): Option[E] = _prev(curr)
+  }
+
+  def apply[E](first: E, next: E => Option[E], prev: E => Option[E]): OneWayPath[E] =
+    OneWayPathImpl(first, next, prev)
 }

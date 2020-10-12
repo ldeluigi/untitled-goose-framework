@@ -58,8 +58,8 @@ private[scalafx] class IntroMenu(stage: Stage, gameData: GameDefinition, boardNa
       val gameScene: ScalaFxGameScene = ScalaFxGameScene(stage, controller, currentMatch.currentState, graphicMap)
       controller.setGameScene(gameScene)
       stage.scene = gameScene
-      stage.minWidth = widthSize * 0.5
-      stage.minHeight = heightSize * 0.5
+      stage.minWidth = widthSize * 1 / 3
+      stage.minHeight = heightSize * 1 / 3
       stage setResizable true
       stage setMaximized true
     } else {

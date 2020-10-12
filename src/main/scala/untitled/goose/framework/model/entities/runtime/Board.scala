@@ -11,7 +11,10 @@ trait Board extends Defined[BoardDefinition] {
   def tileOrdering: OneWayPath[Tile]
 
   /** Compares two boards. */
-  def ==(obj: Board): Boolean = definition == obj.definition
+  def ==(obj: Board): Boolean =
+    definition == obj.definition &&
+      tiles == obj.tiles &&
+      tileOrdering == obj.tileOrdering
 
   override def equals(obj: Any): Boolean = obj match {
     case b: Board => b == this
@@ -36,17 +39,10 @@ object Board {
     BoardImpl(
       definition,
       tileMap,
-      new OneWayPath[Tile] {
-        override def next(tile: Tile): Option[Tile] =
-          definition.tileOrdering.next(tile.definition).map(tileMap(_))
-
-        override def first: Tile =
-          tileMap(definition.tileOrdering.first)
-
-        override def prev(tile: Tile): Option[Tile] =
-          definition.tileOrdering.prev(tile.definition).map(tileMap(_))
-      }
+      OneWayPath(tileMap(definition.tileOrdering.first),
+          c => definition.tileOrdering.next(c.definition).map(tileMap(_)),
+          c =>definition.tileOrdering.prev(c.definition).map(tileMap(_))
+      )
     )
   }
-
 }

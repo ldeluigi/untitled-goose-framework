@@ -16,7 +16,7 @@ trait PlayerDefinition {
 
   override def toString: String = this.getClass.getSimpleName + ": " + name
 
-  override def hashCode(): Int = name.hashCode + 1
+  override def hashCode(): Int = 13 * name.hashCode + 7
 }
 
 object PlayerDefinition {
