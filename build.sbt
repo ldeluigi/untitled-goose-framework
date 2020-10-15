@@ -71,3 +71,9 @@ libraryDependencies ++= javaFXModules.map(m =>
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
 publishMavenStyle := true
+
+githubTokenSource := TokenSource.Environment("GITHUB_TOKEN") || TokenSource.GitConfig("github.token")
+
+githubOwner := "ldeluigi"
+
+githubRepository := "untitled-goose-framework"
