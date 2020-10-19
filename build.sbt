@@ -20,8 +20,10 @@ inThisBuild(List(
   githubWorkflowBuild := Seq(
     WorkflowStep.Sbt(List("test"))
   ),
-  githubWorkflowPublishPreamble +=
-    WorkflowStep.Use("olafurpg", "setup-gpg", "v2"),
+  githubWorkflowPublishPreamble ++= Seq(
+    WorkflowStep.Use("olafurpg", "setup-gpg", "v2")
+  ),
+  ghreleaseNotes := { _ => IO.read(baseDirectory.value / "release_notes.md") },
   githubWorkflowPublish := Seq(
     WorkflowStep.Sbt(
       List("ci-release"),
