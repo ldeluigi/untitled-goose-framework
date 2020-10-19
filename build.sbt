@@ -1,8 +1,5 @@
 onChangedBuildSource := ReloadOnSourceChanges
 
-ghreleaseRepoOrg := "ldeluigi"
-ghreleaseNotes := (_ => IO.read(baseDirectory.value / "release_notes.md"))
-
 inThisBuild(List(
   name := "untitled-goose-framework",
   organization := "com.github.ldeluigi",
@@ -24,12 +21,24 @@ inThisBuild(List(
     WorkflowStep.Sbt(List("test"))
   ),
   githubWorkflowPublishPreamble ++= Seq(
-    WorkflowStep.Use("olafurpg", "setup-gpg", "v2")
+    WorkflowStep.Use("olafurpg", "setup-gpg", "v2"),
   ),
   githubWorkflowPublish := Seq(
-    WorkflowStep.Sbt(
-      List("githubRelease"),
-      name = Some("Release to Github Releases")
+    WorkflowStep.Run(List(
+      """VERSION=`sbt -no-color 'inspect actual version' | grep "Setting: java.lang.String" | cut -d '=' -f2 | tr -d ' '`""",
+      """echo "VERSION=${VERSION}" >> $GITHUB_ENV""",
+      """IS_SNAPSHOT=`if [[ ${VERSION} =~ "-" ]] then ; echo "true" ; else ; echo "false" ; fi`""",
+      """echo "IS_SNAPSHOT=${IS_SNAPSHOT}" >> $GITHUB_ENV""",
+    )),
+    WorkflowStep.Use(
+      "marvinpinto", "action-automatic-releases", "latest",
+      name = Some("Release to Github Releases"),
+      params = Map(
+        "repo_token" -> "${{ secrets.GITHUB_TOKEN }}",
+        "prerelease" -> "${IS_SNAPSHOT}",
+        "title" -> "Release - Version ${VERSION}",
+        "files" -> """target/scala-2.12/@(*.jar|*.pom)"""
+      )
     ),
     WorkflowStep.Sbt(
       List("ci-release"),
