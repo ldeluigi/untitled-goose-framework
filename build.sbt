@@ -21,15 +21,16 @@ inThisBuild(List(
     WorkflowStep.Sbt(List("test"))
   ),
   githubWorkflowPublishPreamble ++= Seq(
-    WorkflowStep.Use("olafurpg", "setup-gpg", "v2"),
-  ),
-  githubWorkflowPublish := Seq(
     WorkflowStep.Run(List(
       """VERSION=`sbt -no-color 'inspect actual version' | grep "Setting: java.lang.String" | cut -d '=' -f2 | tr -d ' '`""",
       """echo "VERSION=${VERSION}" >> $GITHUB_ENV""",
-      """IS_SNAPSHOT=`if [[ ${VERSION} =~ "-" ]] then ; echo "true" ; else ; echo "false" ; fi`""",
+      """IS_SNAPSHOT=`if [[ "${VERSION}" =~ "-" ]] then ; echo "true" ; else ; echo "false" ; fi`""",
       """echo "IS_SNAPSHOT=${IS_SNAPSHOT}" >> $GITHUB_ENV""",
-    )),
+    ),
+    name = Some("Setup environment variables")),
+    WorkflowStep.Use("olafurpg", "setup-gpg", "v2"),
+  ),
+  githubWorkflowPublish := Seq(
     WorkflowStep.Use(
       "marvinpinto", "action-automatic-releases", "latest",
       name = Some("Release to Github Releases"),
