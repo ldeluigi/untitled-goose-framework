@@ -1,53 +1,66 @@
-name := "untitled-goose-framework"
+onChangedBuildSource := ReloadOnSourceChanges
 
-organization := "untitled.goose.framework"
+inThisBuild(List(
+  name := "untitled-goose-framework",
+  organization := "untitled.goose.framework",
+  homepage := Some(url("https://github.com/" +
+    "ldeluigi" +
+    "/" +
+    "untitled-goose-framework")),
+  licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
+  developers := List(
+    Developer(
+      "ldeluigi",
+      "",
+      "",
+      url("https://github.com/ldeluigi")
+    )
+  ),
 
-version := "2.0.0"
+  githubWorkflowBuild := Seq(
+    WorkflowStep.Sbt(List("test"))
+  ),
+  githubWorkflowPublishPreamble := Seq(
+    WorkflowStep.Use("olafurpg", "setup-gpg", "v2")
+  ),
+  githubWorkflowPublish := Seq(
+    WorkflowStep.Sbt(
+      List("ci-release"),
+      env = Map(
+        "PGP_PASSPHRASE" -> "${{ secrets.PGP_PASSPHRASE }}",
+        "PGP_SECRET" -> "${{ secrets.PGP_SECRET }}",
+        "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
+        "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
+      )
+    )
+  ),
+  githubWorkflowTargetTags ++= Seq("v*"),
+  githubWorkflowPublishTargetBranches :=
+    Seq(RefPredicate.Equals(Ref.Branch("master")))
+))
 
-scalaVersion := "2.12.10"
+ThisBuild / scalaVersion := "2.12.10"
 
 ThisBuild / sbtVersion := "1.3.13"
 
 //ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
 
-ThisBuild / githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("test", "packagedArtifacts")))
 
-ThisBuild / githubWorkflowPublishPreamble := Seq(WorkflowStep.Run(
-  List("mv ./target/scala-2.12/*.jar .", "mv ./target/scala-2.12/*.pom .",
-    "find . -type f -name \"*.jar\"", "find . -type f -name \"*.pom\"")
-))
-ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Use(
-  "marvinpinto", "action-automatic-releases", "latest",
-  name = Some("Upload new GitHub Release"),
-  params = Map(
-    "repo_token" -> "${{ secrets.GITHUB_TOKEN }}",
-    "automatic_release_tag" -> version.value,
-    "prerelease" -> version.value.startsWith("0.").toString,
-    "title" -> {
-      if (version.value.startsWith("0."))
-        "Development Build - Version " + version.value
-      else
-        "Release - Version " + version.value
-    },
-    "files" -> "(*.jar|*.pom)"
-  )
-))
-
-resolvers += "Local Ivy Repository" at "file:///" + Path.userHome.absolutePath + "/.ivy2/local"
+ThisBuild / resolvers += "Local Ivy Repository" at "file:///" + Path.userHome.absolutePath + "/.ivy2/local"
 
 // Add dependency on ScalaFX library
-libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
+ThisBuild / libraryDependencies += "org.scalafx" %% "scalafx" % "14-R19"
 
 // Add dependency on Vert.x library
-libraryDependencies += "io.vertx" %% "vertx-lang-scala" % "3.9.1"
+ThisBuild / libraryDependencies += "io.vertx" %% "vertx-lang-scala" % "3.9.1"
 
 
 // Test dependencies
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
+ThisBuild / libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.0"
+ThisBuild / libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.0" % "test"
 
 
-scalacOptions ++= {
+ThisBuild / scalacOptions ++= {
   Seq(
     "-language:postfixOps",
     "-language:implicitConversions"
@@ -64,10 +77,6 @@ lazy val osName = System.getProperty("os.name") match {
 
 // Add dependency on JavaFX libraries, OS dependent
 lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-libraryDependencies ++= javaFXModules.map(m =>
+ThisBuild / libraryDependencies ++= javaFXModules.map(m =>
   "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName
 )
-
-Global / onChangedBuildSource := ReloadOnSourceChanges
-
-publishMavenStyle := true
