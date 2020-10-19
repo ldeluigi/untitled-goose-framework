@@ -1,5 +1,7 @@
 onChangedBuildSource := ReloadOnSourceChanges
 
+ghreleaseNotes := { _ => IO.read(baseDirectory.value / "release_notes.md") }
+
 inThisBuild(List(
   name := "untitled-goose-framework",
   organization := "com.github.ldeluigi",
@@ -23,7 +25,6 @@ inThisBuild(List(
   githubWorkflowPublishPreamble ++= Seq(
     WorkflowStep.Use("olafurpg", "setup-gpg", "v2")
   ),
-  ghreleaseNotes := { _ => IO.read(baseDirectory.value / "release_notes.md") },
   githubWorkflowPublish := Seq(
     WorkflowStep.Sbt(
       List("githubRelease"),
