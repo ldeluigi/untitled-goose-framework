@@ -26,6 +26,10 @@ inThisBuild(List(
   ghreleaseNotes := { _ => IO.read(baseDirectory.value / "release_notes.md") },
   githubWorkflowPublish := Seq(
     WorkflowStep.Sbt(
+      List("githubRelease"),
+      name = Some("Release to Github Releases")
+    ),
+    WorkflowStep.Sbt(
       List("ci-release"),
       name = Some("Release to Sonatype"),
       env = Map(
@@ -34,12 +38,7 @@ inThisBuild(List(
         "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
         "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
       )
-    ),
-    WorkflowStep.Sbt(
-      List("githubRelease"),
-      name = Some("Release to Github Releases")
-    ),
-
+    )
   ),
   githubWorkflowTargetTags ++= Seq("v*"),
   githubWorkflowPublishTargetBranches :=
