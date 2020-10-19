@@ -21,7 +21,7 @@ inThisBuild(List(
     WorkflowStep.Sbt(List("test"))
   ),
   githubWorkflowPublishPreamble := Seq(
-    WorkflowStep.Use("olafurpg", "setup-gpg", "v2")
+
   ),
   githubWorkflowPublish := Seq(
     WorkflowStep.Sbt(
