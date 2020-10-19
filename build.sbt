@@ -1,6 +1,7 @@
 onChangedBuildSource := ReloadOnSourceChanges
 
-ghreleaseNotes := { _ => IO.read(baseDirectory.value / "release_notes.md") }
+ghreleaseRepoOrg := "ldeluigi"
+ghreleaseNotes := (_ => IO.read(baseDirectory.value / "release_notes.md"))
 
 inThisBuild(List(
   name := "untitled-goose-framework",
