@@ -36,7 +36,7 @@ inThisBuild(List(
   ),
   githubWorkflowTargetTags ++= Seq("v*"),
   githubWorkflowPublishTargetBranches :=
-    Seq(RefPredicate.Equals(Ref.Branch("master")))
+    Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 ))
 
 ThisBuild / scalaVersion := "2.12.10"
