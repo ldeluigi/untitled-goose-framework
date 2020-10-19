@@ -2,7 +2,7 @@ onChangedBuildSource := ReloadOnSourceChanges
 
 inThisBuild(List(
   name := "untitled-goose-framework",
-  organization := "untitled.goose.framework",
+  organization := "com.github.ldeluigi",
   homepage := Some(url("https://github.com/" +
     "ldeluigi" +
     "/" +
