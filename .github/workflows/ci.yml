@@ -162,6 +162,9 @@ jobs:
 
       - uses: olafurpg/setup-gpg@v2
 
+      - name: Release to Github Releases
+        run: sbt ++${{ matrix.scala }} githubRelease
+
       - name: Release to Sonatype
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
@@ -169,6 +172,3 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         run: sbt ++${{ matrix.scala }} ci-release
-
-      - name: Release to Github Releases
-        run: sbt ++${{ matrix.scala }} githubRelease
