@@ -11,8 +11,8 @@ inThisBuild(List(
   developers := List(
     Developer(
       "ldeluigi",
-      "",
-      "",
+      "Luca Deluigi",
+      "lucadelu97@gmail.com",
       url("https://github.com/ldeluigi")
     )
   ),
@@ -25,13 +25,19 @@ inThisBuild(List(
   githubWorkflowPublish := Seq(
     WorkflowStep.Sbt(
       List("ci-release"),
+      name = Some("Release to Sonatype"),
       env = Map(
         "PGP_PASSPHRASE" -> "${{ secrets.PGP_PASSPHRASE }}",
         "PGP_SECRET" -> "${{ secrets.PGP_SECRET }}",
         "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
         "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
       )
-    )
+    ),
+    WorkflowStep.Sbt(
+      List("githubRelease"),
+      name = Some("Release to Github Releases")
+    ),
+
   ),
   githubWorkflowTargetTags ++= Seq("v*"),
   githubWorkflowPublishTargetBranches :=
