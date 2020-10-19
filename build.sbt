@@ -20,9 +20,8 @@ inThisBuild(List(
   githubWorkflowBuild := Seq(
     WorkflowStep.Sbt(List("test"))
   ),
-  githubWorkflowPublishPreamble := Seq(
-
-  ),
+  githubWorkflowPublishPreamble +=
+    WorkflowStep.Use("olafurpg", "setup-gpg", "v2"),
   githubWorkflowPublish := Seq(
     WorkflowStep.Sbt(
       List("ci-release"),
