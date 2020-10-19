@@ -1,14 +1,15 @@
 # untitled-goose-framework
 Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to run the definition of a game based on [The Game of the Goose](https://en.wikipedia.org/wiki/Game_of_the_Goose).
 
-## Continuous Integration
+## CI/CD
+### Continuous Integration
 A CI system tests, builds and makes new releases of the framework.
 - __master__ branch:  
 ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=master)
 - __develop__ branch:  
 ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=develop)
-
-New [releases](https://github.com/ldeluigi/untitled-goose-framework/releases) are generated based on the [master](https://github.com/ldeluigi/untitled-goose-framework/tree/master) branch.
+### Continuous Delivery
+New [releases](https://github.com/ldeluigi/untitled-goose-framework/releases) are generated based on the [master](https://github.com/ldeluigi/untitled-goose-framework/tree/master) branch, as well as new [Github packages](https://github.com/ldeluigi?tab=packages&repo_name=untitled-goose-framework) and Sonatype packages.
 
 ## Features
 - Ability to create new games with the shortest, most readable syntax possible through a Scala DSL (_Domain Specific Language_) called **GooseDSL**.
@@ -18,6 +19,9 @@ New [releases](https://github.com/ldeluigi/untitled-goose-framework/releases) ar
 - Possibility to extend the GooseDSL with custom shortcuts, keywords and more.
 
 ## Installation
+### Declaring the library as dependency
+WIP
+### Manually downloading as unmanaged jar/library
 1. Download the jar of the last version available in the [Release](https://github.com/ldeluigi/untitled-goose-framework/releases) section.
 1. Add the jar as a dependency for your project
     - For __sbt__ projects you can simply put the jar inside a _lib_ folder in the project root.
