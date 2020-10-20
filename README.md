@@ -35,25 +35,6 @@ Add, in your `build.gradle.kts` file, inside the `dependencies` block:
 implementation("com.github.ldeluigi:untitled-goose-framework_2.12:<version>")
 ```
 
-### Configuration for ScalaFx
-#### SBT
-- For __sbt__ projects you should add the following code to your `build.sbt` file, in order to enable compilation and build on every operating system:
-    ```scala
-    // Determine OS version of JavaFX binaries
-    lazy val osName = System.getProperty("os.name") match {
-      case n if n.startsWith("Linux")   => "linux"
-      case n if n.startsWith("Mac")     => "mac"
-      case n if n.startsWith("Windows") => "win"
-      case _ => throw new Exception("Unknown platform!")
-    }
-
-    // Add dependency on JavaFX libraries, OS dependent
-    lazy val javaFXModules = Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-    libraryDependencies ++= javaFXModules.map(m =>
-      "org.openjfx" % s"javafx-$m" % "14.0.1" classifier osName
-    )
-    ```
-
 ## Usage
 Create a class or object that extends __GooseDSL__ (package: `untitled.goose.framework.dsl`) and write your own game. Documentation on how to write a game can be found in the Wiki.
 
