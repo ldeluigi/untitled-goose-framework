@@ -183,5 +183,5 @@ jobs:
           prerelease: ${{ env.IS_SNAPSHOT }}
           title: Release - Version ${{ env.VERSION }}
           files: |
-            target/**/*.jar
-            target/**/*.pom
+            target/scala-2.12/*.jar
+            target/scala-2.12/*.pom
