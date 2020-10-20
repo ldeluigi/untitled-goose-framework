@@ -37,7 +37,7 @@ inThisBuild(List(
         "repo_token" -> "${{ secrets.GITHUB_TOKEN }}",
         "prerelease" -> "${{ env.IS_SNAPSHOT }}",
         "title" -> "Release - Version ${{ env.VERSION }}",
-        "files" -> """target/scala-2.12/@(*.jar|*.pom)"""
+        "files" -> "target/**/*.jar\ntarget/**/*.pom"
       )
     ),
     WorkflowStep.Sbt(
