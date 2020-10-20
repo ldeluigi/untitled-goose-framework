@@ -23,8 +23,6 @@ inThisBuild(List(
   githubWorkflowPublishPreamble ++= Seq(
     WorkflowStep.Run(List(
       """VERSION=`sbt -Dsbt.ci=true 'inspect actual version' | grep "Setting: java.lang.String" | cut -d '=' -f2 | tr -d ' '`""",
-      """echo `sbt -Dsbt.ci=true 'inspect actual version'`""",
-      """echo "VERSION=${VERSION}" >> $GITHUB_ENV""",
       """IS_SNAPSHOT=`if [[ "${VERSION}" =~ "-" ]] ; then echo "true" ; else echo "false" ; fi`""",
       """echo "IS_SNAPSHOT=${IS_SNAPSHOT}" >> $GITHUB_ENV""",
     ),
@@ -37,8 +35,8 @@ inThisBuild(List(
       name = Some("Release to Github Releases"),
       params = Map(
         "repo_token" -> "${{ secrets.GITHUB_TOKEN }}",
-        "prerelease" -> "${IS_SNAPSHOT}",
-        "title" -> "Release - Version ${VERSION}",
+        "prerelease" -> "${{ env.IS_SNAPSHOT }}",
+        "title" -> "Release - Version ${{ env.VERSION }}",
         "files" -> """target/scala-2.12/@(*.jar|*.pom)"""
       )
     ),
