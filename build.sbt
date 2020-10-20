@@ -1,3 +1,5 @@
+import sbtghactions.GenerativePlugin.autoImport.WorkflowStep
+
 onChangedBuildSource := ReloadOnSourceChanges
 
 inThisBuild(List(
@@ -26,10 +28,20 @@ inThisBuild(List(
       """IS_SNAPSHOT=`if [[ "${VERSION}" =~ "-" ]] ; then echo "true" ; else echo "false" ; fi`""",
       """echo "IS_SNAPSHOT=${IS_SNAPSHOT}" >> $GITHUB_ENV""",
     ),
-    name = Some("Setup environment variables")),
+      name = Some("Setup environment variables")),
     WorkflowStep.Use("olafurpg", "setup-gpg", "v2"),
   ),
   githubWorkflowPublish := Seq(
+    WorkflowStep.Sbt(
+      List("ci-release"),
+      name = Some("Release to Sonatype"),
+      env = Map(
+        "PGP_PASSPHRASE" -> "${{ secrets.PGP_PASSPHRASE }}",
+        "PGP_SECRET" -> "${{ secrets.PGP_SECRET }}",
+        "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
+        "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
+      )
+    ),
     WorkflowStep.Use(
       "marvinpinto", "action-automatic-releases", "latest",
       name = Some("Release to Github Releases"),
@@ -40,16 +52,6 @@ inThisBuild(List(
         "files" -> "target/**/*.jar\ntarget/**/*.pom"
       )
     ),
-    WorkflowStep.Sbt(
-      List("ci-release"),
-      name = Some("Release to Sonatype"),
-      env = Map(
-        "PGP_PASSPHRASE" -> "${{ secrets.PGP_PASSPHRASE }}",
-        "PGP_SECRET" -> "${{ secrets.PGP_SECRET }}",
-        "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
-        "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
-      )
-    )
   ),
   githubWorkflowTargetTags ++= Seq("v*"),
   githubWorkflowPublishTargetBranches :=
