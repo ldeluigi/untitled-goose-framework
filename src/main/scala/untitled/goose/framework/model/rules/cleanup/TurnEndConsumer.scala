@@ -1,7 +1,7 @@
 package untitled.goose.framework.model.rules.cleanup
 
-import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions._
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
+import untitled.goose.framework.model.entities.runtime.functional.HistoryExtensions.PimpedHistory
 import untitled.goose.framework.model.entities.runtime.{GameState, Player}
 import untitled.goose.framework.model.events.consumable.TurnShouldEndEvent
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, TurnEndedEvent}

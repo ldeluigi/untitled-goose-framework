@@ -1,8 +1,9 @@
 package untitled.goose.framework.model.rules.operations.update
 
+import untitled.goose.framework.model.entities.runtime._
 import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions._
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
-import untitled.goose.framework.model.entities.runtime._
+import untitled.goose.framework.model.entities.runtime.functional.HistoryExtensions.PimpedHistory
 import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.rules.operations.Operation
 

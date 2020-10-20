@@ -2,7 +2,7 @@ package untitled.goose.framework.model.events
 
 import untitled.goose.framework.model.entities.definitions.TileIdentifier.Group
 import untitled.goose.framework.model.entities.runtime.GameState
-import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions.GameStateExtensions
+import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions.PimpedGameState
 import untitled.goose.framework.model.events.consumable._
 import untitled.goose.framework.model.events.persistent.{GainTurnEvent, LoseTurnEvent}
 import untitled.goose.framework.model.events.special.{ExitEvent, NoOpEvent}

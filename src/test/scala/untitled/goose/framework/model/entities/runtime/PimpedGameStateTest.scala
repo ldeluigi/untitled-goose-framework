@@ -8,11 +8,12 @@ import untitled.goose.framework.model.entities.definitions.TileDefinition
 import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
 import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions._
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
+import untitled.goose.framework.model.entities.runtime.functional.HistoryExtensions.PimpedHistory
 import untitled.goose.framework.model.events.GameEvent
 import untitled.goose.framework.model.events.consumable.{SkipTurnEvent, StopOnTileEvent}
 import untitled.goose.framework.model.events.persistent.{LoseTurnEvent, TurnEndedEvent}
 
-class GameStateExtensionsTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
+class PimpedGameStateTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
 
   var skipTurnSequence: Seq[SkipTurnEvent] = Seq(SkipTurnEvent(PlayerDefinitionImpl("a"), 1, 1))
   var pimpedHistory: PimpedHistory[GameEvent] = new PimpedHistory[GameEvent](skipTurnSequence)

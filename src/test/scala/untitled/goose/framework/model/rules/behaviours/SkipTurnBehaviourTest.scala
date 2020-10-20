@@ -3,7 +3,7 @@ package untitled.goose.framework.model.rules.behaviours
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock
-import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions.GameStateExtensions
+import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions.PimpedGameState
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.entities.runtime.{Game, GameState}
 import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, SkipTurnEvent}

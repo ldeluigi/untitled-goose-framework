@@ -2,6 +2,7 @@ package untitled.goose.framework.model.rules.behaviours
 
 import untitled.goose.framework.model.entities.runtime.GameState
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
+import untitled.goose.framework.model.entities.runtime.functional.HistoryExtensions.PimpedHistory
 import untitled.goose.framework.model.events.consumable.ConsumableGameEvent
 import untitled.goose.framework.model.rules.operations.Operation
 
@@ -14,8 +15,6 @@ sealed trait BehaviourRule {
 
 
 object BehaviourRule {
-
-  import untitled.goose.framework.model.entities.runtime.functional.GameStateExtensions._
 
   /** The mandatory implementation of a behaviour rule ensures constraints are honored. */
   private[behaviours] class BehaviourRuleImpl[T <: ConsumableGameEvent : ClassTag]

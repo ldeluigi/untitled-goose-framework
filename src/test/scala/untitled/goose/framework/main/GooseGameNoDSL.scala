@@ -9,6 +9,7 @@ import untitled.goose.framework.model.entities.Dice.MovementDice
 import untitled.goose.framework.model.entities.definitions._
 import untitled.goose.framework.model.entities.runtime.PlayerDefinition.PlayerDefinitionImpl
 import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
+import untitled.goose.framework.model.entities.runtime.functional.HistoryExtensions.PimpedHistory
 import untitled.goose.framework.model.entities.runtime.{Game, Piece, PlayerDefinition}
 import untitled.goose.framework.model.entities.{DialogContent, Dice}
 import untitled.goose.framework.model.events.consumable

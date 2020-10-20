@@ -4,8 +4,8 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import untitled.goose.framework.mock.MatchMock
 import untitled.goose.framework.model.Colour
-import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.entities.runtime._
+import untitled.goose.framework.model.entities.runtime.functional.GameStateUpdate.GameStateUpdateImpl
 import untitled.goose.framework.model.events.consumable.{ConsumableGameEvent, SkipTurnEvent, TurnShouldEndEvent}
 import untitled.goose.framework.model.events.persistent.{TileActivatedEvent, TurnEndedEvent}
 
