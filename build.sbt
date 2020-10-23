@@ -1,7 +1,5 @@
 import sbtghactions.GenerativePlugin.autoImport.WorkflowStep
 
-onChangedBuildSource := ReloadOnSourceChanges
-
 val baseRepo = "ldeluigi/untitled-goose-framework"
 
 inThisBuild(List(
@@ -61,8 +59,6 @@ inThisBuild(List(
 ))
 
 ThisBuild / scalaVersion := "2.12.10"
-
-ThisBuild / sbtVersion := "1.3.13"
 
 //ThisBuild / githubWorkflowOSes := Seq("ubuntu-latest", "macos-latest", "windows-latest")
 
