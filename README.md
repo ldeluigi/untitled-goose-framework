@@ -9,8 +9,9 @@ A CI system tests, builds and makes new releases of the framework.
 - __develop__ branch:  
 ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=develop)
 ### Continuous Delivery
-New [releases](https://github.com/ldeluigi/untitled-goose-framework/releases) are generated based on the [master](https://github.com/ldeluigi/untitled-goose-framework/tree/master) branch.  
-The library is published on ~~[Github packages](https://github.com/ldeluigi?tab=packages&repo_name=untitled-goose-framework) and~~ [Sonatype](https://search.maven.org/artifact/com.github.ldeluigi/untitled-goose-framework_2.12).
+- New [releases](https://github.com/ldeluigi/untitled-goose-framework/releases) are generated based on the [master](https://github.com/ldeluigi/untitled-goose-framework/tree/master) branch.  
+- The library is published on ~~[Github packages](https://github.com/ldeluigi?tab=packages&repo_name=untitled-goose-framework) and~~ [Sonatype](https://search.maven.org/artifact/com.github.ldeluigi/untitled-goose-framework_2.12).  
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ldeluigi/untitled-goose-framework_2.12.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.ldeluigi%22%20AND%20a:%22untitled-goose-framework_2.12%22)
 
 ## Features
 - Ability to create new games with the shortest, most readable syntax possible through a Scala DSL (_Domain Specific Language_) called **GooseDSL**.
