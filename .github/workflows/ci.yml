@@ -93,7 +93,7 @@ jobs:
   publish:
     name: Publish Artifacts
     needs: [build]
-    if: github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/v'))
+    if: github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/v')) && (github.repository == 'ldeluigi/untitled-goose-framework')
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -172,9 +172,10 @@ jobs:
       - name: Release to Sonatype
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
-          PGP_SECRET: ${{ secrets.PGP_SECRET }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          CI_CLEAN: sonatypeBundleClean
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
         run: sbt ++${{ matrix.scala }} ci-release
 
       - name: Release to Github Releases

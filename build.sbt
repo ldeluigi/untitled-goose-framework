@@ -2,13 +2,12 @@ import sbtghactions.GenerativePlugin.autoImport.WorkflowStep
 
 onChangedBuildSource := ReloadOnSourceChanges
 
+val baseRepo = "ldeluigi/untitled-goose-framework"
+
 inThisBuild(List(
   name := "untitled-goose-framework",
   organization := "com.github.ldeluigi",
-  homepage := Some(url("https://github.com/" +
-    "ldeluigi" +
-    "/" +
-    "untitled-goose-framework")),
+  homepage := Some(url("https://github.com/" + baseRepo)),
   licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
   developers := List(
     Developer(
@@ -40,7 +39,8 @@ inThisBuild(List(
         "PGP_PASSPHRASE" -> "${{ secrets.PGP_PASSPHRASE }}",
         "PGP_SECRET" -> "${{ secrets.PGP_SECRET }}",
         "SONATYPE_PASSWORD" -> "${{ secrets.SONATYPE_PASSWORD }}",
-        "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}"
+        "SONATYPE_USERNAME" -> "${{ secrets.SONATYPE_USERNAME }}",
+        "CI_CLEAN" -> "sonatypeBundleClean"
       )
     ),
     WorkflowStep.Use(
@@ -56,7 +56,8 @@ inThisBuild(List(
   ),
   githubWorkflowTargetTags ++= Seq("v*"),
   githubWorkflowPublishTargetBranches :=
-    Seq(RefPredicate.StartsWith(Ref.Tag("v")))
+    Seq(RefPredicate.StartsWith(Ref.Tag("v"))),
+  githubWorkflowPublishCond := Some("github.repository == '" + baseRepo + "'")
 ))
 
 ThisBuild / scalaVersion := "2.12.10"
