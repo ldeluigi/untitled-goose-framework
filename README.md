@@ -6,6 +6,7 @@ Untitled Goose Framework _(not a trademark)_ is a Scala library that is able to 
 A CI system tests, builds and makes new releases of the framework.
 - __master__ branch:  
 ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=master)
+![Periodic Integration Checks](https://github.com/ldeluigi/untitled-goose-framework/workflows/Periodic%20Integration%20Checks/badge.svg?branch=master&event=schedule)
 - __develop__ branch:  
 ![Continuous Integration](https://github.com/ldeluigi/untitled-goose-framework/workflows/Continuous%20Integration/badge.svg?branch=develop)
 ### Continuous Delivery
