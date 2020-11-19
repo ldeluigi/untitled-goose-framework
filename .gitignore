@@ -60,6 +60,9 @@ out/
 # JIRA plugin
 atlassian-ide-plugin.xml
 
+# BSP
+.bsp/
+
 # Cursive Clojure plugin
 .idea/replstate.xml
 
